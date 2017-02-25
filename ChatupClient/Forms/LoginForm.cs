@@ -12,6 +12,7 @@ namespace ChatupClient
     {
         private SessionService sessionService;
         private SessionService remoteService;
+        private SessionToken tokenStorage;
 
         public LoginForm()
         {
@@ -22,7 +23,15 @@ namespace ChatupClient
             //sessionService.OnLeave += UserLeft;
         }
 
-        private SessionToken tokenStorage;
+        private bool ValidateForm()
+        {
+            if (string.IsNullOrWhiteSpace(fieldUsername.Text))
+            {
+                return false;
+            }
+
+            return !string.IsNullOrWhiteSpace(fieldPassword.Text);
+        }
 
         private void UserJoined(string userName)
         {
@@ -43,12 +52,12 @@ namespace ChatupClient
         {
         }
 
-        private static string userName = "marques999";
-        private static string userPasswowrd = "14191091aB";
+        private const string userName = "marques999";
+        private const string userPassword = "lerolero";
 
         private void buttonValidate_Click(object sender, EventArgs e)
         {
-            if (remoteService == null)
+            /*if (remoteService == null)
             {
                 remoteService = (SessionService)Activator.GetObject(typeof(SessionService), "tcp://127.0.0.1:12480/SessionService");
 
@@ -82,51 +91,69 @@ namespace ChatupClient
                 {
                     MessageBox.Show("LogoutFailed");
                 }
+            }*/
+
+            ActionLogin();
+        }
+
+        private void ActionLogin()
+        {
+            if (fieldUsername.Text.Equals(userName) && fieldPassword.Text.Equals(userPassword))
+            {
+                Hide();
+                SessionData.Instance.Username = userName;
+                new MainForm().ShowDialog();
+                Show();
+            }
+            else
+            {
+                MessageBox.Show(this,
+                    ChatupNET.Properties.Resources.LoginError,
+                    ChatupNET.Properties.Resources.LoginErrorTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs args)
         {
             Application.Exit();
         }
-    }
 
-    class GetRemote
-    {
-        private static IDictionary wellKnownTypes;
-
-        public static object New(Type type)
+        private void buttonRegister_Click(object sender, EventArgs args)
         {
-            if (wellKnownTypes == null)
+            var registrationForm = new ChatupNET.RegisterForm();
+
+            if (registrationForm.ShowDialog() == DialogResult.OK)
             {
-                InitTypeCache();
+                var registrationData = registrationForm.RegistrationData;
+
+                if (MessageBox.Show(this,
+                    ChatupNET.Properties.Resources.InfoRegister,
+                    ChatupNET.Properties.Resources.InfoRegisterTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    fieldUsername.Text = registrationData.Username;
+                    fieldPassword.Text = registrationData.Password;
+                }
             }
-
-            var entry = (WellKnownClientTypeEntry)wellKnownTypes[type];
-
-            if (entry == null)
-            {
-                throw new RemotingException("Type not found!");
-            }
-
-            return Activator.GetObject(type, entry.ObjectUrl);
         }
 
-        public static void InitTypeCache()
+        private void fieldUsername_TextChanged(object sender, EventArgs args)
         {
-            var types = new Hashtable();
+            buttonValidate.Enabled = ValidateForm();
+        }
 
-            foreach (var entry in RemotingConfiguration.GetRegisteredWellKnownClientTypes())
-            {
-                if (entry.ObjectType == null)
-                {
-                    throw new RemotingException("A configured type could not be found!");
-                }
+        private void fieldPassword_TextChanged(object sender, EventArgs args)
+        {
+            buttonValidate.Enabled = ValidateForm();
+        }
 
-                types.Add(entry.ObjectType, entry);
-            }
-
-            wellKnownTypes = types;
+        private void LoginForm_Load(object sender, EventArgs args)
+        {
+            buttonValidate.Enabled = ValidateForm();
         }
     }
 }

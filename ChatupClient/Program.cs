@@ -8,6 +8,6 @@ static class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new ChatupClient.RoomForm());
+        Application.Run(new ChatupClient.LoginForm());
     }
 }

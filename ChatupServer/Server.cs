@@ -1,6 +1,4 @@
 using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
 
 public class Server
 {
@@ -8,7 +6,7 @@ public class Server
 
     private Server()
     {
-        RemotingConfiguration.Configure("Server.exe.config", false);
+        RemotingConfiguration.Configure("ChatupServer.exe.config", false);
     }
 
     public static Server getInstance()

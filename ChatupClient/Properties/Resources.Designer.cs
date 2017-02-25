@@ -59,5 +59,123 @@ namespace ChatupNET.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon chatup {
+            get {
+                object obj = ResourceManager.GetObject("chatup", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your user account was successfully registered in the server! Please login with your account details now..
+        /// </summary>
+        internal static string InfoRegister {
+            get {
+                return ResourceManager.GetString("InfoRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration successful.
+        /// </summary>
+        internal static string InfoRegisterTitle {
+            get {
+                return ResourceManager.GetString("InfoRegisterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We couldn&apos;t sign you in, please check your username and password and try again!.
+        /// </summary>
+        internal static string LoginError {
+            get {
+                return ResourceManager.GetString("LoginError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login failed.
+        /// </summary>
+        internal static string LoginErrorTitle {
+            get {
+                return ResourceManager.GetString("LoginErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password you entered was recognized as invalid!.
+        /// </summary>
+        internal static string PasswordError {
+            get {
+                return ResourceManager.GetString("PasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong password.
+        /// </summary>
+        internal static string PasswordErrorTitle {
+            get {
+                return ResourceManager.GetString("PasswordErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @{0} has asked you to participate in a private conversation with him/her. Do you want to accept the invitation?.
+        /// </summary>
+        internal static string PromptInvite {
+            get {
+                return ResourceManager.GetString("PromptInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private conversation.
+        /// </summary>
+        internal static string PromptInviteTitle {
+            get {
+                return ResourceManager.GetString("PromptInviteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the room \&quot;{0}\&quot;?.
+        /// </summary>
+        internal static string WarnDelete {
+            get {
+                return ResourceManager.GetString("WarnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete room.
+        /// </summary>
+        internal static string WarnDeleteTitle {
+            get {
+                return ResourceManager.GetString("WarnDeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you want to terminate your current session and disconnect from the server? Your conversations will be closed..
+        /// </summary>
+        internal static string WarnLogout {
+            get {
+                return ResourceManager.GetString("WarnLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminate session.
+        /// </summary>
+        internal static string WarnLogoutTitle {
+            get {
+                return ResourceManager.GetString("WarnLogoutTitle", resourceCulture);
+            }
+        }
     }
 }

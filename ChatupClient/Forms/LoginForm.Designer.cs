@@ -35,9 +35,10 @@
             this.buttonValidate = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelUsername = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.fieldUsername = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.fieldPassword = new System.Windows.Forms.TextBox();
+            this.buttonRegister = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -45,6 +46,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
@@ -56,6 +58,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -72,41 +75,51 @@
             // 
             // buttonCancel
             // 
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Location = new System.Drawing.Point(145, 7);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(133, 26);
             this.buttonCancel.TabIndex = 9;
             this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonValidate
             // 
-            this.buttonValidate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonValidate.Location = new System.Drawing.Point(64, 7);
+            this.buttonValidate.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonValidate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonValidate.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.buttonValidate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonValidate.Location = new System.Drawing.Point(7, 7);
             this.buttonValidate.Name = "buttonValidate";
-            this.buttonValidate.Size = new System.Drawing.Size(75, 23);
+            this.buttonValidate.Size = new System.Drawing.Size(132, 26);
             this.buttonValidate.TabIndex = 8;
             this.buttonValidate.Text = "Validate";
-            this.buttonValidate.UseVisualStyleBackColor = true;
+            this.buttonValidate.UseVisualStyleBackColor = false;
             this.buttonValidate.Click += new System.EventHandler(this.buttonValidate_Click);
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.labelUsername, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.fieldUsername, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.fieldPassword, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.buttonRegister, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 242);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.17241F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.82759F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.625F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.375F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(285, 172);
@@ -115,46 +128,72 @@
             // labelUsername
             // 
             this.labelUsername.AutoSize = true;
+            this.labelUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelUsername.Location = new System.Drawing.Point(3, 0);
+            this.labelUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUsername.Location = new System.Drawing.Point(8, 0);
+            this.labelUsername.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(279, 32);
+            this.labelUsername.Size = new System.Drawing.Size(269, 26);
             this.labelUsername.TabIndex = 0;
             this.labelUsername.Text = "Username";
             this.labelUsername.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox1
+            // fieldUsername
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(32, 35);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(32, 3, 22, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(231, 20);
-            this.textBox1.TabIndex = 2;
+            this.fieldUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fieldUsername.Location = new System.Drawing.Point(8, 34);
+            this.fieldUsername.Margin = new System.Windows.Forms.Padding(8);
+            this.fieldUsername.Name = "fieldUsername";
+            this.fieldUsername.Size = new System.Drawing.Size(269, 20);
+            this.fieldUsername.TabIndex = 2;
+            this.fieldUsername.Text = "marques999";
+            this.fieldUsername.TextChanged += new System.EventHandler(this.fieldUsername_TextChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 58);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(8, 64);
+            this.label2.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(279, 32);
+            this.label2.Size = new System.Drawing.Size(269, 26);
             this.label2.TabIndex = 1;
             this.label2.Text = "Password";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox2
+            // fieldPassword
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(32, 93);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(32, 3, 32, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(221, 20);
-            this.textBox2.TabIndex = 3;
+            this.fieldPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fieldPassword.Location = new System.Drawing.Point(8, 98);
+            this.fieldPassword.Margin = new System.Windows.Forms.Padding(8);
+            this.fieldPassword.Name = "fieldPassword";
+            this.fieldPassword.PasswordChar = '*';
+            this.fieldPassword.Size = new System.Drawing.Size(269, 20);
+            this.fieldPassword.TabIndex = 3;
+            this.fieldPassword.Text = "lerolero";
+            this.fieldPassword.TextChanged += new System.EventHandler(this.fieldPassword_TextChanged);
+            // 
+            // buttonRegister
+            // 
+            this.buttonRegister.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.buttonRegister.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonRegister.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.buttonRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRegister.Location = new System.Drawing.Point(64, 133);
+            this.buttonRegister.Margin = new System.Windows.Forms.Padding(64, 8, 64, 16);
+            this.buttonRegister.Name = "buttonRegister";
+            this.buttonRegister.Size = new System.Drawing.Size(157, 23);
+            this.buttonRegister.TabIndex = 4;
+            this.buttonRegister.Text = "Register";
+            this.buttonRegister.UseVisualStyleBackColor = false;
+            this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
             // 
             // LoginForm
             // 
+            this.AcceptButton = this.buttonValidate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 454);
@@ -167,7 +206,8 @@
             this.Name = "LoginForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Chatup.NET (Login)";
+            this.Text = "Authentication";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -184,9 +224,10 @@
         private System.Windows.Forms.Button buttonValidate;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label labelUsername;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox fieldUsername;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox fieldPassword;
+        private System.Windows.Forms.Button buttonRegister;
     }
 }
 
