@@ -121,6 +121,12 @@
   <data name="chatup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chatup.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ConversationExists" xml:space="preserve">
+    <value>Another conversation with the same name was opened!</value>
+  </data>
+  <data name="ConversationExistsTitle" xml:space="preserve">
+    <value>Conversation exists</value>
+  </data>
   <data name="InfoRegister" xml:space="preserve">
     <value>Your user account was successfully registered in the server! Please login with your account details now.</value>
   </data>
@@ -146,7 +152,7 @@
     <value>Private conversation</value>
   </data>
   <data name="WarnDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the room \"{0}\"?</value>
+    <value>Are you sure you want to delete the room "{0}"?</value>
   </data>
   <data name="WarnDeleteTitle" xml:space="preserve">
     <value>Delete room</value>

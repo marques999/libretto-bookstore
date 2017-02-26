@@ -71,6 +71,24 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Another conversation with the same name was opened!.
+        /// </summary>
+        internal static string ConversationExists {
+            get {
+                return ResourceManager.GetString("ConversationExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversation exists.
+        /// </summary>
+        internal static string ConversationExistsTitle {
+            get {
+                return ResourceManager.GetString("ConversationExistsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your user account was successfully registered in the server! Please login with your account details now..
         /// </summary>
         internal static string InfoRegister {
@@ -143,7 +161,7 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the room \&quot;{0}\&quot;?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the room &quot;{0}&quot;?.
         /// </summary>
         internal static string WarnDelete {
             get {

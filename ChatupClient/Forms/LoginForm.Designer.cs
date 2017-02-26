@@ -1,4 +1,4 @@
-﻿namespace ChatupClient
+﻿namespace ChatupNET.Forms
 {
     partial class LoginForm
     {

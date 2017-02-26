@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ChatupNET
+namespace ChatupNET.Forms
 {
     partial class CreateForm
     {

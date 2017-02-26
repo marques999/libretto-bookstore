@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
 
-namespace ChatupClient
+using ChatupNET.Session;
+
+namespace ChatupNET.Forms
 {
     public partial class LoginForm : Form
     {
@@ -19,8 +18,6 @@ namespace ChatupClient
             InitializeComponent();
             sessionService = new SessionService();
             ChannelServices.RegisterChannel(new TcpChannel(), false);
-            //sessionService.OnJoin += UserJoined;
-            //sessionService.OnLeave += UserLeft;
         }
 
         private bool ValidateForm()
@@ -43,19 +40,10 @@ namespace ChatupClient
             MessageBox.Show("UserLeft: " + userName);
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
         private const string userName = "marques999";
         private const string userPassword = "lerolero";
 
-        private void buttonValidate_Click(object sender, EventArgs e)
+        private void buttonValidate_Click(object sender, EventArgs args)
         {
             /*if (remoteService == null)
             {
@@ -93,23 +81,18 @@ namespace ChatupClient
                 }
             }*/
 
-            ActionLogin();
-        }
-
-        private void ActionLogin()
-        {
             if (fieldUsername.Text.Equals(userName) && fieldPassword.Text.Equals(userPassword))
             {
                 Hide();
-                SessionData.Instance.Username = userName;
+                ChatupClient.Instance.Username = userName;
                 new MainForm().ShowDialog();
                 Show();
             }
             else
             {
                 MessageBox.Show(this,
-                    ChatupNET.Properties.Resources.LoginError,
-                    ChatupNET.Properties.Resources.LoginErrorTitle,
+                    Properties.Resources.LoginError,
+                    Properties.Resources.LoginErrorTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -130,8 +113,8 @@ namespace ChatupClient
                 var registrationData = registrationForm.RegistrationData;
 
                 if (MessageBox.Show(this,
-                    ChatupNET.Properties.Resources.InfoRegister,
-                    ChatupNET.Properties.Resources.InfoRegisterTitle,
+                    Properties.Resources.InfoRegister,
+                    Properties.Resources.InfoRegisterTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information) == DialogResult.OK)
                 {

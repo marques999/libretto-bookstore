@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using ChatupNET.Users;
+
 namespace ChatupNET
 {
     public partial class RegisterForm : Form

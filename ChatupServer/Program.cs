@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using ChatupNET.Forms;
+
 static class Program
 {
     [STAThread]
@@ -8,6 +10,6 @@ static class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new Chatup.NET.ServerGUI());
+        Application.Run(new MainForm());
     }
 }

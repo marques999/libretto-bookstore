@@ -1,4 +1,4 @@
-﻿namespace ChatupClient
+﻿namespace ChatupNET.Forms
 {
     partial class MainForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Public", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Private", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
@@ -55,10 +56,13 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonMessage = new System.Windows.Forms.Button();
+            this.buttonInvite = new System.Windows.Forms.Button();
+            this.roomsList = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.usersList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
@@ -70,18 +74,16 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.buttonInvite = new System.Windows.Forms.Button();
-            this.buttonMessage = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -110,8 +112,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.listView1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.roomsList, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.usersList, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
@@ -135,34 +137,66 @@
             this.panel2.Size = new System.Drawing.Size(276, 29);
             this.panel2.TabIndex = 6;
             // 
-            // listView1
+            // panel3
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.panel3.Controls.Add(this.buttonMessage);
+            this.panel3.Controls.Add(this.buttonInvite);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(276, 29);
+            this.panel3.TabIndex = 0;
+            // 
+            // buttonMessage
+            // 
+            this.buttonMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMessage.Location = new System.Drawing.Point(75, 0);
+            this.buttonMessage.Name = "buttonMessage";
+            this.buttonMessage.Size = new System.Drawing.Size(201, 29);
+            this.buttonMessage.TabIndex = 12;
+            this.buttonMessage.Text = "Private Message";
+            this.buttonMessage.UseVisualStyleBackColor = true;
+            this.buttonMessage.Click += new System.EventHandler(this.buttonMessage_Click);
+            // 
+            // buttonInvite
+            // 
+            this.buttonInvite.Dock = System.Windows.Forms.DockStyle.Left;
+            this.buttonInvite.Location = new System.Drawing.Point(0, 0);
+            this.buttonInvite.Name = "buttonInvite";
+            this.buttonInvite.Size = new System.Drawing.Size(75, 29);
+            this.buttonInvite.TabIndex = 11;
+            this.buttonInvite.Text = "Invite";
+            this.buttonInvite.UseVisualStyleBackColor = true;
+            this.buttonInvite.Click += new System.EventHandler(this.buttonInvite_Click);
+            // 
+            // roomsList
+            // 
+            this.roomsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roomsList.Dock = System.Windows.Forms.DockStyle.Fill;
             listViewGroup1.Header = "Public";
             listViewGroup1.Name = "Public";
             listViewGroup2.Header = "Private";
             listViewGroup2.Name = "Private";
-            this.listView1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            this.roomsList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup1,
             listViewGroup2});
             listViewItem1.Group = listViewGroup1;
             listViewItem2.Group = listViewGroup2;
             listViewItem3.Group = listViewGroup1;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.roomsList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.listView1.Location = new System.Drawing.Point(3, 44);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(276, 244);
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.roomsList.Location = new System.Drawing.Point(3, 44);
+            this.roomsList.Name = "roomsList";
+            this.roomsList.Size = new System.Drawing.Size(276, 244);
+            this.roomsList.TabIndex = 4;
+            this.roomsList.UseCompatibleStateImageBehavior = false;
+            this.roomsList.View = System.Windows.Forms.View.Details;
+            this.roomsList.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.roomsList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.roomsList_MouseDoubleClick);
             // 
             // columnHeader3
             // 
@@ -174,25 +208,25 @@
             this.columnHeader4.Text = "Capacity";
             this.columnHeader4.Width = 78;
             // 
-            // listView2
+            // usersList
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.usersList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.usersList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.usersList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem4,
             listViewItem5,
             listViewItem6,
             listViewItem7});
-            this.listView2.Location = new System.Drawing.Point(285, 44);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(276, 244);
-            this.listView2.TabIndex = 3;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
-            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
-            this.listView2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView2_MouseDoubleClick);
+            this.usersList.Location = new System.Drawing.Point(285, 44);
+            this.usersList.Name = "usersList";
+            this.usersList.Size = new System.Drawing.Size(276, 244);
+            this.usersList.TabIndex = 3;
+            this.usersList.UseCompatibleStateImageBehavior = false;
+            this.usersList.View = System.Windows.Forms.View.Details;
+            this.usersList.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            this.usersList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.usersList_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -321,35 +355,10 @@
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
-            // panel3
+            // contextMenuStrip1
             // 
-            this.panel3.Controls.Add(this.buttonMessage);
-            this.panel3.Controls.Add(this.buttonInvite);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(276, 29);
-            this.panel3.TabIndex = 0;
-            // 
-            // buttonInvite
-            // 
-            this.buttonInvite.Dock = System.Windows.Forms.DockStyle.Left;
-            this.buttonInvite.Location = new System.Drawing.Point(0, 0);
-            this.buttonInvite.Name = "buttonInvite";
-            this.buttonInvite.Size = new System.Drawing.Size(75, 29);
-            this.buttonInvite.TabIndex = 11;
-            this.buttonInvite.Text = "Invite";
-            this.buttonInvite.UseVisualStyleBackColor = true;
-            // 
-            // buttonMessage
-            // 
-            this.buttonMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMessage.Location = new System.Drawing.Point(75, 0);
-            this.buttonMessage.Name = "buttonMessage";
-            this.buttonMessage.Size = new System.Drawing.Size(201, 29);
-            this.buttonMessage.TabIndex = 12;
-            this.buttonMessage.Text = "Private Message";
-            this.buttonMessage.UseVisualStyleBackColor = true;
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // MainForm
             // 
@@ -372,10 +381,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -386,10 +395,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView roomsList;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView usersList;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -403,5 +412,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button buttonMessage;
         private System.Windows.Forms.Button buttonInvite;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

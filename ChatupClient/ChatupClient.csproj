@@ -53,8 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\AbstractChatroom.cs" />
-    <Compile Include="Model\PrivateChatroom.cs" />
     <Compile Include="Forms\CreateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,19 +85,14 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\RegisterObject.cs" />
-    <Compile Include="Remoting\RemoteAccess.cs" />
     <Compile Include="Forms\RoomForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\RoomForm.Designer.cs">
       <DependentUpon>RoomForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\GroupChatroom.cs" />
-    <Compile Include="Remoting\SessionInterface.cs" />
     <Compile Include="Remoting\SessionService.cs" />
-    <Compile Include="Model\SessionToken.cs" />
-    <Compile Include="SessionData.cs" />
+    <Compile Include="ChatupClient.cs" />
     <EmbeddedResource Include="Forms\CreateForm.resx">
       <DependentUpon>CreateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +137,12 @@
   <ItemGroup>
     <Content Include="chatup.ico" />
     <None Include="Resources\chatup.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChatupCommon\ChatupCommon.csproj">
+      <Project>{f2a6b882-d61e-4304-9bd3-9a5c532dc713}</Project>
+      <Name>ChatupCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

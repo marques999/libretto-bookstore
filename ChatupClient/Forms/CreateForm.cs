@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ChatupNET
+using ChatupNET.Rooms;
+
+namespace ChatupNET.Forms
 {
     public partial class CreateForm : Form
     {

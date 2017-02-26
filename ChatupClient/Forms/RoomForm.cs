@@ -2,9 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ChatupClient
+using ChatupNET.Rooms;
+
+namespace ChatupNET.Forms
 {
-    public delegate void ExitChatroomHandler(int instanceCount);
+    public delegate void ExitChatroomHandler(Chatroom instance);
 
     public partial class RoomForm : Form
     {
@@ -21,8 +23,6 @@ namespace ChatupClient
                 UserJoined(userInstance.Key, userInstance.Value);
             }
         }
-
-        private static int instanceCount = 0;
 
         private void UpdateTitle()
         {
@@ -70,7 +70,6 @@ namespace ChatupClient
 
         private void RoomForm_Load(object sender, EventArgs args)
         {
-            instanceCount++;
             buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
             UpdateTitle();
         }
@@ -88,8 +87,7 @@ namespace ChatupClient
 
         private void RoomForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            instanceCount--;
-            ExitHandler?.Invoke(instanceCount);
+            ExitHandler?.Invoke(instance);
         }
     }
 }

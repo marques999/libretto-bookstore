@@ -1,4 +1,4 @@
-﻿namespace ChatupNET
+﻿namespace ChatupNET.Forms
 {
     partial class PasswordForm
     {

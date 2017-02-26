@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ChatupNET.Session;
 public class SessionService : MarshalByRefObject, SessionInterface
 {
     /// <summary>
@@ -56,7 +57,14 @@ public class SessionService : MarshalByRefObject, SessionInterface
         return "abcdefg";
     }
 
-    public override object InitializeLifetimeService() { return (null); }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override object InitializeLifetimeService()
+    {
+        return null;
+    }
 
     /// <summary>
     /// Add client name to the arraylist. This way we maintain the list of all clients connected.

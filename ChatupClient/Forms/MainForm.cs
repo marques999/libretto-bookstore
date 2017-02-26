@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
-namespace ChatupClient
+using ChatupNET.Rooms;
+
+namespace ChatupNET.Forms
 {
     public partial class MainForm : Form
     {
@@ -12,13 +16,13 @@ namespace ChatupClient
 
         private void UpdatePrivateButtons()
         {
-            buttonMessage.Enabled = listView2.SelectedItems.Count > 0;
-            buttonInvite.Enabled = conversationCount > 0 && buttonMessage.Enabled;
+            buttonMessage.Enabled = usersList.SelectedItems.Count > 0;
+            buttonInvite.Enabled = groupchatCount > 0 && buttonMessage.Enabled;
         }
 
         private void UpdateRoomButtons()
         {
-            buttonDelete.Enabled = listView1.SelectedItems.Count > 0;
+            buttonDelete.Enabled = roomsList.SelectedItems.Count > 0;
             buttonJoin.Enabled = buttonDelete.Enabled;
         }
 
@@ -27,6 +31,8 @@ namespace ChatupClient
             UpdatePrivateButtons();
         }
 
+        private int groupchatCount = 0;
+
         private void MainForm_Load(object sender, EventArgs args)
         {
             UpdateRoomButtons();
@@ -34,49 +40,92 @@ namespace ChatupClient
             HandleInvitation("koreris");
         }
 
-        private int conversationCount = 0;
-
         private void listView1_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateRoomButtons();
         }
 
+        private void JoinRoom(GroupChatroom roomObject)
+        {
+            if (contextDictionary.ContainsKey(roomObject.Name))
+            {
+                MessageBox.Show(this,
+                    Properties.Resources.ConversationExists,
+                    Properties.Resources.ConversationExistsTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            else
+            {
+                roomObject.InsertUser(ChatupClient.Instance.Username);
+                RegisterContext(roomObject);
+                LaunchRoom(new RoomForm(roomObject));
+            }
+        }
+
+        private void RegisterContext(Chatroom roomObject)
+        {
+            if (roomObject.IsGroup())
+            {
+                groupchatCount++;
+                contextDictionary.Add(roomObject.Name, contextMenuStrip1.Items.Add(roomObject.Name));
+            }
+            else
+            {
+                contextDictionary.Add(roomObject.Name, null);
+            }
+        }
+
         private void JoinRoom(PrivateChatroom roomObject)
         {
-            roomObject.InsertUser(SessionData.Instance.Username);
-            roomObject.InsertUser(roomObject.Name);
-            LaunchRoom(new RoomForm(roomObject));
+            if (contextDictionary.ContainsKey(roomObject.Name))
+            {
+                MessageBox.Show(this,
+                    Properties.Resources.ConversationExists,
+                    Properties.Resources.ConversationExistsTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            else
+            {
+                roomObject.InsertUser(ChatupClient.Instance.Username);
+                roomObject.InsertUser(roomObject.Name);
+                RegisterContext(roomObject);
+                LaunchRoom(new RoomForm(roomObject));
+            }
         }
 
         private void LaunchRoom(RoomForm roomForm)
         {
-            conversationCount++;
             UpdatePrivateButtons();
             roomForm.ExitHandler += UpdateCount;
             roomForm.Show(this);
         }
 
+        private Dictionary<Chatroom, ListViewItem> groupRooms = new Dictionary<Chatroom, ListViewItem>();
+        private Dictionary<string, ToolStripItem> contextDictionary = new Dictionary<string, ToolStripItem>();
+
         private void JoinRoom(GroupChatroom roomObject, bool userInvited)
         {
-            var passwordForm = new ChatupNET.PasswordForm();
+            var passwordForm = new PasswordForm();
 
             if (userInvited || roomObject.Password == null)
             {
-                roomObject.InsertUser(SessionData.Instance.Username);
-                LaunchRoom(new RoomForm(roomObject));
+                JoinRoom(roomObject);
             }
             else if (passwordForm.ShowDialog() == DialogResult.OK)
             {
                 if (passwordForm.Password.Equals(roomObject.Password))
                 {
-                    roomObject.InsertUser(SessionData.Instance.Username);
-                    LaunchRoom(new RoomForm(roomObject));
+                    JoinRoom(roomObject);
                 }
                 else
                 {
                     MessageBox.Show(this,
-                        ChatupNET.Properties.Resources.PasswordError,
-                        ChatupNET.Properties.Resources.PasswordErrorTitle,
+                        Properties.Resources.PasswordError,
+                        Properties.Resources.PasswordErrorTitle,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
@@ -86,55 +135,84 @@ namespace ChatupClient
 
         private void buttonJoin_Click(object sender, EventArgs args)
         {
-            JoinRoom(new GroupChatroom(listView1.SelectedItems[0].Text, "qwerty", 4), false);
+            JoinRoom(new GroupChatroom(roomsList.SelectedItems[0].Text, "qwerty", 4), false);
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs args)
+        private void roomsList_MouseDoubleClick(object sender, MouseEventArgs args)
         {
-            JoinRoom(new GroupChatroom(listView1.SelectedItems[0].Text, "qwerty", 4), false);
+            JoinRoom(new GroupChatroom(roomsList.SelectedItems[0].Text, "qwerty", 4), false);
         }
 
         private void buttonLogout_Click(object sender, EventArgs args)
         {
             if (MessageBox.Show(this,
-                ChatupNET.Properties.Resources.WarnLogout,
-                ChatupNET.Properties.Resources.WarnLogoutTitle,
+                Properties.Resources.WarnLogout,
+                Properties.Resources.WarnLogoutTitle,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning) == DialogResult.Yes
             )
             {
-                SessionData.Instance.Username = null;
+                ChatupClient.Instance.Username = null;
                 Close();
             }
         }
 
-        private void UpdateCount(int instanceCount)
+        private void UpdateCount(Chatroom chatroomInstance)
         {
-            conversationCount = instanceCount;
-            UpdatePrivateButtons();
+            var roomName = chatroomInstance.Name;
+
+            if (contextDictionary.ContainsKey(roomName))
+            {
+                var toolStripItem = contextDictionary[roomName];
+
+                if (toolStripItem != null)
+                {
+                    contextMenuStrip1.Items.Remove(contextDictionary[roomName]);
+                }
+
+                if (chatroomInstance.IsGroup())
+                {
+                    groupchatCount--;
+
+                    if (groupRooms.ContainsKey(chatroomInstance))
+                    {
+                        var listViewItem = groupRooms[chatroomInstance];
+
+                        if (listViewItem != null)
+                        {
+                            roomsList.Items.Remove(listViewItem);
+                        }
+
+                        groupRooms.Remove(chatroomInstance);
+                    }
+                }
+
+                contextDictionary.Remove(roomName);
+                UpdatePrivateButtons();
+            }
         }
 
         private void buttonMessage_Click(object sender, EventArgs args)
         {
-            if (listView2.SelectedItems.Count > 0)
+            if (usersList.SelectedItems.Count > 0)
             {
-                JoinRoom(new PrivateChatroom(listView2.SelectedItems[0].Text));
+                JoinRoom(new PrivateChatroom(usersList.SelectedItems[0].Text));
             }
         }
 
-        private void listView2_MouseDoubleClick(object sender, MouseEventArgs args)
+        private void usersList_MouseDoubleClick(object sender, MouseEventArgs args)
         {
-            if (listView2.SelectedItems.Count > 0)
+            if (usersList.SelectedItems.Count > 0)
             {
-                JoinRoom(new PrivateChatroom(listView2.SelectedItems[0].Text));
+                JoinRoom(new PrivateChatroom(usersList.SelectedItems[0].Text));
             }
         }
 
         private void HandleInvitation(string userName)
         {
             if (MessageBox.Show(this,
-                string.Format(ChatupNET.Properties.Resources.PromptInvite, userName),
-                ChatupNET.Properties.Resources.PromptInviteTitle,
+                string.Format(Properties.Resources.PromptInvite, userName),
+                Properties.Resources.PromptInviteTitle,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes
             )
@@ -145,30 +223,72 @@ namespace ChatupClient
 
         private void buttonDelete_Click(object sender, EventArgs args)
         {
-            if (listView1.SelectedItems.Count > 0)
+            if (roomsList.SelectedItems.Count > 0)
             {
-                var selectedRoom = listView1.SelectedItems[0];
+                var selectedRoom = roomsList.SelectedItems[0];
 
                 if (MessageBox.Show(this,
-                    string.Format(ChatupNET.Properties.Resources.WarnDelete, selectedRoom.Text),
-                    ChatupNET.Properties.Resources.WarnDeleteTitle,
+                    string.Format(Properties.Resources.WarnDelete, selectedRoom.Text),
+                    Properties.Resources.WarnDeleteTitle,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning) == DialogResult.Yes
                 )
                 {
-                    listView1.Items.Remove(selectedRoom);
+                    roomsList.Items.Remove(selectedRoom);
                 }
             }
         }
 
+        private string FormatCapacity(GroupChatroom groupChatroom)
+        {
+            return string.Format("{0} / {1}", groupChatroom.Count, groupChatroom.GetCapacity());
+        }
+
         private void buttonNew_Click(object sender, EventArgs args)
         {
-            var modalDialog = new ChatupNET.CreateForm();
+            var modalDialog = new CreateForm();
 
             if (modalDialog.ShowDialog(this) == DialogResult.OK)
             {
-                LaunchRoom(new RoomForm(modalDialog.RoomObject));
+                var roomObject = modalDialog.RoomObject;
+
+                if (contextDictionary.ContainsKey(roomObject.Name))
+                {
+                    MessageBox.Show(this,
+                      Properties.Resources.ConversationExists,
+                      Properties.Resources.ConversationExistsTitle,
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Warning
+                    );
+                }
+                else
+                {
+                    JoinRoom(roomObject);
+                    InsertGroup(roomObject);
+                }
             }
+        }
+
+        private void InsertGroup(GroupChatroom roomObject)
+        {
+            var listItem = new ListViewItem(roomObject.Name);
+
+            if (roomObject.Password == null)
+            {
+                listItem.Group = roomsList.Groups[0];
+            }
+            else
+            {
+                listItem.Group = roomsList.Groups[1];
+            }
+
+            listItem.SubItems.Add(FormatCapacity(roomObject));
+            roomsList.Items.Add(listItem);
+        }
+
+        private void buttonInvite_Click(object sender, EventArgs args)
+        {
+            contextMenuStrip1.Show(buttonInvite.PointToScreen(new Point(0, buttonInvite.Height)));
         }
     }
 }

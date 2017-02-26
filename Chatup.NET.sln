@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatupClient", "ChatupClien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatupServer", "ChatupServer\ChatupServer.csproj", "{66370D6F-93BA-4EDA-AFDB-3284492EC9BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatupCommon", "ChatupCommon\ChatupCommon.csproj", "{F2A6B882-D61E-4304-9BD3-9A5C532DC713}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{66370D6F-93BA-4EDA-AFDB-3284492EC9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66370D6F-93BA-4EDA-AFDB-3284492EC9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66370D6F-93BA-4EDA-AFDB-3284492EC9BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A6B882-D61E-4304-9BD3-9A5C532DC713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A6B882-D61E-4304-9BD3-9A5C532DC713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A6B882-D61E-4304-9BD3-9A5C532DC713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A6B882-D61E-4304-9BD3-9A5C532DC713}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
