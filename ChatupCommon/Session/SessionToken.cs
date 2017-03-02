@@ -6,7 +6,7 @@ namespace ChatupNET.Session
     public class SessionToken
     {
         /// <summary>
-        /// 
+        /// Default constructor for the "SessionToken" class
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userToken"></param>
@@ -22,11 +22,6 @@ namespace ChatupNET.Session
         private string _token;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _username;
-
-        /// <summary>
         /// Public getter property for the "_token" private member
         /// </summary>
         public string Token
@@ -36,6 +31,11 @@ namespace ChatupNET.Session
                 return _token;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _username;
 
         /// <summary>
         /// Public getter property for the "_username" private member
@@ -60,11 +60,21 @@ namespace ChatupNET.Session
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object otherInstance)
         {
-            return obj != null && obj is SessionToken && (_token.Equals(((SessionToken)obj)._token));
+            if (otherInstance != null)
+            {
+                var tokenObject = otherInstance as SessionToken;
+
+                if (tokenObject != null)
+                {
+                    return Token.Equals(tokenObject.Token);
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -13,50 +13,72 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private string _username;
+    private static ChatupClient instance;
 
     /// <summary>
-    /// 
-    /// </summary>
-    private static ChatupClient _instance;
-
-    /// <summary>
-    /// Public getter for the "instance" private member
+    /// Public getter property for the "instance" private member
     /// </summary>
     public static ChatupClient Instance
     {
         get
         {
-            if (_instance == null)
+            if (instance == null)
             {
-                _instance = new ChatupClient();
+                instance = new ChatupClient();
             }
 
-            return _instance;
+            return instance;
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public bool IsAuthenticated()
-    {
-        return _username != null;
-    }
+    private string username;
 
     /// <summary>
-    /// Public getter for the "_username" private member
+    /// Public getter property for the "username" private member
     /// </summary>
     public string Username
     {
         get
         {
-            return _username;
+            return username;
         }
-        set
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool active;
+
+    /// <summary>
+    /// Public getter property for the "active" private member
+    /// </summary>
+    public bool Active
+    {
+        get
         {
-            _username = value;
+            return active && username != null;
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    public void Login(string userName)
+    {
+        active = true;
+        username = userName;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Logout()
+    {
+        active = false;
+        username = null;
     }
 }

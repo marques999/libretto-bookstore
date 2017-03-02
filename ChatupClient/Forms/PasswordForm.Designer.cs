@@ -110,6 +110,7 @@
             this.fieldPassword.Location = new System.Drawing.Point(8, 48);
             this.fieldPassword.Margin = new System.Windows.Forms.Padding(8);
             this.fieldPassword.Name = "fieldPassword";
+            this.fieldPassword.PasswordChar = '*';
             this.fieldPassword.Size = new System.Drawing.Size(268, 20);
             this.fieldPassword.TabIndex = 1;
             this.fieldPassword.TextChanged += new System.EventHandler(this.fieldPassword_TextChanged);

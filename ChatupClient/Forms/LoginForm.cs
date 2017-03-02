@@ -9,15 +9,9 @@ namespace ChatupNET.Forms
 {
     public partial class LoginForm : Form
     {
-        private SessionService sessionService;
-        private SessionService remoteService;
-        private SessionToken tokenStorage;
-
         public LoginForm()
         {
             InitializeComponent();
-            sessionService = new SessionService();
-            ChannelServices.RegisterChannel(new TcpChannel(), false);
         }
 
         private bool ValidateForm()
@@ -84,7 +78,7 @@ namespace ChatupNET.Forms
             if (fieldUsername.Text.Equals(userName) && fieldPassword.Text.Equals(userPassword))
             {
                 Hide();
-                ChatupClient.Instance.Username = userName;
+                ChatupClient.Instance.Login(userName);
                 new MainForm().ShowDialog();
                 Show();
             }

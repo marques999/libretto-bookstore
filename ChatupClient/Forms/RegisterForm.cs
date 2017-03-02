@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using ChatupNET.Users;
+using ChatupNET.Session;
 
 namespace ChatupNET
 {

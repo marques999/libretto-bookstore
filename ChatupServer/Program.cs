@@ -10,6 +10,7 @@ static class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
+        ChatupServer.Instance.Equals("");
         Application.Run(new MainForm());
     }
 }

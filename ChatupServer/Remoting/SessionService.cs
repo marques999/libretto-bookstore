@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 
 using ChatupNET.Session;
+using ChatupNET.Database;
+using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Remoting
 {
@@ -10,12 +12,12 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event JoinHandler OnJoin;
+        public event LoginHandler OnLogin;
 
         /// <summary>
         /// 
         /// </summary>
-        public event LeaveHandler OnLeave;
+        public event LogoutHandler OnLogout;
 
         /// <summary>
         /// 
@@ -25,26 +27,13 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public HashSet<string> GetUsers()
+        public HashSet<string> Users
         {
-            return new HashSet<string>(userTokens.Keys);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Dictionary<string, string> userDatabase = new Dictionary<string, string>()
-        {
+            get
             {
-                "marques999", "14191091aB"
-            },
-            {
-                "jabst123", "eyb0sserino"
-            },
-            {
-                "somouco", "dormirebom666"
+                return ChatupServer.Instance.QueryUsers();
             }
-        };
+        }
 
         /// <summary>
         /// 
@@ -73,9 +62,17 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool Logout(SessionToken userInstance)
         {
-            if (ValidateSession(userInstance.Username, userInstance.Token))
+            var userName = userInstance.Username;
+
+            if (string.IsNullOrEmpty(userName))
             {
-                userTokens.Remove(userInstance.Username);
+                return false;
+            }
+
+            if (ValidateSession(userName, userInstance.Token))
+            {
+                userTokens.Remove(userName);
+                OnLogout(userName);
             }
             else
             {
@@ -91,34 +88,46 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public string Login(string userName, string userPassword)
+        public SessionToken Login(string userName, string userPassword)
         {
-            // check if user is not currently associated with a session
-            if (userTokens.ContainsKey(userName))
+            if (string.IsNullOrEmpty(userName) || userTokens.ContainsKey(userName))
             {
                 return null;
             }
 
-            // check if username exists in the user database
-            if (userDatabase.ContainsKey(userName) == false)
+            var userPasword = ChatupServer.Instance.QueryPassword(userName);
+
+            if (!userPasword.Equals(userPassword))
             {
                 return null;
             }
 
-            // check user password against password stored in the database
-            if (userDatabase[userName].Equals(userPassword) == false)
-            {
-                return null;
-            }
-
-            // generate session token
             var userToken = "generateToken";
 
-            // 
             userTokens.Add(userName, userToken);
-            OnJoin(userName);
+            OnLogin(userName);
 
-            return userToken;
+            return new SessionToken(userName, "-1");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerObject"></param>
+        /// <returns></returns>
+        public bool Register(RegisterObject registerObject)
+        {
+            if (registerObject == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(registerObject.Username) || string.IsNullOrEmpty(registerObject.Password))
+            {
+                return false;
+            }
+
+            return ChatupServer.Instance.InsertUser(registerObject);
         }
     }
 }

@@ -36,10 +36,12 @@ namespace ChatupNET
                     throw new RemotingException("A configured type could not be found!");
                 }
 
+                System.Diagnostics.Debug.Print(entry.ObjectType.ToString());
                 types.Add(entry.ObjectType, entry);
             }
 
             wellKnownTypes = types;
+            
         }
     }
 }

@@ -93,6 +93,9 @@
     </Compile>
     <Compile Include="Remoting\SessionService.cs" />
     <Compile Include="ChatupClient.cs" />
+    <Compile Include="Rooms\Chatroom.cs" />
+    <Compile Include="Rooms\GroupChatroom.cs" />
+    <Compile Include="Rooms\PrivateChatroom.cs" />
     <EmbeddedResource Include="Forms\CreateForm.resx">
       <DependentUpon>CreateForm.cs</DependentUpon>
     </EmbeddedResource>

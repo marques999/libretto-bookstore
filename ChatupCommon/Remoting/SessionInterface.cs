@@ -1,27 +1,32 @@
 ﻿using System.Collections.Generic;
 
-namespace ChatupNET.Session
+using ChatupNET.Session;
+
+namespace ChatupNET.Remoting
 {
-    public delegate void JoinHandler(string userName);
-    public delegate void LeaveHandler(string userName);
+    public delegate void LoginHandler(string userName);
+    public delegate void LogoutHandler(string userName);
 
     public interface SessionInterface
     {
         /// <summary>
         /// 
         /// </summary>
-        event JoinHandler OnJoin;
+        event LoginHandler OnLogin;
 
         /// <summary>
         /// 
         /// </summary>
-        event LeaveHandler OnLeave;
+        event LogoutHandler OnLogout;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        HashSet<string> GetUsers();
+        HashSet<string> Users
+        {
+            get;
+        }
 
         /// <summary>
         /// 
@@ -29,7 +34,7 @@ namespace ChatupNET.Session
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        string Login(string userName, string userPassword);
+        SessionToken Login(string userName, string userPassword);
 
         /// <summary>
         /// 
@@ -37,5 +42,12 @@ namespace ChatupNET.Session
         /// <param name="userInstance"></param>
         /// <returns></returns>
         bool Logout(SessionToken userInstance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerObject"></param>
+        /// <returns></returns>
+        bool Register(RegisterObject registerObject);
     }
 }

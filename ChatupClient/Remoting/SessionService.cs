@@ -2,38 +2,43 @@
 using System.Collections.Generic;
 
 using ChatupNET.Session;
+using ChatupNET.Remoting;
+
 public class SessionService : MarshalByRefObject, SessionInterface
 {
     /// <summary>
     /// 
     /// </summary>
-    public event JoinHandler OnJoin;
+    public event LoginHandler OnLogin;
 
     /// <summary>
     /// 
     /// </summary>
-    public event LeaveHandler OnLeave;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private HashSet<string> activeUsers = new HashSet<string>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public HashSet<string> GetUsers()
-    {
-        return activeUsers;
-    }
+    public event LogoutHandler OnLogout;
 
     /// <summary>
     /// 
     /// </summary>
     public SessionService()
     {
-        OnJoin += Insert;
-        OnLeave += Remove;
+        OnLogin += Insert;
+        OnLogout += Remove;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private HashSet<string> users = new HashSet<string>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public HashSet<string> Users
+    {
+        get
+        {
+            return users;
+        }
     }
 
     /// <summary>
@@ -52,9 +57,9 @@ public class SessionService : MarshalByRefObject, SessionInterface
     /// <param name="userName"></param>
     /// <param name="userPassword"></param>
     /// <returns></returns>
-    public string Login(string userName, string userPassword)
+    public SessionToken Login(string userName, string userPassword)
     {
-        return "abcdefg";
+        return new SessionToken(userName, "abcdefg");
     }
 
     /// <summary>
@@ -74,9 +79,9 @@ public class SessionService : MarshalByRefObject, SessionInterface
     {
         if (string.IsNullOrEmpty(userName) == false)
         {
-            lock (activeUsers)
+            lock (users)
             {
-                activeUsers.Add(userName);
+                users.Add(userName);
             }
         }
     }
@@ -89,10 +94,20 @@ public class SessionService : MarshalByRefObject, SessionInterface
     {
         if (string.IsNullOrEmpty(userName) == false)
         {
-            lock (activeUsers)
+            lock (users)
             {
-                activeUsers.Remove(userName);
+                users.Remove(userName);
             }
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="registerObject"></param>
+    /// <returns></returns>
+    public bool Register(RegisterObject registerObject)
+    {
+        return false;
     }
 }

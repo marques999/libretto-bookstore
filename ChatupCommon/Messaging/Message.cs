@@ -5,44 +5,67 @@ namespace ChatupNET.Messaging
     [Serializable]
     public class Message
     {
-        /// <summary>
-        /// Default constructor the "Message" class
-        /// </summary>
-        /// <param name="messageAuthor"></param>
-        /// <param name="messageContents"></param>
-        /// <param name="messageTimestamp"></param>
-        public Message(string messageAuthor, string messageContents, DateTime messageTimestamp)
+        public Message(int messageId, string user1, string user2, string messageContents)
         {
-            _author = messageAuthor;
+            _id = messageId;
+            _source = user1;
+            _destination = user2;
             _contents = messageContents;
-            _timestamp = messageTimestamp;
+            _timestamp = DateTime.Now;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string _author;
+        private int _id;
+
+        /// <summary>
+        /// Public getter property for the "_id" private attribute
+        /// </summary>
+        public int ID
+        {
+            get
+            {
+                return _id;
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _source;
+
+        /// <summary>
+        /// Public getter property for the "_source" private attribute
+        /// </summary>
+        public string Source
+        {
+            get
+            {
+                return _source;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _destination;
+
+        /// <summary>
+        /// Public getter property for the "_destination" private attribute
+        /// </summary>
+        public string Destination
+        {
+            get
+            {
+                return _destination;
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
         private string _contents;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private DateTime _timestamp;
-
-        /// <summary>
-        /// Public gettter property for the "_author" private member
-        /// </summary>
-        public string Author
-        {
-            get
-            {
-                return _author;
-            }
-        }
 
         /// <summary>
         /// Public getter property for the "_contents" private member
@@ -54,6 +77,11 @@ namespace ChatupNET.Messaging
                 return _contents;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private DateTime _timestamp;
 
         /// <summary>
         /// Public getter property for the "_timestamp" private member
@@ -72,23 +100,23 @@ namespace ChatupNET.Messaging
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _author.GetHashCode() ^ _timestamp.GetHashCode();
+            return _timestamp.GetHashCode() * 31 + ID.GetHashCode();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object otherInstance)
         {
-            if (obj != null)
+            if (otherInstance != null)
             {
-                var messageObject = obj as Message;
+                var messageObject = otherInstance as Message;
 
                 if (messageObject != null)
                 {
-                    return messageObject._author.Equals(_author) && messageObject._timestamp.Equals(_timestamp);
+                    return ID == messageObject.ID;
                 }
             }
 

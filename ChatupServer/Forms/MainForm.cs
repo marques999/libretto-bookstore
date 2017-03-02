@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
 
 using ChatupNET.Remoting;
-using System.Drawing;
 
 namespace ChatupNET.Forms
 {
     public partial class MainForm : Form
     {
-        private ServerStatus serverStatus = 0;
+        private ServerStatus serverStatus = ServerStatus.Running;
 
         private enum ServerStatus
         {
@@ -41,7 +42,6 @@ namespace ChatupNET.Forms
 
         private void UserJoined(string userName)
         {
-            MessageBox.Show("UserJoined");
             ListViewItem lvi = new ListViewItem();
 
             if (listView1.Items.ContainsKey(userName))
@@ -77,8 +77,6 @@ namespace ChatupNET.Forms
             }
         }
 
-        private SessionService remoteSession;
-
         private void HandleChange(ServerStatus nextStatus)
         {
             if (serverStatus == nextStatus)
@@ -88,29 +86,29 @@ namespace ChatupNET.Forms
 
             switch (serverStatus)
             {
-            case ServerStatus.Restarting:
-                buttonStart.Enabled = true;
-                buttonRestart.Enabled = true;
-                buttonExit.Enabled = true;
-                break;
+                case ServerStatus.Restarting:
+                    buttonStart.Enabled = true;
+                    buttonRestart.Enabled = true;
+                    buttonExit.Enabled = true;
+                    break;
             }
 
             switch (nextStatus)
             {
-            case ServerStatus.Stopped:
-                buttonStart.Text = "Start";
-                buttonRestart.Enabled = false;
-                break;
-            case ServerStatus.Running:
-                buttonStart.Text = "Stop";
-                buttonRestart.Enabled = true;
-                break;
-            case ServerStatus.Restarting:
-                buttonStart.Text = "Restarting...";
-                buttonStart.Enabled = false;
-                buttonRestart.Enabled = false;
-                buttonExit.Enabled = false;
-                break;
+                case ServerStatus.Stopped:
+                    buttonStart.Text = "Start";
+                    buttonRestart.Enabled = false;
+                    break;
+                case ServerStatus.Running:
+                    buttonStart.Text = "Stop";
+                    buttonRestart.Enabled = true;
+                    break;
+                case ServerStatus.Restarting:
+                    buttonStart.Text = "Restarting...";
+                    buttonStart.Enabled = false;
+                    buttonRestart.Enabled = false;
+                    buttonExit.Enabled = false;
+                    break;
             }
 
             serverStatus = nextStatus;
@@ -143,6 +141,55 @@ namespace ChatupNET.Forms
             HandleChange(statusValue);
             labelStatus.ForeColor = statusColor[(int)serverStatus];
             labelStatus.Text = statusMessages[(int)serverStatus];
+        }
+
+        private void LoadUsers()
+        {
+            foreach (var userInfo in ChatupServer.Instance.Users)
+            {
+                listView1.Items.Add(userInfo);
+            }
+        }
+
+        private void LoadRooms()
+        {
+            foreach (var roomInfo in ChatupServer.Instance.Rooms)
+            {
+                var roomInstance = roomInfo.Value;
+
+                if (roomInstance != null)
+                {
+                    treeView1.Nodes.Add(
+                        Convert.ToString(roomInfo.Key),
+                        string.Format("{0} (0/{1})", roomInstance.Name, roomInstance.Capacity)
+                    );
+                }
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs args)
+        {
+            LoadRooms();
+            LoadUsers();
+            UpdateAddress(new AddressObject(IPAddress.Loopback, 12480));
+        }
+
+        private AddressObject addressObject;
+
+        private void UpdateAddress(AddressObject objectInstance)
+        {
+            addressObject = objectInstance;
+            labelAddress.Text = addressObject.Address.ToString() + ":" + addressObject.Port;
+        }
+
+        private void buttonAddress_click(object sender, EventArgs args)
+        {
+            var addressForm = new AddressForm(addressObject);
+
+            if (addressForm.ShowDialog() == DialogResult.OK)
+            {
+                UpdateAddress(addressForm.ModalData);
+            }
         }
     }
 }

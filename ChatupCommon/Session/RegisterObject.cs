@@ -1,7 +1,8 @@
 ﻿using System;
 
-namespace ChatupNET.Users
+namespace ChatupNET.Session
 {
+    [Serializable]
     public class RegisterObject
     {
         /// <summary>
@@ -31,6 +32,8 @@ namespace ChatupNET.Users
         /// 
         /// </summary>
         private TimeZoneInfo _timezone;
+        private string v1;
+        private string v2;
 
         /// <summary>
         /// Public getter property for the "_timzeone" private member
@@ -63,6 +66,35 @@ namespace ChatupNET.Users
             {
                 return _password;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return _username.GetHashCode() * 31 + _password.GetHashCode();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="otherInstance"></param>
+        /// <returns></returns>
+        public override bool Equals(object otherInstance)
+        {
+            if (otherInstance != null)
+            {
+                var registerObject = otherInstance as RegisterObject;
+
+                if (registerObject != null)
+                {
+                    return Username.Equals(registerObject.Username) && Password.Equals(registerObject.Password);
+                }
+            }
+
+            return false;
         }
     }
 }

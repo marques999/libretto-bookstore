@@ -43,13 +43,13 @@
   <ItemGroup>
     <Compile Include="Messaging\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rooms\Chatroom.cs" />
-    <Compile Include="Rooms\GroupChatroom.cs" />
-    <Compile Include="Rooms\PrivateChatroom.cs" />
     <Compile Include="RemoteAccess.cs" />
-    <Compile Include="Session\SessionInterface.cs" />
+    <Compile Include="Remoting\ChatroomInterface.cs" />
+    <Compile Include="Remoting\ChatroomIntermediate.cs" />
+    <Compile Include="Remoting\SessionInterface.cs" />
+    <Compile Include="Remoting\SessionIntermediate.cs" />
     <Compile Include="Session\SessionToken.cs" />
-    <Compile Include="Users\RegisterObject.cs" />
+    <Compile Include="Session\RegisterObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

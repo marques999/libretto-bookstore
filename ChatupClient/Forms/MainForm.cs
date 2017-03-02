@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using ChatupNET.Rooms;
+using ChatupNET.Remoting;
+using System.Runtime.Remoting;
 
 namespace ChatupNET.Forms
 {
@@ -11,8 +13,55 @@ namespace ChatupNET.Forms
     {
         public MainForm()
         {
+            sessionService = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+            sessionIntermediate = new SessionIntermediate();
+            sessionIntermediate.OnLogin += UserJoined;
+            sessionIntermediate.OnLogout += UserLeft;
+            sessionService.OnLogin += sessionIntermediate.Login;
+            sessionService.OnLogout += sessionIntermediate.Logout;
             InitializeComponent();
         }
+
+        private void UserJoined(string userName)
+        {
+            MessageBox.Show("UserJoined");
+            ListViewItem lvi = new ListViewItem();
+
+            if (usersList.Items.ContainsKey(userName))
+            {
+                usersList.Items.RemoveByKey(userName);
+            }
+
+            lvi.Text = userName;
+            lvi.SubItems.Add("Online");
+            usersList.Items.Add(lvi);
+        }
+
+        private void UserLeft(string userName)
+        {
+            ListViewItem lvi = new ListViewItem();
+
+            if (usersList.Items.ContainsKey(userName))
+            {
+                ListViewItem[] existingItem = usersList.Items.Find(userName, false);
+
+                if (existingItem.Length > 0)
+                {
+                    lvi = existingItem[0];
+                    lvi.SubItems.RemoveAt(0);
+                    lvi.SubItems.Add("Offline");
+                }
+            }
+            else
+            {
+                lvi.Text = userName;
+                lvi.SubItems.Add("Offline");
+                usersList.Items.Add(lvi);
+            }
+        }
+
+        private SessionInterface sessionService;
+        private SessionIntermediate sessionIntermediate;
 
         private void UpdatePrivateButtons()
         {
@@ -152,7 +201,7 @@ namespace ChatupNET.Forms
                 MessageBoxIcon.Warning) == DialogResult.Yes
             )
             {
-                ChatupClient.Instance.Username = null;
+                ChatupClient.Instance.Logout();
                 Close();
             }
         }
