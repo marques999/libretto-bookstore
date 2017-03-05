@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 
+using ChatupNET.Model;
 using ChatupNET.Remoting;
 
 namespace ChatupNET.Forms
@@ -38,43 +39,38 @@ namespace ChatupNET.Forms
         public MainForm()
         {
             InitializeComponent();
-        }
 
-        private void UserJoined(string userName)
-        {
-            ListViewItem lvi = new ListViewItem();
-
-            if (listView1.Items.ContainsKey(userName))
-            {
-                listView1.Items.RemoveByKey(userName);
-            }
-
-            lvi.Text = userName;
-            lvi.SubItems.Add("Online");
-            listView1.Items.Add(lvi);
-        }
-
-        private void UserLeft(string userName)
-        {
-            ListViewItem lvi = new ListViewItem();
-
-            if (listView1.Items.ContainsKey(userName))
-            {
-                ListViewItem[] existingItem = listView1.Items.Find(userName, false);
-
-                if (existingItem.Length > 0)
+            ChatupServer.Instance.SessionActivator
+            (
+                delegate (UserInformation userInformation)
                 {
-                    lvi = existingItem[0];
-                    lvi.SubItems.RemoveAt(0);
-                    lvi.SubItems.Add("Offline");
+                    UpsertUser(userInformation, "Active");
+                },
+                delegate (UserInformation userInformation)
+                {
+                    UpsertUser(userInformation, "Offline");
+                },
+                delegate (UserInformation userInformation)
+                {
+                    UpsertUser(userInformation, "Offline");
                 }
-            }
-            else
+            );
+        }
+
+        private void UpsertUser(UserInformation userInformation, string userStatus)
+        {
+            if (listView1.Items.ContainsKey(userInformation.Username))
             {
-                lvi.Text = userName;
-                lvi.SubItems.Add("Offline");
-                listView1.Items.Add(lvi);
+                listView1.Items.RemoveByKey(userInformation.Username);
             }
+
+            var lvi = new ListViewItem(new string[]
+            {
+                userInformation.Username, userStatus
+            });
+
+            lvi.Name = userInformation.Username;
+            listView1.Items.Insert(0, lvi);
         }
 
         private void HandleChange(ServerStatus nextStatus)
@@ -145,9 +141,9 @@ namespace ChatupNET.Forms
 
         private void LoadUsers()
         {
-            foreach (var userInfo in ChatupServer.Instance.Users)
+            foreach (var userInformation in ChatupServer.Instance.Users)
             {
-                listView1.Items.Add(userInfo);
+                UpsertUser(userInformation.Value, "Offline");
             }
         }
 
@@ -171,15 +167,15 @@ namespace ChatupNET.Forms
         {
             LoadRooms();
             LoadUsers();
-            UpdateAddress(new AddressObject(IPAddress.Loopback, 12480));
+            UpdateAddress(new Address(IPAddress.Loopback, 12480));
         }
 
-        private AddressObject addressObject;
+        private Address addressObject;
 
-        private void UpdateAddress(AddressObject objectInstance)
+        private void UpdateAddress(Address objectInstance)
         {
             addressObject = objectInstance;
-            labelAddress.Text = addressObject.Address.ToString() + ":" + addressObject.Port;
+            labelAddress.Text = addressObject.Host.ToString() + ":" + addressObject.Port;
         }
 
         private void buttonAddress_click(object sender, EventArgs args)

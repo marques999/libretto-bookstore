@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Runtime.Remoting;
+using System.Windows.Forms;
 
-using ChatupNET.Database;
-using ChatupNET.Database.Enums;
+using ChatupNET;
+using ChatupNET.Model;
+using ChatupNET.Forms;
+using ChatupNET.Remoting;
 using ChatupNET.Rooms;
-using ChatupNET.Session;
 
 public class ChatupServer
 {
@@ -16,12 +18,13 @@ public class ChatupServer
     {
         roomsInitialized = false;
         usersInitialized = false;
-        InitializeSQLite();
+        RemotingConfiguration.Configure("ChatupServer.exe.config", false);
     }
 
     /// <summary>
     /// 
     /// </summary>
+    /// 
     private static ChatupServer instance;
 
     /// <summary>
@@ -43,21 +46,44 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private SQLiteConnection sqliteConnection;
+    private static SessionIntermediate sessionIntermediate = new SessionIntermediate();
 
     /// <summary>
     /// 
     /// </summary>
-    public SQLiteConnection Database
+    private bool roomsInitialized;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool usersInitialized;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public SessionIntermediate Session
     {
         get
         {
-            return sqliteConnection;
+            return sessionIntermediate;
         }
     }
 
-    private bool roomsInitialized;
-    private bool usersInitialized;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="loginHandler"></param>
+    /// <param name="logoutHandler"></param>
+    /// <param name="registerHandler"></param>
+    public void SessionActivator(
+        UserHandler loginHandler,
+        UserHandler logoutHandler,
+        UserHandler registerHandler)
+    {
+        sessionIntermediate.OnLogin += loginHandler;
+        sessionIntermediate.OnLogout += logoutHandler;
+        sessionIntermediate.OnRegister += registerHandler;
+    }
 
     /// <summary>
     /// 
@@ -67,105 +93,21 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private HashSet<string> users = new HashSet<string>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private const string tableUsers = "users";
-    private const string fieldUsername = "username";
-    private const string tableRooms = "rooms";
-    private const string fieldId = "id";
-    private const string fieldName = "name";
-    private const string fieldOwner = "owner";
-    private const string fieldPassword = "password";
-    private const string fieldCapacity = "capacity";
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private SqlColumn[] roomColumns = new SqlColumn[]
-    {
-        new SqlColumn(fieldId, null),
-        new SqlColumn(fieldName, null),
-        new SqlColumn(fieldPassword, null),
-        new SqlColumn(fieldCapacity, null)
-    };
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <returns></returns>
-    internal bool DeleteRoom(int roomId, string roomOwner)
-    {
-        int queryResult = 0;
-        var deleteRoom = "DELETE FROM rooms WHERE id = :id AND owner = :owner";
-
-        using (var sqlCommand = new SQLiteCommand(deleteRoom, sqliteConnection))
-        {
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldOwner, roomOwner));
-            queryResult = sqlCommand.ExecuteNonQuery();
-        }
-
-        return queryResult == 0 ? true : false;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="chatroomInstance"></param>
-    /// <returns></returns>
-    internal bool InsertRoom(int roomId, GroupChatroom chatroomInstance)
-    {
-        int queryResult = 0;
-        var insertRoom = "INSERT INTO rooms(id, name, owner, password, capacity) VALUES(:id, :name, :owner, :password, :capacity)";
-
-        using (var sqlCommand = new SQLiteCommand(insertRoom, sqliteConnection))
-        {
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldName, chatroomInstance.Name));
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldOwner, chatroomInstance.Owner));
-
-            if (chatroomInstance.IsPrivate())
-            {
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldPassword, chatroomInstance.Password));
-            }
-
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldCapacity, chatroomInstance.Capacity));
-            queryResult = sqlCommand.ExecuteNonQuery();
-        }
-
-        return queryResult == 0 ? true : false;
-    }
+    private Dictionary<string, UserInformation> users = new Dictionary<string, UserInformation>();
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    internal Dictionary<int, GroupChatroom> QueryRooms()
+    internal Dictionary<int, GroupChatroom> RefreshRooms()
     {
-        var sqlQuery = new SqlBuilder().FromTable(tableRooms).Columns(roomColumns);
-
         if (roomsInitialized)
         {
             return rooms;
         }
 
-        using (var roomEntry = QueryDatabase(sqlQuery))
-        {
-            while (roomEntry.Read())
-            {
-                rooms.Add(roomEntry.GetInt32(roomEntry.GetOrdinal(fieldId)), new GroupChatroom(
-                    roomEntry.GetString(roomEntry.GetOrdinal(fieldName)),
-                    roomEntry.GetString(roomEntry.GetOrdinal(fieldOwner)),
-                    roomEntry.GetString(roomEntry.GetOrdinal(fieldPassword)),
-                    roomEntry.GetInt32(roomEntry.GetOrdinal(fieldCapacity))
-                ));
-            }
-        }
+        roomsInitialized = true;
+        rooms = SqliteDatabase.Instance.QueryRooms();
 
         return rooms;
     }
@@ -173,66 +115,16 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userName"></param>
     /// <returns></returns>
-    internal string QueryPassword(string userName)
-    {
-        var sqlQuery = new SqlBuilder()
-            .FromTable(tableUsers)
-            .Column(fieldPassword)
-            .Where(fieldUsername, Comparison.Equals, userName);
-
-        using (var userInfo = QueryDatabase(sqlQuery))
-        {
-            if (!userInfo.Read())
-            {
-                return null;
-            }
-
-            return userInfo.GetString(userInfo.GetOrdinal(fieldPassword));
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="registerObject"></param>
-    /// <returns></returns>
-    internal bool InsertUser(RegisterObject registerObject)
-    {
-        int queryResult = 0;
-        var registerUser = "INSERT INTO users(username, password) VALUES(:username, :password)";
-
-        using (var sqlCommand = new SQLiteCommand(registerUser, sqliteConnection))
-        {
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldUsername, registerObject.Username));
-            sqlCommand.Parameters.Add(new SQLiteParameter(fieldPassword, registerObject.Password));
-            queryResult = sqlCommand.ExecuteNonQuery();
-        }
-
-        return queryResult == 0 ? true : false;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    internal HashSet<string> QueryUsers()
+    internal Dictionary<string, UserInformation> RefreshUsers()
     {
         if (usersInitialized)
         {
             return users;
         }
 
-        var sqlQuery = new SqlBuilder().FromTable(tableUsers).Column(fieldUsername);
-
-        using (var userEntry = QueryDatabase(sqlQuery))
-        {
-            while (userEntry.Read())
-            {
-                users.Add(userEntry.GetString(userEntry.GetOrdinal(fieldUsername)));
-            }
-        }
+        usersInitialized = true;
+        users = SqliteDatabase.Instance.QueryUsers();
 
         return users;
     }
@@ -244,83 +136,29 @@ public class ChatupServer
     {
         get
         {
-            return QueryRooms();
+            return RefreshRooms();
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public HashSet<string> Users
+    public Dictionary<string, UserInformation> Users
     {
         get
         {
-            return QueryUsers();
+            return RefreshUsers();
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sqlBuilder"></param>
-    /// <returns></returns>
-    private SQLiteDataReader QueryDatabase(SqlBuilder sqlBuilder)
+    [STAThread]
+    static void Main()
     {
-        SQLiteDataReader dataReader;
-
-        using (SQLiteCommand sqlQuery = sqliteConnection.CreateCommand())
-        {
-            sqlQuery.CommandText = sqlBuilder.BuildQuery();
-            dataReader = sqlQuery.ExecuteReader();
-        }
-
-        return dataReader;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="tableSql"></param>
-    private void GenerateTable(string tableName, string tableSql)
-    {
-        using (SQLiteCommand sqlQuery = sqliteConnection.CreateCommand())
-        {
-            sqlQuery.CommandText = new SqlBuilder()
-                .FromTable("sqlite_master")
-                .Column("name")
-                .Where("name", Comparison.Equals, tableName).BuildQuery();
-
-            var queryResult = sqlQuery.ExecuteScalar();
-
-            if (queryResult == null || !queryResult.ToString().Equals(tableName))
-            {
-                sqlQuery.CommandText = tableSql;
-                sqlQuery.ExecuteNonQuery();
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void InitializeSQLite()
-    {
-        sqliteConnection = new SQLiteConnection(string.Format(
-            "Data Source={0}ChatupServer.db;Version=3;",
-            AppDomain.CurrentDomain.BaseDirectory)
-        );
-
-        sqliteConnection.Open();
-
-        GenerateTable(
-            "users",
-            "CREATE TABLE `users`(`username` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL)"
-        );
-
-        GenerateTable(
-            "rooms",
-            "CREATE TABLE `rooms`(`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL UNIQUE, `owner` TEXT NOT NULL, `password` TEXT, `capacity` INTEGER DEFAULT 4 CHECK(capacity > 0), FOREIGN KEY(`owner`) REFERENCES `users`(`username`))"
-        );
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new MainForm());
     }
 }

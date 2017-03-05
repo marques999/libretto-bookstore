@@ -1,70 +1,68 @@
 ﻿using System;
 
-namespace ChatupNET.Session
+namespace ChatupNET.Model
 {
     [Serializable]
-    public class RegisterObject
+    public class UserForm
     {
         /// <summary>
-        /// Default constructor for 'RegisterObject' class
+        /// 
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="fullName"></param>
         /// <param name="userPassword"></param>
-        /// <param name="userTimezone"></param>
-        public RegisterObject(string userName, string userPassword, TimeZoneInfo userTimezone)
+        public UserForm(string userName, string fullName, string userPassword)
         {
-            _username = userName;
-            _password = userPassword;
-            _timezone = userTimezone;
+            mUsername = userName;
+            mPassword = userPassword;
+            mFullName = fullName;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string _username;
+        private string mUsername;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _password;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private TimeZoneInfo _timezone;
-        private string v1;
-        private string v2;
-
-        /// <summary>
-        /// Public getter property for the "_timzeone" private member
-        /// </summary>
-        public TimeZoneInfo Timezone
-        {
-            get
-            {
-                return _timezone;
-            }
-        }
-
-        /// <summary>
-        /// Public getter property for the "_username" private member
+        /// Public getter property for the "mUsername" private member
         /// </summary>
         public string Username
         {
             get
             {
-                return _username;
+                return mUsername;
             }
         }
 
         /// <summary>
-        /// Public getter property for the "_password" private member
+        /// 
+        /// </summary>
+        private string mFullName;
+
+        /// <summary>
+        /// Public getter property for the "mName" private member
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return mFullName;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string mPassword;
+
+        /// <summary>
+        /// Public getter property for the "mPassword" private member
         /// </summary>
         public string Password
         {
             get
             {
-                return _password;
+                return mPassword;
             }
         }
 
@@ -74,7 +72,7 @@ namespace ChatupNET.Session
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _username.GetHashCode() * 31 + _password.GetHashCode();
+            return mUsername.GetHashCode() * 31 + mPassword.GetHashCode();
         }
 
         /// <summary>
@@ -86,7 +84,7 @@ namespace ChatupNET.Session
         {
             if (otherInstance != null)
             {
-                var registerObject = otherInstance as RegisterObject;
+                var registerObject = otherInstance as UserForm;
 
                 if (registerObject != null)
                 {

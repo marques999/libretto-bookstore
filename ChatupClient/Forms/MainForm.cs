@@ -1,66 +1,60 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ChatupNET.Model;
 using ChatupNET.Rooms;
 using ChatupNET.Remoting;
-using System.Runtime.Remoting;
 
 namespace ChatupNET.Forms
 {
     public partial class MainForm : Form
     {
+        delegate void UsersChangeHandler(string userName, string userStatus);
+        delegate ListViewItem ListViewInsert(ListViewItem lvItem);
+
         public MainForm()
         {
-            sessionService = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+            InitializeComponent();
             sessionIntermediate = new SessionIntermediate();
             sessionIntermediate.OnLogin += UserJoined;
             sessionIntermediate.OnLogout += UserLeft;
-            sessionService.OnLogin += sessionIntermediate.Login;
-            sessionService.OnLogout += sessionIntermediate.Logout;
-            InitializeComponent();
+            ChatupClient.Instance.IntializeSession(sessionIntermediate);
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            ChatupClient.Instance.DestroySession(sessionIntermediate);
         }
 
-        private void UserJoined(string userName)
+        private void UserJoined(UserInformation userInformation)
         {
-            MessageBox.Show("UserJoined");
-            ListViewItem lvi = new ListViewItem();
+            BeginInvoke(new UsersChangeHandler(UpsertUser), new object[] { userInformation.Username, "Active" });
+        }
 
+        private void UpsertUser(string userName, string userStatus)
+        {
             if (usersList.Items.ContainsKey(userName))
             {
                 usersList.Items.RemoveByKey(userName);
             }
 
-            lvi.Text = userName;
-            lvi.SubItems.Add("Online");
-            usersList.Items.Add(lvi);
+            var lvi = new ListViewItem(new string[]
+            {
+                userName, userStatus
+            });
+
+            lvi.Name = userName;
+            usersList.Items.Insert(0, lvi);
         }
 
-        private void UserLeft(string userName)
+        private void UserLeft(UserInformation userInformation)
         {
-            ListViewItem lvi = new ListViewItem();
-
-            if (usersList.Items.ContainsKey(userName))
-            {
-                ListViewItem[] existingItem = usersList.Items.Find(userName, false);
-
-                if (existingItem.Length > 0)
-                {
-                    lvi = existingItem[0];
-                    lvi.SubItems.RemoveAt(0);
-                    lvi.SubItems.Add("Offline");
-                }
-            }
-            else
-            {
-                lvi.Text = userName;
-                lvi.SubItems.Add("Offline");
-                usersList.Items.Add(lvi);
-            }
+            BeginInvoke(new UsersChangeHandler(UpsertUser), new object[] { userInformation.Username, "Offline" });
         }
 
-        private SessionInterface sessionService;
         private SessionIntermediate sessionIntermediate;
 
         private void UpdatePrivateButtons()
@@ -86,6 +80,14 @@ namespace ChatupNET.Forms
         {
             UpdateRoomButtons();
             UpdatePrivateButtons();
+
+            var currentUsers = ChatupClient.Instance.Session.Users;
+
+            foreach (var userInformation in currentUsers)
+            {
+                UpsertUser(userInformation.Key, userInformation.Value.Status ? "Active" : "Offline");
+            }
+
             HandleInvitation("koreris");
         }
 
@@ -201,8 +203,19 @@ namespace ChatupNET.Forms
                 MessageBoxIcon.Warning) == DialogResult.Yes
             )
             {
-                ChatupClient.Instance.Logout();
-                Close();
+                if (ChatupClient.Instance.Logout())
+                {
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show(this,
+                        "Server did not respond!",
+                        "Logout failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
         }
 

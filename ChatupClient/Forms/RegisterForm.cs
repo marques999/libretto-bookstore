@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using ChatupNET.Session;
+using ChatupNET.Model;
 
 namespace ChatupNET
 {
@@ -12,7 +12,7 @@ namespace ChatupNET
             InitializeComponent();
         }
 
-        public RegisterObject RegistrationData
+        public UserForm RegistrationData
         {
             get;
             private set;
@@ -20,6 +20,11 @@ namespace ChatupNET
 
         private bool ValidateForm()
         {
+            if (string.IsNullOrWhiteSpace(fieldUsername.Text))
+            {
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(fieldName.Text))
             {
                 return false;
@@ -36,12 +41,11 @@ namespace ChatupNET
         private void RegisterForm_Load(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
-            fieldCapacity.DataSource = TimeZoneInfo.GetSystemTimeZones();
         }
 
         private void buttonConfirm_Click(object sender, EventArgs args)
         {
-            RegistrationData = new RegisterObject(fieldName.Text, fieldPassword.Text, null);
+            RegistrationData = new UserForm(fieldUsername.Text, fieldName.Text, fieldPassword.Text);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -52,12 +56,17 @@ namespace ChatupNET
             Close();
         }
 
-        private void fieldName_TextChanged(object sender, EventArgs args)
+        private void fieldUsername_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }
 
         private void fieldPassword_TextChanged(object sender, EventArgs args)
+        {
+            buttonConfirm.Enabled = ValidateForm();
+        }
+
+        private void fieldName_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }

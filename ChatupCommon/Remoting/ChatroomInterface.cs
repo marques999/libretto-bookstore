@@ -1,13 +1,31 @@
 ﻿using System.Drawing;
 
-using ChatupNET.Messaging;
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public delegate void MessageHandler(Message messageInstance);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
     public delegate void LeaveHandler(string userName);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <param name="userColor"></param>
     public delegate void JoinHandler(string userName, Color userColor);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="messageInstance"></param>
+    public delegate void MessageHandler(Message messageInstance);
+
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ChatroomInterface
     {
         /// <summary>

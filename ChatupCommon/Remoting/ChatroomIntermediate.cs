@@ -1,6 +1,7 @@
-﻿using ChatupNET.Messaging;
-using System;
+﻿using System;
 using System.Drawing;
+
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
@@ -14,9 +15,19 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        public event LeaveHandler OnLeave;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event MessageHandler OnMessage;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
-        public void Join(string userName, Color userColor)
+        /// <param name="userColor"></param>
+        public void JoinRoom(string userName, Color userColor)
         {
             OnJoin(userName, userColor);
         }
@@ -24,29 +35,19 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event LeaveHandler OnLeave;
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="userInstance"></param>
-        public void Leave(string userName)
+        public void LeaveRoom(string userName)
         {
-            OnLeave(userName);
+            OnLeave?.Invoke(userName);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event MessageHandler OnSend;
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="messageInstance"></param>
-        public void Send(Message messageInstance)
+        public void SendMessage(Message messageInstance)
         {
-            OnSend(messageInstance);
+            OnMessage?.Invoke(messageInstance);
         }
 
         /// <summary>

@@ -46,8 +46,6 @@
             treeNode8,
             treeNode9,
             treeNode10});
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("jabst1");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("somouco");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -104,7 +102,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.90669F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.09331F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel2.Controls.Add(this.buttonAddress, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label7, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.staticUsers, 0, 2);
@@ -146,7 +144,7 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(110, 64);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(378, 32);
+            this.label7.Size = new System.Drawing.Size(377, 32);
             this.label7.TabIndex = 13;
             this.label7.Text = "0 active, 2 inactive";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -173,7 +171,7 @@
             this.labelStatus.Location = new System.Drawing.Point(111, 4);
             this.labelStatus.Margin = new System.Windows.Forms.Padding(4);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(376, 24);
+            this.labelStatus.Size = new System.Drawing.Size(375, 24);
             this.labelStatus.TabIndex = 9;
             this.labelStatus.Text = "Running";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -197,9 +195,9 @@
             this.buttonStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Location = new System.Drawing.Point(494, 3);
+            this.buttonStart.Location = new System.Drawing.Point(493, 3);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(112, 26);
+            this.buttonStart.Size = new System.Drawing.Size(113, 26);
             this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Stop";
             this.buttonStart.UseVisualStyleBackColor = false;
@@ -212,9 +210,9 @@
             this.buttonRestart.Enabled = false;
             this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRestart.Location = new System.Drawing.Point(494, 35);
+            this.buttonRestart.Location = new System.Drawing.Point(493, 35);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(112, 26);
+            this.buttonRestart.Size = new System.Drawing.Size(113, 26);
             this.buttonRestart.TabIndex = 2;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = false;
@@ -226,9 +224,9 @@
             this.buttonExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonExit.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExit.Location = new System.Drawing.Point(494, 67);
+            this.buttonExit.Location = new System.Drawing.Point(493, 67);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(112, 26);
+            this.buttonExit.Size = new System.Drawing.Size(113, 26);
             this.buttonExit.TabIndex = 3;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = false;
@@ -240,7 +238,7 @@
             this.labelAddress.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelAddress.Location = new System.Drawing.Point(110, 32);
             this.labelAddress.Name = "labelAddress";
-            this.labelAddress.Size = new System.Drawing.Size(378, 32);
+            this.labelAddress.Size = new System.Drawing.Size(377, 32);
             this.labelAddress.TabIndex = 12;
             this.labelAddress.Text = "127.0.0.1:12480";
             this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -329,9 +327,6 @@
             this.columnHeader1,
             this.columnHeader2});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
             this.listView1.Location = new System.Drawing.Point(8, 21);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(215, 296);

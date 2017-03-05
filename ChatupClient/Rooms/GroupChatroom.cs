@@ -5,9 +5,6 @@ namespace ChatupNET.Rooms
     [Serializable]
     public class GroupChatroom : Chatroom
     {
-        private int _capacity;
-        private string _password;
-
         /// <summary>
         /// Default constructor for "GroupChatroom" class
         /// </summary>
@@ -16,29 +13,39 @@ namespace ChatupNET.Rooms
         /// <param name="roomCapacity"></param>
         public GroupChatroom(string roomName, string roomPassword, int roomCapacity) : base(roomName)
         {
-            _password = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
-            _capacity = roomCapacity;
+            mCapacity = roomCapacity;
+            mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
         }
 
         /// <summary>
-        /// Public getter property for the "_capacity" private member
+        /// 
+        /// </summary>
+        private int mCapacity;
+
+        /// <summary>
+        /// Public getter property for the "mCapacity" private member
         /// </summary>
         public int Capacity
         {
             get
             {
-                return _capacity;
+                return mCapacity;
             }
         }
 
         /// <summary>
-        /// Public getter property for the "_password" private member
+        /// 
+        /// </summary>
+        private string mPassword;
+
+        /// <summary>
+        /// Public getter property for the "mPassword" private member
         /// </summary>
         public string Password
         {
             get
             {
-                return _password;
+                return mPassword;
             }
         }
 

@@ -32,10 +32,10 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.fieldAddress = new IPAddressControlLib.IPAddressControl();
             this.fieldPort = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.fieldAddress = new IPAddressControlLib.IPAddressControl();
             this.flowLayout.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.SuspendLayout();
@@ -99,6 +99,23 @@
             this.tableLayout.Size = new System.Drawing.Size(284, 71);
             this.tableLayout.TabIndex = 12;
             // 
+            // fieldAddress
+            // 
+            this.fieldAddress.AllowInternalTab = false;
+            this.fieldAddress.AutoHeight = true;
+            this.fieldAddress.BackColor = System.Drawing.SystemColors.Window;
+            this.fieldAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.fieldAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.fieldAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fieldAddress.Location = new System.Drawing.Point(90, 8);
+            this.fieldAddress.Margin = new System.Windows.Forms.Padding(4);
+            this.fieldAddress.MinimumSize = new System.Drawing.Size(87, 20);
+            this.fieldAddress.Name = "fieldAddress";
+            this.fieldAddress.ReadOnly = false;
+            this.fieldAddress.Size = new System.Drawing.Size(186, 20);
+            this.fieldAddress.TabIndex = 13;
+            this.fieldAddress.Text = "...";
+            // 
             // fieldPort
             // 
             this.fieldPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -130,23 +147,6 @@
             this.labelPassword.TabIndex = 1;
             this.labelPassword.Text = "Port";
             this.labelPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // fieldAddress
-            // 
-            this.fieldAddress.AllowInternalTab = false;
-            this.fieldAddress.AutoHeight = true;
-            this.fieldAddress.BackColor = System.Drawing.SystemColors.Window;
-            this.fieldAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.fieldAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.fieldAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldAddress.Location = new System.Drawing.Point(90, 8);
-            this.fieldAddress.Margin = new System.Windows.Forms.Padding(4);
-            this.fieldAddress.MinimumSize = new System.Drawing.Size(87, 20);
-            this.fieldAddress.Name = "fieldAddress";
-            this.fieldAddress.ReadOnly = false;
-            this.fieldAddress.Size = new System.Drawing.Size(186, 20);
-            this.fieldAddress.TabIndex = 13;
-            this.fieldAddress.Text = "...";
             // 
             // AddressForm
             // 

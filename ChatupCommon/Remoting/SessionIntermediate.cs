@@ -1,5 +1,7 @@
 ﻿using System;
 
+using ChatupNET.Model;
+
 namespace ChatupNET.Remoting
 {
     public class SessionIntermediate : MarshalByRefObject
@@ -7,29 +9,43 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event LoginHandler OnLogin;
+        public event UserHandler OnLogin;
 
         /// <summary>
         /// 
         /// </summary>
-        public event LogoutHandler OnLogout;
+        public event UserHandler OnLogout;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        public void Login(string userName)
+        public event UserHandler OnRegister;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        public void Login(UserInformation userInformation)
         {
-            OnLogin(userName);
+            OnLogin?.Invoke(userInformation);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        public void Logout(string userName)
+        /// <param name="userInformation"></param>
+        public void Logout(UserInformation userInformation)
         {
-            OnLogout(userName);
+            OnLogout?.Invoke(userInformation);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        public void Register(UserInformation userInformation)
+        {
+            OnRegister?.Invoke(userInformation);
         }
 
         /// <summary>

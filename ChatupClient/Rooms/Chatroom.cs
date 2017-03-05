@@ -15,23 +15,23 @@ namespace ChatupNET.Rooms
         /// <param name="roomName"></param>
         public Chatroom(string roomName)
         {
-            _name = roomName;
+            mName = roomName;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string _name;
+        private string mName;
 
         /// <summary>
         /// 
         /// </summary>
-        private Random randomGenerator = new Random();
+        private Random mRnadom = new Random();
 
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, Color> _users = new Dictionary<string, Color>();
+        private Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
 
         /// <summary>
         /// 
@@ -49,7 +49,7 @@ namespace ChatupNET.Rooms
         {
             get
             {
-                return _name;
+                return mName;
             }
         }
 
@@ -60,7 +60,7 @@ namespace ChatupNET.Rooms
         {
             get
             {
-                return _users.Count;
+                return mUsers.Count;
             }
         }
 
@@ -70,7 +70,7 @@ namespace ChatupNET.Rooms
         /// <param name="userName"></param>
         public void InsertUser(string userName)
         {
-            _users.Add(userName, Colors[randomGenerator.Next(0, Colors.Length)]);
+            mUsers.Add(userName, Colors[mRnadom.Next(0, Colors.Length)]);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace ChatupNET.Rooms
         /// <param name="userColor"></param>
         public void InsertUser(string userName, Color userColor)
         {
-            _users.Add(userName, userColor);
+            mUsers.Add(userName, userColor);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace ChatupNET.Rooms
         /// <param name="userName"></param>
         public void RemoveUser(string userName)
         {
-            _users.Remove(userName);
+            mUsers.Remove(userName);
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace ChatupNET.Rooms
         /// <returns></returns>
         public Color Color(string userName)
         {
-            if (_users.ContainsKey(userName))
+            if (mUsers.ContainsKey(userName))
             {
-                return _users[userName];
+                return mUsers[userName];
             }
 
             return System.Drawing.Color.Black;
@@ -113,7 +113,7 @@ namespace ChatupNET.Rooms
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _name.GetHashCode();
+            return mName.GetHashCode();
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace ChatupNET.Rooms
 
                 if (chatroomInstance != null)
                 {
-                    return chatroomInstance._name.Equals(_name);
+                    return chatroomInstance.mName.Equals(mName);
                 }
             }
 
@@ -143,7 +143,7 @@ namespace ChatupNET.Rooms
         {
             get
             {
-                return _users;
+                return mUsers;
             }
         }
 

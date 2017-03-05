@@ -1,15 +1,15 @@
 ﻿using System.Net;
 
-namespace ChatupNET.Remoting
+namespace ChatupNET.Model
 {
-    public class AddressObject
+    public class Address
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serverAddress"></param>
         /// <param name="serverPort"></param>
-        public AddressObject(IPAddress serverAddress, ushort serverPort)
+        public Address(IPAddress serverAddress, ushort serverPort)
         {
             address = serverAddress;
             port = serverPort;
@@ -23,7 +23,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public IPAddress Address
+        public IPAddress Host
         {
             get
             {

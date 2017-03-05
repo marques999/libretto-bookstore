@@ -1,4 +1,11 @@
-﻿using System.Runtime.Remoting;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting;
+using System.Windows.Forms;
+
+using ChatupNET;
+using ChatupNET.Forms;
+using ChatupNET.Remoting;
 
 public class ChatupClient
 {
@@ -8,33 +15,163 @@ public class ChatupClient
     private ChatupClient()
     {
         RemotingConfiguration.Configure("ChatupClient.exe.config", false);
+        mSession = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+        mLobby = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private static ChatupClient instance;
+    /// <param name="sessionIntermediate"></param>
+    public void IntializeSession(SessionIntermediate sessionIntermediate)
+    {
+        mSession.OnLogin += sessionIntermediate.Login;
+        mSession.OnLogout += sessionIntermediate.Logout;
+    }
 
     /// <summary>
-    /// Public getter property for the "instance" private member
+    /// 
     /// </summary>
-    public static ChatupClient Instance
+    /// <param name="sessionIntermediate"></param>
+    public void DestroySession(SessionIntermediate sessionIntermediate)
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new ChatupClient();
-            }
+        mSession.OnLogin -= sessionIntermediate.Login;
+        mSession.OnLogout -= sessionIntermediate.Logout;
+    }
 
-            return instance;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sessionIntermediate"></param>
+    public void InitializeLobby(LobbyIntermediate lobbyIntermediate)
+    {
+        mLobby.OnCreate += lobbyIntermediate.CreateRoom;
+        mLobby.OnDelete += lobbyIntermediate.DeleteRoom;
+        mLobby.OnUpdate += lobbyIntermediate.UpdateRoom;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sessionIntermediate"></param>
+    public void DestroyLobby(LobbyIntermediate lobbyIntermediate)
+    {
+        mLobby.OnCreate -= lobbyIntermediate.CreateRoom;
+        mLobby.OnDelete -= lobbyIntermediate.DeleteRoom;
+        mLobby.OnUpdate -= lobbyIntermediate.UpdateRoom;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roomId"></param>
+    /// <param name="chatroomIntermediate"></param>
+    public void InitializeRoom(int roomId, ChatroomIntermediate chatroomIntermediate)
+    {
+        var chatroomInstance = Room(roomId);
+
+        if (chatroomInstance != null)
+        {
+            chatroomInstance.OnJoin += chatroomIntermediate.JoinRoom;
+            chatroomInstance.OnLeave += chatroomIntermediate.LeaveRoom;
+            chatroomInstance.OnSend += chatroomIntermediate.SendMessage;
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private string username;
+    /// <param name="roomId"></param>
+    /// <param name="chatroomIntermediate"></param>
+    public void DestroyRoom(int roomId, ChatroomIntermediate chatroomIntermediate)
+    {
+        var chatroomInstance = Room(roomId);
+
+        if (chatroomInstance != null)
+        {
+            chatroomInstance.OnJoin -= chatroomIntermediate.JoinRoom;
+            chatroomInstance.OnLeave -= chatroomIntermediate.LeaveRoom;
+            chatroomInstance.OnSend -= chatroomIntermediate.SendMessage;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private SessionInterface mSession;
+
+    /// <summary>
+    /// Public getter property for the "mSession" private member
+    /// </summary>
+    public SessionInterface Session
+    {
+        get
+        {
+            return mSession;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<int, ChatroomInterface> mRooms = new Dictionary<int, ChatroomInterface>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roomId"></param>
+    /// <returns></returns>
+    public ChatroomInterface Room(int roomId)
+    {
+        if (mRooms.ContainsKey(roomId))
+        {
+            return mRooms[roomId];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private LobbyInterface mLobby;
+
+    /// <summary>
+    /// Public getter property for the "mLobby" private member
+    /// </summary>
+    public LobbyInterface Lobby
+    {
+        get
+        {
+            return mLobby;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static ChatupClient mInstance;
+
+    /// <summary>
+    /// Public getter property for the "mInstance" private member
+    /// </summary>
+    public static ChatupClient Instance
+    {
+        get
+        {
+            if (mInstance == null)
+            {
+                mInstance = new ChatupClient();
+            }
+
+            return mInstance;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private string mUsername;
 
     /// <summary>
     /// Public getter property for the "username" private member
@@ -43,14 +180,14 @@ public class ChatupClient
     {
         get
         {
-            return username;
+            return mUsername;
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private bool active;
+    private bool mActive;
 
     /// <summary>
     /// Public getter property for the "active" private member
@@ -59,7 +196,7 @@ public class ChatupClient
     {
         get
         {
-            return active && username != null;
+            return mActive && mUsername != null;
         }
     }
 
@@ -67,18 +204,46 @@ public class ChatupClient
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    public void Login(string userName)
+    /// <param name="userPassword"></param>
+    /// <returns></returns>
+    public bool Login(string userName, string userPassword)
     {
-        active = true;
-        username = userName;
+        bool operationResult = mSession.Login(userName, userPassword);
+
+        if (operationResult)
+        {
+            mActive = true;
+            mUsername = userName;
+        }
+
+        return operationResult;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void Logout()
+    /// <returns></returns>
+    public bool Logout()
     {
-        active = false;
-        username = null;
+        bool operationResult = mSession.Logout(mUsername);
+
+        if (operationResult)
+        {
+            mActive = false;
+            mUsername = null;
+        }
+
+        return operationResult;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [STAThread]
+    private static void Main()
+    {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new LoginForm());
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChatupNET.Messaging
+namespace ChatupNET.Model
 {
     [Serializable]
     public class Message

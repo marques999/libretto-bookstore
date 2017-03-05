@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
-
-using ChatupNET.Session;
 
 namespace ChatupNET.Forms
 {
@@ -24,61 +20,11 @@ namespace ChatupNET.Forms
             return !string.IsNullOrWhiteSpace(fieldPassword.Text);
         }
 
-        private void UserJoined(string userName)
-        {
-            MessageBox.Show("UserJoined: " + userName);
-        }
-
-        private void UserLeft(string userName)
-        {
-            MessageBox.Show("UserLeft: " + userName);
-        }
-
-        private const string userName = "marques999";
-        private const string userPassword = "lerolero";
-
         private void buttonValidate_Click(object sender, EventArgs args)
         {
-            /*if (remoteService == null)
-            {
-                remoteService = (SessionService)Activator.GetObject(typeof(SessionService), "tcp://127.0.0.1:12480/SessionService");
-
-                var sessionToken = remoteService.Login(userName, userPasswowrd);
-
-                if (sessionToken != null)
-                {
-                    MessageBox.Show("LoginSuccess");
-                    buttonValidate.Text = "Disconnect";
-                    sessionService.OnJoin += UserJoined;
-                    sessionService.OnLeave += UserLeft;
-                    tokenStorage = new SessionToken(userName, sessionToken);
-                }
-                else
-                {
-                    remoteService = null;
-                    MessageBox.Show("LoginFailed");
-                }
-            }
-            else
-            {
-                if (remoteService.Logout(tokenStorage))
-                {
-                    sessionService.OnJoin -= UserJoined;
-                    sessionService.OnLeave -= UserLeft;
-                    buttonValidate.Text = "Connect";
-                    remoteService = null;
-                    MessageBox.Show("LogoutSuccess");
-                }
-                else
-                {
-                    MessageBox.Show("LogoutFailed");
-                }
-            }*/
-
-            if (fieldUsername.Text.Equals(userName) && fieldPassword.Text.Equals(userPassword))
+            if (ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text))
             {
                 Hide();
-                ChatupClient.Instance.Login(userName);
                 new MainForm().ShowDialog();
                 Show();
             }
@@ -100,20 +46,32 @@ namespace ChatupNET.Forms
 
         private void buttonRegister_Click(object sender, EventArgs args)
         {
-            var registrationForm = new ChatupNET.RegisterForm();
+            var registrationForm = new RegisterForm();
 
             if (registrationForm.ShowDialog() == DialogResult.OK)
             {
                 var registrationData = registrationForm.RegistrationData;
 
-                if (MessageBox.Show(this,
-                    Properties.Resources.InfoRegister,
-                    Properties.Resources.InfoRegisterTitle,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information) == DialogResult.OK)
+                if (registrationData == null)
                 {
-                    fieldUsername.Text = registrationData.Username;
-                    fieldPassword.Text = registrationData.Password;
+                    return;
+                }
+
+                if (ChatupClient.Instance.Session.Register(registrationData))
+                {
+                    if (MessageBox.Show(this,
+                       Properties.Resources.InfoRegister,
+                       Properties.Resources.InfoRegisterTitle,
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Information) == DialogResult.OK)
+                    {
+                        fieldUsername.Text = registrationData.Username;
+                        fieldPassword.Text = registrationData.Password;
+                    }
+                }
+                else
+                {
+
                 }
             }
         }

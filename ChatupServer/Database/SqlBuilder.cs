@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Data.Common;
 
 using ChatupNET.Database.Enums;
 
@@ -120,6 +118,11 @@ namespace ChatupNET.Database
             }
 
             return this;
+        }
+
+        internal object FromTable(object tableRooms)
+        {
+            throw new NotImplementedException();
         }
 
         public SqlBuilder Columns(params SqlColumn[] columns)
@@ -355,18 +358,18 @@ namespace ChatupNET.Database
 
                     switch (Clause.JoinType)
                     {
-                        case JoinType.InnerJoin:
-                            JoinString = "INNER JOIN";
-                            break;
-                        case JoinType.OuterJoin:
-                            JoinString = "OUTER JOIN";
-                            break;
-                        case JoinType.LeftJoin:
-                            JoinString = "LEFT JOIN";
-                            break;
-                        case JoinType.RightJoin:
-                            JoinString = "RIGHT JOIN";
-                            break;
+                    case JoinType.InnerJoin:
+                        JoinString = "INNER JOIN";
+                        break;
+                    case JoinType.OuterJoin:
+                        JoinString = "OUTER JOIN";
+                        break;
+                    case JoinType.LeftJoin:
+                        JoinString = "LEFT JOIN";
+                        break;
+                    case JoinType.RightJoin:
+                        JoinString = "RIGHT JOIN";
+                        break;
                     }
 
                     JoinString += " " + Clause.ToTable + " ON ";
@@ -413,12 +416,12 @@ namespace ChatupNET.Database
 
                     switch (Clause.SortOrder)
                     {
-                        case Sorting.Ascending:
-                            OrderByClause = Clause.FieldName + " ASC";
-                            break;
-                        case Sorting.Descending:
-                            OrderByClause = Clause.FieldName + " DESC";
-                            break;
+                    case Sorting.Ascending:
+                        OrderByClause = Clause.FieldName + " ASC";
+                        break;
+                    case Sorting.Descending:
+                        OrderByClause = Clause.FieldName + " DESC";
+                        break;
                     }
 
                     Query += OrderByClause + ',';

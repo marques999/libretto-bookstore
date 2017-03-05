@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using ChatupNET.Session;
-using ChatupNET.Database;
-using ChatupNET.Database.Enums;
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
@@ -12,26 +10,31 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event LoginHandler OnLogin;
+        public event UserHandler OnLogin;
 
         /// <summary>
         /// 
         /// </summary>
-        public event LogoutHandler OnLogout;
+        public event UserHandler OnLogout;
 
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, string> userTokens = new Dictionary<string, string>();
+        public event UserHandler OnRegister;
 
         /// <summary>
         /// 
         /// </summary>
-        public HashSet<string> Users
+        public Dictionary<string, UserInformation> mUsers;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, UserInformation> Users
         {
             get
             {
-                return ChatupServer.Instance.QueryUsers();
+                return mUsers;
             }
         }
 
@@ -50,9 +53,9 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userToken"></param>
         /// <returns></returns>
-        private bool ValidateSession(string userName, string userToken)
+        private bool ValidateSession(string userName)
         {
-            return userTokens.ContainsKey(userName) && userTokens[userName].Equals(userToken);
+            return mUsers.ContainsKey(userName) && mUsers[userName].Status;
         }
 
         /// <summary>
@@ -60,24 +63,26 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userInstance"></param>
         /// <returns></returns>
-        public bool Logout(SessionToken userInstance)
+        public bool Logout(string userName)
         {
-            var userName = userInstance.Username;
+            if (mUsers == null)
+            {
+                mUsers = ChatupServer.Instance.RefreshUsers();
+            }
 
             if (string.IsNullOrEmpty(userName))
             {
                 return false;
             }
 
-            if (ValidateSession(userName, userInstance.Token))
-            {
-                userTokens.Remove(userName);
-                OnLogout(userName);
-            }
-            else
+            if (!ValidateSession(userName))
             {
                 return false;
             }
+
+            OnLogout?.Invoke(mUsers[userName]);
+            mUsers[userName].Status = false;
+            ChatupServer.Instance.Session.Logout(mUsers[userName]);
 
             return true;
         }
@@ -88,26 +93,37 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public SessionToken Login(string userName, string userPassword)
+        public bool Login(string userName, string userPassword)
         {
-            if (string.IsNullOrEmpty(userName) || userTokens.ContainsKey(userName))
+            if (string.IsNullOrEmpty(userName))
             {
-                return null;
+                return false;
             }
 
-            var userPasword = ChatupServer.Instance.QueryPassword(userName);
+            if (mUsers == null)
+            {
+                mUsers = ChatupServer.Instance.RefreshUsers();
+            }
+
+            if (ValidateSession(userName))
+            {
+                return false;
+            }
+
+            var userPasword = SqliteDatabase.Instance.QueryPassword(userName);
 
             if (!userPasword.Equals(userPassword))
             {
-                return null;
+                return false;
             }
 
-            var userToken = "generateToken";
+            var userInformation = mUsers[userName];
 
-            userTokens.Add(userName, userToken);
-            OnLogin(userName);
+            OnLogin?.Invoke(userInformation);
+            mUsers[userName].Status = true;
+            ChatupServer.Instance.Session.Login(userInformation);
 
-            return new SessionToken(userName, "-1");
+            return true;
         }
 
         /// <summary>
@@ -115,7 +131,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="registerObject"></param>
         /// <returns></returns>
-        public bool Register(RegisterObject registerObject)
+        public bool Register(UserForm registerObject)
         {
             if (registerObject == null)
             {
@@ -127,7 +143,21 @@ namespace ChatupNET.Remoting
                 return false;
             }
 
-            return ChatupServer.Instance.InsertUser(registerObject);
+            if (mUsers == null)
+            {
+                mUsers = ChatupServer.Instance.Users;
+            }
+
+            var userInformation = new UserInformation(registerObject.Username, registerObject.Name);
+            bool operationResult = SqliteDatabase.Instance.InsertUser(registerObject);
+
+            if (operationResult)
+            {
+                OnRegister?.Invoke(userInformation);
+                ChatupServer.Instance.Session.Register(userInformation);
+            }
+
+            return operationResult;
         }
     }
 }

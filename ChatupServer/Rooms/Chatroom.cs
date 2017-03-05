@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 
-using ChatupNET.Messaging;
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
@@ -27,14 +27,14 @@ namespace ChatupNET.Remoting
 
         public Chatroom(string roomName, string roomOwner)
         {
-            name = roomName;
-            owner = roomOwner;
+            mName = roomName;
+            mOwner = roomOwner;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string name;
+        private string mName;
 
         /// <summary>
         /// 
@@ -43,14 +43,14 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return name;
+                return mName;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string owner;
+        private string mOwner;
 
         /// <summary>
         /// 
@@ -59,7 +59,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return owner;
+                return mOwner;
             }
         }
 
@@ -75,12 +75,12 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected Random randomGenerator = new Random();
+        protected Random mRandom = new Random();
 
         /// <summary>
         /// 
         /// </summary>
-        protected Dictionary<string, Color> users = new Dictionary<string, Color>();
+        protected Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
 
         /// <summary>
         /// 
@@ -94,7 +94,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool Insert(Message messageInstance)
         {
-            if (users.ContainsKey(messageInstance.Source) && users.ContainsKey(messageInstance.Destination))
+            if (mUsers.ContainsKey(messageInstance.Source) && mUsers.ContainsKey(messageInstance.Destination))
             {
                 if (messages.Add(messageInstance))
                 {
@@ -116,9 +116,9 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool Leave(string userName)
         {
-            if (users.ContainsKey(userName))
+            if (mUsers.ContainsKey(userName))
             {
-                if (users.Remove(userName))
+                if (mUsers.Remove(userName))
                 {
                     OnLeave?.Invoke(userName);
                 }
@@ -129,7 +129,7 @@ namespace ChatupNET.Remoting
 
         protected bool Exists(string userName)
         {
-            return users.ContainsKey(userName);
+            return mUsers.ContainsKey(userName);
         }
 
         /// <summary>
@@ -139,14 +139,14 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool InsertUser(string userName)
         {
-            if (users.ContainsKey(userName))
+            if (mUsers.ContainsKey(userName))
             {
                 return false;
             }
 
-            var userColor = Colors[randomGenerator.Next(0, Colors.Length)];
+            var userColor = Colors[mRandom.Next(0, Colors.Length)];
 
-            users.Add(userName, userColor);
+            mUsers.Add(userName, userColor);
             OnJoin?.Invoke(userName, userColor);
 
             return true;
@@ -165,7 +165,7 @@ namespace ChatupNET.Remoting
 
                 if (chatroomInstance != null)
                 {
-                    return chatroomInstance.name.Equals(name);
+                    return chatroomInstance.mName.Equals(mName);
                 }
             }
 
@@ -178,7 +178,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return name.GetHashCode();
+            return mName.GetHashCode();
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return users;
+                return mUsers;
             }
         }
 
@@ -216,7 +216,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return users.Count;
+                return mUsers.Count;
             }
         }
 

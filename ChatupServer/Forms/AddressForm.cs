@@ -2,19 +2,19 @@
 using System.Net;
 using System.Windows.Forms;
 
-using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
     public partial class AddressForm : Form
     {
-        public AddressForm(AddressObject addressObject)
+        public AddressForm(Address addressObject)
         {
             InitializeComponent();
             ModalData = addressObject;
         }
 
-        public AddressObject ModalData
+        public Address ModalData
         {
             get;
             private set;
@@ -22,23 +22,14 @@ namespace ChatupNET.Forms
 
         private ushort ParsePort()
         {
-            ushort parsedPort = 0;
-
             try
             {
-                parsedPort = Convert.ToUInt16(fieldPort.Text);
-
-                if (parsedPort < ushort.MinValue || parsedPort > ushort.MaxValue)
-                {
-                    return 0;
-                }
+                return Convert.ToUInt16(fieldPort.Text);
             }
             catch
             {
                 return 0;
             }
-
-            return parsedPort;
         }
 
         private IPAddress ParseAddress()
@@ -77,14 +68,14 @@ namespace ChatupNET.Forms
 
         private void RegisterForm_Load(object sender, EventArgs args)
         {
-            fieldAddress.Text = ReadAddress(ModalData.Address.GetAddressBytes());
+            fieldAddress.Text = ReadAddress(ModalData.Host.GetAddressBytes());
             fieldPort.Text = Convert.ToString(ModalData.Port);
             buttonConfirm.Enabled = ValidateForm();
         }
 
         private void buttonConfirm_Click(object sender, EventArgs args)
         {
-            ModalData = new AddressObject(ParseAddress(), ParsePort());
+            ModalData = new Address(ParseAddress(), ParsePort());
             DialogResult = DialogResult.OK;
             Close();
         }
