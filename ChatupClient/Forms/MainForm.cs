@@ -111,6 +111,10 @@ namespace ChatupNET.Forms
             rooms.Add(roomId, roomInformation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
         private void DeleteRoom(int roomId)
         {
             var _roomId = Convert.ToString(roomId);
@@ -122,6 +126,12 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
         private void UpdateRoom(int roomId, int roomCount, int roomCapacity)
         {
             var _roomId = Convert.ToString(roomId);
@@ -140,6 +150,11 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userStatus"></param>
         private void UpsertUser(string userName, string userStatus)
         {
             if (usersList.Items.ContainsKey(userName))
@@ -156,18 +171,29 @@ namespace ChatupNET.Forms
             usersList.Items.Insert(0, lvi);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdatePrivateButtons()
         {
             buttonMessage.Enabled = usersList.SelectedItems.Count > 0;
             buttonInvite.Enabled = groupchatCount > 0 && buttonMessage.Enabled;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateRoomButtons()
         {
             buttonDelete.Enabled = roomsList.SelectedItems.Count > 0;
             buttonJoin.Enabled = buttonDelete.Enabled;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listView2_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdatePrivateButtons();
@@ -175,6 +201,11 @@ namespace ChatupNET.Forms
 
         private int groupchatCount = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void MainForm_Load(object sender, EventArgs args)
         {
             InitializeUsers();
@@ -184,9 +215,12 @@ namespace ChatupNET.Forms
             HandleInvitation("koreris");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void InitializeUsers()
         {
-            var remoteList = ChatupClient.Instance.Session.Users;
+            var remoteList = ChatupClient.Instance.Session.List();
 
             foreach (var userInformation in remoteList)
             {
@@ -194,6 +228,9 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void InitializeRoooms()
         {
             var remoteList = ChatupClient.Instance.Lobby.List();
@@ -204,11 +241,20 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void listView1_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateRoomButtons();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
         private void JoinRoom(int roomId)
         {
             if (contextDictionary.ContainsKey(Convert.ToString(roomId)))
@@ -227,6 +273,11 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomObject"></param>
         private void RegisterContext(int roomId, Room roomObject)
         {
             var _roomId = Convert.ToString(roomId);
@@ -242,6 +293,10 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomObject"></param>
         private void JoinRoom(PrivateChatroom roomObject)
         {
             if (contextDictionary.ContainsKey(roomObject.Name))
@@ -262,6 +317,10 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomForm"></param>
         private void LaunchRoom(RoomForm roomForm)
         {
             UpdatePrivateButtons();
@@ -277,11 +336,11 @@ namespace ChatupNET.Forms
             var passwordForm = new PasswordForm();
             var privateRoom = ChatupClient.Instance.Lobby.IsPrivate(roomId);
 
-            if (privateRoom == RemoteResponse.EntityNotFound)
+            if (privateRoom == RemoteResponse.NotFound)
             {
 
             }
-            else if (privateRoom == RemoteResponse.Failure || userInvited)
+            else if (privateRoom == RemoteResponse.OperationFailed || userInvited)
             {
                 JoinRoom(roomId);
             }

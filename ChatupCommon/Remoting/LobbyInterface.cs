@@ -30,7 +30,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        event RoomInsertHandler OnCreate;
+        event RoomInsertHandler OnInsert;
 
         /// <summary>
         /// 

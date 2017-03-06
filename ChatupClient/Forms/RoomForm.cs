@@ -15,14 +15,14 @@ namespace ChatupNET.Forms
     {
         private Room instance;
         private Dictionary<string, Color> users;
-        private ChatroomIntermediate chatroomIntermediate;
+        private RoomIntermediate chatroomIntermediate;
 
         public RoomForm(Room roomObject)
         {
             InitializeComponent();
             instance = roomObject;
             users = new Dictionary<string, Color>();
-            chatroomIntermediate = new ChatroomIntermediate();
+            chatroomIntermediate = new RoomIntermediate();
             chatroomIntermediate.OnJoin += UserJoined;
             chatroomIntermediate.OnLeave += UserLeft;
             chatroomIntermediate.OnMessage += AppendMessage;
@@ -92,7 +92,7 @@ namespace ChatupNET.Forms
 
         private void buttonValidate_Click(object sender, EventArgs args)
         {
-            AppendMessage(new RemoteMessage(-1, "marques999", textBox2.Text));
+            AppendMessage(new RemoteMessage("marques999", textBox2.Text));
             textBox2.Text = "";
         }
 

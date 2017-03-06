@@ -80,7 +80,7 @@ namespace ChatupNET.Rooms
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (IsPrivate())
@@ -98,7 +98,7 @@ namespace ChatupNET.Rooms
                 return RemoteResponse.Success;
             }
 
-            return RemoteResponse.EntityExists;
+            return RemoteResponse.ObjectExists;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace ChatupNET.Rooms
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userPassword))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (IsPrivate() && !userPassword.Equals(mPassword))
@@ -129,7 +129,7 @@ namespace ChatupNET.Rooms
                 return RemoteResponse.Success;
             }
 
-            return RemoteResponse.EntityExists;
+            return RemoteResponse.ObjectExists;
         }
     }
 }

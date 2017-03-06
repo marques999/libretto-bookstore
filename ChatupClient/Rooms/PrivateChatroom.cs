@@ -55,7 +55,7 @@ namespace ChatupNET.Rooms
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (IsFull())
@@ -68,7 +68,7 @@ namespace ChatupNET.Rooms
                 return RemoteResponse.Success;
             }
 
-            return RemoteResponse.EntityExists;
+            return RemoteResponse.ObjectExists;
         }
 
         /// <summary>

@@ -6,42 +6,51 @@ namespace ChatupNET
 {
     public class RemoteAccess
     {
-        public static object New(Type type)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="classType"></param>
+        /// <returns></returns>
+        public static object New(Type classType)
         {
             if (wellKnownTypes == null)
             {
                 InitTypeCache();
             }
 
-            var entry = (WellKnownClientTypeEntry)wellKnownTypes[type];
+            var wellKnownType = (WellKnownClientTypeEntry)wellKnownTypes[classType];
 
-            if (entry == null)
+            if (wellKnownType == null)
             {
                 throw new RemotingException("Type not found!");
             }
 
-            return Activator.GetObject(type, entry.ObjectUrl);
+            return Activator.GetObject(classType, wellKnownType.ObjectUrl);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static IDictionary wellKnownTypes;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void InitTypeCache()
         {
-            var types = new Hashtable();
+            var typeTable = new Hashtable();
 
-            foreach (var entry in RemotingConfiguration.GetRegisteredWellKnownClientTypes())
+            foreach (var registeredObject in RemotingConfiguration.GetRegisteredWellKnownClientTypes())
             {
-                if (entry.ObjectType == null)
+                if (registeredObject.ObjectType == null)
                 {
                     throw new RemotingException("A configured type could not be found!");
                 }
 
-                System.Diagnostics.Debug.Print(entry.ObjectType.ToString());
-                types.Add(entry.ObjectType, entry);
+                typeTable.Add(registeredObject.ObjectType, registeredObject);
             }
 
-            wellKnownTypes = types;
-            
+            wellKnownTypes = typeTable;
         }
     }
 }

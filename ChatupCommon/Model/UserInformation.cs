@@ -14,8 +14,15 @@ namespace ChatupNET.Model
         {
             mUsername = userName;
             mFullName = fullName;
+            mStatus = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="fullName"></param>
+        /// <param name="userStatus"></param>
         public UserInformation(string userName, string fullName, bool userStatus)
         {
             mUsername = userName;
@@ -93,11 +100,11 @@ namespace ChatupNET.Model
         {
             if (otherInstance != null)
             {
-                var userInformation = otherInstance as UserInformation;
+                var otherInformation = otherInstance as UserInformation;
 
-                if (userInformation != null)
+                if (otherInformation != null)
                 {
-                    return Username.Equals(userInformation.Username);
+                    return Username.Equals(otherInformation.Username);
                 }
             }
 

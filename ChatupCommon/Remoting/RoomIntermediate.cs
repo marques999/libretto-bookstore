@@ -5,7 +5,7 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public class ChatroomIntermediate : MarshalByRefObject
+    public class RoomIntermediate : MarshalByRefObject
     {
         /// <summary>
         /// 

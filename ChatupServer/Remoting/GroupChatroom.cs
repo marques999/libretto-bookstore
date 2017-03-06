@@ -3,22 +3,27 @@
 using ChatupNET.Remoting;
 using ChatupNET.Model;
 
-namespace ChatupNET.Rooms
+namespace ChatupNET.Remoting
 {
     [Serializable]
-    public class GroupChatroom : Chatroom
+    public class GroupChatroom : RoomService
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomName"></param>
-        /// <param name="roomPassword"></param>
-        /// <param name="roomCapacity"></param>
-        public GroupChatroom(string roomName, string roomOwner, string roomPassword, int roomCapacity) : base(roomName, roomOwner)
+        /// <param name="roomInstance"></param>
+        public GroupChatroom(Room roomInstance) : base(roomInstance.Name, roomInstance.Owner)
         {
-            mCapacity = roomCapacity;
-            mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
-            InsertUser(roomOwner);
+            mCapacity = roomInstance.Capacity;
+
+            if (roomInstance.IsPrivate())
+            {
+                mPassword = roomInstance.Password;
+            }
+            else
+            {
+                mPassword = null;
+            }
         }
 
         /// <summary>
@@ -27,7 +32,7 @@ namespace ChatupNET.Rooms
         private int mCapacity;
 
         /// <summary>
-        /// Public getter property for the "_capacity" private member
+        /// Public getter property for the "mCapacity" private member
         /// </summary>
         public override int Capacity
         {
@@ -43,7 +48,7 @@ namespace ChatupNET.Rooms
         private string mPassword;
 
         /// <summary>
-        /// Public getter property for the "_password" private member
+        /// Public getter property for the "mPassword" private member
         /// </summary>
         public string Password
         {
@@ -81,7 +86,7 @@ namespace ChatupNET.Rooms
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(mPassword)))
@@ -99,7 +104,7 @@ namespace ChatupNET.Rooms
                 return RemoteResponse.Success;
             }
 
-            return RemoteResponse.EntityExists;
+            return RemoteResponse.ObjectExists;
         }
     }
 }

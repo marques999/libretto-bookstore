@@ -84,11 +84,11 @@ namespace ChatupNET.Model
         {
             if (otherInstance != null)
             {
-                var registerObject = otherInstance as UserForm;
+                var otherForm = otherInstance as UserForm;
 
-                if (registerObject != null)
+                if (otherForm != null)
                 {
-                    return Username.Equals(registerObject.Username) && Password.Equals(registerObject.Password);
+                    return Username.Equals(otherForm.Username) && Password.Equals(otherForm.Password);
                 }
             }
 

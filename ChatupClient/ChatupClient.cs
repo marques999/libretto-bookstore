@@ -46,7 +46,7 @@ public class ChatupClient
     /// <param name="sessionIntermediate"></param>
     public void InitializeLobby(LobbyIntermediate lobbyIntermediate)
     {
-        mLobby.OnCreate += lobbyIntermediate.CreateRoom;
+        mLobby.OnInsert += lobbyIntermediate.CreateRoom;
         mLobby.OnDelete += lobbyIntermediate.DeleteRoom;
         mLobby.OnUpdate += lobbyIntermediate.UpdateRoom;
     }
@@ -57,7 +57,7 @@ public class ChatupClient
     /// <param name="sessionIntermediate"></param>
     public void DestroyLobby(LobbyIntermediate lobbyIntermediate)
     {
-        mLobby.OnCreate -= lobbyIntermediate.CreateRoom;
+        mLobby.OnInsert -= lobbyIntermediate.CreateRoom;
         mLobby.OnDelete -= lobbyIntermediate.DeleteRoom;
         mLobby.OnUpdate -= lobbyIntermediate.UpdateRoom;
     }
@@ -67,7 +67,7 @@ public class ChatupClient
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="chatroomIntermediate"></param>
-    public void InitializeRoom(int roomId, ChatroomIntermediate chatroomIntermediate)
+    public void InitializeRoom(int roomId, RoomIntermediate chatroomIntermediate)
     {
         var chatroomInstance = Room(roomId);
 
@@ -84,7 +84,7 @@ public class ChatupClient
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="chatroomIntermediate"></param>
-    public void DestroyRoom(int roomId, ChatroomIntermediate chatroomIntermediate)
+    public void DestroyRoom(int roomId, RoomIntermediate chatroomIntermediate)
     {
         var chatroomInstance = Room(roomId);
 
@@ -115,14 +115,14 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<int, ChatroomInterface> mRooms = new Dictionary<int, ChatroomInterface>();
+    private Dictionary<int, RoomInterface> mRooms = new Dictionary<int, RoomInterface>();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    public ChatroomInterface Room(int roomId)
+    public RoomInterface Room(int roomId)
     {
         if (mRooms.ContainsKey(roomId))
         {

@@ -7,18 +7,18 @@ namespace ChatupNET.Model
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serverAddress"></param>
+        /// <param name="serverHost"></param>
         /// <param name="serverPort"></param>
-        public Address(IPAddress serverAddress, ushort serverPort)
+        public Address(IPAddress serverHost, ushort serverPort)
         {
-            address = serverAddress;
+            host = serverHost;
             port = serverPort;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private IPAddress address;
+        private IPAddress host;
 
         /// <summary>
         /// 
@@ -27,7 +27,7 @@ namespace ChatupNET.Model
         {
             get
             {
-                return address;
+                return host;
             }
         }
 

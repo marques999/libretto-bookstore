@@ -26,7 +26,7 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
-    public interface ChatroomInterface
+    public interface RoomInterface
     {
         /// <summary>
         /// 

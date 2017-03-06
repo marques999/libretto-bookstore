@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using ChatupNET.Model;
 
@@ -11,7 +10,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event RoomInsertHandler OnCreate;
+        public event RoomInsertHandler OnInsert;
 
         /// <summary>
         /// 
@@ -26,42 +25,22 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<int, Room> mRooms;
+        private Dictionary<int, Room> Rooms
+        {
+            get
+            {
+                return ChatupServer.Instance.Rooms;
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
         public Dictionary<int, Room> List()
         {
-            if (mRooms == null)
-            {
-                LazyInitialize();
-            }
-
-            return mRooms;
+            return ChatupServer.Instance.Rooms;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void LazyInitialize()
-        {
-            mRooms = ChatupServer.Instance.Rooms;
-
-            if (mRooms.Count > 0)
-            {
-                lastId = mRooms.Aggregate((l, r) => l.Key > r.Key ? l : r).Key;
-            }
-            else
-            {
-                lastId = 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int lastId;
 
         /// <summary>
         /// 
@@ -73,28 +52,23 @@ namespace ChatupNET.Remoting
         {
             if (string.IsNullOrEmpty(userName) || roomId < 1)
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
-            if (mRooms == null)
+            if (!Rooms.ContainsKey(roomId))
             {
-                LazyInitialize();
+                return RemoteResponse.NotFound;
             }
 
-            if (!mRooms.ContainsKey(roomId))
-            {
-                return RemoteResponse.EntityNotFound;
-            }
-
-            if (mRooms[roomId].Owner == userName)
+            if (Rooms[roomId].Owner == userName)
             {
                 OnDelete?.Invoke(roomId);
                 ChatupServer.Instance.Lobby.DeleteRoom(roomId);
-                mRooms.Remove(roomId);
+                Rooms.Remove(roomId);
             }
             else
             {
-                return RemoteResponse.InsufficientPermissions;
+                return RemoteResponse.PermissionDenied;
             }
 
             return RemoteResponse.Success;
@@ -104,23 +78,19 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="userPassword"></param>
         /// <param name="roomId"></param>
         /// <returns></returns>
         public RemoteResponse Join(string userName, string userPassword, int roomId)
         {
             if (string.IsNullOrEmpty(userName) || roomId < 1)
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
-            if (mRooms == null)
+            if (Rooms.ContainsKey(roomId))
             {
-                LazyInitialize();
-            }
-
-            if (mRooms.ContainsKey(roomId))
-            {
-                var roomInformation = mRooms[roomId];
+                var roomInformation = Rooms[roomId];
 
                 if (roomInformation.Password == null || roomInformation.Password.Equals(userPassword))
                 {
@@ -134,7 +104,7 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return RemoteResponse.EntityNotFound;
+                return RemoteResponse.NotFound;
             }
 
             return RemoteResponse.Success;
@@ -149,29 +119,29 @@ namespace ChatupNET.Remoting
         {
             if (roomInformation == null)
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (string.IsNullOrEmpty(roomInformation.Owner))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (string.IsNullOrEmpty(roomInformation.Name))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
-            if (mRooms == null)
+            var roomId = ChatupServer.Instance.NextID;
+
+            if (ChatupServer.Instance.RegisterChatrooom(roomId, roomInformation))
             {
-                LazyInitialize();
+                OnInsert?.Invoke(roomId, roomInformation);
             }
-
-            var roomId = ++lastId;
-
-            OnCreate?.Invoke(roomId, roomInformation);
-            ChatupServer.Instance.Lobby.CreateRoom(roomId, roomInformation);
-            mRooms.Add(roomId, roomInformation);
+            else
+            {
+                return RemoteResponse.OperationFailed;
+            }
 
             return RemoteResponse.Success;
         }
@@ -183,22 +153,22 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse IsPrivate(int roomId)
         {
-            if (mRooms == null)
+            if (roomId < 1)
             {
-                LazyInitialize();
+                return RemoteResponse.BadRequest;
             }
 
-            if (mRooms.ContainsKey(roomId))
+            if (Rooms.ContainsKey(roomId))
             {
-                if (mRooms[roomId].IsPrivate())
+                if (Rooms[roomId].IsPrivate())
                 {
                     return RemoteResponse.Success;
                 }
 
-                return RemoteResponse.Failure;
+                return RemoteResponse.OperationFailed;
             }
 
-            return RemoteResponse.EntityNotFound;
+            return RemoteResponse.NotFound;
         }
 
         /// <summary>

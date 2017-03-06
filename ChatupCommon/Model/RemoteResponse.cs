@@ -3,14 +3,13 @@
     public enum RemoteResponse
     {
         AuthenticationFailed,
-        EntityNotFound,
-        InsufficientPermissions,
-        RoomExists,
+        NotFound,
+        PermissionDenied,
         Success,
-        MissingParameters,
+        BadRequest,
         SessionExists,
-        EntityExists,
-        Failure,
+        ObjectExists,
+        OperationFailed,
         RoomFull
     }
 }

@@ -11,16 +11,16 @@ namespace ChatupNET
         {
             { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginError },
             { RemoteResponse.SessionExists, "Selected user is currently logged in to this service!" },
-            { RemoteResponse.MissingParameters, "Please check if the information you entered is complete and try again." },
-            { RemoteResponse.InsufficientPermissions, "You currently don't have sufficient permissions to access this!" }
+            { RemoteResponse.BadRequest, "Please check if the information you entered is complete and try again." },
+            { RemoteResponse.PermissionDenied, "You currently don't have sufficient permissions to access this!" }
         };
 
         private static Dictionary<RemoteResponse, string> responseTitles = new Dictionary<RemoteResponse, string>()
         {
             { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginErrorTitle },
             { RemoteResponse.SessionExists, "Session exists" },
-            { RemoteResponse.MissingParameters, "Missing parameters" },
-            { RemoteResponse.InsufficientPermissions, "Insufficient permissions" }
+            { RemoteResponse.BadRequest, "Missing parameters" },
+            { RemoteResponse.PermissionDenied, "Insufficient permissions" }
         };
 
         public static void DisplayError(Form parentForm, RemoteResponse operationResult)

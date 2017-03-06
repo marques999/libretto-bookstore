@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
@@ -51,50 +52,87 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        private enum UserAction
+        {
+            Login,
+            Logout,
+            Register
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        private void OnLogin(UserInformation userInformation)
+        {
+            UpsertUser(userInformation, UserAction.Login);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        private void OnLogout(UserInformation userInformation)
+        {
+            UpsertUser(userInformation, UserAction.Logout);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        private void OnRegister(UserInformation userInformation)
+        {
+            UpsertUser(userInformation, UserAction.Register);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomInformation"></param>
+        private void OnInsert(int roomId, Room roomInformation)
+        {
+            BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
+            {
+                roomId, roomInformation
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        private void OnDelete(int roomId)
+        {
+            BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
+            {
+                roomId
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
+        private void OnUpdate(int roomId, int roomCount, int roomCapacity)
+        {
+            BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
+            {
+                roomId, roomCount, roomCapacity
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
-
-            ChatupServer.Instance.SessionActivator
-            (
-                delegate (UserInformation userInformation)
-                {
-                    UpsertUser(userInformation, "Active");
-                },
-                delegate (UserInformation userInformation)
-                {
-                    UpsertUser(userInformation, "Offline");
-                },
-                delegate (UserInformation userInformation)
-                {
-                    UpsertUser(userInformation, "Offline");
-                }
-            );
-
-            ChatupServer.Instance.LobbyActivator
-            (
-                delegate (int roomId, Room roomInformation)
-                {
-                    BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
-                    {
-                        roomId, roomInformation
-                    });
-                },
-                delegate (int roomId)
-                {
-                    BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
-                    {
-                        roomId
-                    });
-                },
-                delegate (int roomId, int roomCount, int roomCapacity)
-                {
-                    BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
-                    {
-                        roomId, roomCount, roomCapacity
-                    });
-                }
-            );
+            ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
+            ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete, OnUpdate);
         }
 
         /// <summary>
@@ -146,20 +184,46 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="userInformation"></param>
         /// <param name="userStatus"></param>
-        private void UpsertUser(UserInformation userInformation, string userStatus)
+        private void UpsertUser(UserInformation userInformation, UserAction userAction)
         {
             if (listView1.Items.ContainsKey(userInformation.Username))
             {
                 listView1.Items.RemoveByKey(userInformation.Username);
             }
 
+            var userStatus = Properties.Resources.user_Offline;
+
+            if (userAction == UserAction.Login)
+            {
+                activeUsers++;
+                userStatus = Properties.Resources.user_Active;
+            }
+            else if (userAction == UserAction.Logout)
+            {
+                activeUsers--;
+            }
+
             var lvi = new ListViewItem(new string[]
             {
-                userInformation.Username, userStatus
+                userInformation.Username, userAction == UserAction.Login ? "Active" : "Offline"
             });
 
             lvi.Name = userInformation.Username;
             listView1.Items.Insert(0, lvi);
+            UpdateStats();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int activeUsers = 0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpdateStats()
+        {
+            labelStats.Text = string.Format(Properties.Resources.label_Stats, activeUsers, listView1.Items.Count - activeUsers);
         }
 
         /// <summary>
@@ -185,15 +249,15 @@ namespace ChatupNET.Forms
             switch (nextStatus)
             {
                 case ServerStatus.Stopped:
-                    buttonStart.Text = "Start";
+                    buttonStart.Text = Properties.Resources.status_Start;
                     buttonRestart.Enabled = false;
                     break;
                 case ServerStatus.Running:
-                    buttonStart.Text = "Stop";
+                    buttonStart.Text = Properties.Resources.status_Stopped;
                     buttonRestart.Enabled = true;
                     break;
                 case ServerStatus.Restarting:
-                    buttonStart.Text = "Restarting...";
+                    buttonStart.Text = Properties.Resources.status_Restarting;
                     buttonStart.Enabled = false;
                     buttonRestart.Enabled = false;
                     buttonExit.Enabled = false;
@@ -258,7 +322,7 @@ namespace ChatupNET.Forms
         {
             foreach (var userInformation in ChatupServer.Instance.Users)
             {
-                UpsertUser(userInformation.Value, "Offline");
+                UpsertUser(userInformation.Value, UserAction.Register);
             }
         }
 
@@ -276,6 +340,13 @@ namespace ChatupNET.Forms
 
                 }
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete, OnUpdate);
+            ChatupServer.Instance.DestroySession(OnLogin, OnLogout, OnRegister);
         }
 
         /// <summary>
@@ -296,7 +367,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private string FormatCapacity(int roomCount, int roomCapacity)
         {
-            return string.Format("{0} / {1}", roomCount, roomCapacity);
+            return string.Format(Properties.Resources.label_Capacity, roomCount, roomCapacity);
         }
 
         /// <summary>
@@ -309,6 +380,7 @@ namespace ChatupNET.Forms
             LoadRooms();
             LoadUsers();
             UpdateAddress(new Address(IPAddress.Loopback, 12480));
+            UpdateStats();
         }
 
         /// <summary>

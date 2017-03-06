@@ -5,7 +5,6 @@ using System.Data.SQLite;
 using ChatupNET.Database;
 using ChatupNET.Database.Enums;
 using ChatupNET.Model;
-using ChatupNET.Rooms;
 using ChatupNET.Remoting;
 
 namespace ChatupNET
@@ -38,71 +37,36 @@ namespace ChatupNET
         /// </summary>
         private SqliteDatabase()
         {
-            sqliteConnection = new SQLiteConnection(string.Format(
-                "Data Source={0}ChatupServer.db;Version=3;",
-                AppDomain.CurrentDomain.BaseDirectory)
-            );
-
+            sqliteConnection = new SQLiteConnection(string.Format(Properties.Resources.database_Url, AppDomain.CurrentDomain.BaseDirectory));
             sqliteConnection.Open();
-
-            GenerateTable(
-                "users",
-                "CREATE TABLE `users`(`username` TEXT NOT NULL UNIQUE, `name` TEXT NOT NULL, `password` TEXT NOT NULL)"
-            );
-
-            GenerateTable(
-                "rooms",
-                "CREATE TABLE `rooms`(`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL UNIQUE, `owner` TEXT NOT NULL, `password` TEXT, `capacity` INTEGER DEFAULT 4 CHECK(capacity > 0), FOREIGN KEY(`owner`) REFERENCES `users`(`username`))"
-            );
+            GenerateTable(SqliteConstants.USERS, SqliteConstants.users_CREATE);
+            GenerateTable(SqliteConstants.ROOMS, SqliteConstants.rooms_CREATE);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private SqlColumn[] userColumns = new SqlColumn[]
+        {
+            new SqlColumn(SqliteConstants.Name, null),
+            new SqlColumn(SqliteConstants.Username, null)
+        };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private SqlColumn[] roomColumns = new SqlColumn[]
+        {
+            new SqlColumn(SqliteConstants.Id, null),
+            new SqlColumn(SqliteConstants.Name, null),
+            new SqlColumn(SqliteConstants.Password, null),
+            new SqlColumn(SqliteConstants.Capacity, null)
+        };
 
         /// <summary>
         /// 
         /// </summary>
         private SQLiteConnection sqliteConnection;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public SQLiteConnection Connection
-        {
-            get
-            {
-                return sqliteConnection;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <returns></returns>
-        public bool DeleteRoom(int roomId, string roomOwner)
-        {
-            int queryResult = 0;
-            string deleteRoom = "DELETE FROM rooms WHERE id = :id AND owner = :owner";
-
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(deleteRoom, sqliteConnection))
-            {
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldOwner, roomOwner));
-                queryResult = sqlCommand.ExecuteNonQuery();
-            }
-
-            return queryResult == 1 ? true : false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private const string tableUsers = "users";
-        private const string fieldUsername = "username";
-        private const string tableRooms = "rooms";
-        private const string fieldId = "id";
-        private const string fieldName = "name";
-        private const string fieldOwner = "owner";
-        private const string fieldPassword = "password";
-        private const string fieldCapacity = "capacity";
 
         /// <summary>
         /// 
@@ -125,22 +89,21 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="registerObject"></param>
+        /// <param name="userInformation"></param>
         /// <returns></returns>
-        public bool InsertUser(UserForm registerObject)
+        public bool InsertUser(UserForm userInformation)
         {
-            int queryResult = 0;
-            string registerUser = "INSERT INTO users(username, name, password) VALUES(:username, :name, :password)";
+            bool operationResult = false;
 
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(registerUser, sqliteConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(SqliteConstants.users_INSERT, sqliteConnection))
             {
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldUsername, registerObject.Username));
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldName, registerObject.Name));
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldPassword, registerObject.Password));
-                queryResult = sqlCommand.ExecuteNonQuery();
+                AddParameter(sqlCommand, SqliteConstants.Username, userInformation.Username);
+                AddParameter(sqlCommand, SqliteConstants.Name, userInformation.Name);
+                AddParameter(sqlCommand, SqliteConstants.Password, userInformation.Password);
+                operationResult = sqlCommand.ExecuteNonQuery() > 0;
             }
 
-            return true;
+            return operationResult;
         }
 
         /// <summary>
@@ -151,15 +114,15 @@ namespace ChatupNET
         public string QueryPassword(string userName)
         {
             SqlBuilder sqlQuery = new SqlBuilder()
-                .FromTable(tableUsers)
-                .Column(fieldPassword)
-                .Where(fieldUsername, Comparison.Equals, userName);
+                .FromTable(SqliteConstants.USERS)
+                .Column(SqliteConstants.Password)
+                .Where(SqliteConstants.Username, Comparison.Equals, userName);
 
             using (SQLiteDataReader userInfo = QueryDatabase(sqlQuery))
             {
                 if (userInfo.Read())
                 {
-                    return userInfo.GetString(userInfo.GetOrdinal(fieldPassword));
+                    return userInfo.GetString(userInfo.GetOrdinal(SqliteConstants.Password));
                 }
 
                 return null;
@@ -170,29 +133,64 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="chatroomInstance"></param>
+        /// <param name="groupChatroom"></param>
         /// <returns></returns>
-        public bool InsertRoom(int roomId, GroupChatroom chatroomInstance)
+        public bool InsertRoom(int roomId, GroupChatroom groupChatroom)
         {
-            int queryResult = 0;
-            string insertRoom = "INSERT INTO rooms(id, name, owner, password, capacity) VALUES(:id, :name, :owner, :password, :capacity)";
+            bool operationResult = false;
+            var queryString = SqliteConstants.rooms_INSERT_Public;
 
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(insertRoom, sqliteConnection))
+            if (groupChatroom.IsPrivate())
             {
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldName, chatroomInstance.Name));
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldOwner, chatroomInstance.Owner));
-
-                if (chatroomInstance.IsPrivate())
-                {
-                    sqlCommand.Parameters.Add(new SQLiteParameter(fieldPassword, chatroomInstance.Password));
-                }
-
-                sqlCommand.Parameters.Add(new SQLiteParameter(fieldCapacity, chatroomInstance.Capacity));
-                queryResult = sqlCommand.ExecuteNonQuery();
+                queryString = SqliteConstants.rooms_INSERT_Private;
             }
 
-            return queryResult == 0 ? true : false;
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(queryString, sqliteConnection))
+            {
+                AddParameter(sqlCommand, SqliteConstants.Id, roomId);
+                AddParameter(sqlCommand, SqliteConstants.Name, groupChatroom.Name);
+                AddParameter(sqlCommand, SqliteConstants.Owner, groupChatroom.Owner);
+
+                if (groupChatroom.IsPrivate())
+                {
+                    AddParameter(sqlCommand, SqliteConstants.Password, groupChatroom.Password);
+                }
+
+                AddParameter(sqlCommand, SqliteConstants.Capacity, groupChatroom.Capacity);
+                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+            }
+
+            return operationResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="parameterKey"></param>
+        /// <param name="parameterValue"></param>
+        private void AddParameter(SQLiteCommand sqlCommand, string parameterKey, object parameterValue)
+        {
+            sqlCommand.Parameters.Add(new SQLiteParameter(parameterKey, parameterValue));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        public bool DeleteRoom(int roomId, string roomOwner)
+        {
+            bool operationResult = false;
+
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(SqliteConstants.rooms_DELETE, sqliteConnection))
+            {
+                AddParameter(sqlCommand, SqliteConstants.Id, roomId);
+                AddParameter(sqlCommand, SqliteConstants.Owner, roomOwner);
+                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+            }
+
+            return operationResult;
         }
 
         /// <summary>
@@ -222,37 +220,21 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private SqlColumn[] userColumns = new SqlColumn[]
-        {
-            new SqlColumn(fieldName, null),
-            new SqlColumn(fieldUsername, null)
-        };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private SqlColumn[] roomColumns = new SqlColumn[]
-        {
-            new SqlColumn(fieldId, null),
-            new SqlColumn(fieldName, null),
-            new SqlColumn(fieldPassword, null),
-            new SqlColumn(fieldCapacity, null)
-        };
-
-        internal Dictionary<string, UserInformation> QueryUsers()
+        /// <returns></returns>
+        public Dictionary<string, UserInformation> QueryUsers()
         {
             Dictionary<string, UserInformation> users = new Dictionary<string, UserInformation>();
-            SqlBuilder sqlQuery = new SqlBuilder().FromTable(tableUsers).Columns(userColumns);
+            SqlBuilder sqlQuery = new SqlBuilder().FromTable(SqliteConstants.USERS).Columns(userColumns);
 
             using (SQLiteDataReader userEntry = QueryDatabase(sqlQuery))
             {
                 while (userEntry.Read())
                 {
-                    string userName = userEntry.GetString(userEntry.GetOrdinal(fieldUsername));
+                    string userName = ReadString(userEntry, SqliteConstants.Username);
 
                     users.Add(userName, new UserInformation(
                         userName,
-                        userEntry.GetString(userEntry.GetOrdinal(fieldName))
+                        ReadString(userEntry, SqliteConstants.Name)
                     ));
                 }
             }
@@ -263,22 +245,44 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sqliteReader"></param>
+        /// <param name="sqlColumn"></param>
+        /// <returns></returns>
+        private string ReadString(SQLiteDataReader sqliteReader, string sqlColumn)
+        {
+            return sqliteReader.GetString(sqliteReader.GetOrdinal(sqlColumn));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqliteReader"></param>
+        /// <param name="sqlColumn"></param>
+        /// <returns></returns>
+        private int ReadInteger(SQLiteDataReader sqliteReader, string sqlColumn)
+        {
+            return sqliteReader.GetInt32(sqliteReader.GetOrdinal(sqlColumn));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public Dictionary<int, Room> QueryRooms()
         {
             Dictionary<int, Room> rooms = new Dictionary<int, Room>();
-            SqlBuilder sqlQuery = new SqlBuilder().FromTable(tableRooms).Columns(roomColumns);
+            SqlBuilder sqlQuery = new SqlBuilder().FromTable(SqliteConstants.ROOMS).Columns(roomColumns);
 
             using (SQLiteDataReader roomEntry = QueryDatabase(sqlQuery))
             {
                 while (roomEntry.Read())
                 {
-                    rooms.Add(roomEntry.GetInt32(roomEntry.GetOrdinal(fieldId)), new Room(
-                        roomEntry.GetString(roomEntry.GetOrdinal(fieldName)),
-                        roomEntry.GetString(roomEntry.GetOrdinal(fieldOwner)),
-                        roomEntry.GetString(roomEntry.GetOrdinal(fieldPassword)),
-                        roomEntry.GetInt32(roomEntry.GetOrdinal(fieldCapacity))
-                    ));
+                    rooms.Add(ReadInteger(roomEntry, SqliteConstants.Id), new Room(
+                        ReadString(roomEntry, SqliteConstants.Name),
+                        ReadString(roomEntry, SqliteConstants.Owner),
+                        ReadString(roomEntry, SqliteConstants.Password),
+                        ReadInteger(roomEntry, SqliteConstants.Capacity))
+                    );
                 }
             }
 

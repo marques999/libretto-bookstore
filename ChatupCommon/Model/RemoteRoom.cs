@@ -106,11 +106,11 @@ namespace ChatupNET.Remoting
         {
             if (otherInstance != null)
             {
-                var chatroomInstance = otherInstance as Room;
+                var otherChatroom = otherInstance as Room;
 
-                if (chatroomInstance != null)
+                if (otherChatroom != null)
                 {
-                    return chatroomInstance.mName.Equals(mName);
+                    return otherChatroom.mName.Equals(mName);
                 }
             }
 
@@ -154,6 +154,10 @@ namespace ChatupNET.Remoting
             return Count < Capacity;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool IsGroup()
         {
             return true;

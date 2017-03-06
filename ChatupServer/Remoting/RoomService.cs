@@ -8,7 +8,7 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public abstract class Chatroom : MarshalByRefObject, ChatroomInterface
+    public abstract class RoomService : MarshalByRefObject, RoomInterface
     {
         /// <summary>
         /// 
@@ -25,10 +25,11 @@ namespace ChatupNET.Remoting
         /// </summary>
         public event MessageHandler OnSend;
 
-        public Chatroom(string roomName, string roomOwner)
+        public RoomService(string roomName, string roomOwner)
         {
             mName = roomName;
             mOwner = roomOwner;
+            InsertUser(roomOwner);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        static readonly Color[] Colors = typeof(Color)
+        static readonly Color[] colors = typeof(Color)
             .GetProperties(BindingFlags.Public | BindingFlags.Static)
             .Select(propInfo => propInfo.GetValue(null, null))
             .Cast<Color>()
@@ -75,12 +76,12 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected Random mRandom = new Random();
+        protected Random randomGenerator = new Random();
 
         /// <summary>
         /// 
         /// </summary>
-        protected Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
+        protected Dictionary<string, Color> users = new Dictionary<string, Color>();
 
         /// <summary>
         /// 
@@ -94,16 +95,30 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Insert(RemoteMessage messageInstance)
         {
-            if (mUsers.ContainsKey(messageInstance.Author))
+            if (messageInstance == null)
+            {
+                return RemoteResponse.BadRequest;
+            }
+
+            if (string.IsNullOrEmpty(messageInstance.Author))
+            {
+                return RemoteResponse.BadRequest;
+            }
+
+            if (users.ContainsKey(messageInstance.Author))
             {
                 if (messages.Add(messageInstance))
                 {
                     OnSend?.Invoke(messageInstance);
                 }
+                else
+                {
+                    return RemoteResponse.ObjectExists;
+                }
             }
             else
             {
-                return RemoteResponse.InsufficientPermissions;
+                return RemoteResponse.PermissionDenied;
             }
 
             return RemoteResponse.Success;
@@ -116,28 +131,28 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Leave(string userName)
         {
-            if (mUsers.ContainsKey(userName))
+            if (string.IsNullOrEmpty(userName))
             {
-                if (mUsers.Remove(userName))
+                return RemoteResponse.BadRequest;
+            }
+
+            if (users.ContainsKey(userName))
+            {
+                if (users.Remove(userName))
                 {
                     OnLeave?.Invoke(userName);
                 }
                 else
                 {
-                    return RemoteResponse.Failure;
+                    return RemoteResponse.OperationFailed;
                 }
             }
             else
             {
-                return RemoteResponse.EntityNotFound;
+                return RemoteResponse.NotFound;
             }
 
             return RemoteResponse.Success;
-        }
-
-        protected bool Exists(string userName)
-        {
-            return mUsers.ContainsKey(userName);
         }
 
         /// <summary>
@@ -147,15 +162,22 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool InsertUser(string userName)
         {
-            if (mUsers.ContainsKey(userName))
+            if (users.ContainsKey(userName))
             {
                 return false;
             }
 
-            var userColor = Colors[mRandom.Next(0, Colors.Length)];
+            var userColor = colors[randomGenerator.Next(0, colors.Length)];
 
-            mUsers.Add(userName, userColor);
-            OnJoin?.Invoke(userName, userColor);
+            if (userColor != null)
+            {
+                users.Add(userName, userColor);
+                OnJoin?.Invoke(userName, userColor);
+            }
+            else
+            {
+                return false;
+            }
 
             return true;
         }
@@ -169,11 +191,11 @@ namespace ChatupNET.Remoting
         {
             if (otherInstance != null)
             {
-                var chatroomInstance = otherInstance as Chatroom;
+                var otherChatroom = otherInstance as RoomService;
 
-                if (chatroomInstance != null)
+                if (otherChatroom != null)
                 {
-                    return chatroomInstance.mName.Equals(mName);
+                    return otherChatroom.mName.Equals(mName);
                 }
             }
 
@@ -196,7 +218,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mUsers;
+                return users;
             }
         }
 
@@ -215,7 +237,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mUsers.Count;
+                return users.Count;
             }
         }
 

@@ -32,7 +32,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAddress = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelStats = new System.Windows.Forms.Label();
             this.staticUsers = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.staticStatus = new System.Windows.Forms.Label();
@@ -84,9 +84,9 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.90669F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.09331F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel2.Controls.Add(this.buttonAddress, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label7, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.labelStats, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.staticUsers, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.labelStatus, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.staticStatus, 0, 0);
@@ -120,16 +120,16 @@
             this.buttonAddress.UseVisualStyleBackColor = false;
             this.buttonAddress.Click += new System.EventHandler(this.buttonAddress_click);
             // 
-            // label7
+            // labelStats
             // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(110, 64);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(376, 32);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "0 active, 2 inactive";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelStats.AutoSize = true;
+            this.labelStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelStats.Location = new System.Drawing.Point(110, 64);
+            this.labelStats.Name = "labelStats";
+            this.labelStats.Size = new System.Drawing.Size(375, 32);
+            this.labelStats.TabIndex = 13;
+            this.labelStats.Text = "0 active, 0 inactive";
+            this.labelStats.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // staticUsers
             // 
@@ -153,7 +153,7 @@
             this.labelStatus.Location = new System.Drawing.Point(111, 4);
             this.labelStatus.Margin = new System.Windows.Forms.Padding(4);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(374, 24);
+            this.labelStatus.Size = new System.Drawing.Size(373, 24);
             this.labelStatus.TabIndex = 9;
             this.labelStatus.Text = "Running";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -177,9 +177,9 @@
             this.buttonStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Location = new System.Drawing.Point(492, 3);
+            this.buttonStart.Location = new System.Drawing.Point(491, 3);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(114, 26);
+            this.buttonStart.Size = new System.Drawing.Size(115, 26);
             this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Stop";
             this.buttonStart.UseVisualStyleBackColor = false;
@@ -192,9 +192,9 @@
             this.buttonRestart.Enabled = false;
             this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRestart.Location = new System.Drawing.Point(492, 35);
+            this.buttonRestart.Location = new System.Drawing.Point(491, 35);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(114, 26);
+            this.buttonRestart.Size = new System.Drawing.Size(115, 26);
             this.buttonRestart.TabIndex = 2;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = false;
@@ -206,9 +206,9 @@
             this.buttonExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonExit.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExit.Location = new System.Drawing.Point(492, 67);
+            this.buttonExit.Location = new System.Drawing.Point(491, 67);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(114, 26);
+            this.buttonExit.Size = new System.Drawing.Size(115, 26);
             this.buttonExit.TabIndex = 3;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = false;
@@ -220,7 +220,7 @@
             this.labelAddress.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelAddress.Location = new System.Drawing.Point(110, 32);
             this.labelAddress.Name = "labelAddress";
-            this.labelAddress.Size = new System.Drawing.Size(376, 32);
+            this.labelAddress.Size = new System.Drawing.Size(375, 32);
             this.labelAddress.TabIndex = 12;
             this.labelAddress.Text = "127.0.0.1:12480";
             this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -338,7 +338,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelStats;
         private System.Windows.Forms.Label staticUsers;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Label staticStatus;

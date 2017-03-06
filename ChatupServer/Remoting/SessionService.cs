@@ -25,33 +25,21 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, UserInformation> mUsers;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Dictionary<string, UserInformation> Users
+        private Dictionary<string, UserInformation> Users
         {
             get
             {
-                if (mUsers == null)
-                {
-                    mUsers = ChatupServer.Instance.Users;
-                }
-
-                return mUsers;
+                return ChatupServer.Instance.Users;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userToken"></param>
         /// <returns></returns>
-        private bool ValidateSession(string userName)
+        public Dictionary<string, UserInformation> List()
         {
-            return mUsers.ContainsKey(userName) && mUsers[userName].Status;
+            return ChatupServer.Instance.Users;
         }
 
         /// <summary>
@@ -63,22 +51,17 @@ namespace ChatupNET.Remoting
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
-            if (mUsers == null)
+            if (ChatupServer.Instance.Logout(userName))
             {
-                mUsers = ChatupServer.Instance.Users;
+                OnLogout?.Invoke(Users[userName]);
             }
-
-            if (!ValidateSession(userName))
+            else
             {
-                return RemoteResponse.InsufficientPermissions;
+                return RemoteResponse.PermissionDenied;
             }
-
-            OnLogout?.Invoke(mUsers[userName]);
-            mUsers[userName].Status = false;
-            ChatupServer.Instance.Session.Logout(mUsers[userName]);
 
             return RemoteResponse.Success;
         }
@@ -91,35 +74,30 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Login(string userName, string userPassword)
         {
-            if (string.IsNullOrEmpty(userName))
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userPassword))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
-            if (mUsers == null)
+            var storedPassword = SqliteDatabase.Instance.QueryPassword(userName);
+
+            if (storedPassword.Equals(userPassword))
             {
-                mUsers = ChatupServer.Instance.Users;
+                if (ChatupServer.Instance.Login(userName, userPassword))
+                {
+                    OnLogin?.Invoke(Users[userName]);
+                }
+                else
+                {
+                    return RemoteResponse.SessionExists;
+                }
+
+                return RemoteResponse.Success;
             }
-
-            if (ValidateSession(userName))
-            {
-                return RemoteResponse.SessionExists;
-            }
-
-            var userPasword = SqliteDatabase.Instance.QueryPassword(userName);
-
-            if (!userPasword.Equals(userPassword))
+            else
             {
                 return RemoteResponse.AuthenticationFailed;
             }
-
-            var userInformation = mUsers[userName];
-
-            OnLogin?.Invoke(userInformation);
-            mUsers[userName].Status = true;
-            ChatupServer.Instance.Session.Login(userInformation);
-
-            return RemoteResponse.Success;
         }
 
         /// <summary>
@@ -131,17 +109,12 @@ namespace ChatupNET.Remoting
         {
             if (registerObject == null)
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (string.IsNullOrEmpty(registerObject.Username) || string.IsNullOrEmpty(registerObject.Password))
             {
-                return RemoteResponse.MissingParameters;
-            }
-
-            if (mUsers == null)
-            {
-                mUsers = ChatupServer.Instance.Users;
+                return RemoteResponse.BadRequest;
             }
 
             var userInformation = new UserInformation(registerObject.Username, registerObject.Name);
@@ -149,12 +122,12 @@ namespace ChatupNET.Remoting
             if (SqliteDatabase.Instance.InsertUser(registerObject))
             {
                 OnRegister?.Invoke(userInformation);
-                mUsers.Add(registerObject.Username, userInformation);
+                Users.Add(registerObject.Username, userInformation);
                 ChatupServer.Instance.Session.Register(userInformation);
             }
             else
             {
-                return RemoteResponse.EntityExists;
+                return RemoteResponse.ObjectExists;
             }
 
             return RemoteResponse.Success;

@@ -1,12 +1,11 @@
 ﻿using System;
 
-using ChatupNET.Remoting;
 using ChatupNET.Model;
 
-namespace ChatupNET.Rooms
+namespace ChatupNET.Remoting
 {
     [Serializable]
-    public class PrivateChatroom : Chatroom
+    public class PrivateChatroom : RoomService
     {
         /// <summary>
         /// 
@@ -14,7 +13,6 @@ namespace ChatupNET.Rooms
         /// <param name="roomName"></param>
         public PrivateChatroom(string roomName, string roomOwner) : base(roomName, roomOwner)
         {
-            InsertUser(roomOwner);
         }
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace ChatupNET.Rooms
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.MissingParameters;
+                return RemoteResponse.BadRequest;
             }
 
             if (IsFull())
@@ -69,7 +67,7 @@ namespace ChatupNET.Rooms
                 return RemoteResponse.Success;
             }
 
-            return RemoteResponse.EntityExists;
+            return RemoteResponse.ObjectExists;
         }
     }
 }

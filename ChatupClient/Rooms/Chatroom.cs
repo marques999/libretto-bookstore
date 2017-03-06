@@ -8,7 +8,7 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public abstract class Chatroom : MarshalByRefObject, ChatroomInterface
+    public abstract class Chatroom : MarshalByRefObject, RoomInterface
     {
         /// <summary>
         /// 
@@ -103,7 +103,7 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return RemoteResponse.InsufficientPermissions;
+                return RemoteResponse.PermissionDenied;
             }
 
             return RemoteResponse.Success;
@@ -124,12 +124,12 @@ namespace ChatupNET.Remoting
                 }
                 else
                 {
-                    return RemoteResponse.Failure;
+                    return RemoteResponse.OperationFailed;
                 }
             }
             else
             {
-                return RemoteResponse.EntityNotFound;
+                return RemoteResponse.NotFound;
             }
 
             return RemoteResponse.Success;
