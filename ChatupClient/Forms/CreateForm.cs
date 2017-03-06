@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using ChatupNET.Rooms;
+using ChatupNET.Remoting;
 
 namespace ChatupNET.Forms
 {
@@ -12,7 +12,7 @@ namespace ChatupNET.Forms
             InitializeComponent();
         }
 
-        public GroupChatroom RoomObject
+        public Room RoomObject
         {
             get;
             private set;
@@ -37,8 +37,8 @@ namespace ChatupNET.Forms
 
         private void buttonConfirm_Click(object sender, EventArgs args)
         {
+            RoomObject = new Room(fieldName.Text, ChatupClient.Instance.Username, fieldPassword.Text, fieldCapacity.SelectedIndex);
             DialogResult = DialogResult.OK;
-            RoomObject = new GroupChatroom(fieldName.Text, fieldPassword.Text, fieldCapacity.SelectedIndex);
             Close();
         }
 

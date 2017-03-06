@@ -28,24 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Room 0 (1/3)", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node1");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Node4");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Room 1 (2/3)", new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Room 2 (1/3)", new System.Windows.Forms.TreeNode[] {
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Node5");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Node6");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Node7");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Room 3 (3/3)", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -102,7 +84,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.90669F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.09331F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel2.Controls.Add(this.buttonAddress, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label7, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.staticUsers, 0, 2);
@@ -144,7 +126,7 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(110, 64);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(377, 32);
+            this.label7.Size = new System.Drawing.Size(376, 32);
             this.label7.TabIndex = 13;
             this.label7.Text = "0 active, 2 inactive";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -171,7 +153,7 @@
             this.labelStatus.Location = new System.Drawing.Point(111, 4);
             this.labelStatus.Margin = new System.Windows.Forms.Padding(4);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(375, 24);
+            this.labelStatus.Size = new System.Drawing.Size(374, 24);
             this.labelStatus.TabIndex = 9;
             this.labelStatus.Text = "Running";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -195,9 +177,9 @@
             this.buttonStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Location = new System.Drawing.Point(493, 3);
+            this.buttonStart.Location = new System.Drawing.Point(492, 3);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(113, 26);
+            this.buttonStart.Size = new System.Drawing.Size(114, 26);
             this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Stop";
             this.buttonStart.UseVisualStyleBackColor = false;
@@ -210,9 +192,9 @@
             this.buttonRestart.Enabled = false;
             this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRestart.Location = new System.Drawing.Point(493, 35);
+            this.buttonRestart.Location = new System.Drawing.Point(492, 35);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(113, 26);
+            this.buttonRestart.Size = new System.Drawing.Size(114, 26);
             this.buttonRestart.TabIndex = 2;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = false;
@@ -224,9 +206,9 @@
             this.buttonExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonExit.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExit.Location = new System.Drawing.Point(493, 67);
+            this.buttonExit.Location = new System.Drawing.Point(492, 67);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(113, 26);
+            this.buttonExit.Size = new System.Drawing.Size(114, 26);
             this.buttonExit.TabIndex = 3;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = false;
@@ -238,7 +220,7 @@
             this.labelAddress.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelAddress.Location = new System.Drawing.Point(110, 32);
             this.labelAddress.Name = "labelAddress";
-            this.labelAddress.Size = new System.Drawing.Size(377, 32);
+            this.labelAddress.Size = new System.Drawing.Size(376, 32);
             this.labelAddress.TabIndex = 12;
             this.labelAddress.Text = "127.0.0.1:12480";
             this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -279,33 +261,6 @@
             this.treeView1.Location = new System.Drawing.Point(8, 21);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Node0";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Room 0 (1/3)";
-            treeNode3.Name = "Node1";
-            treeNode3.Text = "Node1";
-            treeNode4.Name = "Node4";
-            treeNode4.Text = "Node4";
-            treeNode5.Name = "Node1";
-            treeNode5.Text = "Room 1 (2/3)";
-            treeNode6.Name = "Node2";
-            treeNode6.Text = "Node2";
-            treeNode7.Name = "Node2";
-            treeNode7.Text = "Room 2 (1/3)";
-            treeNode8.Name = "Node5";
-            treeNode8.Text = "Node5";
-            treeNode9.Name = "Node6";
-            treeNode9.Text = "Node6";
-            treeNode10.Name = "Node7";
-            treeNode10.Text = "Node7";
-            treeNode11.Name = "Node3";
-            treeNode11.Text = "Room 3 (3/3)";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode5,
-            treeNode7,
-            treeNode11});
             this.treeView1.Size = new System.Drawing.Size(358, 296);
             this.treeView1.TabIndex = 5;
             // 

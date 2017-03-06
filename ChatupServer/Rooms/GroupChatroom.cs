@@ -1,6 +1,7 @@
 ﻿using System;
 
 using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 namespace ChatupNET.Rooms
 {
@@ -15,15 +16,15 @@ namespace ChatupNET.Rooms
         /// <param name="roomCapacity"></param>
         public GroupChatroom(string roomName, string roomOwner, string roomPassword, int roomCapacity) : base(roomName, roomOwner)
         {
-            _capacity = roomCapacity;
-            _password = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
+            mCapacity = roomCapacity;
+            mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
             InsertUser(roomOwner);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int _capacity;
+        private int mCapacity;
 
         /// <summary>
         /// Public getter property for the "_capacity" private member
@@ -32,14 +33,14 @@ namespace ChatupNET.Rooms
         {
             get
             {
-                return _capacity;
+                return mCapacity;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string _password;
+        private string mPassword;
 
         /// <summary>
         /// Public getter property for the "_password" private member
@@ -48,7 +49,7 @@ namespace ChatupNET.Rooms
         {
             get
             {
-                return _password;
+                return mPassword;
             }
         }
 
@@ -67,17 +68,7 @@ namespace ChatupNET.Rooms
         /// <returns></returns>
         public override bool IsPrivate()
         {
-            return _password != null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public override bool Join(string userName)
-        {
-            return !IsPrivate() && !IsFull() && InsertUser(userName);
+            return mPassword != null;
         }
 
         /// <summary>
@@ -86,14 +77,29 @@ namespace ChatupNET.Rooms
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public override bool Join(string userName, string userPassword)
+        public override RemoteResponse Join(string userName, string userPassword)
         {
-            if (IsPrivate() && !userPassword.Equals(_password))
+            if (string.IsNullOrEmpty(userName))
             {
-                return false;
+                return RemoteResponse.MissingParameters;
             }
 
-            return !IsFull() && InsertUser(userName);
+            if (IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(mPassword)))
+            {
+                return RemoteResponse.AuthenticationFailed;
+            }
+
+            if (IsFull())
+            {
+                return RemoteResponse.RoomFull;
+            }
+
+            if (InsertUser(userName))
+            {
+                return RemoteResponse.Success;
+            }
+
+            return RemoteResponse.EntityExists;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using ChatupNET.Model;
+
 namespace ChatupNET.Forms
 {
     public partial class LoginForm : Form
@@ -22,7 +24,9 @@ namespace ChatupNET.Forms
 
         private void buttonValidate_Click(object sender, EventArgs args)
         {
-            if (ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text))
+            var operationResult = ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text);
+
+            if (operationResult == RemoteResponse.Success)
             {
                 Hide();
                 new MainForm().ShowDialog();
@@ -30,12 +34,7 @@ namespace ChatupNET.Forms
             }
             else
             {
-                MessageBox.Show(this,
-                    Properties.Resources.LoginError,
-                    Properties.Resources.LoginErrorTitle,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                ErrorHandler.DisplayError(this, operationResult);
             }
         }
 
@@ -57,7 +56,9 @@ namespace ChatupNET.Forms
                     return;
                 }
 
-                if (ChatupClient.Instance.Session.Register(registrationData))
+                var operationResult = ChatupClient.Instance.Session.Register(registrationData);
+
+                if (operationResult == RemoteResponse.Success)
                 {
                     if (MessageBox.Show(this,
                        Properties.Resources.InfoRegister,
@@ -71,7 +72,7 @@ namespace ChatupNET.Forms
                 }
                 else
                 {
-
+                    ErrorHandler.DisplayError(this, operationResult);
                 }
             }
         }

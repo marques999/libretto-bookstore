@@ -85,16 +85,16 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected HashSet<Message> messages = new HashSet<Message>();
+        protected HashSet<RemoteMessage> messages = new HashSet<RemoteMessage>();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="messageInstance"></param>
         /// <returns></returns>
-        public bool Insert(Message messageInstance)
+        public RemoteResponse Insert(RemoteMessage messageInstance)
         {
-            if (mUsers.ContainsKey(messageInstance.Source) && mUsers.ContainsKey(messageInstance.Destination))
+            if (mUsers.ContainsKey(messageInstance.Author))
             {
                 if (messages.Add(messageInstance))
                 {
@@ -103,10 +103,10 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return false;
+                return RemoteResponse.InsufficientPermissions;
             }
 
-            return true;
+            return RemoteResponse.Success;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public bool Leave(string userName)
+        public RemoteResponse Leave(string userName)
         {
             if (mUsers.ContainsKey(userName))
             {
@@ -122,9 +122,17 @@ namespace ChatupNET.Remoting
                 {
                     OnLeave?.Invoke(userName);
                 }
+                else
+                {
+                    return RemoteResponse.Failure;
+                }
+            }
+            else
+            {
+                return RemoteResponse.EntityNotFound;
             }
 
-            return false;
+            return RemoteResponse.Success;
         }
 
         protected bool Exists(string userName)
@@ -179,15 +187,6 @@ namespace ChatupNET.Remoting
         public override int GetHashCode()
         {
             return mName.GetHashCode();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetCapacity()
-        {
-            return Capacity < 1 ? "INF" : Convert.ToString(Capacity + 1);
         }
 
         /// <summary>
@@ -247,13 +246,6 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public abstract bool Join(string userName, string userPassword);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public abstract bool Join(string userName);
+        public abstract RemoteResponse Join(string userName, string userPassword);
     }
 }

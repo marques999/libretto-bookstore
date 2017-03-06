@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using ChatupNET;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 public class ChatupClient
 {
@@ -206,11 +207,11 @@ public class ChatupClient
     /// <param name="userName"></param>
     /// <param name="userPassword"></param>
     /// <returns></returns>
-    public bool Login(string userName, string userPassword)
+    public RemoteResponse Login(string userName, string userPassword)
     {
-        bool operationResult = mSession.Login(userName, userPassword);
+        RemoteResponse operationResult = mSession.Login(userName, userPassword);
 
-        if (operationResult)
+        if (operationResult == RemoteResponse.Success)
         {
             mActive = true;
             mUsername = userName;
@@ -223,11 +224,11 @@ public class ChatupClient
     /// 
     /// </summary>
     /// <returns></returns>
-    public bool Logout()
+    public RemoteResponse Logout()
     {
-        bool operationResult = mSession.Logout(mUsername);
+        RemoteResponse operationResult = mSession.Logout(mUsername);
 
-        if (operationResult)
+        if (operationResult == RemoteResponse.Success)
         {
             mActive = false;
             mUsername = null;

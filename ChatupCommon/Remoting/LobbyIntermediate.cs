@@ -7,7 +7,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event RoomCreateHandler OnCreate;
+        public event RoomInsertHandler OnCreate;
 
         /// <summary>
         /// 
@@ -22,23 +22,10 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="roomName"></param>
-        /// <param name="roomPassword"></param>
-        /// <param name="roomCapacity"></param>
-        public void CreateRoom(string userName, string roomName, string roomPassword, int roomCapacity)
+        /// <param name="roomInstance"></param>
+        public void CreateRoom(int roomId, Room roomInstance)
         {
-            OnCreate?.Invoke(userName, roomName, roomPassword, roomCapacity);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="roomExit"></param>
-        public void UpdateRoom(int roomId, string roomExit)
-        {
-            OnUpdate?.Invoke(roomId, roomExit);
+            OnCreate?.Invoke(roomId, roomInstance);
         }
 
         /// <summary>
@@ -48,6 +35,16 @@ namespace ChatupNET.Remoting
         public void DeleteRoom(int roomId)
         {
             OnDelete?.Invoke(roomId);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomExit"></param>
+        public void UpdateRoom(int roomId, int roomCount, int roomCapacity)
+        {
+            OnUpdate?.Invoke(roomId, roomCount, roomCapacity);
         }
 
         /// <summary>

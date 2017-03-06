@@ -34,17 +34,13 @@ namespace ChatupNET.Remoting
         {
             get
             {
+                if (mUsers == null)
+                {
+                    mUsers = ChatupServer.Instance.Users;
+                }
+
                 return mUsers;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override object InitializeLifetimeService()
-        {
-            return null;
         }
 
         /// <summary>
@@ -63,28 +59,28 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userInstance"></param>
         /// <returns></returns>
-        public bool Logout(string userName)
+        public RemoteResponse Logout(string userName)
         {
-            if (mUsers == null)
-            {
-                mUsers = ChatupServer.Instance.RefreshUsers();
-            }
-
             if (string.IsNullOrEmpty(userName))
             {
-                return false;
+                return RemoteResponse.MissingParameters;
+            }
+
+            if (mUsers == null)
+            {
+                mUsers = ChatupServer.Instance.Users;
             }
 
             if (!ValidateSession(userName))
             {
-                return false;
+                return RemoteResponse.InsufficientPermissions;
             }
 
             OnLogout?.Invoke(mUsers[userName]);
             mUsers[userName].Status = false;
             ChatupServer.Instance.Session.Logout(mUsers[userName]);
 
-            return true;
+            return RemoteResponse.Success;
         }
 
         /// <summary>
@@ -93,28 +89,28 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public bool Login(string userName, string userPassword)
+        public RemoteResponse Login(string userName, string userPassword)
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return false;
+                return RemoteResponse.MissingParameters;
             }
 
             if (mUsers == null)
             {
-                mUsers = ChatupServer.Instance.RefreshUsers();
+                mUsers = ChatupServer.Instance.Users;
             }
 
             if (ValidateSession(userName))
             {
-                return false;
+                return RemoteResponse.SessionExists;
             }
 
             var userPasword = SqliteDatabase.Instance.QueryPassword(userName);
 
             if (!userPasword.Equals(userPassword))
             {
-                return false;
+                return RemoteResponse.AuthenticationFailed;
             }
 
             var userInformation = mUsers[userName];
@@ -123,7 +119,7 @@ namespace ChatupNET.Remoting
             mUsers[userName].Status = true;
             ChatupServer.Instance.Session.Login(userInformation);
 
-            return true;
+            return RemoteResponse.Success;
         }
 
         /// <summary>
@@ -131,16 +127,16 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="registerObject"></param>
         /// <returns></returns>
-        public bool Register(UserForm registerObject)
+        public RemoteResponse Register(UserForm registerObject)
         {
             if (registerObject == null)
             {
-                return false;
+                return RemoteResponse.MissingParameters;
             }
 
             if (string.IsNullOrEmpty(registerObject.Username) || string.IsNullOrEmpty(registerObject.Password))
             {
-                return false;
+                return RemoteResponse.MissingParameters;
             }
 
             if (mUsers == null)
@@ -149,15 +145,28 @@ namespace ChatupNET.Remoting
             }
 
             var userInformation = new UserInformation(registerObject.Username, registerObject.Name);
-            bool operationResult = SqliteDatabase.Instance.InsertUser(registerObject);
 
-            if (operationResult)
+            if (SqliteDatabase.Instance.InsertUser(registerObject))
             {
                 OnRegister?.Invoke(userInformation);
+                mUsers.Add(registerObject.Username, userInformation);
                 ChatupServer.Instance.Session.Register(userInformation);
             }
+            else
+            {
+                return RemoteResponse.EntityExists;
+            }
 
-            return operationResult;
+            return RemoteResponse.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override object InitializeLifetimeService()
+        {
+            return null;
         }
     }
 }

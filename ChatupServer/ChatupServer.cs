@@ -7,7 +7,6 @@ using ChatupNET;
 using ChatupNET.Model;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
-using ChatupNET.Rooms;
 
 public class ChatupServer
 {
@@ -16,16 +15,33 @@ public class ChatupServer
     /// </summary>
     private ChatupServer()
     {
-        roomsInitialized = false;
-        usersInitialized = false;
         RemotingConfiguration.Configure("ChatupServer.exe.config", false);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// 
     private static ChatupServer instance;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<int, Room> rooms;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<string, UserInformation> users;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private LobbyIntermediate lobbyIntermediate = new LobbyIntermediate();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private SessionIntermediate sessionIntermediate = new SessionIntermediate();
 
     /// <summary>
     /// Public getter property for the "instance" private member
@@ -46,17 +62,13 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private static SessionIntermediate sessionIntermediate = new SessionIntermediate();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private bool roomsInitialized;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private bool usersInitialized;
+    public LobbyIntermediate Lobby
+    {
+        get
+        {
+            return lobbyIntermediate;
+        }
+    }
 
     /// <summary>
     /// 
@@ -78,7 +90,8 @@ public class ChatupServer
     public void SessionActivator(
         UserHandler loginHandler,
         UserHandler logoutHandler,
-        UserHandler registerHandler)
+        UserHandler registerHandler
+    )
     {
         sessionIntermediate.OnLogin += loginHandler;
         sessionIntermediate.OnLogout += logoutHandler;
@@ -88,55 +101,33 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<int, GroupChatroom> rooms = new Dictionary<int, GroupChatroom>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private Dictionary<string, UserInformation> users = new Dictionary<string, UserInformation>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    internal Dictionary<int, GroupChatroom> RefreshRooms()
+    /// <param name="createHandler"></param>
+    /// <param name="deleteHandler"></param>
+    /// <param name="updateHandler"></param>
+    public void LobbyActivator(
+        RoomInsertHandler createHandler,
+        RoomDeleteHandler deleteHandler,
+        RoomUpdateHandler updateHandler
+    )
     {
-        if (roomsInitialized)
-        {
-            return rooms;
-        }
-
-        roomsInitialized = true;
-        rooms = SqliteDatabase.Instance.QueryRooms();
-
-        return rooms;
+        lobbyIntermediate.OnCreate += createHandler;
+        lobbyIntermediate.OnDelete += deleteHandler;
+        lobbyIntermediate.OnUpdate += updateHandler;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    internal Dictionary<string, UserInformation> RefreshUsers()
-    {
-        if (usersInitialized)
-        {
-            return users;
-        }
-
-        usersInitialized = true;
-        users = SqliteDatabase.Instance.QueryUsers();
-
-        return users;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Dictionary<int, GroupChatroom> Rooms
+    public Dictionary<int, Room> Rooms
     {
         get
         {
-            return RefreshRooms();
+            if (rooms == null)
+            {
+                rooms = SqliteDatabase.Instance.QueryRooms();
+            }
+
+            return rooms;
         }
     }
 
@@ -147,7 +138,12 @@ public class ChatupServer
     {
         get
         {
-            return RefreshUsers();
+            if (users == null)
+            {
+                users = SqliteDatabase.Instance.QueryUsers();
+            }
+
+            return users;
         }
     }
 

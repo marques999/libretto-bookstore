@@ -6,6 +6,7 @@ using ChatupNET.Database;
 using ChatupNET.Database.Enums;
 using ChatupNET.Model;
 using ChatupNET.Rooms;
+using ChatupNET.Remoting;
 
 namespace ChatupNET
 {
@@ -79,16 +80,16 @@ namespace ChatupNET
         public bool DeleteRoom(int roomId, string roomOwner)
         {
             int queryResult = 0;
-            var deleteRoom = "DELETE FROM rooms WHERE id = :id AND owner = :owner";
+            string deleteRoom = "DELETE FROM rooms WHERE id = :id AND owner = :owner";
 
-            using (var sqlCommand = new SQLiteCommand(deleteRoom, sqliteConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(deleteRoom, sqliteConnection))
             {
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldOwner, roomOwner));
                 queryResult = sqlCommand.ExecuteNonQuery();
             }
 
-            return queryResult == 0 ? true : false;
+            return queryResult == 1 ? true : false;
         }
 
         /// <summary>
@@ -126,12 +127,12 @@ namespace ChatupNET
         /// </summary>
         /// <param name="registerObject"></param>
         /// <returns></returns>
-        internal bool InsertUser(UserForm registerObject)
+        public bool InsertUser(UserForm registerObject)
         {
             int queryResult = 0;
-            var registerUser = "INSERT INTO users(username, name, password) VALUES(:username, :name, :password)";
+            string registerUser = "INSERT INTO users(username, name, password) VALUES(:username, :name, :password)";
 
-            using (var sqlCommand = new SQLiteCommand(registerUser, sqliteConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(registerUser, sqliteConnection))
             {
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldUsername, registerObject.Username));
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldName, registerObject.Name));
@@ -147,21 +148,21 @@ namespace ChatupNET
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        internal string QueryPassword(string userName)
+        public string QueryPassword(string userName)
         {
-            var sqlQuery = new SqlBuilder()
+            SqlBuilder sqlQuery = new SqlBuilder()
                 .FromTable(tableUsers)
                 .Column(fieldPassword)
                 .Where(fieldUsername, Comparison.Equals, userName);
 
-            using (var userInfo = QueryDatabase(sqlQuery))
+            using (SQLiteDataReader userInfo = QueryDatabase(sqlQuery))
             {
-                if (!userInfo.Read())
+                if (userInfo.Read())
                 {
-                    return null;
+                    return userInfo.GetString(userInfo.GetOrdinal(fieldPassword));
                 }
 
-                return userInfo.GetString(userInfo.GetOrdinal(fieldPassword));
+                return null;
             }
         }
 
@@ -174,9 +175,9 @@ namespace ChatupNET
         public bool InsertRoom(int roomId, GroupChatroom chatroomInstance)
         {
             int queryResult = 0;
-            var insertRoom = "INSERT INTO rooms(id, name, owner, password, capacity) VALUES(:id, :name, :owner, :password, :capacity)";
+            string insertRoom = "INSERT INTO rooms(id, name, owner, password, capacity) VALUES(:id, :name, :owner, :password, :capacity)";
 
-            using (var sqlCommand = new SQLiteCommand(insertRoom, sqliteConnection))
+            using (SQLiteCommand sqlCommand = new SQLiteCommand(insertRoom, sqliteConnection))
             {
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldId, roomId));
                 sqlCommand.Parameters.Add(new SQLiteParameter(fieldName, chatroomInstance.Name));
@@ -240,14 +241,14 @@ namespace ChatupNET
 
         internal Dictionary<string, UserInformation> QueryUsers()
         {
-            var users = new Dictionary<string, UserInformation>();
-            var sqlQuery = new SqlBuilder().FromTable(tableUsers).Columns(userColumns);
+            Dictionary<string, UserInformation> users = new Dictionary<string, UserInformation>();
+            SqlBuilder sqlQuery = new SqlBuilder().FromTable(tableUsers).Columns(userColumns);
 
-            using (var userEntry = QueryDatabase(sqlQuery))
+            using (SQLiteDataReader userEntry = QueryDatabase(sqlQuery))
             {
                 while (userEntry.Read())
                 {
-                    var userName = userEntry.GetString(userEntry.GetOrdinal(fieldUsername));
+                    string userName = userEntry.GetString(userEntry.GetOrdinal(fieldUsername));
 
                     users.Add(userName, new UserInformation(
                         userName,
@@ -263,16 +264,16 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, GroupChatroom> QueryRooms()
+        public Dictionary<int, Room> QueryRooms()
         {
-            var rooms = new Dictionary<int, GroupChatroom>();
-            var sqlQuery = new SqlBuilder().FromTable(tableRooms).Columns(roomColumns);
+            Dictionary<int, Room> rooms = new Dictionary<int, Room>();
+            SqlBuilder sqlQuery = new SqlBuilder().FromTable(tableRooms).Columns(roomColumns);
 
-            using (var roomEntry = QueryDatabase(sqlQuery))
+            using (SQLiteDataReader roomEntry = QueryDatabase(sqlQuery))
             {
                 while (roomEntry.Read())
                 {
-                    rooms.Add(roomEntry.GetInt32(roomEntry.GetOrdinal(fieldId)), new GroupChatroom(
+                    rooms.Add(roomEntry.GetInt32(roomEntry.GetOrdinal(fieldId)), new Room(
                         roomEntry.GetString(roomEntry.GetOrdinal(fieldName)),
                         roomEntry.GetString(roomEntry.GetOrdinal(fieldOwner)),
                         roomEntry.GetString(roomEntry.GetOrdinal(fieldPassword)),

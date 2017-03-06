@@ -10,8 +10,14 @@ namespace ChatupNET.Forms
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private ServerStatus serverStatus = ServerStatus.Running;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private enum ServerStatus
         {
             Stopped = 0,
@@ -20,6 +26,9 @@ namespace ChatupNET.Forms
             Failure = 3
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static string[] statusMessages =
         {
             "Stopped",
@@ -28,6 +37,9 @@ namespace ChatupNET.Forms
             "Failure"
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static Color[] statusColor =
         {
             Color.Black,
@@ -36,6 +48,9 @@ namespace ChatupNET.Forms
             Color.Red
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -55,8 +70,82 @@ namespace ChatupNET.Forms
                     UpsertUser(userInformation, "Offline");
                 }
             );
+
+            ChatupServer.Instance.LobbyActivator
+            (
+                delegate (int roomId, Room roomInformation)
+                {
+                    BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
+                    {
+                        roomId, roomInformation
+                    });
+                },
+                delegate (int roomId)
+                {
+                    BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
+                    {
+                        roomId
+                    });
+                },
+                delegate (int roomId, int roomCount, int roomCapacity)
+                {
+                    BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
+                    {
+                        roomId, roomCount, roomCapacity
+                    });
+                }
+            );
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomInformation"></param>
+        private void InsertRoom(int roomId, Room roomInformation)
+        {
+            treeView1.Nodes.Add(
+                Convert.ToString(roomId),
+                FormatCapacity(roomInformation)
+            );
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        private void DeleteRoom(int roomId)
+        {
+            var _roomId = Convert.ToString(roomId);
+
+            if (treeView1.Nodes.ContainsKey(_roomId))
+            {
+                treeView1.Nodes.RemoveByKey(_roomId);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomExit"></param>
+        private void UpdateRoom(int roomId, int roomCount, int roomCapacity)
+        {
+            var _roomId = Convert.ToString(roomId);
+
+            if (!treeView1.Nodes.ContainsKey(_roomId))
+            {
+                return;
+            }
+
+            var listItems = treeView1.Nodes.Find(_roomId, false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        /// <param name="userStatus"></param>
         private void UpsertUser(UserInformation userInformation, string userStatus)
         {
             if (listView1.Items.ContainsKey(userInformation.Username))
@@ -73,6 +162,10 @@ namespace ChatupNET.Forms
             listView1.Items.Insert(0, lvi);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nextStatus"></param>
         private void HandleChange(ServerStatus nextStatus)
         {
             if (serverStatus == nextStatus)
@@ -110,7 +203,12 @@ namespace ChatupNET.Forms
             serverStatus = nextStatus;
         }
 
-        private void buttonStart_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void buttonStart_Click(object sender, EventArgs args)
         {
             if (serverStatus == ServerStatus.Stopped)
             {
@@ -122,16 +220,30 @@ namespace ChatupNET.Forms
             }
         }
 
-        private void buttonExit_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void buttonExit_Click(object sender, EventArgs args)
         {
             Application.Exit();
         }
 
-        private void buttonRestart_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void buttonRestart_Click(object sender, EventArgs args)
         {
             ChangeStatus(ServerStatus.Restarting);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="statusValue"></param>
         private void ChangeStatus(ServerStatus statusValue)
         {
             HandleChange(statusValue);
@@ -139,6 +251,9 @@ namespace ChatupNET.Forms
             labelStatus.Text = statusMessages[(int)serverStatus];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void LoadUsers()
         {
             foreach (var userInformation in ChatupServer.Instance.Users)
@@ -147,6 +262,9 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void LoadRooms()
         {
             foreach (var roomInfo in ChatupServer.Instance.Rooms)
@@ -155,14 +273,37 @@ namespace ChatupNET.Forms
 
                 if (roomInstance != null)
                 {
-                    treeView1.Nodes.Add(
-                        Convert.ToString(roomInfo.Key),
-                        string.Format("{0} (0/{1})", roomInstance.Name, roomInstance.Capacity)
-                    );
+
                 }
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInstance"></param>
+        /// <returns></returns>
+        private string FormatCapacity(Room roomInstance)
+        {
+            return FormatCapacity(roomInstance.Count, roomInstance.Capacity);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
+        /// <returns></returns>
+        private string FormatCapacity(int roomCount, int roomCapacity)
+        {
+            return string.Format("{0} / {1}", roomCount, roomCapacity);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void MainForm_Load(object sender, EventArgs args)
         {
             LoadRooms();
@@ -170,14 +311,26 @@ namespace ChatupNET.Forms
             UpdateAddress(new Address(IPAddress.Loopback, 12480));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private Address addressObject;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objectInstance"></param>
         private void UpdateAddress(Address objectInstance)
         {
             addressObject = objectInstance;
             labelAddress.Text = addressObject.Host.ToString() + ":" + addressObject.Port;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void buttonAddress_click(object sender, EventArgs args)
         {
             var addressForm = new AddressForm(addressObject);

@@ -3,21 +3,20 @@
 namespace ChatupNET.Model
 {
     [Serializable]
-    public class Message
+    public class RemoteMessage
     {
-        public Message(int messageId, string user1, string user2, string messageContents)
+        public RemoteMessage(int messageId, string messageAuthor, string messageContents)
         {
-            _id = messageId;
-            _source = user1;
-            _destination = user2;
-            _contents = messageContents;
-            _timestamp = DateTime.Now;
+            mId = messageId;
+            mAuthor = messageAuthor;
+            mContents = messageContents;
+            mTimestamp = DateTime.Now;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int _id;
+        private int mId;
 
         /// <summary>
         /// Public getter property for the "_id" private attribute
@@ -26,46 +25,30 @@ namespace ChatupNET.Model
         {
             get
             {
-                return _id;
+                return mId;
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
-        private string _source;
+        private string mAuthor;
 
         /// <summary>
         /// Public getter property for the "_source" private attribute
         /// </summary>
-        public string Source
+        public string Author
         {
             get
             {
-                return _source;
+                return mAuthor;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string _destination;
-
-        /// <summary>
-        /// Public getter property for the "_destination" private attribute
-        /// </summary>
-        public string Destination
-        {
-            get
-            {
-                return _destination;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _contents;
+        private string mContents;
 
         /// <summary>
         /// Public getter property for the "_contents" private member
@@ -74,14 +57,14 @@ namespace ChatupNET.Model
         {
             get
             {
-                return _contents;
+                return mContents;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private DateTime _timestamp;
+        private DateTime mTimestamp;
 
         /// <summary>
         /// Public getter property for the "_timestamp" private member
@@ -90,7 +73,7 @@ namespace ChatupNET.Model
         {
             get
             {
-                return _timestamp;
+                return mTimestamp;
             }
         }
 
@@ -100,7 +83,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _timestamp.GetHashCode() * 31 + ID.GetHashCode();
+            return mTimestamp.GetHashCode() * 31 + ID.GetHashCode();
         }
 
         /// <summary>
@@ -112,7 +95,7 @@ namespace ChatupNET.Model
         {
             if (otherInstance != null)
             {
-                var messageObject = otherInstance as Message;
+                var messageObject = otherInstance as RemoteMessage;
 
                 if (messageObject != null)
                 {

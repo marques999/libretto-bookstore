@@ -1,6 +1,7 @@
 ﻿using System;
 
 using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 namespace ChatupNET.Rooms
 {
@@ -49,21 +50,26 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns></returns>
-        public override bool Join(string userName)
-        {
-            return !IsFull() && InsertUser(userName);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public override bool Join(string userName, string userPassword)
+        public override RemoteResponse Join(string userName, string userPassword)
         {
-            return !IsFull() && InsertUser(userName);
+            if (string.IsNullOrEmpty(userName))
+            {
+                return RemoteResponse.MissingParameters;
+            }
+
+            if (IsFull())
+            {
+                return RemoteResponse.RoomFull;
+            }
+
+            if (InsertUser(userName))
+            {
+                return RemoteResponse.Success;
+            }
+
+            return RemoteResponse.EntityExists;
         }
     }
 }

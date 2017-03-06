@@ -1,27 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
-using ChatupNET.Rooms;
+using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
-    public delegate void ExitChatroomHandler(Chatroom instance);
+    public delegate void ExitChatroomHandler(Room instance);
 
     public partial class RoomForm : Form
     {
-        private Chatroom instance;
+        private Room instance;
+        private Dictionary<string, Color> users;
+        private ChatroomIntermediate chatroomIntermediate;
+
+        public RoomForm(Room roomObject)
+        {
+            InitializeComponent();
+            instance = roomObject;
+            users = new Dictionary<string, Color>();
+            chatroomIntermediate = new ChatroomIntermediate();
+            chatroomIntermediate.OnJoin += UserJoined;
+            chatroomIntermediate.OnLeave += UserLeft;
+            chatroomIntermediate.OnMessage += AppendMessage;
+        }
+
         public event ExitChatroomHandler ExitHandler;
 
-        public RoomForm(Chatroom roomObject)
+        protected override void OnClosing(CancelEventArgs args)
         {
-            instance = roomObject;
-            InitializeComponent();
-
-            foreach (var userInstance in instance.Users)
-            {
-                UserJoined(userInstance.Key, userInstance.Value);
-            }
+            base.OnClosing(args);
+            chatroomIntermediate.OnJoin -= UserJoined;
+            chatroomIntermediate.OnLeave -= UserLeft;
+            chatroomIntermediate.OnMessage -= AppendMessage;
         }
 
         private void UpdateTitle()
@@ -36,12 +50,12 @@ namespace ChatupNET.Forms
             }
         }
 
-        public void AppendText(string text, Color color)
+        public void AppendText(string textContents, Color textColor)
         {
             richTextBox1.SelectionStart = richTextBox1.TextLength;
             richTextBox1.SelectionLength = 0;
-            richTextBox1.SelectionColor = color;
-            richTextBox1.AppendText(text);
+            richTextBox1.SelectionColor = textColor;
+            richTextBox1.AppendText(textContents);
             richTextBox1.SelectionColor = richTextBox1.ForeColor;
         }
 
@@ -51,21 +65,23 @@ namespace ChatupNET.Forms
             AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
             AppendText(userName, userColor);
             AppendText(" has joined the conversation." + "\n", Color.DimGray);
+            users.Add(userName, userColor);
         }
 
         private void UserLeft(string userName)
         {
             listBox1.Items.Remove(userName);
             AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(userName, instance.Color(userName));
+            AppendText(userName, users[userName]);
             AppendText(" has left the conversation." + "\n", Color.DimGray);
+            users.Remove(userName);
         }
 
-        private void AppendMessage(string userName, string messageContents, DateTime messageTimestamp)
+        private void AppendMessage(RemoteMessage messageInstance)
         {
-            AppendText("(" + messageTimestamp.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(userName + ": ", instance.Color(userName));
-            AppendText(messageContents + "\n", Color.Black);
+            AppendText("(" + messageInstance.Timestamp.ToShortTimeString() + ") ", Color.DimGray);
+            AppendText(messageInstance.Author + ": ", users[messageInstance.Author]);
+            AppendText(messageInstance.Contents + "\n", Color.Black);
         }
 
         private void RoomForm_Load(object sender, EventArgs args)
@@ -76,7 +92,7 @@ namespace ChatupNET.Forms
 
         private void buttonValidate_Click(object sender, EventArgs args)
         {
-            AppendMessage("marques999", textBox2.Text, DateTime.Now);
+            AppendMessage(new RemoteMessage(-1, "marques999", textBox2.Text));
             textBox2.Text = "";
         }
 
@@ -85,7 +101,7 @@ namespace ChatupNET.Forms
             buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
         }
 
-        private void RoomForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void RoomForm_FormClosing(object sender, FormClosingEventArgs args)
         {
             ExitHandler?.Invoke(instance);
         }

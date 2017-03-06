@@ -1,20 +1,24 @@
 ﻿using System;
 
+using ChatupNET.Remoting;
+using ChatupNET.Model;
+
 namespace ChatupNET.Rooms
 {
     [Serializable]
     public class GroupChatroom : Chatroom
     {
         /// <summary>
-        /// Default constructor for "GroupChatroom" class
+        /// 
         /// </summary>
         /// <param name="roomName"></param>
         /// <param name="roomPassword"></param>
         /// <param name="roomCapacity"></param>
-        public GroupChatroom(string roomName, string roomPassword, int roomCapacity) : base(roomName)
+        public GroupChatroom(string roomName, string roomOwner, string roomPassword, int roomCapacity) : base(roomName, roomOwner)
         {
             mCapacity = roomCapacity;
             mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
+            InsertUser(roomOwner);
         }
 
         /// <summary>
@@ -23,9 +27,9 @@ namespace ChatupNET.Rooms
         private int mCapacity;
 
         /// <summary>
-        /// Public getter property for the "mCapacity" private member
+        /// Public getter property for the "_capacity" private member
         /// </summary>
-        public int Capacity
+        public override int Capacity
         {
             get
             {
@@ -39,7 +43,7 @@ namespace ChatupNET.Rooms
         private string mPassword;
 
         /// <summary>
-        /// Public getter property for the "mPassword" private member
+        /// Public getter property for the "_password" private member
         /// </summary>
         public string Password
         {
@@ -53,18 +57,79 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <returns></returns>
-        public override string GetCapacity()
+        public override bool IsGroup()
         {
-            return Capacity < 1 ? "INF" : Convert.ToString(Capacity + 1);
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public override bool IsGroup()
+        public override bool IsPrivate()
         {
-            return true;
+            return mPassword != null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public override RemoteResponse Join(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return RemoteResponse.MissingParameters;
+            }
+
+            if (IsPrivate())
+            {
+                return RemoteResponse.AuthenticationFailed;
+            }
+
+            if (IsFull())
+            {
+                return RemoteResponse.RoomFull;
+            }
+
+            if (InsertUser(userName))
+            {
+                return RemoteResponse.Success;
+            }
+
+            return RemoteResponse.EntityExists;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPassword"></param>
+        /// <returns></returns>
+        public override RemoteResponse Join(string userName, string userPassword)
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userPassword))
+            {
+                return RemoteResponse.MissingParameters;
+            }
+
+            if (IsPrivate() && !userPassword.Equals(mPassword))
+            {
+                return RemoteResponse.AuthenticationFailed;
+            }
+
+            if (IsFull())
+            {
+                return RemoteResponse.RoomFull;
+            }
+
+            if (InsertUser(userName))
+            {
+                return RemoteResponse.Success;
+            }
+
+            return RemoteResponse.EntityExists;
         }
     }
 }

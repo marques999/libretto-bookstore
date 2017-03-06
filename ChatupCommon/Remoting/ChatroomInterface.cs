@@ -21,7 +21,7 @@ namespace ChatupNET.Remoting
     /// 
     /// </summary>
     /// <param name="messageInstance"></param>
-    public delegate void MessageHandler(Message messageInstance);
+    public delegate void MessageHandler(RemoteMessage messageInstance);
 
     /// <summary>
     /// 
@@ -47,25 +47,19 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="messageInstance"></param>
-        bool Insert(Message messageInstance);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        bool Join(string userName);
+        RemoteResponse Insert(RemoteMessage messageInstance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        bool Join(string userName, string userPassword);
+        RemoteResponse Join(string userName, string userPassword);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        bool Leave(string userName);
+        RemoteResponse Leave(string userName);
     }
 }

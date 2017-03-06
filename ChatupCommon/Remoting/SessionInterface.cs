@@ -33,7 +33,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         Dictionary<string, UserInformation> Users
         {
             get;
@@ -45,22 +44,20 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        /// 
-
-        bool Login(string userName, string userPassword);
+        RemoteResponse Login(string userName, string userPassword);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInstance"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        bool Logout(string userName);
+        RemoteResponse Logout(string userName);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="registerObject"></param>
         /// <returns></returns>
-        bool Register(UserForm registerObject);
+        RemoteResponse Register(UserForm registerObject);
     }
 }

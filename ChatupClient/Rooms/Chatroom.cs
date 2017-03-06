@@ -4,18 +4,31 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 
-namespace ChatupNET.Rooms
+using ChatupNET.Model;
+
+namespace ChatupNET.Remoting
 {
-    [Serializable]
-    public abstract class Chatroom
+    public abstract class Chatroom : MarshalByRefObject, ChatroomInterface
     {
         /// <summary>
-        /// Default constructor for the "Chatroom" class
+        /// 
         /// </summary>
-        /// <param name="roomName"></param>
-        public Chatroom(string roomName)
+        public event JoinHandler OnJoin;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event LeaveHandler OnLeave;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event MessageHandler OnSend;
+
+        public Chatroom(string roomName, string roomOwner)
         {
             mName = roomName;
+            mOwner = roomOwner;
         }
 
         /// <summary>
@@ -26,12 +39,29 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        private Random mRnadom = new Random();
+        public string Name
+        {
+            get
+            {
+                return mName;
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
+        private string mOwner;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Owner
+        {
+            get
+            {
+                return mOwner;
+            }
+        }
 
         /// <summary>
         /// 
@@ -43,14 +73,144 @@ namespace ChatupNET.Rooms
             .ToArray();
 
         /// <summary>
-        /// Public getter property for the "_name" private member
+        /// 
         /// </summary>
-        public string Name
+        protected Random mRandom = new Random();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected HashSet<RemoteMessage> messages = new HashSet<RemoteMessage>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messageInstance"></param>
+        /// <returns></returns>
+        public RemoteResponse Insert(RemoteMessage messageInstance)
+        {
+            if (mUsers.ContainsKey(messageInstance.Author))
+            {
+                if (messages.Add(messageInstance))
+                {
+                    OnSend?.Invoke(messageInstance);
+                }
+            }
+            else
+            {
+                return RemoteResponse.InsufficientPermissions;
+            }
+
+            return RemoteResponse.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public RemoteResponse Leave(string userName)
+        {
+            if (mUsers.ContainsKey(userName))
+            {
+                if (mUsers.Remove(userName))
+                {
+                    OnLeave?.Invoke(userName);
+                }
+                else
+                {
+                    return RemoteResponse.Failure;
+                }
+            }
+            else
+            {
+                return RemoteResponse.EntityNotFound;
+            }
+
+            return RemoteResponse.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        protected bool Exists(string userName)
+        {
+            return mUsers.ContainsKey(userName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public bool InsertUser(string userName)
+        {
+            if (mUsers.ContainsKey(userName))
+            {
+                return false;
+            }
+
+            var userColor = Colors[mRandom.Next(0, Colors.Length)];
+
+            mUsers.Add(userName, userColor);
+            OnJoin?.Invoke(userName, userColor);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="otherInstance"></param>
+        /// <returns></returns>
+        public override bool Equals(object otherInstance)
+        {
+            if (otherInstance != null)
+            {
+                var chatroomInstance = otherInstance as Chatroom;
+
+                if (chatroomInstance != null)
+                {
+                    return chatroomInstance.mName.Equals(mName);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return mName.GetHashCode();
+        }
+
+        /// <summary>
+        /// Public getter property for the "_users" private member
+        /// </summary>
+        public Dictionary<string, Color> Users
         {
             get
             {
-                return mName;
+                return mUsers;
             }
+        }
+
+        /// <summary>
+        /// Public getter property for the "_name" private member
+        /// </summary>
+        public abstract int Capacity
+        {
+            get;
         }
 
         /// <summary>
@@ -67,89 +227,6 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        public void InsertUser(string userName)
-        {
-            mUsers.Add(userName, Colors[mRnadom.Next(0, Colors.Length)]);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userColor"></param>
-        public void InsertUser(string userName, Color userColor)
-        {
-            mUsers.Add(userName, userColor);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        public void RemoveUser(string userName)
-        {
-            mUsers.Remove(userName);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public Color Color(string userName)
-        {
-            if (mUsers.ContainsKey(userName))
-            {
-                return mUsers[userName];
-            }
-
-            return System.Drawing.Color.Black;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return mName.GetHashCode();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj != null)
-            {
-                var chatroomInstance = obj as Chatroom;
-
-                if (chatroomInstance != null)
-                {
-                    return chatroomInstance.mName.Equals(mName);
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Public getter property for the "_users" private member
-        /// </summary>
-        public Dictionary<string, Color> Users
-        {
-            get
-            {
-                return mUsers;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public abstract bool IsGroup();
 
@@ -157,6 +234,30 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <returns></returns>
-        public abstract string GetCapacity();
+        public abstract bool IsPrivate();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsFull()
+        {
+            return Count < Capacity;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPassword"></param>
+        /// <returns></returns>
+        public abstract RemoteResponse Join(string userName, string userPassword);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public abstract RemoteResponse Join(string userName);
     }
 }

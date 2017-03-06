@@ -1,5 +1,14 @@
-﻿namespace ChatupNET.Remoting
+﻿using ChatupNET.Model;
+using System.Collections.Generic;
+
+namespace ChatupNET.Remoting
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roomInformation"></param>
+    public delegate void RoomInsertHandler(int id, Room roomInformation);
+
     /// <summary>
     /// 
     /// </summary>
@@ -11,16 +20,7 @@
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="roomExit"></param>
-    public delegate void RoomUpdateHandler(int roomId, string roomExit);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="roomName"></param>
-    /// <param name="roomPassword"></param>
-    /// <param name="roomCapacity"></param>
-    public delegate void RoomCreateHandler(string userName, string roomName, string roomPassword, int roomCapacity);
+    public delegate void RoomUpdateHandler(int roomId, int roomCount, int roomCapacity);
 
     /// <summary>
     /// 
@@ -30,7 +30,7 @@
         /// <summary>
         /// 
         /// </summary>
-        event RoomCreateHandler OnCreate;
+        event RoomInsertHandler OnCreate;
 
         /// <summary>
         /// 
@@ -45,20 +45,32 @@
         /// <summary>
         /// 
         /// </summary>
+        Dictionary<int, Room> List();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        RemoteResponse IsPrivate(int roomId);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="messageInstance"></param>
-        bool New(string userName, string roomName, string roomPassword, int roomCapacity);
+        RemoteResponse New(Room roomInstance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        bool Delete(string userName, int roomId);
+        RemoteResponse Delete(string userName, int roomId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        bool Join(string userName, int roomId);
+        RemoteResponse Join(string userName, string userPassword, int roomId);
     }
 }

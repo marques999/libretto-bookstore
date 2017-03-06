@@ -29,13 +29,13 @@ namespace ChatupNET.Remoting
         /// <param name="userColor"></param>
         public void JoinRoom(string userName, Color userColor)
         {
-            OnJoin(userName, userColor);
+            OnJoin?.Invoke(userName, userColor);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInstance"></param>
+        /// <param name="userName"></param>
         public void LeaveRoom(string userName)
         {
             OnLeave?.Invoke(userName);
@@ -45,7 +45,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="messageInstance"></param>
-        public void SendMessage(Message messageInstance)
+        public void SendMessage(RemoteMessage messageInstance)
         {
             OnMessage?.Invoke(messageInstance);
         }
