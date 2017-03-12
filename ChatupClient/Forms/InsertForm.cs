@@ -5,9 +5,9 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Forms
 {
-    public partial class CreateForm : Form
+    public partial class InsertForm : Form
     {
-        public CreateForm()
+        public InsertForm()
         {
             InitializeComponent();
         }

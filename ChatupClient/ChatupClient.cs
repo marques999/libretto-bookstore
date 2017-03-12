@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Net;
 using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 
 using ChatupNET;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
 using ChatupNET.Model;
+using System.Collections;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Drawing;
 
 public class ChatupClient
 {
@@ -15,9 +21,63 @@ public class ChatupClient
     /// </summary>
     private ChatupClient()
     {
+        var clientProvider = new BinaryClientFormatterSinkProvider();
+        var serverProvider = new BinaryServerFormatterSinkProvider();
+
+        var props = new Hashtable()
+        {
+            { "port", 0 }
+        };
+
         RemotingConfiguration.Configure("ChatupClient.exe.config", false);
-        mSession = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+        serverProvider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+
+        var tcpChannel = new TcpChannel(props, clientProvider, serverProvider);
+
+        ChannelServices.RegisterChannel(tcpChannel, false);
+        mChat = new MessageIntermediate();
+        mColor = ColorGenerator.Random();
         mLobby = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
+        mSession = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+        mHost = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
+
+        RemotingConfiguration.RegisterWellKnownServiceType(
+            typeof(MessageService),
+            "messaging.rem",
+            WellKnownObjectMode.Singleton
+        );
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Color mColor;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Color Color
+    {
+        get
+        {
+            return mColor;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Address mHost;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Address Host
+    {
+        get
+        {
+            return mHost;
+        }
     }
 
     /// <summary>
@@ -43,7 +103,7 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sessionIntermediate"></param>
+    /// <param name="lobbyIntermediate"></param>
     public void InitializeLobby(LobbyIntermediate lobbyIntermediate)
     {
         mLobby.OnInsert += lobbyIntermediate.CreateRoom;
@@ -54,12 +114,44 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sessionIntermediate"></param>
+    /// <param name="lobbyIntermediate"></param>
     public void DestroyLobby(LobbyIntermediate lobbyIntermediate)
     {
         mLobby.OnInsert -= lobbyIntermediate.CreateRoom;
         mLobby.OnDelete -= lobbyIntermediate.DeleteRoom;
         mLobby.OnUpdate -= lobbyIntermediate.UpdateRoom;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="connectHandler"></param>
+    /// <param name="leaveHandler"></param>
+    /// <param name="messageHandler"></param>
+    public void InitializeMessaging(
+        ConnectHandler connectHandler,
+        LeaveHandler leaveHandler,
+        MessageHandler messageHandler)
+    {
+        mChat.OnConnect += connectHandler;
+        mChat.OnDisconnect += leaveHandler;
+        mChat.OnReceive += messageHandler;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="connectHandler"></param>
+    /// <param name="leaveHandler"></param>
+    /// <param name="messageHandler"></param>
+    public void DestroyMessaging(
+        ConnectHandler connectHandler,
+        LeaveHandler leaveHandler,
+        MessageHandler messageHandler)
+    {
+        mChat.OnConnect -= connectHandler;
+        mChat.OnDisconnect -= leaveHandler;
+        mChat.OnReceive -= messageHandler;
     }
 
     /// <summary>
@@ -151,6 +243,22 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
+    private MessageIntermediate mChat;
+
+    /// <summary>
+    /// Public getter property for the "mChat" private member
+    /// </summary>
+    public MessageIntermediate Messaging
+    {
+        get
+        {
+            return mChat;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     private static ChatupClient mInstance;
 
     /// <summary>
@@ -204,17 +312,29 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
+    public UserProfile Profile
+    {
+        get
+        {
+            return new UserProfile(mUsername, mColor);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="userName"></param>
-    /// <param name="userPassword"></param>
+    /// <param name="userLogin"></param>
     /// <returns></returns>
     public RemoteResponse Login(string userName, string userPassword)
     {
-        RemoteResponse operationResult = mSession.Login(userName, userPassword);
+        var userLogin = new UserLogin(userName, userPassword, mHost);
+        var operationResult = mSession.Login(userLogin);
 
         if (operationResult == RemoteResponse.Success)
         {
             mActive = true;
-            mUsername = userName;
+            mUsername = userLogin.Username;
         }
 
         return operationResult;
@@ -226,7 +346,7 @@ public class ChatupClient
     /// <returns></returns>
     public RemoteResponse Logout()
     {
-        RemoteResponse operationResult = mSession.Logout(mUsername);
+        var operationResult = mSession.Logout(mUsername);
 
         if (operationResult == RemoteResponse.Success)
         {

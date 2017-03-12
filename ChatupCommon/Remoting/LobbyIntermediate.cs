@@ -22,6 +22,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomId"></param>
         /// <param name="roomInstance"></param>
         public void CreateRoom(int roomId, Room roomInstance)
         {
@@ -41,7 +42,8 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="roomExit"></param>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
         public void UpdateRoom(int roomId, int roomCount, int roomCapacity)
         {
             OnUpdate?.Invoke(roomId, roomCount, roomCapacity);

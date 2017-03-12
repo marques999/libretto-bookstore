@@ -12,28 +12,7 @@ namespace ChatupNET
     class SqliteDatabase
     {
         /// <summary>
-        /// 
-        /// </summary>
-        private static SqliteDatabase instance;
-
-        /// <summary>
-        /// Public getter property for the "instance" private member
-        /// </summary>
-        public static SqliteDatabase Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new SqliteDatabase();
-                }
-
-                return instance;
-            }
-        }
-
-        /// <summary>
-        /// 
+        /// Default constructor
         /// </summary>
         private SqliteDatabase()
         {
@@ -46,11 +25,28 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private SqlColumn[] userColumns = new SqlColumn[]
+        private static SqliteDatabase mInstance;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private SQLiteConnection sqliteConnection;
+
+        /// <summary>
+        /// Public getter property for the "mInstance" private member
+        /// </summary>
+        public static SqliteDatabase Instance
         {
-            new SqlColumn(SqliteConstants.Name, null),
-            new SqlColumn(SqliteConstants.Username, null)
-        };
+            get
+            {
+                if (mInstance == null)
+                {
+                    mInstance = new SqliteDatabase();
+                }
+
+                return mInstance;
+            }
+        }
 
         /// <summary>
         /// 
@@ -66,7 +62,11 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private SQLiteConnection sqliteConnection;
+        private SqlColumn[] userColumns = new SqlColumn[]
+        {
+            new SqlColumn(SqliteConstants.Name, null),
+            new SqlColumn(SqliteConstants.Username, null)
+        };
 
         /// <summary>
         /// 
@@ -89,17 +89,17 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInformation"></param>
+        /// <param name="userForm"></param>
         /// <returns></returns>
-        public bool InsertUser(UserForm userInformation)
+        public bool InsertUser(UserForm userForm)
         {
             bool operationResult = false;
 
             using (SQLiteCommand sqlCommand = new SQLiteCommand(SqliteConstants.users_INSERT, sqliteConnection))
             {
-                AddParameter(sqlCommand, SqliteConstants.Username, userInformation.Username);
-                AddParameter(sqlCommand, SqliteConstants.Name, userInformation.Name);
-                AddParameter(sqlCommand, SqliteConstants.Password, userInformation.Password);
+                AddParameter(sqlCommand, SqliteConstants.Username, userForm.Username);
+                AddParameter(sqlCommand, SqliteConstants.Name, userForm.Name);
+                AddParameter(sqlCommand, SqliteConstants.Password, userForm.Password);
                 operationResult = sqlCommand.ExecuteNonQuery() > 0;
             }
 
@@ -135,7 +135,7 @@ namespace ChatupNET
         /// <param name="roomId"></param>
         /// <param name="groupChatroom"></param>
         /// <returns></returns>
-        public bool InsertRoom(int roomId, GroupChatroom groupChatroom)
+        public bool InsertRoom(int roomId, Room groupChatroom)
         {
             bool operationResult = false;
             var queryString = SqliteConstants.rooms_INSERT_Public;
@@ -178,6 +178,7 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="roomId"></param>
+        /// <param name="roomOwner"></param>
         /// <returns></returns>
         public bool DeleteRoom(int roomId, string roomOwner)
         {
@@ -234,7 +235,8 @@ namespace ChatupNET
 
                     users.Add(userName, new UserInformation(
                         userName,
-                        ReadString(userEntry, SqliteConstants.Name)
+                        ReadString(userEntry, SqliteConstants.Name),
+                        false
                     ));
                 }
             }

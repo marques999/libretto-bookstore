@@ -1,52 +1,52 @@
 ﻿using System;
-using System.Drawing;
 
 using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public class RoomIntermediate : MarshalByRefObject
+    public class MessageIntermediate : MarshalByRefObject
     {
         /// <summary>
         /// 
         /// </summary>
-        public event JoinHandler OnJoin;
+        public event MessageHandler OnReceive;
 
         /// <summary>
         /// 
         /// </summary>
-        public event LeaveHandler OnLeave;
+        public event ConnectHandler OnConnect;
 
         /// <summary>
         /// 
         /// </summary>
-        public event MessageHandler OnMessage;
+        public event LeaveHandler OnDisconnect;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userProfile"></param>
-        public void JoinRoom(UserProfile userProfile)
+        /// <param name="userName"></param>
+        public void Disconnect(string userName)
         {
-            OnJoin?.Invoke(userProfile);
+            OnDisconnect?.Invoke(userName);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        public void LeaveRoom(string userName)
+        /// <param name="userColor"></param>
+        public void Connect(UserProfile userProfile, Address remoteHost)
         {
-            OnLeave?.Invoke(userName);
+            OnConnect?.Invoke(userProfile, remoteHost);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
-        public void SendMessage(RemoteMessage messageInstance)
+        /// <param name="remoteMessage"></param>
+        public void Push(RemoteMessage remoteMessage)
         {
-            OnMessage?.Invoke(messageInstance);
+            OnReceive?.Invoke(remoteMessage);
         }
 
         /// <summary>

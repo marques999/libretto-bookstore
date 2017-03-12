@@ -6,19 +6,7 @@ namespace ChatupNET.Model
     public class UserInformation
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="fullName"></param>
-        public UserInformation(string userName, string fullName)
-        {
-            mUsername = userName;
-            mFullName = fullName;
-            mStatus = false;
-        }
-
-        /// <summary>
-        /// 
+        /// Default constructor
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
@@ -26,7 +14,7 @@ namespace ChatupNET.Model
         public UserInformation(string userName, string fullName, bool userStatus)
         {
             mUsername = userName;
-            mFullName = fullName;
+            mFullname = fullName;
             mStatus = userStatus;
         }
 
@@ -36,7 +24,7 @@ namespace ChatupNET.Model
         private bool mStatus;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "mStatus" private member
         /// </summary>
         public bool Status
         {
@@ -56,7 +44,7 @@ namespace ChatupNET.Model
         private string mUsername;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "mUsername" private member
         /// </summary>
         public string Username
         {
@@ -69,16 +57,16 @@ namespace ChatupNET.Model
         /// <summary>
         /// 
         /// </summary>
-        private string mFullName;
+        private string mFullname;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "mFullname" private member
         /// </summary>
         public string Name
         {
             get
             {
-                return mFullName;
+                return mFullname;
             }
         }
 

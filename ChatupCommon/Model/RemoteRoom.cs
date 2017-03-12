@@ -2,11 +2,19 @@
 
 namespace ChatupNET.Remoting
 {
+    [Serializable]
     public class Room
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <param name="roomOwner"></param>
+        /// <param name="roomPassword"></param>
+        /// <param name="roomCapacity"></param>
         public Room(string roomName, string roomOwner, string roomPassword, int roomCapacity)
         {
-            mCount = 1;
+            mCount = 0;
             mName = roomName;
             mOwner = roomOwner;
             mCapacity = roomCapacity;
@@ -19,7 +27,7 @@ namespace ChatupNET.Remoting
         private string mName;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "mName" private member
         /// </summary>
         public string Name
         {
@@ -35,7 +43,7 @@ namespace ChatupNET.Remoting
         private string mOwner;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "mOwner" private member
         /// </summary>
         public string Owner
         {
@@ -51,7 +59,7 @@ namespace ChatupNET.Remoting
         private int mCount;
 
         /// <summary>
-        /// Public getter property for the "_count" private member
+        /// Public getter property for the "mCount" private member
         /// </summary>
         public int Count
         {
@@ -71,7 +79,7 @@ namespace ChatupNET.Remoting
         private string mPassword;
 
         /// <summary>
-        /// Public getter property for the "_password" private member
+        /// Public getter property for the "mPassword" private member
         /// </summary>
         public string Password
         {
@@ -87,7 +95,7 @@ namespace ChatupNET.Remoting
         private int mCapacity;
 
         /// <summary>
-        /// Public getter property for the "_capacity" private member
+        /// Public getter property for the "mCapacity" private member
         /// </summary>
         public int Capacity
         {
@@ -152,15 +160,6 @@ namespace ChatupNET.Remoting
         public bool IsFull()
         {
             return Count < Capacity;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsGroup()
-        {
-            return true;
         }
     }
 }

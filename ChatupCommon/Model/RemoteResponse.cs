@@ -1,5 +1,8 @@
-﻿namespace ChatupNET.Model
+﻿using System;
+
+namespace ChatupNET.Model
 {
+    [Serializable]
     public enum RemoteResponse
     {
         AuthenticationFailed,

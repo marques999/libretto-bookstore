@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 
@@ -8,17 +9,29 @@ using ChatupNET.Model;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
 
-using System.Linq;
-
 public class ChatupServer
 {
     /// <summary>
-    /// Default constructor for the "ChatupServer" class
+    /// Default constructor
     /// </summary>
     private ChatupServer()
     {
+        lastId = 0;
+        users = SqliteDatabase.Instance.QueryUsers();
+        rooms = SqliteDatabase.Instance.QueryRooms();
         RemotingConfiguration.Configure("ChatupServer.exe.config", false);
+        RemotingConfiguration.RegisterActivatedServiceType(typeof(RoomInterface));
+
+        if (rooms.Count > 0)
+        {
+            lastId = rooms.Aggregate((l, r) => l.Key > r.Key ? l : r).Key;
+        }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private int lastId;
 
     /// <summary>
     /// 
@@ -33,12 +46,12 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<int, GroupChatroom> objects = new Dictionary<int, GroupChatroom>();
+    private Dictionary<string, UserInformation> users;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    private Dictionary<string, UserInformation> users;
+    private Dictionary<string, Address> connections = new Dictionary<string, Address>();
 
     /// <summary>
     /// 
@@ -123,52 +136,6 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="userPassword"></param>
-    /// <returns></returns>
-    public bool Login(string userName, string userPassword)
-    {
-        bool operationResult = ValidateSession(userName);
-
-        if (operationResult)
-        {
-            users[userName].Status = true;
-            sessionIntermediate.Login(users[userName]);
-        }
-
-        return operationResult;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="userToken"></param>
-    /// <returns></returns>
-    private bool ValidateSession(string userName)
-    {
-        return Users.ContainsKey(userName) && Users[userName].Status;
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    public bool Logout(string userName)
-    {
-        bool operationResult = ValidateSession(userName);
-
-        if (operationResult)
-        {
-            users[userName].Status = false;
-            sessionIntermediate.Logout(Users[userName]);
-        }
-
-        return operationResult;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="createHandler"></param>
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
@@ -201,17 +168,69 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    private bool ValidateSession(string userName)
+    {
+        return Users.ContainsKey(userName) && Users[userName].Status;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userLogin"></param>
+    /// <returns></returns>
+    public bool Login(UserLogin userLogin)
+    {
+        var userName = userLogin.Username;
+        bool operationResult = !ValidateSession(userName);
+
+        if (operationResult)
+        {
+            users[userName].Status = true;
+            connections.Add(userName, userLogin.Host);
+            sessionIntermediate.Login(users[userName]);
+        }
+
+        return operationResult;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    public bool Logout(string userName)
+    {
+        bool operationResult = ValidateSession(userName);
+
+        if (operationResult)
+        {
+            users[userName].Status = false;
+
+            if (connections.ContainsKey(userName))
+            {
+                connections.Remove(userName);
+            }
+
+            sessionIntermediate.Logout(Users[userName]);
+        }
+
+        return operationResult;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
+    /// <returns></returns>
     public bool RegisterChatrooom(int roomId, Room roomInformation)
     {
-        var chatroomInstance = new GroupChatroom(roomInformation);
-
         try
         {
-            RemotingServices.Marshal(chatroomInstance, FormatUri(roomId));
+            RemotingServices.Marshal(new RoomService(roomInformation), FormatUri(roomId));
             rooms.Add(roomId, roomInformation);
-            objects.Add(roomId, chatroomInstance);
             lobbyIntermediate.CreateRoom(roomId, roomInformation);
         }
         catch (RemotingException)
@@ -228,16 +247,7 @@ public class ChatupServer
     /// <param name="roomId"></param>
     public void DestroyChatroom(int roomId)
     {
-        if (objects.ContainsKey(roomId))
-        {
-            var roomInstance = objects[roomId];
-
-            if (roomInstance != null)
-            {
-                RemotingServices.Disconnect(roomInstance);
-                lobbyIntermediate.DeleteRoom(roomId);
-            }
-        }
+        lobbyIntermediate.DeleteRoom(roomId);
     }
 
     /// <summary>
@@ -253,13 +263,13 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
+    /// <param name="userName"></param>
     /// <returns></returns>
-    public string FindChatroom(int roomId)
+    public Address LookupHost(string userName)
     {
-        if (objects.ContainsKey(roomId))
+        if (connections.ContainsKey(userName))
         {
-            return FormatUri(roomId);
+            return connections[userName];
         }
 
         return null;
@@ -268,8 +278,16 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private int lastId;
+    /// <param name="roomId"></param>
+    /// <returns></returns>
+    public string LookupChatroom(int roomId)
+    {
+        return "tcp://localhost:12480/" + FormatUri(roomId);
+    }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public int NextID
     {
         get
@@ -285,20 +303,6 @@ public class ChatupServer
     {
         get
         {
-            if (rooms == null)
-            {
-                rooms = SqliteDatabase.Instance.QueryRooms();
-
-                if (rooms.Count > 0)
-                {
-                    lastId = rooms.Aggregate((l, r) => l.Key > r.Key ? l : r).Key;
-                }
-                else
-                {
-                    lastId = 0;
-                }
-            }
-
             return rooms;
         }
     }
@@ -310,11 +314,6 @@ public class ChatupServer
     {
         get
         {
-            if (users == null)
-            {
-                users = SqliteDatabase.Instance.QueryUsers();
-            }
-
             return users;
         }
     }

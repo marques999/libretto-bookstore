@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
-    partial class CreateForm
+    partial class InsertForm
     {
         private IContainer components = null;
 

@@ -7,8 +7,8 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userName"></param>
-    public delegate void UserHandler(UserInformation userName);
+    /// <param name="userInformation"></param>
+    public delegate void UserHandler(UserInformation userInformation);
 
     /// <summary>
     /// 
@@ -33,15 +33,8 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        Dictionary<string, UserInformation> List();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
         /// <returns></returns>
-        RemoteResponse Login(string userName, string userPassword);
+        Dictionary<string, UserInformation> List();
 
         /// <summary>
         /// 
@@ -53,8 +46,15 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="registerObject"></param>
+        /// <param name="userLogin"></param>
         /// <returns></returns>
-        RemoteResponse Register(UserForm registerObject);
+        RemoteResponse Login(UserLogin userLogin);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userForm"></param>
+        /// <returns></returns>
+        RemoteResponse Register(UserForm userForm);
     }
 }

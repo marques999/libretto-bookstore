@@ -9,13 +9,28 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Forms
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    enum UserAction
+    {
+        Login,
+        Logout,
+        Register
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userInformation"></param>
+    /// <param name="userAction"></param>
+    delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
+
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class MainForm : Form
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private ServerStatus serverStatus = ServerStatus.Running;
-
         /// <summary>
         /// 
         /// </summary>
@@ -52,12 +67,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private enum UserAction
-        {
-            Login,
-            Logout,
-            Register
-        }
+        private ServerStatus serverStatus = ServerStatus.Running;
 
         /// <summary>
         /// 
@@ -65,7 +75,17 @@ namespace ChatupNET.Forms
         /// <param name="userInformation"></param>
         private void OnLogin(UserInformation userInformation)
         {
-            UpsertUser(userInformation, UserAction.Login);
+            if (InvokeRequired)
+            {
+                BeginInvoke(new UpsertHandler(UpsertUser), new object[]
+                {
+                    userInformation, UserAction.Login
+                });
+            }
+            else
+            {
+                UpsertUser(userInformation, UserAction.Login);
+            }
         }
 
         /// <summary>
@@ -74,7 +94,17 @@ namespace ChatupNET.Forms
         /// <param name="userInformation"></param>
         private void OnLogout(UserInformation userInformation)
         {
-            UpsertUser(userInformation, UserAction.Logout);
+            if (InvokeRequired)
+            {
+                BeginInvoke(new UpsertHandler(UpsertUser), new object[]
+                {
+                    userInformation, UserAction.Logout
+                });
+            }
+            else
+            {
+                UpsertUser(userInformation, UserAction.Logout);
+            }
         }
 
         /// <summary>
@@ -83,7 +113,17 @@ namespace ChatupNET.Forms
         /// <param name="userInformation"></param>
         private void OnRegister(UserInformation userInformation)
         {
-            UpsertUser(userInformation, UserAction.Register);
+            if (InvokeRequired)
+            {
+                BeginInvoke(new UpsertHandler(UpsertUser), new object[]
+                {
+                    userInformation, UserAction.Register
+                });
+            }
+            else
+            {
+                UpsertUser(userInformation, UserAction.Register);
+            }
         }
 
         /// <summary>
@@ -93,10 +133,17 @@ namespace ChatupNET.Forms
         /// <param name="roomInformation"></param>
         private void OnInsert(int roomId, Room roomInformation)
         {
-            BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
+            if (InvokeRequired)
             {
-                roomId, roomInformation
-            });
+                BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
+                {
+                    roomId, roomInformation
+                });
+            }
+            else
+            {
+                InsertRoom(roomId, roomInformation);
+            }
         }
 
         /// <summary>
@@ -105,10 +152,17 @@ namespace ChatupNET.Forms
         /// <param name="roomId"></param>
         private void OnDelete(int roomId)
         {
-            BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
+            if (InvokeRequired)
             {
-                roomId
-            });
+                BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
+                {
+                    roomId
+                });
+            }
+            else
+            {
+                DeleteRoom(roomId);
+            }
         }
 
         /// <summary>
@@ -119,14 +173,21 @@ namespace ChatupNET.Forms
         /// <param name="roomCapacity"></param>
         private void OnUpdate(int roomId, int roomCount, int roomCapacity)
         {
-            BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
+            if (InvokeRequired)
             {
-                roomId, roomCount, roomCapacity
-            });
+                BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
+                {
+                    roomId, roomCount, roomCapacity
+                });
+            }
+            else
+            {
+                UpdateRoom(roomId, roomCount, roomCapacity);
+            }
         }
 
         /// <summary>
-        /// 
+        /// Default constructor
         /// </summary>
         public MainForm()
         {
@@ -205,7 +266,8 @@ namespace ChatupNET.Forms
 
             var lvi = new ListViewItem(new string[]
             {
-                userInformation.Username, userAction == UserAction.Login ? "Active" : "Offline"
+                userInformation.Username,
+                userAction == UserAction.Login ? "Active" : "Offline"
             });
 
             lvi.Name = userInformation.Username;
@@ -342,9 +404,9 @@ namespace ChatupNET.Forms
             }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs args)
         {
-            base.OnClosing(e);
+            base.OnClosing(args);
             ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete, OnUpdate);
             ChatupServer.Instance.DestroySession(OnLogin, OnLogout, OnRegister);
         }
@@ -356,18 +418,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private string FormatCapacity(Room roomInstance)
         {
-            return FormatCapacity(roomInstance.Count, roomInstance.Capacity);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomCount"></param>
-        /// <param name="roomCapacity"></param>
-        /// <returns></returns>
-        private string FormatCapacity(int roomCount, int roomCapacity)
-        {
-            return string.Format(Properties.Resources.label_Capacity, roomCount, roomCapacity);
+            return string.Format("{0} ({1}/{2})", roomInstance.Name, roomInstance.Count, roomInstance.Capacity);
         }
 
         /// <summary>

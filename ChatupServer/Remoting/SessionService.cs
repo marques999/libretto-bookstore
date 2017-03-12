@@ -45,7 +45,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInstance"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
         public RemoteResponse Logout(string userName)
         {
@@ -69,21 +69,22 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
+        /// <param name="userLogin"></param>
         /// <returns></returns>
-        public RemoteResponse Login(string userName, string userPassword)
+        public RemoteResponse Login(UserLogin userLogin)
         {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userPassword))
+            var userName = userLogin.Username;
+
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userLogin.Pasword))
             {
                 return RemoteResponse.BadRequest;
             }
 
             var storedPassword = SqliteDatabase.Instance.QueryPassword(userName);
 
-            if (storedPassword.Equals(userPassword))
+            if (storedPassword.Equals(userLogin.Pasword))
             {
-                if (ChatupServer.Instance.Login(userName, userPassword))
+                if (ChatupServer.Instance.Login(userLogin))
                 {
                     OnLogin?.Invoke(Users[userName]);
                 }
@@ -117,7 +118,7 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            var userInformation = new UserInformation(registerObject.Username, registerObject.Name);
+            var userInformation = new UserInformation(registerObject.Username, registerObject.Name, false);
 
             if (SqliteDatabase.Instance.InsertUser(registerObject))
             {

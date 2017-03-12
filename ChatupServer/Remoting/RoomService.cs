@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
 
 using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public abstract class RoomService : MarshalByRefObject, RoomInterface
+    public class RoomService : MarshalByRefObject, RoomInterface
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private Room mRoom;
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,59 +28,6 @@ namespace ChatupNET.Remoting
         /// </summary>
         public event MessageHandler OnSend;
 
-        public RoomService(string roomName, string roomOwner)
-        {
-            mName = roomName;
-            mOwner = roomOwner;
-            InsertUser(roomOwner);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string mName;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return mName;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string mOwner;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Owner
-        {
-            get
-            {
-                return mOwner;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        static readonly Color[] colors = typeof(Color)
-            .GetProperties(BindingFlags.Public | BindingFlags.Static)
-            .Select(propInfo => propInfo.GetValue(null, null))
-            .Cast<Color>()
-            .ToArray();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected Random randomGenerator = new Random();
-
         /// <summary>
         /// 
         /// </summary>
@@ -87,6 +37,58 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         protected HashSet<RemoteMessage> messages = new HashSet<RemoteMessage>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInstance"></param>
+        public RoomService(Room roomInstance)
+        {
+            mRoom = roomInstance;
+            InsertUser(roomInstance.Owner);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return mRoom.Name;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Owner
+        {
+            get
+            {
+                return mRoom.Owner;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Capacity
+        {
+            get
+            {
+                return mRoom.Capacity;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, Color> List()
+        {
+            return users;
+        }
 
         /// <summary>
         /// 
@@ -167,12 +169,12 @@ namespace ChatupNET.Remoting
                 return false;
             }
 
-            var userColor = colors[randomGenerator.Next(0, colors.Length)];
+            var userColor = ColorGenerator.Random();
 
             if (userColor != null)
             {
                 users.Add(userName, userColor);
-                OnJoin?.Invoke(userName, userColor);
+                OnJoin?.Invoke(new UserProfile(userName, userColor));
             }
             else
             {
@@ -189,17 +191,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public override bool Equals(object otherInstance)
         {
-            if (otherInstance != null)
-            {
-                var otherChatroom = otherInstance as RoomService;
-
-                if (otherChatroom != null)
-                {
-                    return otherChatroom.mName.Equals(mName);
-                }
-            }
-
-            return false;
+            return mRoom.Equals(otherInstance);
         }
 
         /// <summary>
@@ -208,7 +200,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return mName.GetHashCode();
+            return mRoom.GetHashCode();
         }
 
         /// <summary>
@@ -220,14 +212,6 @@ namespace ChatupNET.Remoting
             {
                 return users;
             }
-        }
-
-        /// <summary>
-        /// Public getter property for the "_name" private member
-        /// </summary>
-        public abstract int Capacity
-        {
-            get;
         }
 
         /// <summary>
@@ -244,30 +228,32 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public abstract bool IsGroup();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool IsPrivate();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsFull()
-        {
-            return Count < Capacity;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public abstract RemoteResponse Join(string userName, string userPassword);
+        public RemoteResponse Join(string userName, string userPassword)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return RemoteResponse.BadRequest;
+            }
+
+            if (mRoom.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(mRoom.Password)))
+            {
+                return RemoteResponse.AuthenticationFailed;
+            }
+
+            if (mRoom.IsFull())
+            {
+                return RemoteResponse.RoomFull;
+            }
+
+            if (InsertUser(userName))
+            {
+                return RemoteResponse.Success;
+            }
+
+            return RemoteResponse.ObjectExists;
+        }
     }
 }

@@ -6,16 +6,16 @@ namespace ChatupNET.Model
     public class UserForm
     {
         /// <summary>
-        /// 
+        /// Default constructor
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
         /// <param name="userPassword"></param>
         public UserForm(string userName, string fullName, string userPassword)
         {
+            mFullname = fullName;
             mUsername = userName;
             mPassword = userPassword;
-            mFullName = fullName;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace ChatupNET.Model
         /// <summary>
         /// 
         /// </summary>
-        private string mFullName;
+        private string mFullname;
 
         /// <summary>
         /// Public getter property for the "mName" private member
@@ -46,7 +46,7 @@ namespace ChatupNET.Model
         {
             get
             {
-                return mFullName;
+                return mFullname;
             }
         }
 

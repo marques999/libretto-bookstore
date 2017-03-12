@@ -7,6 +7,9 @@ namespace ChatupNET
 {
     class ErrorHandler
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private static Dictionary<RemoteResponse, string> responseMessages = new Dictionary<RemoteResponse, string>()
         {
             { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginError },
@@ -15,6 +18,9 @@ namespace ChatupNET
             { RemoteResponse.PermissionDenied, "You currently don't have sufficient permissions to access this!" }
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static Dictionary<RemoteResponse, string> responseTitles = new Dictionary<RemoteResponse, string>()
         {
             { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginErrorTitle },
@@ -23,6 +29,11 @@ namespace ChatupNET
             { RemoteResponse.PermissionDenied, "Insufficient permissions" }
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parentForm"></param>
+        /// <param name="operationResult"></param>
         public static void DisplayError(Form parentForm, RemoteResponse operationResult)
         {
             MessageBox.Show(parentForm,

@@ -54,12 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorHandler.cs" />
-    <Compile Include="Forms\CreateForm.cs">
+    <Compile Include="Forms\InsertForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CreateForm.Designer.cs">
-      <DependentUpon>CreateForm.cs</DependentUpon>
+    <Compile Include="Forms\InsertForm.Designer.cs">
+      <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Remoting\MessageInterface.cs" />
+    <Compile Include="Remoting\MessageProxy.cs" />
+    <Compile Include="Remoting\MessageService.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,18 +88,21 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RoomForm.cs">
+    <Compile Include="Rooms\GroupRoom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RoomForm.Designer.cs">
-      <DependentUpon>RoomForm.cs</DependentUpon>
+    <Compile Include="Rooms\GroupRoom.Designer.cs">
+      <DependentUpon>GroupRoom.cs</DependentUpon>
     </Compile>
     <Compile Include="ChatupClient.cs" />
-    <Compile Include="Rooms\Chatroom.cs" />
-    <Compile Include="Rooms\GroupChatroom.cs" />
-    <Compile Include="Rooms\PrivateChatroom.cs" />
-    <EmbeddedResource Include="Forms\CreateForm.resx">
-      <DependentUpon>CreateForm.cs</DependentUpon>
+    <Compile Include="Rooms\PrivateRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rooms\PrivateRoom.Designer.cs">
+      <DependentUpon>PrivateRoom.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\InsertForm.resx">
+      <DependentUpon>InsertForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -120,8 +126,11 @@
     <EmbeddedResource Include="Forms\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RoomForm.resx">
-      <DependentUpon>RoomForm.cs</DependentUpon>
+    <EmbeddedResource Include="Rooms\GroupRoom.resx">
+      <DependentUpon>GroupRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rooms\PrivateRoom.resx">
+      <DependentUpon>PrivateRoom.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -145,7 +154,9 @@
       <Name>ChatupCommon</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Remoting\MessageQueue.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

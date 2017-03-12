@@ -173,7 +173,7 @@
             this.fieldPassword.PasswordChar = '*';
             this.fieldPassword.Size = new System.Drawing.Size(269, 20);
             this.fieldPassword.TabIndex = 3;
-            this.fieldPassword.Text = "lerolero";
+            this.fieldPassword.Text = "14191091";
             this.fieldPassword.TextChanged += new System.EventHandler(this.fieldPassword_TextChanged);
             // 
             // buttonRegister

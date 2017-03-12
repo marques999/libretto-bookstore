@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 
 using ChatupNET.Model;
+using System.Collections.Generic;
 
 namespace ChatupNET.Remoting
 {
@@ -13,9 +14,8 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="userColor"></param>
-    public delegate void JoinHandler(string userName, Color userColor);
+    /// <param name="userProfile"></param>
+    public delegate void JoinHandler(UserProfile userProfile);
 
     /// <summary>
     /// 
@@ -42,6 +42,12 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         event MessageHandler OnSend;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, Color> List();
 
         /// <summary>
         /// 

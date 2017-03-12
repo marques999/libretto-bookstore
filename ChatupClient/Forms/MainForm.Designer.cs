@@ -51,7 +51,7 @@
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonNew = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelUser = new System.Windows.Forms.Label();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -284,7 +284,7 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.labelUser, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonLogout, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -295,20 +295,20 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(564, 51);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // label3
+            // labelUser
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Silver;
-            this.label3.Location = new System.Drawing.Point(2, 2);
-            this.label3.Margin = new System.Windows.Forms.Padding(2);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(278, 47);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "User: marques999";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUser.AutoSize = true;
+            this.labelUser.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUser.ForeColor = System.Drawing.Color.Silver;
+            this.labelUser.Location = new System.Drawing.Point(2, 2);
+            this.labelUser.Margin = new System.Windows.Forms.Padding(2);
+            this.labelUser.Name = "labelUser";
+            this.labelUser.Size = new System.Drawing.Size(278, 47);
+            this.labelUser.TabIndex = 1;
+            this.labelUser.Text = "User: guest";
+            this.labelUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonLogout
             // 
@@ -369,7 +369,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelUser;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;

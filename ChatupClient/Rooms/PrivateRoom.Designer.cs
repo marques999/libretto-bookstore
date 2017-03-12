@@ -1,11 +1,13 @@
-﻿namespace ChatupNET.Forms
+﻿using System.ComponentModel;
+
+namespace ChatupNET.Rooms
 {
-    partial class RoomForm
+    partial class PrivateRoom
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -17,6 +19,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -28,7 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RoomForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrivateRoom));
             this.buttonValidate = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -106,7 +109,7 @@
             this.listBox1.Size = new System.Drawing.Size(121, 348);
             this.listBox1.TabIndex = 18;
             // 
-            // RoomForm
+            // PrivateRoom
             // 
             this.AcceptButton = this.buttonValidate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,10 +117,9 @@
             this.ClientSize = new System.Drawing.Size(487, 388);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RoomForm";
+            this.Name = "PrivateRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Default [1/1]";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RoomForm_FormClosing);
             this.Load += new System.EventHandler(this.RoomForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
