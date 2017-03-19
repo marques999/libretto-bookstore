@@ -1,6 +1,6 @@
 namespace ChatupNET.Database.Enums
 {
-    public enum Sorting
+    enum Sorting
     {
         Ascending,
         Descending

@@ -1,6 +1,6 @@
 namespace ChatupNET.Database.Enums
 {
-    public enum LogicOperator
+    enum LogicOperator
     {
         And,
         Or

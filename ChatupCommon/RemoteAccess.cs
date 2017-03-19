@@ -36,7 +36,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public static void InitTypeCache()
+        private static void InitTypeCache()
         {
             var typeTable = new Hashtable();
 

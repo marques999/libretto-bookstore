@@ -2,7 +2,7 @@ using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Database
 {
-    public struct TopClause
+    struct TopClause
     {
         /// <summary>
         /// 

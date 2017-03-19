@@ -5,7 +5,7 @@ using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Database
 {
-    public class SqlBuilder
+    class SqlBuilder
     {
         protected bool _distinct = false;
         protected TopClause _topClause = new TopClause(100, TopUnit.Percent);

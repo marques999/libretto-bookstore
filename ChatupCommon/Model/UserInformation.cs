@@ -6,16 +6,16 @@ namespace ChatupNET.Model
     public class UserInformation
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="userhost"></param>
-        /// <param name="userStatus"></param>
+        /// <param name="fullName"></param>
+        /// <param name="userHost"></param>
         public UserInformation(string userName, string fullName, string userHost)
         {
-            mUsername = userName;
-            mFullname = fullName;
-            mHost = userHost;
+            _username = userName;
+            _name = fullName;
+            _host = userHost;
         }
 
         /// <summary>
@@ -25,53 +25,59 @@ namespace ChatupNET.Model
         {
             get
             {
-                return mHost != null;
+                return _host != null;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mUsername;
+        private string _username;
 
         /// <summary>
-        /// Public getter property for the "mUsername" private member
+        /// Public getter property for the "_username" private member
         /// </summary>
         public string Username
         {
             get
             {
-                return mUsername;
-            }
-        }
-
-        private string mFullname;
-
-        public string Name
-        {
-            get
-            {
-                return mFullname;
+                return _username;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mHost;
+        private string _name;
 
         /// <summary>
-        /// Public getter property for the "mFullname" private member
+        /// Public getter property for the "_name" private member
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _host;
+
+        /// <summary>
+        /// Public getter property for the "_host" private member
         /// </summary>
         public string Host
         {
             get
             {
-                return mHost;
+                return _host;
             }
             set
             {
-                mHost = value;
+                _host = value;
             }
         }
 
@@ -81,7 +87,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return mUsername.GetHashCode();
+            return _username.GetHashCode();
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace ChatupNET.Model
 
                 if (otherInformation != null)
                 {
-                    return Username.Equals(otherInformation.Username);
+                    return _username.Equals(otherInformation._username);
                 }
             }
 

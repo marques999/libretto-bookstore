@@ -6,22 +6,17 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public class RoomService : MarshalByRefObject, RoomInterface
+    class RoomService : MarshalByRefObject, RoomInterface
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInstance"></param>
-        public RoomService(Room roomInstance)
+        /// <param name="roomInformation"></param>
+        public RoomService(Room roomInformation)
         {
-            mRoom = roomInstance;
-            InsertUser(roomInstance.Owner);
+            _instance = roomInformation;
+            InsertUser(roomInformation.Owner);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Room mRoom;
 
         /// <summary>
         /// 
@@ -41,67 +36,17 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected Dictionary<string, Color> users = new Dictionary<string, Color>();
+        private Room _instance;
 
         /// <summary>
         /// 
         /// </summary>
-        protected HashSet<RemoteMessage> messages = new HashSet<RemoteMessage>();
+        protected Dictionary<string, Color> _users = new Dictionary<string, Color>();
 
         /// <summary>
         /// 
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return mRoom.Name;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Owner
-        {
-            get
-            {
-                return mRoom.Owner;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Capacity
-        {
-            get
-            {
-                return mRoom.Capacity;
-            }
-        }
-
-        /// <summary>
-        /// Public getter property for the "users" private member
-        /// </summary>
-        public Dictionary<string, Color> Users
-        {
-            get
-            {
-                return users;
-            }
-        }
-
-        /// <summary>
-        /// Public getter property for the "count" private member
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return users.Count;
-            }
-        }
+        protected HashSet<RemoteMessage> _messages = new HashSet<RemoteMessage>();
 
         /// <summary>
         /// 
@@ -109,7 +54,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public Dictionary<string, Color> List()
         {
-            return users;
+            return _users;
         }
 
         /// <summary>
@@ -129,9 +74,9 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (users.ContainsKey(messageInstance.Author))
+            if (_users.ContainsKey(messageInstance.Author))
             {
-                if (messages.Add(messageInstance))
+                if (_messages.Add(messageInstance))
                 {
                     OnSend?.Invoke(messageInstance);
                 }
@@ -160,9 +105,9 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (users.ContainsKey(userName))
+            if (_users.ContainsKey(userName))
             {
-                if (users.Remove(userName))
+                if (_users.Remove(userName))
                 {
                     OnLeave?.Invoke(userName);
                 }
@@ -186,7 +131,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool InsertUser(string userName)
         {
-            bool operationResult = !users.ContainsKey(userName);
+            bool operationResult = !_users.ContainsKey(userName);
 
             if (operationResult)
             {
@@ -202,7 +147,7 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         private void InsertUser(UserProfile userProfile)
         {
-            users.Add(userProfile.Username, userProfile.Color);
+            _users.Add(userProfile.Username, userProfile.Color);
             OnJoin?.Invoke(userProfile);
         }
 
@@ -219,19 +164,19 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (mRoom.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(mRoom.Password)))
+            if (_instance.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(_instance.Password)))
             {
                 return RemoteResponse.AuthenticationFailed;
             }
 
-            if (mRoom.IsFull())
+            if (_instance.IsFull())
             {
                 return RemoteResponse.RoomFull;
             }
 
             if (InsertUser(userName))
             {
-                ChatupServer.Instance.Lobby.UpdateRoom(mRoom);
+                ChatupServer.Instance.Lobby.UpdateRoom(_instance);
             }
             else
             {

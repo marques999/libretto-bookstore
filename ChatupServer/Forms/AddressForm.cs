@@ -6,7 +6,7 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
-    public partial class AddressForm : Form
+    partial class AddressForm : Form
     {
         /// <summary>
         /// 

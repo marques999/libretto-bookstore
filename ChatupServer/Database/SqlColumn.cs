@@ -1,6 +1,6 @@
 ﻿namespace ChatupNET.Database
 {
-    public struct SqlColumn
+    struct SqlColumn
     {
         /// <summary>
         /// 

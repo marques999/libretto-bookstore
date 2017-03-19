@@ -1,6 +1,6 @@
 namespace ChatupNET.Database.Enums
 {
-    public enum JoinType
+    enum JoinType
     {
         InnerJoin,
         OuterJoin,

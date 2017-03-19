@@ -6,63 +6,63 @@ namespace ChatupNET.Model
     public class UserLogin
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPasword"></param>
         /// <param name="userHost"></param>
         public UserLogin(string userName, string userPasword, Address userHost)
         {
-            mUsername = userName;
-            mPassword = userPasword;
-            mHost = userHost;
+            _host = userHost;
+            _username = userName;
+            _password = userPasword;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mUsername;
+        private string _username;
 
         /// <summary>
-        /// Public getter property for the "mUsername" private member
+        /// Public getter property for the "_username" private member
         /// </summary>
         public string Username
         {
             get
             {
-                return mUsername;
+                return _username;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mPassword;
+        private string _password;
 
         /// <summary>
-        /// Public getter property for the "mPassword" private member
+        /// Public getter property for the "_password" private member
         /// </summary>
         public string Pasword
         {
             get
             {
-                return mPassword;
+                return _password;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private Address mHost;
+        private Address _host;
 
         /// <summary>
-        /// Public getter property for the "mHost" private member
+        /// Public getter property for the "_host" private member
         /// </summary>
         public Address Host
         {
             get
             {
-                return mHost;
+                return _host;
             }
         }
     }

@@ -6,63 +6,63 @@ namespace ChatupNET.Model
     public class UserForm
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
         /// <param name="userPassword"></param>
         public UserForm(string userName, string fullName, string userPassword)
         {
-            mFullname = fullName;
-            mUsername = userName;
-            mPassword = userPassword;
+            _name = fullName;
+            _username = userName;
+            _password = userPassword;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mUsername;
+        private string _username;
 
         /// <summary>
-        /// Public getter property for the "mUsername" private member
+        /// Public getter property for the "_username" private member
         /// </summary>
         public string Username
         {
             get
             {
-                return mUsername;
+                return _username;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mFullname;
+        private string _name;
 
         /// <summary>
-        /// Public getter property for the "mName" private member
+        /// Public getter property for the "_name" private member
         /// </summary>
         public string Name
         {
             get
             {
-                return mFullname;
+                return _name;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mPassword;
+        private string _password;
 
         /// <summary>
-        /// Public getter property for the "mPassword" private member
+        /// Public getter property for the "_password" private member
         /// </summary>
         public string Password
         {
             get
             {
-                return mPassword;
+                return _password;
             }
         }
 
@@ -72,7 +72,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return mUsername.GetHashCode() * 31 + mPassword.GetHashCode();
+            return _username.GetHashCode() * 31 + _password.GetHashCode();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace ChatupNET.Model
 
                 if (otherForm != null)
                 {
-                    return Username.Equals(otherForm.Username) && Password.Equals(otherForm.Password);
+                    return _username.Equals(otherForm._username) && _password.Equals(otherForm._password);
                 }
             }
 

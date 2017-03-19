@@ -9,7 +9,7 @@ using ChatupNET.Model;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
 
-public class ChatupServer
+class ChatupServer
 {
     /// <summary>
     /// Default constructor
@@ -38,12 +38,17 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<int, Room> rooms = SqliteDatabase.Instance.QueryRooms();
+    private LobbyIntermediate lobbyIntermediate = new LobbyIntermediate();
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, UserInformation> users = SqliteDatabase.Instance.QueryUsers();
+    private SessionIntermediate sessionIntermediate = new SessionIntermediate();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<int, Room> rooms = SqliteDatabase.Instance.QueryRooms();
 
     /// <summary>
     ///
@@ -53,12 +58,7 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private LobbyIntermediate lobbyIntermediate = new LobbyIntermediate();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private SessionIntermediate sessionIntermediate = new SessionIntermediate();
+    private Dictionary<string, UserInformation> users = SqliteDatabase.Instance.QueryUsers();
 
     /// <summary>
     /// Public getter property for the "instance" private member
@@ -101,13 +101,43 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
+    public Dictionary<int, Room> Rooms
+    {
+        get
+        {
+            return rooms;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Dictionary<string, UserInformation> Users
+    {
+        get
+        {
+            return users;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int NextID
+    {
+        get
+        {
+            return ++lastId;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="loginHandler"></param>
     /// <param name="logoutHandler"></param>
     /// <param name="registerHandler"></param>
-    public void InitializeSession(
-        UserHandler loginHandler,
-        UserHandler logoutHandler,
-        UserHandler registerHandler)
+    public void InitializeSession(UserHandler loginHandler, UserHandler logoutHandler, UserHandler registerHandler)
     {
         sessionIntermediate.OnLogin += loginHandler;
         sessionIntermediate.OnLogout += logoutHandler;
@@ -120,10 +150,7 @@ public class ChatupServer
     /// <param name="loginHandler"></param>
     /// <param name="logoutHandler"></param>
     /// <param name="registerHandler"></param>
-    public void DestroySession(
-        UserHandler loginHandler,
-        UserHandler logoutHandler,
-        UserHandler registerHandler)
+    public void DestroySession(UserHandler loginHandler, UserHandler logoutHandler, UserHandler registerHandler)
     {
         sessionIntermediate.OnLogin -= loginHandler;
         sessionIntermediate.OnLogout -= logoutHandler;
@@ -136,10 +163,7 @@ public class ChatupServer
     /// <param name="createHandler"></param>
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
-    public void InitializeLobby(
-        RoomHandler createHandler,
-        DeleteHandler deleteHandler,
-        RoomHandler updateHandler)
+    public void InitializeLobby(RoomHandler createHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
     {
         lobbyIntermediate.OnCreate += createHandler;
         lobbyIntermediate.OnDelete += deleteHandler;
@@ -152,10 +176,7 @@ public class ChatupServer
     /// <param name="createHandler"></param>
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
-    public void DestroyLobby(
-        RoomHandler createHandler,
-        DeleteHandler deleteHandler,
-        RoomHandler updateHandler)
+    public void DestroyLobby(RoomHandler createHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
     {
         lobbyIntermediate.OnCreate -= createHandler;
         lobbyIntermediate.OnDelete -= deleteHandler;
@@ -222,7 +243,6 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
     /// <returns></returns>
     public bool RegisterChatrooom(Room roomInformation)
@@ -245,9 +265,10 @@ public class ChatupServer
     /// 
     /// </summary>
     /// <param name="roomId"></param>
-    public void DestroyChatroom(int roomId)
+    /// <returns></returns>
+    private string FormatUri(int roomId)
     {
-        lobbyIntermediate.DeleteRoom(roomId);
+        return string.Format("chatroom-{0:D}.rem", roomId);
     }
 
     /// <summary>
@@ -255,9 +276,19 @@ public class ChatupServer
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    private string FormatUri(int roomId)
+    public string LookupChatroom(int roomId)
     {
-        return string.Format("chatroom-{0:D}.rem", roomId);
+        return string.Format("tcp://localhost:12480/chatroom-{0:D}.rem", roomId);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="connectionInformation"></param>
+    /// <returns></returns>
+    private string FormatHost(Address connectionInformation)
+    {
+        return string.Format("tcp://{0}:{1:D}/messaging.rem", connectionInformation.Host, connectionInformation.Port);
     }
 
     /// <summary>
@@ -278,59 +309,6 @@ public class ChatupServer
         }
 
         return null;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <returns></returns>
-    private string FormatHost(Address connectionInformation)
-    {
-        return string.Format("tcp://{0}:{1:D}/messaging.rem", connectionInformation.Host, connectionInformation.Port);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <returns></returns>
-    public string LookupChatroom(int roomId)
-    {
-        return "tcp://localhost:12480/" + FormatUri(roomId);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int NextID
-    {
-        get
-        {
-            return ++lastId;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Dictionary<int, Room> Rooms
-    {
-        get
-        {
-            return rooms;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Dictionary<string, UserInformation> Users
-    {
-        get
-        {
-            return users;
-        }
     }
 
     /// <summary>

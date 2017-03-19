@@ -12,56 +12,56 @@ namespace ChatupNET.Model
         /// <param name="messageContents"></param>
         public RemoteMessage(string messageAuthor, string messageContents)
         {
-            mAuthor = messageAuthor;
-            mContents = messageContents;
-            mTimestamp = DateTime.Now;
+            _author = messageAuthor;
+            _contents = messageContents;
+            _timestamp = DateTime.Now;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mAuthor;
+        private string _author;
 
         /// <summary>
-        /// Public getter property for the "mAuthor" private attribute
+        /// Public getter property for the "_author" private attribute
         /// </summary>
         public string Author
         {
             get
             {
-                return mAuthor;
+                return _author;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mContents;
+        private string _contents;
 
         /// <summary>
-        /// Public getter property for the "mContents" private member
+        /// Public getter property for the "_contents" private member
         /// </summary>
         public string Contents
         {
             get
             {
-                return mContents;
+                return _contents;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private DateTime mTimestamp;
+        private DateTime _timestamp;
 
         /// <summary>
-        /// Public getter property for the "mTimestamp" private member
+        /// Public getter property for the "_timestamp" private member
         /// </summary>
         public DateTime Timestamp
         {
             get
             {
-                return mTimestamp;
+                return _timestamp;
             }
         }
 
@@ -71,7 +71,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return mTimestamp.GetHashCode() * 31 + mAuthor.GetHashCode();
+            return _timestamp.GetHashCode() * 31 + _author.GetHashCode();
         }
 
         /// <summary>

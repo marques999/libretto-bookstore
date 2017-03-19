@@ -13,39 +13,39 @@ namespace ChatupNET.Model
         /// <param name="userColor"></param>
         public UserProfile(string userName, Color userColor)
         {
-            mColor = userColor;
-            mUsername = userName;
+            _color = userColor;
+            _username = userName;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mUsername;
+        private string _username;
 
         /// <summary>
-        /// Public getter property for the "mUsername" private member
+        /// Public getter property for the "_username" private member
         /// </summary>
         public string Username
         {
             get
             {
-                return mUsername;
+                return _username;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private Color mColor;
+        private Color _color;
 
         /// <summary>
-        /// Public getter property for the "mColor" private member
+        /// Public getter property for the "_color" private member
         /// </summary>
         public Color Color
         {
             get
             {
-                return mColor;
+                return _color;
             }
         }
     }

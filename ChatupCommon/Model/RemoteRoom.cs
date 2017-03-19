@@ -14,18 +14,18 @@ namespace ChatupNET.Remoting
         /// <param name="roomCapacity"></param>
         public Room(int roomId, string roomName, string roomOwner, string roomPassword, int roomCapacity)
         {
-            mCount = 0;
-            mId = roomId;
-            mName = roomName;
-            mOwner = roomOwner;
-            mCapacity = roomCapacity;
-            mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
+            _count = 0;
+            _id = roomId;
+            _name = roomName;
+            _owner = roomOwner;
+            _capacity = roomCapacity;
+            _password = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int mId;
+        private int _id;
 
         /// <summary>
         /// 
@@ -34,18 +34,18 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mId;
+                return _id;
             }
             set
             {
-                mId = value;
+                _id = value;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mName;
+        private string _name;
 
         /// <summary>
         /// Public getter property for the "mName" private member
@@ -54,14 +54,14 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mName;
+                return _name;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mOwner;
+        private string _owner;
 
         /// <summary>
         /// Public getter property for the "mOwner" private member
@@ -70,14 +70,14 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mOwner;
+                return _owner;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int mCount;
+        private int _count;
 
         /// <summary>
         /// Public getter property for the "mCount" private member
@@ -86,18 +86,18 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mCount;
+                return _count;
             }
             set
             {
-                mCount = value;
+                _count = value;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mPassword;
+        private string _password;
 
         /// <summary>
         /// Public getter property for the "mPassword" private member
@@ -106,14 +106,14 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mPassword;
+                return _password;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int mCapacity;
+        private int _capacity;
 
         /// <summary>
         /// Public getter property for the "mCapacity" private member
@@ -122,7 +122,7 @@ namespace ChatupNET.Remoting
         {
             get
             {
-                return mCapacity;
+                return _capacity;
             }
         }
 
@@ -161,7 +161,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool IsPrivate()
         {
-            return mPassword != null;
+            return _password != null;
         }
 
         /// <summary>

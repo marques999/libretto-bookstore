@@ -6,7 +6,7 @@ using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Database
 {
-    public class WhereStatement : List<List<WhereClause>>
+    class WhereStatement : List<List<WhereClause>>
     {
         /// <summary>
         /// 

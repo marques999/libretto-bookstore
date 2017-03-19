@@ -12,25 +12,22 @@ using ChatupNET.Forms;
 using ChatupNET.Remoting;
 using ChatupNET.Model;
 
-public class ChatupClient
+class ChatupClient
 {
     /// <summary>
     /// Default constructor for the "ChatupCient" class
     /// </summary>
     private ChatupClient()
     {
-        var clientProvider = new BinaryClientFormatterSinkProvider();
         var serverProvider = new BinaryServerFormatterSinkProvider();
-
-        var props = new Hashtable()
-        {
-            { "port", 0 }
-        };
 
         RemotingConfiguration.Configure("ChatupClient.exe.config", false);
         serverProvider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
 
-        var tcpChannel = new TcpChannel(props, clientProvider, serverProvider);
+        var tcpChannel = new TcpChannel(new Hashtable()
+        {
+            { "port", 0 }
+        }, new BinaryClientFormatterSinkProvider(), serverProvider);
 
         ChannelServices.RegisterChannel(tcpChannel, false);
         mLobby = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
@@ -172,15 +169,12 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="connectHandler"></param>
+    /// <param name="joinHandler"></param>
     /// <param name="leaveHandler"></param>
     /// <param name="messageHandler"></param>
-    public void InitializeMessaging(
-        ConnectHandler connectHandler,
-        DisconnectHandler leaveHandler,
-        MessageHandler messageHandler)
+    public void InitializeMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, MessageHandler messageHandler)
     {
-        OnConnect += connectHandler;
+        OnConnect += joinHandler;
         OnDisconnect += leaveHandler;
         OnReceive += messageHandler;
     }
@@ -188,15 +182,12 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="connectHandler"></param>
+    /// <param name="joinHandler"></param>
     /// <param name="leaveHandler"></param>
     /// <param name="messageHandler"></param>
-    public void DestroyMessaging(
-        ConnectHandler connectHandler,
-        DisconnectHandler leaveHandler,
-        MessageHandler messageHandler)
+    public void DestroyMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, MessageHandler messageHandler)
     {
-        OnConnect -= connectHandler;
+        OnConnect -= joinHandler;
         OnDisconnect -= leaveHandler;
         OnReceive -= messageHandler;
     }
@@ -215,6 +206,7 @@ public class ChatupClient
     /// 
     /// </summary>
     /// <param name="userName"></param>
+    /// <param name="userAction"></param>
     public void Disconnect(string userName, bool userAction)
     {
         OnDisconnect?.Invoke(userName, userAction);
@@ -293,7 +285,7 @@ public class ChatupClient
     /// 
     /// </summary>
     /// <param name="userName"></param>
-    /// <param name="userLogin"></param>
+    /// <param name="userPassword"></param>
     /// <returns></returns>
     public RemoteResponse Login(string userName, string userPassword)
     {

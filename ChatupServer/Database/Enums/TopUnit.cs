@@ -1,6 +1,6 @@
 namespace ChatupNET.Database.Enums
 {
-    public enum TopUnit
+    enum TopUnit
     {
         Records,
         Percent

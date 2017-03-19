@@ -1,6 +1,6 @@
 namespace ChatupNET.Database.Enums
 {
-    public enum Comparison
+    enum Comparison
     {
         Equals,
         NotEquals,

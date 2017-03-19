@@ -69,7 +69,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomInstance"></param>
         /// <returns></returns>
-        CustomResponse New(Room roomInstance);
+        CustomResponse New(Room roomInformation);
 
         /// <summary>
         /// 

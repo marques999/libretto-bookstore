@@ -1,6 +1,6 @@
 namespace ChatupNET.Database
 {
-    public class SqlLiteral
+    class SqlLiteral
     {
         /// <summary>
         /// 

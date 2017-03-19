@@ -29,7 +29,7 @@ namespace ChatupNET.Forms
     /// <summary>
     /// 
     /// </summary>
-    public partial class MainForm : Form
+    partial class MainForm : Form
     {
         /// <summary>
         /// 

@@ -8,43 +8,43 @@ namespace ChatupNET.Model
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="remoteResponse"></param>
+        /// <param name="responseCode"></param>
         /// <param name="responseContents"></param>
-        public CustomResponse(RemoteResponse remoteResponse, object responseContents)
+        public CustomResponse(RemoteResponse responseCode, object responseContents)
         {
-            mResponse = remoteResponse;
-            mContents = responseContents;
+            _response = responseCode;
+            _contents = responseContents;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private RemoteResponse mResponse;
+        private RemoteResponse _response;
 
         /// <summary>
-        /// Public getter property for the "mResponse" private member
+        /// Public getter property for the "_response" private member
         /// </summary>
         public RemoteResponse Response
         {
             get
             {
-                return mResponse;
+                return _response;
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private object mContents;
+        private object _contents;
 
         /// <summary>
-        /// Public getter property for the "mContents" private member
+        /// Public getter property for the "_contents" private member
         /// </summary>
         public object Contents
         {
             get
             {
-                return mContents;
+                return _contents;
             }
         }
     }

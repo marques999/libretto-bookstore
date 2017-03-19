@@ -10,7 +10,6 @@ namespace ChatupNET.Model
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serverHost"></param>
         /// <param name="serverPort"></param>
         public Address(ushort serverPort)
         {

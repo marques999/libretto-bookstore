@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 
 using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Database
 {
-    public class WhereClause
+    class WhereClause
     {
         /// <summary>
         /// 
