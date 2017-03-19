@@ -82,8 +82,6 @@
     <Compile Include="Remoting\LobbyService.cs" />
     <Compile Include="SqliteConstants.cs" />
     <Compile Include="SqliteDatabase.cs" />
-    <Compile Include="Database\Clauses\JoinClause.cs" />
-    <Compile Include="Database\Clauses\OrderByClause.cs" />
     <Compile Include="Database\Clauses\TopClause.cs" />
     <Compile Include="Database\Clauses\WhereClause.cs" />
     <Compile Include="Database\Clauses\WhereStatement.cs" />

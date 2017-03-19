@@ -7,13 +7,29 @@ namespace ChatupNET.Database
 {
     public class WhereClause
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private object m_Value;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string m_FieldName;
 
         internal struct SubClause
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public object Value;
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="logic"></param>
+            /// <param name="compareOperator"></param>
+            /// <param name="compareValue"></param>
             public SubClause(LogicOperator logic, Comparison compareOperator, object compareValue)
             {
                 LogicOperator = logic;
@@ -21,12 +37,25 @@ namespace ChatupNET.Database
                 Value = compareValue;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public LogicOperator LogicOperator;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public Comparison ComparisonOperator;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal List<SubClause> SubClauses;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FieldName
         {
             get
@@ -39,8 +68,14 @@ namespace ChatupNET.Database
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private Comparison m_ComparisonOperator;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Comparison ComparisonOperator
         {
             get
@@ -53,6 +88,9 @@ namespace ChatupNET.Database
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public object Value
         {
             get
@@ -65,26 +103,18 @@ namespace ChatupNET.Database
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="firstCompareOperator"></param>
+        /// <param name="firstCompareValue"></param>
         public WhereClause(string field, Comparison firstCompareOperator, object firstCompareValue)
         {
             m_FieldName = field;
             m_Value = firstCompareValue;
             m_ComparisonOperator = firstCompareOperator;
             SubClauses = new List<SubClause>();
-        }
-
-        public WhereClause(Enum field, Comparison firstCompareOperator, object firstCompareValue)
-        {
-            m_FieldName = field.ToString();
-            m_Value = firstCompareValue;
-            m_ComparisonOperator = firstCompareOperator;
-            SubClauses = new List<SubClause>();
-        }
-
-        public WhereClause AddClause(LogicOperator logic, Comparison compareOperator, object compareValue)
-        {
-            SubClauses.Add(new SubClause(logic, compareOperator, compareValue));
-            return this;
         }
     }
 }

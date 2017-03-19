@@ -1,5 +1,5 @@
 ﻿using ChatupNET.Model;
-
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -33,15 +33,39 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="parentForm"></param>
+        /// <param name="ex"></param>
+        public static void DisplayException(Form parentForm, Exception ex)
+        {
+            MessageBox.Show(parentForm,
+                ex.Message,
+                ex.Source,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parentForm"></param>
         /// <param name="operationResult"></param>
         public static void DisplayError(Form parentForm, RemoteResponse operationResult)
         {
-            MessageBox.Show(parentForm,
-                responseMessages[operationResult],
-                responseTitles[operationResult],
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            );
+            if (responseMessages.ContainsKey(operationResult))
+            {
+                MessageBox.Show(parentForm,
+                    responseMessages[operationResult],
+                    responseTitles[operationResult],
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(parentForm,
+                    "Unknown Error",
+                    "Unknown Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

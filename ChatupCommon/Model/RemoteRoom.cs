@@ -12,13 +12,34 @@ namespace ChatupNET.Remoting
         /// <param name="roomOwner"></param>
         /// <param name="roomPassword"></param>
         /// <param name="roomCapacity"></param>
-        public Room(string roomName, string roomOwner, string roomPassword, int roomCapacity)
+        public Room(int roomId, string roomName, string roomOwner, string roomPassword, int roomCapacity)
         {
             mCount = 0;
+            mId = roomId;
             mName = roomName;
             mOwner = roomOwner;
             mCapacity = roomCapacity;
             mPassword = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int mId;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ID
+        {
+            get
+            {
+                return mId;
+            }
+            set
+            {
+                mId = value;
+            }
         }
 
         /// <summary>
@@ -118,7 +139,7 @@ namespace ChatupNET.Remoting
 
                 if (otherChatroom != null)
                 {
-                    return otherChatroom.mName.Equals(mName);
+                    return ID == otherChatroom.ID;
                 }
             }
 
@@ -131,17 +152,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return mName.GetHashCode();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomInformation"></param>
-        /// <returns></returns>
-        public string GetCapacity()
-        {
-            return Capacity < 1 ? "INF" : Convert.ToString(Capacity + 1);
+            return ID;
         }
 
         /// <summary>

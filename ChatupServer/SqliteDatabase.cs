@@ -236,7 +236,7 @@ namespace ChatupNET
                     users.Add(userName, new UserInformation(
                         userName,
                         ReadString(userEntry, SqliteConstants.Name),
-                        false
+                        null
                     ));
                 }
             }
@@ -279,7 +279,9 @@ namespace ChatupNET
             {
                 while (roomEntry.Read())
                 {
-                    rooms.Add(ReadInteger(roomEntry, SqliteConstants.Id), new Room(
+                    var roomId = ReadInteger(roomEntry, SqliteConstants.Id);
+
+                    rooms.Add(roomId, new Room(roomId,
                         ReadString(roomEntry, SqliteConstants.Name),
                         ReadString(roomEntry, SqliteConstants.Owner),
                         ReadString(roomEntry, SqliteConstants.Password),

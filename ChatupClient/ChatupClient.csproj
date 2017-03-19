@@ -61,7 +61,6 @@
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Remoting\MessageInterface.cs" />
-    <Compile Include="Remoting\MessageProxy.cs" />
     <Compile Include="Remoting\MessageService.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -88,18 +87,18 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rooms\GroupRoom.cs">
+    <Compile Include="Rooms\AbstractRoom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Rooms\GroupRoom.Designer.cs">
-      <DependentUpon>GroupRoom.cs</DependentUpon>
+    <Compile Include="Rooms\AbstractRoom.Designer.cs">
+      <DependentUpon>AbstractRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Rooms\GroupRoom.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChatupClient.cs" />
     <Compile Include="Rooms\PrivateRoom.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Rooms\PrivateRoom.Designer.cs">
-      <DependentUpon>PrivateRoom.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\InsertForm.resx">
       <DependentUpon>InsertForm.cs</DependentUpon>
@@ -126,11 +125,8 @@
     <EmbeddedResource Include="Forms\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Rooms\GroupRoom.resx">
-      <DependentUpon>GroupRoom.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Rooms\PrivateRoom.resx">
-      <DependentUpon>PrivateRoom.cs</DependentUpon>
+    <EmbeddedResource Include="Rooms\AbstractRoom.resx">
+      <DependentUpon>AbstractRoom.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -153,9 +149,6 @@
       <Project>{f2a6b882-d61e-4304-9bd3-9a5c532dc713}</Project>
       <Name>ChatupCommon</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Remoting\MessageQueue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

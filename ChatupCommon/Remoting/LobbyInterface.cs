@@ -8,22 +8,14 @@ namespace ChatupNET.Remoting
     /// 
     /// </summary>
     /// <param name="roomId"></param>
-    public delegate void RoomDeleteHandler(int roomId);
+    public delegate void DeleteHandler(int roomId);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
-    public delegate void RoomInsertHandler(int roomId, Room roomInformation);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="roomCount"></param>
-    /// <param name="roomCapacity"></param>
-    public delegate void RoomUpdateHandler(int roomId, int roomCount, int roomCapacity);
+    public delegate void RoomHandler(Room roomInformation);
 
     /// <summary>
     /// 
@@ -33,17 +25,17 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        event RoomInsertHandler OnInsert;
+        event RoomHandler OnInsert;
 
         /// <summary>
         /// 
         /// </summary>
-        event RoomUpdateHandler OnUpdate;
+        event RoomHandler OnUpdate;
 
         /// <summary>
         /// 
         /// </summary>
-        event RoomDeleteHandler OnDelete;
+        event DeleteHandler OnDelete;
 
         /// <summary>
         /// 
@@ -55,7 +47,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Address Lookup(string userName);
+        string Lookup(string userName);
 
         /// <summary>
         /// 
@@ -67,10 +59,10 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
         /// <param name="roomId"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        RemoteResponse Delete(string userName, int roomId);
+        RemoteResponse Delete(int roomId, string userName);
 
         /// <summary>
         /// 
@@ -82,10 +74,10 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomId"></param>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        /// <param name="roomId"></param>
         /// <returns></returns>
-        CustomResponse Join(string userName, string userPassword, int roomId);
+        CustomResponse Join(int roomId, string userName, string userPassword);
     }
 }

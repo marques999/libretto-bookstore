@@ -7,8 +7,15 @@ namespace ChatupNET
 {
     partial class RegisterForm
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -19,6 +26,10 @@ namespace ChatupNET
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             flowLayout = new FlowLayoutPanel();
@@ -34,6 +45,9 @@ namespace ChatupNET
             flowLayout.SuspendLayout();
             tableLayout.SuspendLayout();
             SuspendLayout();
+            // 
+            // flowLayout
+            // 
             flowLayout.Controls.Add(buttonCancel);
             flowLayout.Controls.Add(buttonConfirm);
             flowLayout.Dock = DockStyle.Bottom;
@@ -44,6 +58,9 @@ namespace ChatupNET
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
             flowLayout.TabIndex = 8;
+            // 
+            // buttonCancel
+            // 
             buttonCancel.BackColor = SystemColors.Control;
             buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonCancel.FlatStyle = FlatStyle.Flat;
@@ -54,6 +71,9 @@ namespace ChatupNET
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
+            // 
+            // buttonConfirm
+            // 
             buttonConfirm.BackColor = SystemColors.Control;
             buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonConfirm.FlatStyle = FlatStyle.Flat;
@@ -64,6 +84,9 @@ namespace ChatupNET
             buttonConfirm.Text = "Validate";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
+            // 
+            // tableLayout
+            // 
             tableLayout.ColumnCount = 2;
             tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
             tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
@@ -85,6 +108,9 @@ namespace ChatupNET
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout.Size = new Size(284, 92);
             tableLayout.TabIndex = 9;
+            // 
+            // labelName
+            // 
             labelName.AutoSize = true;
             labelName.Dock = DockStyle.Fill;
             labelName.Location = new Point(7, 4);
@@ -93,6 +119,9 @@ namespace ChatupNET
             labelName.TabIndex = 0;
             labelName.Text = "Username";
             labelName.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // labelFullname
+            // 
             labelFullname.AutoSize = true;
             labelFullname.Dock = DockStyle.Fill;
             labelFullname.Location = new Point(7, 32);
@@ -101,6 +130,9 @@ namespace ChatupNET
             labelFullname.TabIndex = 2;
             labelFullname.Text = "Full Name";
             labelFullname.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // labelPassword
+            // 
             labelPassword.AutoSize = true;
             labelPassword.Dock = DockStyle.Fill;
             labelPassword.Location = new Point(7, 60);
@@ -109,6 +141,9 @@ namespace ChatupNET
             labelPassword.TabIndex = 4;
             labelPassword.Text = "Password";
             labelPassword.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // fieldUsername
+            // 
             fieldUsername.Dock = DockStyle.Fill;
             fieldUsername.Location = new Point(90, 8);
             fieldUsername.Margin = new Padding(4);
@@ -116,13 +151,20 @@ namespace ChatupNET
             fieldUsername.Size = new Size(186, 20);
             fieldUsername.TabIndex = 1;
             fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
+            // 
+            // fieldPassword
+            // 
             fieldPassword.Dock = DockStyle.Fill;
             fieldPassword.Location = new Point(90, 64);
             fieldPassword.Margin = new Padding(4);
             fieldPassword.Name = "fieldPassword";
+            fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(186, 20);
             fieldPassword.TabIndex = 5;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
+            // 
+            // fieldName
+            // 
             fieldName.Dock = DockStyle.Fill;
             fieldName.Location = new Point(90, 36);
             fieldName.Margin = new Padding(4);
@@ -130,6 +172,9 @@ namespace ChatupNET
             fieldName.Size = new Size(186, 20);
             fieldName.TabIndex = 3;
             fieldName.TextChanged += new EventHandler(fieldName_TextChanged);
+            // 
+            // RegisterForm
+            // 
             AcceptButton = buttonConfirm;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;

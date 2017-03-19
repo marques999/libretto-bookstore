@@ -25,17 +25,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, UserInformation> Users
-        {
-            get
-            {
-                return ChatupServer.Instance.Users;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public Dictionary<string, UserInformation> List()
         {
@@ -54,9 +43,11 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (ChatupServer.Instance.Logout(userName))
+            var userInformation = ChatupServer.Instance.Logout(userName);
+
+            if (userInformation != null)
             {
-                OnLogout?.Invoke(Users[userName]);
+                OnLogout?.Invoke(userInformation);
             }
             else
             {
@@ -84,9 +75,11 @@ namespace ChatupNET.Remoting
 
             if (storedPassword.Equals(userLogin.Pasword))
             {
-                if (ChatupServer.Instance.Login(userLogin))
+                var userInformation = ChatupServer.Instance.Login(userLogin);
+
+                if (userInformation != null)
                 {
-                    OnLogin?.Invoke(Users[userName]);
+                    OnLogin?.Invoke(userInformation);
                 }
                 else
                 {
@@ -118,12 +111,12 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            var userInformation = new UserInformation(registerObject.Username, registerObject.Name, false);
+            var userInformation = new UserInformation(registerObject.Username, registerObject.Name, null);
 
             if (SqliteDatabase.Instance.InsertUser(registerObject))
             {
                 OnRegister?.Invoke(userInformation);
-                Users.Add(registerObject.Username, userInformation);
+                ChatupServer.Instance.Users.Add(registerObject.Username, userInformation);
                 ChatupServer.Instance.Session.Register(userInformation);
             }
             else

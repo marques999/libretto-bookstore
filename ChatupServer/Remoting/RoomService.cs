@@ -11,6 +11,16 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomInstance"></param>
+        public RoomService(Room roomInstance)
+        {
+            mRoom = roomInstance;
+            InsertUser(roomInstance.Owner);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private Room mRoom;
 
         /// <summary>
@@ -37,16 +47,6 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         protected HashSet<RemoteMessage> messages = new HashSet<RemoteMessage>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomInstance"></param>
-        public RoomService(Room roomInstance)
-        {
-            mRoom = roomInstance;
-            InsertUser(roomInstance.Owner);
-        }
 
         /// <summary>
         /// 
@@ -78,6 +78,28 @@ namespace ChatupNET.Remoting
             get
             {
                 return mRoom.Capacity;
+            }
+        }
+
+        /// <summary>
+        /// Public getter property for the "users" private member
+        /// </summary>
+        public Dictionary<string, Color> Users
+        {
+            get
+            {
+                return users;
+            }
+        }
+
+        /// <summary>
+        /// Public getter property for the "count" private member
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return users.Count;
             }
         }
 
@@ -164,65 +186,24 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool InsertUser(string userName)
         {
-            if (users.ContainsKey(userName))
+            bool operationResult = !users.ContainsKey(userName);
+
+            if (operationResult)
             {
-                return false;
+                InsertUser(new UserProfile(userName, ColorGenerator.Random()));
             }
 
-            var userColor = ColorGenerator.Random();
-
-            if (userColor != null)
-            {
-                users.Add(userName, userColor);
-                OnJoin?.Invoke(new UserProfile(userName, userColor));
-            }
-            else
-            {
-                return false;
-            }
-
-            return true;
+            return operationResult;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="otherInstance"></param>
-        /// <returns></returns>
-        public override bool Equals(object otherInstance)
+        /// <param name="userProfile"></param>
+        private void InsertUser(UserProfile userProfile)
         {
-            return mRoom.Equals(otherInstance);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return mRoom.GetHashCode();
-        }
-
-        /// <summary>
-        /// Public getter property for the "_users" private member
-        /// </summary>
-        public Dictionary<string, Color> Users
-        {
-            get
-            {
-                return users;
-            }
-        }
-
-        /// <summary>
-        /// Public getter property for the "_count" private member
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return users.Count;
-            }
+            users.Add(userProfile.Username, userProfile.Color);
+            OnJoin?.Invoke(userProfile);
         }
 
         /// <summary>
@@ -250,10 +231,23 @@ namespace ChatupNET.Remoting
 
             if (InsertUser(userName))
             {
-                return RemoteResponse.Success;
+                ChatupServer.Instance.Lobby.UpdateRoom(mRoom);
+            }
+            else
+            {
+                return RemoteResponse.ObjectExists;
             }
 
-            return RemoteResponse.ObjectExists;
+            return RemoteResponse.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override object InitializeLifetimeService()
+        {
+            return null;
         }
     }
 }

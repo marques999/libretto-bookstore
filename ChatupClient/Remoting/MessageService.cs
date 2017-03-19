@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using ChatupNET.Model;
-using ChatupNET.Forms;
 
 namespace ChatupNET.Remoting
 {
@@ -11,9 +10,11 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public void SetForm(MainForm mainForm)
+        public MessageService()
         {
-            mForm = mainForm;
+            OnReceive += ChatupClient.Instance.Push;
+            OnConnect += ChatupClient.Instance.Connect;
+            OnDisconnect += ChatupClient.Instance.Disconnect;
         }
 
         /// <summary>
@@ -24,7 +25,17 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        private MainForm mForm;
+        public event MessageHandler OnReceive;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event ConnectHandler OnConnect;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event DisconnectHandler OnDisconnect;
 
         /// <summary>
         /// 
@@ -41,12 +52,9 @@ namespace ChatupNET.Remoting
             if (users.Contains(userName))
             {
                 users.Remove(userName);
-                ChatupClient.Instance.Messaging.Disconnect(userName);
             }
-            else
-            {
-                return RemoteResponse.OperationFailed;
-            }
+
+            OnDisconnect?.Invoke(userName, false);
 
             return RemoteResponse.Success;
         }
@@ -73,14 +81,7 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            var userName = messageInstance.Author;
-
-            if (!users.Contains(userName))
-            {
-                return RemoteResponse.PermissionDenied;
-            }
-
-            ChatupClient.Instance.Messaging.Push(messageInstance);
+            OnReceive?.Invoke(messageInstance);
 
             return RemoteResponse.Success;
         }
@@ -90,33 +91,37 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public RemoteResponse Connect(UserProfile userProfile, Address userHost)
+        public CustomResponse Connect(UserProfile userProfile, string userHost)
         {
             var userName = userProfile.Username;
 
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.BadRequest;
+                return new CustomResponse(RemoteResponse.BadRequest, null);
             }
 
-            if (users.Contains(userName))
+            /*if (users.Contains(userName))
             {
-                return RemoteResponse.SessionExists;
+                return new CustomResponse(RemoteResponse.SessionExists, null);
+            }*/
+
+            if (!users.Contains(userName))
+            {
+                users.Add(userName);
             }
 
-            users.Add(userName);
-            ChatupClient.Instance.Messaging.Connect(userProfile, userHost);
+            OnConnect?.Invoke(userProfile, userHost);
 
-            return RemoteResponse.Success;
+            return new CustomResponse(RemoteResponse.Success, ChatupClient.Instance.Profile);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public UserProfile Profile()
+        public override object InitializeLifetimeService()
         {
-            return ChatupClient.Instance.Profile;
+            return null;
         }
     }
 }

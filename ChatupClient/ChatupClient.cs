@@ -1,18 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Net;
+using System.Drawing;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
 
 using ChatupNET;
 using ChatupNET.Forms;
 using ChatupNET.Remoting;
 using ChatupNET.Model;
-using System.Collections;
-using System.Runtime.Remoting.Channels.Tcp;
-using System.Drawing;
 
 public class ChatupClient
 {
@@ -35,8 +33,6 @@ public class ChatupClient
         var tcpChannel = new TcpChannel(props, clientProvider, serverProvider);
 
         ChannelServices.RegisterChannel(tcpChannel, false);
-        mChat = new MessageIntermediate();
-        mColor = ColorGenerator.Random();
         mLobby = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
         mSession = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
         mHost = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
@@ -51,7 +47,52 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private Color mColor;
+    private Address mHost;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private string mUsername;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static ChatupClient mInstance;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public event MessageHandler OnReceive;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public event ConnectHandler OnConnect;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public event DisconnectHandler OnDisconnect;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Color mColor = ColorGenerator.Random();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private LobbyInterface mLobby;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private SessionInterface mSession;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<int, RoomInterface> mRooms = new Dictionary<int, RoomInterface>();
 
     /// <summary>
     /// 
@@ -67,11 +108,6 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private Address mHost;
-
-    /// <summary>
-    /// 
-    /// </summary>
     public Address Host
     {
         get
@@ -83,8 +119,19 @@ public class ChatupClient
     /// <summary>
     /// 
     /// </summary>
+    public string LocalAddress
+    {
+        get
+        {
+            return string.Format("tcp://{0}:{1:D}/messaging.rem", mHost.Host, mHost.Port);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="sessionIntermediate"></param>
-    public void IntializeSession(SessionIntermediate sessionIntermediate)
+    public void InitializeSession(SessionIntermediate sessionIntermediate)
     {
         mSession.OnLogin += sessionIntermediate.Login;
         mSession.OnLogout += sessionIntermediate.Logout;
@@ -130,12 +177,12 @@ public class ChatupClient
     /// <param name="messageHandler"></param>
     public void InitializeMessaging(
         ConnectHandler connectHandler,
-        LeaveHandler leaveHandler,
+        DisconnectHandler leaveHandler,
         MessageHandler messageHandler)
     {
-        mChat.OnConnect += connectHandler;
-        mChat.OnDisconnect += leaveHandler;
-        mChat.OnReceive += messageHandler;
+        OnConnect += connectHandler;
+        OnDisconnect += leaveHandler;
+        OnReceive += messageHandler;
     }
 
     /// <summary>
@@ -146,52 +193,41 @@ public class ChatupClient
     /// <param name="messageHandler"></param>
     public void DestroyMessaging(
         ConnectHandler connectHandler,
-        LeaveHandler leaveHandler,
+        DisconnectHandler leaveHandler,
         MessageHandler messageHandler)
     {
-        mChat.OnConnect -= connectHandler;
-        mChat.OnDisconnect -= leaveHandler;
-        mChat.OnReceive -= messageHandler;
+        OnConnect -= connectHandler;
+        OnDisconnect -= leaveHandler;
+        OnReceive -= messageHandler;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="chatroomIntermediate"></param>
-    public void InitializeRoom(int roomId, RoomIntermediate chatroomIntermediate)
+    /// <param name="userProfile"></param>
+    /// <param name="remoteHost"></param>
+    public void Connect(UserProfile userProfile, string remoteHost)
     {
-        var chatroomInstance = Room(roomId);
-
-        if (chatroomInstance != null)
-        {
-            chatroomInstance.OnJoin += chatroomIntermediate.JoinRoom;
-            chatroomInstance.OnLeave += chatroomIntermediate.LeaveRoom;
-            chatroomInstance.OnSend += chatroomIntermediate.SendMessage;
-        }
+        OnConnect?.Invoke(userProfile, remoteHost);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="chatroomIntermediate"></param>
-    public void DestroyRoom(int roomId, RoomIntermediate chatroomIntermediate)
+    /// <param name="userName"></param>
+    public void Disconnect(string userName, bool userAction)
     {
-        var chatroomInstance = Room(roomId);
-
-        if (chatroomInstance != null)
-        {
-            chatroomInstance.OnJoin -= chatroomIntermediate.JoinRoom;
-            chatroomInstance.OnLeave -= chatroomIntermediate.LeaveRoom;
-            chatroomInstance.OnSend -= chatroomIntermediate.SendMessage;
-        }
+        OnDisconnect?.Invoke(userName, userAction);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private SessionInterface mSession;
+    /// <param name="remoteMessage"></param>
+    public void Push(RemoteMessage remoteMessage)
+    {
+        OnReceive?.Invoke(remoteMessage);
+    }
 
     /// <summary>
     /// Public getter property for the "mSession" private member
@@ -205,31 +241,6 @@ public class ChatupClient
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    private Dictionary<int, RoomInterface> mRooms = new Dictionary<int, RoomInterface>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <returns></returns>
-    public RoomInterface Room(int roomId)
-    {
-        if (mRooms.ContainsKey(roomId))
-        {
-            return mRooms[roomId];
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private LobbyInterface mLobby;
-
-    /// <summary>
     /// Public getter property for the "mLobby" private member
     /// </summary>
     public LobbyInterface Lobby
@@ -239,27 +250,6 @@ public class ChatupClient
             return mLobby;
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private MessageIntermediate mChat;
-
-    /// <summary>
-    /// Public getter property for the "mChat" private member
-    /// </summary>
-    public MessageIntermediate Messaging
-    {
-        get
-        {
-            return mChat;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private static ChatupClient mInstance;
 
     /// <summary>
     /// Public getter property for the "mInstance" private member
@@ -278,11 +268,6 @@ public class ChatupClient
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    private string mUsername;
-
-    /// <summary>
     /// Public getter property for the "username" private member
     /// </summary>
     public string Username
@@ -290,22 +275,6 @@ public class ChatupClient
         get
         {
             return mUsername;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private bool mActive;
-
-    /// <summary>
-    /// Public getter property for the "active" private member
-    /// </summary>
-    public bool Active
-    {
-        get
-        {
-            return mActive && mUsername != null;
         }
     }
 
@@ -333,7 +302,6 @@ public class ChatupClient
 
         if (operationResult == RemoteResponse.Success)
         {
-            mActive = true;
             mUsername = userLogin.Username;
         }
 
@@ -350,7 +318,6 @@ public class ChatupClient
 
         if (operationResult == RemoteResponse.Success)
         {
-            mActive = false;
             mUsername = null;
         }
 

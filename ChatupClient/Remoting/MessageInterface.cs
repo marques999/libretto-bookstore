@@ -5,9 +5,16 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="userProfile"></param>
+    /// <param name="remoteHost"></param>
+    public delegate void ConnectHandler(UserProfile userProfile, string remoteHost);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="userName"></param>
-    /// <param name="userColor"></param>
-    public delegate void ConnectHandler(UserProfile userProfile, Address remoteHost);
+    /// <param name="userAction"></param>
+    public delegate void DisconnectHandler(string userName, bool userAction);
 
     /// <summary>
     /// 
@@ -17,26 +24,38 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
-        RemoteResponse Send(RemoteMessage messageInstance);
+        event MessageHandler OnReceive;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event ConnectHandler OnConnect;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event DisconnectHandler OnDisconnect;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
+        /// <returns></returns>
         RemoteResponse Disconnect(string userName);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userProfile"></param>
+        /// <param name="messageInstance"></param>
         /// <returns></returns>
-        RemoteResponse Connect(UserProfile userProfile, Address userHost);
+        RemoteResponse Send(RemoteMessage messageInstance);
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userProfile"></param>
+        /// <param name="userHost"></param>
         /// <returns></returns>
-        UserProfile Profile();
+        CustomResponse Connect(UserProfile userProfile, string userHost);
     }
 }

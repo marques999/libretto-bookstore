@@ -131,18 +131,18 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
-        private void OnInsert(int roomId, Room roomInformation)
+        private void OnInsert(Room roomInformation)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomInsertHandler(InsertRoom), new object[]
+                BeginInvoke(new RoomHandler(InsertRoom), new object[]
                 {
-                    roomId, roomInformation
+                    roomInformation
                 });
             }
             else
             {
-                InsertRoom(roomId, roomInformation);
+                InsertRoom(roomInformation);
             }
         }
 
@@ -154,7 +154,7 @@ namespace ChatupNET.Forms
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomDeleteHandler(DeleteRoom), new object[]
+                BeginInvoke(new DeleteHandler(DeleteRoom), new object[]
                 {
                     roomId
                 });
@@ -171,18 +171,18 @@ namespace ChatupNET.Forms
         /// <param name="roomId"></param>
         /// <param name="roomCount"></param>
         /// <param name="roomCapacity"></param>
-        private void OnUpdate(int roomId, int roomCount, int roomCapacity)
+        private void OnUpdate(Room roomInformation)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomUpdateHandler(UpdateRoom), new object[]
+                BeginInvoke(new RoomHandler(UpdateRoom), new object[]
                 {
-                    roomId, roomCount, roomCapacity
+                    roomInformation
                 });
             }
             else
             {
-                UpdateRoom(roomId, roomCount, roomCapacity);
+                UpdateRoom(roomInformation);
             }
         }
 
@@ -201,10 +201,10 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
-        private void InsertRoom(int roomId, Room roomInformation)
+        private void InsertRoom(Room roomInformation)
         {
             treeView1.Nodes.Add(
-                Convert.ToString(roomId),
+                Convert.ToString(roomInformation.ID),
                 FormatCapacity(roomInformation)
             );
         }
@@ -228,16 +228,21 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomExit"></param>
-        private void UpdateRoom(int roomId, int roomCount, int roomCapacity)
+        private void UpdateRoom(Room roomInformation)
         {
-            var _roomId = Convert.ToString(roomId);
+            var _roomId = Convert.ToString(roomInformation.ID);
+            var nodeIndex = treeView1.Nodes.IndexOfKey(_roomId);
 
-            if (!treeView1.Nodes.ContainsKey(_roomId))
+            if (nodeIndex >= 0)
             {
-                return;
-            }
+                var nodeItem = treeView1.Nodes[nodeIndex];
 
-            var listItems = treeView1.Nodes.Find(_roomId, false);
+                if (nodeItem != null)
+                {
+                    nodeItem.Nodes.RemoveAt(0);
+                    nodeItem.Nodes.Insert(0, FormatCapacity(roomInformation));
+                }
+            }
         }
 
         /// <summary>
@@ -267,7 +272,7 @@ namespace ChatupNET.Forms
             var lvi = new ListViewItem(new string[]
             {
                 userInformation.Username,
-                userAction == UserAction.Login ? "Active" : "Offline"
+                userAction == UserAction.Login ? userInformation.Host : "Offline"
             });
 
             lvi.Name = userInformation.Username;

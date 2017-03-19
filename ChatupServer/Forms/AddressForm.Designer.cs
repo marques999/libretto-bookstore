@@ -1,11 +1,18 @@
-﻿namespace ChatupNET.Forms
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+using IPAddressControlLib;
+
+namespace ChatupNET.Forms
 {
     partial class AddressForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -17,10 +24,9 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -170,15 +176,13 @@
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.FlowLayoutPanel flowLayout;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonConfirm;
-        private System.Windows.Forms.TableLayoutPanel tableLayout;
-        private System.Windows.Forms.TextBox fieldPort;
-        private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.Label labelPassword;
-        private IPAddressControlLib.IPAddressControl fieldAddress;
+        private FlowLayoutPanel flowLayout;
+        private Button buttonCancel;
+        private Button buttonConfirm;
+        private TableLayoutPanel tableLayout;
+        private TextBox fieldPort;
+        private Label labelName;
+        private Label labelPassword;
+        private IPAddressControl fieldAddress;
     }
 }

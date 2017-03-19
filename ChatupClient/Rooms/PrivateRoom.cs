@@ -1,59 +1,100 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Runtime.Remoting;
 
 using ChatupNET.Model;
 using ChatupNET.Remoting;
+using System.Windows.Forms;
 
 namespace ChatupNET.Rooms
 {
     /// <summary>
     /// 
     /// </summary>
-    public partial class PrivateRoom : Form
+    public class PrivateRoom : AbstractRoom
     {
+        private string mUsername;
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sourceUser"></param>
-        /// <param name="destinationUser"></param>
         /// <param name="remoteHost"></param>
-        public PrivateRoom(UserProfile sourceUser, UserProfile destinationUser, Address remoteHost)
+        public PrivateRoom(string remoteHost) : base() // CLIENT MODE
         {
-            InitializeComponent();
-
-            messageInterface = (MessageInterface)RemotingServices.Connect(
-                typeof(MessageInterface),
-                string.Format(uriFormat, remoteHost.Host, remoteHost.Port)
-            );
-
-            if (destinationUser == null)
+            try
             {
-                destinationUser = messageInterface.Profile();
+                messageInterface = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
+                InitializeRemote();
             }
-
-            var operationResult = messageInterface.Connect(sourceUser, ChatupClient.Instance.Host);
-
-            mUsername = sourceUser.Username;
-            Text = string.Format("{0} [PRIVATE]", destinationUser.Username);
-
-            if (operationResult != RemoteResponse.Success)
+            catch (Exception ex)
             {
-                ErrorHandler.DisplayError(this, operationResult);
-                Close();
+                mConnected = false;
+                ErrorHandler.DisplayException(this, ex);
             }
-
-            UserJoined(sourceUser.Username, sourceUser.Color);
-            UserJoined(destinationUser.Username, destinationUser.Color);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private string mUsername;
+        /// <param name="userProfile"></param>
+        /// <param name="remoteHost"></param>
+        public PrivateRoom(UserProfile userProfile, string remoteHost) // SERVER MODE
+        {
+            try
+            {
+                messageInterface = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
+                InitializeRoom(userProfile);
+            }
+            catch (Exception ex)
+            {
+                mConnected = false;
+                ErrorHandler.DisplayException(this, ex);
+            }
+        }
+
+        private void InitializeRemote()
+        {
+            var operationResult = messageInterface.Connect(ChatupClient.Instance.Profile, ChatupClient.Instance.LocalAddress);
+
+            if (operationResult == null)
+            {
+                return;
+            }
+
+            if (operationResult.Response == RemoteResponse.Success)
+            {
+                var userProfile = operationResult.Contents as UserProfile;
+
+                if (userProfile != null)
+                {
+                    InitializeRoom(userProfile);
+                }
+                else
+                {
+                    ErrorHandler.DisplayError(this, RemoteResponse.BadRequest);
+                }
+            }
+            else
+            {
+                ErrorHandler.DisplayError(this, operationResult.Response);
+            }
+        }
+
+        private bool mConnected = false;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userProfile"></param>
+        /// <param name="remoteHost"></param>
+        private void InitializeRoom(UserProfile userProfile)
+        {
+            mConnected = true;
+            mUsername = userProfile.Username;
+            UserJoined(ChatupClient.Instance.Profile);
+            UserJoined(userProfile);
+            Text = string.Format("{0} [PRIVATE]", mUsername);
+        }
 
         /// <summary>
         /// 
@@ -63,20 +104,16 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        private string uriFormat = "tcp://{0}:{1:D}/messaging.rem";
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
-            if (messageInterface != null)
+            if (mConnected && messageInterface != null)
             {
-                var operationResult = messageInterface.Disconnect(mUsername);
+                var operationResult = messageInterface.Disconnect(ChatupClient.Instance.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
+                    ChatupClient.Instance.Disconnect(mUsername, true);
                     base.OnClosing(args);
                 }
                 else
@@ -94,65 +131,11 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="messageContents"></param>
-        /// <param name="messageColor"></param>
-        private void AppendText(string messageContents, Color messageColor)
-        {
-            richTextBox1.SelectionStart = richTextBox1.TextLength;
-            richTextBox1.SelectionLength = 0;
-            richTextBox1.SelectionColor = messageColor;
-            richTextBox1.AppendText(messageContents);
-            richTextBox1.SelectionColor = richTextBox1.ForeColor;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userColor"></param>
-        private void UserJoined(string userName, Color userColor)
-        {
-            listBox1.Items.Add(userName);
-            mUsers.Add(userName, userColor);
-            AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(userName, userColor);
-            AppendText(" has joined the conversation." + "\n", Color.DimGray);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="remoteMessage"></param>
-        public void AppendMessage(RemoteMessage remoteMessage)
-        {
-            AppendText("(" + remoteMessage.Timestamp.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(remoteMessage.Author + ": ", mUsers[remoteMessage.Author]);
-            AppendText(remoteMessage.Contents + "\n", Color.Black);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void RoomForm_Load(object sender, EventArgs args)
+        protected override void buttonValidate_Click(object sender, EventArgs args)
         {
-            buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void buttonValidate_Click(object sender, EventArgs args)
-        {
-            var remoteMessage = new RemoteMessage(mUsername, textBox2.Text);
+            var remoteMessage = GenerateMessage();
 
             if (remoteMessage != null)
             {
@@ -160,8 +143,7 @@ namespace ChatupNET.Rooms
 
                 if (operationResult == RemoteResponse.Success)
                 {
-                    textBox2.Text = "";
-                    AppendMessage(remoteMessage);
+                    AppendMessage(remoteMessage, true);
                 }
                 else
                 {
@@ -170,14 +152,9 @@ namespace ChatupNET.Rooms
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void textBox2_TextChanged(object sender, EventArgs args)
+        internal void Disconnect()
         {
-            buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
+            mConnected = false;
         }
     }
 }

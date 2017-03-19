@@ -8,79 +8,94 @@ namespace ChatupNET.Database
 {
     public class WhereStatement : List<List<WhereClause>>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int ClauseLevels
         {
             get
             {
-                return this.Count;
+                return Count;
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="level"></param>
         private void AssertLevelExistance(int level)
         {
-            if (this.Count < (level - 1))
+            if (Count < (level - 1))
             {
                 throw new Exception("Level " + level + " not allowed because level " + (level - 1) + " does not exist.");
             }
-            else if (this.Count < level)
+            else if (Count < level)
             {
-                this.Add(new List<WhereClause>());
+                Add(new List<WhereClause>());
             }
         }
 
-        public void Add(WhereClause clause)
-        {
-            this.Add(clause, 1);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clause"></param>
+        /// <param name="level"></param>
         public void Add(WhereClause clause, int level)
         {
-            this.AddWhereClauseToLevel(clause, level);
+            AddWhereClauseToLevel(clause, level);
         }
 
-        public WhereClause Add(string field, Comparison @operator, object compareValue)
-        {
-            return this.Add(field, @operator, compareValue, 1);
-        }
-
-        public WhereClause Add(Enum field, Comparison @operator, object compareValue)
-        {
-            return this.Add(field.ToString(), @operator, compareValue, 1);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="operator"></param>
+        /// <param name="compareValue"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public WhereClause Add(string field, Comparison @operator, object compareValue, int level)
         {
-            WhereClause NewWhereClause = new WhereClause(field, @operator, compareValue);
-            this.AddWhereClauseToLevel(NewWhereClause, level);
+            var NewWhereClause = new WhereClause(field, @operator, compareValue);
+            AddWhereClauseToLevel(NewWhereClause, level);
             return NewWhereClause;
         }
 
-        private void AddWhereClause(WhereClause clause)
-        {
-            AddWhereClauseToLevel(clause, 1);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clause"></param>
+        /// <param name="level"></param>
         private void AddWhereClauseToLevel(WhereClause clause, int level)
         {
             AssertLevelExistance(level);
             this[level - 1].Add(clause);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string BuildWhereStatement()
         {
             DbCommand dummyCommand = null;
             return BuildWhereStatement(false, ref dummyCommand);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="useCommandObject"></param>
+        /// <param name="usedDbCommand"></param>
+        /// <returns></returns>
         public string BuildWhereStatement(bool useCommandObject, ref DbCommand usedDbCommand)
         {
             string Result = "";
 
-            foreach (List<WhereClause> WhereStatement in this)
+            foreach (var WhereStatement in this)
             {
                 string LevelWhere = "";
 
-                foreach (WhereClause Clause in WhereStatement)
+                foreach (var Clause in WhereStatement)
                 {
                     string WhereClause = "";
 
@@ -92,7 +107,7 @@ namespace ChatupNET.Database
                             Clause.FieldName.Replace('.', '_')
                             );
 
-                        DbParameter parameter = usedDbCommand.CreateParameter();
+                        var parameter = usedDbCommand.CreateParameter();
 
                         parameter.ParameterName = parameterName;
                         parameter.Value = Clause.Value;
@@ -118,7 +133,6 @@ namespace ChatupNET.Database
 
                         if (useCommandObject)
                         {
-                            // Create a parameter
                             string parameterName = string.Format(
                                 "@p{0}_{1}",
                                 usedDbCommand.Parameters.Count + 1,
@@ -159,7 +173,8 @@ namespace ChatupNET.Database
         internal static string CreateComparisonClause(string fieldName, Comparison comparisonOperator, object value)
         {
             string Output = "";
-            if (value != null && value != System.DBNull.Value)
+
+            if (value != null && value != DBNull.Value)
             {
                 switch (comparisonOperator)
                 {
@@ -192,7 +207,7 @@ namespace ChatupNET.Database
                         break;
                 }
             }
-            else // value==null	|| value==DBNull.Value
+            else
             {
                 if ((comparisonOperator != Comparison.Equals) && (comparisonOperator != Comparison.NotEquals))
                 {
@@ -214,11 +229,14 @@ namespace ChatupNET.Database
             return Output;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="someValue"></param>
+        /// <returns></returns>
         internal static string FormatSQLValue(object someValue)
         {
             string FormattedValue = "";
-            //				string StringType = Type.GetType("string").Name;
-            //				string DateTimeType = Type.GetType("DateTime").Name;
 
             if (someValue == null)
             {
@@ -248,31 +266,27 @@ namespace ChatupNET.Database
                         break;
                 }
             }
+
             return FormattedValue;
         }
 
         /// <summary>
-        /// This static method combines 2 where statements with eachother to form a new statement
+        /// 
         /// </summary>
         /// <param name="statement1"></param>
         /// <param name="statement2"></param>
         /// <returns></returns>
         public static WhereStatement CombineStatements(WhereStatement statement1, WhereStatement statement2)
         {
-            // statement1: {Level1}((Age<15 OR Age>=20) AND (strEmail LIKE 'e%') OR {Level2}(Age BETWEEN 15 AND 20))
-            // Statement2: {Level1}((Name = 'Peter'))
-            // Return statement: {Level1}((Age<15 or Age>=20) AND (strEmail like 'e%') AND (Name = 'Peter'))
+            var result = Copy(statement1);
 
-            // Make a copy of statement1
-            WhereStatement result = WhereStatement.Copy(statement1);
-
-            // Add all clauses of statement2 to result
-            for (int i = 0; i < statement2.ClauseLevels; i++) // for each clause level in statement2
+            for (int i = 0; i < statement2.ClauseLevels; i++)
             {
-                List<WhereClause> level = statement2[i];
-                foreach (WhereClause clause in level) // for each clause in level i
+                var level = statement2[i];
+
+                foreach (var clause in level)
                 {
-                    for (int j = 0; j < result.ClauseLevels; j++)  // for each level in result, add the clause
+                    for (int j = 0; j < result.ClauseLevels; j++)
                     {
                         result.AddWhereClauseToLevel(clause, j);
                     }
@@ -282,28 +296,35 @@ namespace ChatupNET.Database
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
         public static WhereStatement Copy(WhereStatement statement)
         {
-            WhereStatement result = new WhereStatement();
             int currentLevel = 0;
-            foreach (List<WhereClause> level in statement)
+            var result = new WhereStatement();
+
+            foreach (var level in statement)
             {
                 currentLevel++;
                 result.Add(new List<WhereClause>());
-                foreach (WhereClause clause in statement[currentLevel - 1])
+
+                foreach (var clause in statement[currentLevel - 1])
                 {
-                    WhereClause clauseCopy = new WhereClause(clause.FieldName, clause.ComparisonOperator, clause.Value);
-                    foreach (WhereClause.SubClause subClause in clause.SubClauses)
+                    var clauseCopy = new WhereClause(clause.FieldName, clause.ComparisonOperator, clause.Value);
+
+                    foreach (var subClause in clause.SubClauses)
                     {
-                        WhereClause.SubClause subClauseCopy = new WhereClause.SubClause(subClause.LogicOperator, subClause.ComparisonOperator, subClause.Value);
-                        clauseCopy.SubClauses.Add(subClauseCopy);
+                        clauseCopy.SubClauses.Add(new WhereClause.SubClause(subClause.LogicOperator, subClause.ComparisonOperator, subClause.Value));
                     }
+
                     result[currentLevel - 1].Add(clauseCopy);
                 }
             }
+
             return result;
         }
-
     }
-
 }

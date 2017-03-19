@@ -7,11 +7,18 @@ namespace ChatupNET.Forms
 {
     public partial class LoginForm : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public LoginForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateForm()
         {
             if (string.IsNullOrWhiteSpace(fieldUsername.Text))
@@ -22,6 +29,11 @@ namespace ChatupNET.Forms
             return !string.IsNullOrWhiteSpace(fieldPassword.Text);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void buttonValidate_Click(object sender, EventArgs args)
         {
             var operationResult = ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text);
@@ -38,11 +50,21 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void buttonCancel_Click(object sender, EventArgs args)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void buttonRegister_Click(object sender, EventArgs args)
         {
             var registrationForm = new RegisterForm();
@@ -77,16 +99,31 @@ namespace ChatupNET.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void fieldUsername_TextChanged(object sender, EventArgs args)
         {
             buttonValidate.Enabled = ValidateForm();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void fieldPassword_TextChanged(object sender, EventArgs args)
         {
             buttonValidate.Enabled = ValidateForm();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void LoginForm_Load(object sender, EventArgs args)
         {
             buttonValidate.Enabled = ValidateForm();

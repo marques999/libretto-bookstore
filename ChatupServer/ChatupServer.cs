@@ -16,9 +16,6 @@ public class ChatupServer
     /// </summary>
     private ChatupServer()
     {
-        lastId = 0;
-        users = SqliteDatabase.Instance.QueryUsers();
-        rooms = SqliteDatabase.Instance.QueryRooms();
         RemotingConfiguration.Configure("ChatupServer.exe.config", false);
         RemotingConfiguration.RegisterActivatedServiceType(typeof(RoomInterface));
 
@@ -31,7 +28,7 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private int lastId;
+    private int lastId = 0;
 
     /// <summary>
     /// 
@@ -41,12 +38,12 @@ public class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<int, Room> rooms;
+    private Dictionary<int, Room> rooms = SqliteDatabase.Instance.QueryRooms();
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, UserInformation> users;
+    private Dictionary<string, UserInformation> users = SqliteDatabase.Instance.QueryUsers();
 
     /// <summary>
     ///
@@ -140,9 +137,9 @@ public class ChatupServer
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
     public void InitializeLobby(
-        RoomInsertHandler createHandler,
-        RoomDeleteHandler deleteHandler,
-        RoomUpdateHandler updateHandler)
+        RoomHandler createHandler,
+        DeleteHandler deleteHandler,
+        RoomHandler updateHandler)
     {
         lobbyIntermediate.OnCreate += createHandler;
         lobbyIntermediate.OnDelete += deleteHandler;
@@ -156,9 +153,9 @@ public class ChatupServer
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
     public void DestroyLobby(
-        RoomInsertHandler createHandler,
-        RoomDeleteHandler deleteHandler,
-        RoomUpdateHandler updateHandler)
+        RoomHandler createHandler,
+        DeleteHandler deleteHandler,
+        RoomHandler updateHandler)
     {
         lobbyIntermediate.OnCreate -= createHandler;
         lobbyIntermediate.OnDelete -= deleteHandler;
@@ -172,7 +169,7 @@ public class ChatupServer
     /// <returns></returns>
     private bool ValidateSession(string userName)
     {
-        return Users.ContainsKey(userName) && Users[userName].Status;
+        return Users.ContainsKey(userName) && Users[userName].Online;
     }
 
     /// <summary>
@@ -180,19 +177,20 @@ public class ChatupServer
     /// </summary>
     /// <param name="userLogin"></param>
     /// <returns></returns>
-    public bool Login(UserLogin userLogin)
+    public UserInformation Login(UserLogin userLogin)
     {
         var userName = userLogin.Username;
-        bool operationResult = !ValidateSession(userName);
 
-        if (operationResult)
+        if (ValidateSession(userName))
         {
-            users[userName].Status = true;
-            connections.Add(userName, userLogin.Host);
-            sessionIntermediate.Login(users[userName]);
+            return null;
         }
 
-        return operationResult;
+        users[userName].Host = FormatHost(userLogin.Host);
+        connections.Add(userName, userLogin.Host);
+        sessionIntermediate.Login(users[userName]);
+
+        return users[userName];
     }
 
     /// <summary>
@@ -200,13 +198,11 @@ public class ChatupServer
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public bool Logout(string userName)
+    public UserInformation Logout(string userName)
     {
-        bool operationResult = ValidateSession(userName);
-
-        if (operationResult)
+        if (ValidateSession(userName))
         {
-            users[userName].Status = false;
+            users[userName].Host = null;
 
             if (connections.ContainsKey(userName))
             {
@@ -215,8 +211,12 @@ public class ChatupServer
 
             sessionIntermediate.Logout(Users[userName]);
         }
+        else
+        {
+            return null;
+        }
 
-        return operationResult;
+        return users[userName];
     }
 
     /// <summary>
@@ -225,13 +225,13 @@ public class ChatupServer
     /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
     /// <returns></returns>
-    public bool RegisterChatrooom(int roomId, Room roomInformation)
+    public bool RegisterChatrooom(Room roomInformation)
     {
         try
         {
-            RemotingServices.Marshal(new RoomService(roomInformation), FormatUri(roomId));
-            rooms.Add(roomId, roomInformation);
-            lobbyIntermediate.CreateRoom(roomId, roomInformation);
+            RemotingServices.Marshal(new RoomService(roomInformation), FormatUri(roomInformation.ID));
+            rooms.Add(roomInformation.ID, roomInformation);
+            lobbyIntermediate.CreateRoom(roomInformation);
         }
         catch (RemotingException)
         {
@@ -265,14 +265,29 @@ public class ChatupServer
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public Address LookupHost(string userName)
+    public string LookupHost(string userName)
     {
         if (connections.ContainsKey(userName))
         {
-            return connections[userName];
+            var connectionInformation = connections[userName];
+
+            if (connectionInformation != null)
+            {
+                FormatHost(connectionInformation);
+            }
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    private string FormatHost(Address connectionInformation)
+    {
+        return string.Format("tcp://{0}:{1:D}/messaging.rem", connectionInformation.Host, connectionInformation.Port);
     }
 
     /// <summary>

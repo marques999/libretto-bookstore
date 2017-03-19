@@ -10,17 +10,17 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event RoomInsertHandler OnInsert;
+        public event RoomHandler OnInsert;
 
         /// <summary>
         /// 
         /// </summary>
-        public event RoomDeleteHandler OnDelete;
+        public event DeleteHandler OnDelete;
 
         /// <summary>
         /// 
         /// </summary>
-        public event RoomUpdateHandler OnUpdate;
+        public event RoomHandler OnUpdate;
 
         /// <summary>
         /// 
@@ -47,7 +47,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public Address Lookup(string userName)
+        public string Lookup(string userName)
         {
             return ChatupServer.Instance.LookupHost(userName);
         }
@@ -55,10 +55,10 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
         /// <param name="roomId"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public RemoteResponse Delete(string userName, int roomId)
+        public RemoteResponse Delete(int roomId, string userName)
         {
             if (string.IsNullOrEmpty(userName) || roomId < 1)
             {
@@ -72,9 +72,15 @@ namespace ChatupNET.Remoting
 
             if (Rooms[roomId].Owner == userName)
             {
-                OnDelete?.Invoke(roomId);
-                ChatupServer.Instance.Lobby.DeleteRoom(roomId);
-                Rooms.Remove(roomId);
+                if (Rooms.Remove(roomId))
+                {
+                    OnDelete?.Invoke(roomId);
+                    ChatupServer.Instance.Lobby.DeleteRoom(roomId);
+                }
+                else
+                {
+                    return RemoteResponse.OperationFailed;
+                }
             }
             else
             {
@@ -87,11 +93,11 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomId"></param>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        /// <param name="roomId"></param>
         /// <returns></returns>
-        public CustomResponse Join(string userName, string userPassword, int roomId)
+        public CustomResponse Join(int roomId, string userName, string userPassword)
         {
             if (string.IsNullOrEmpty(userName) || roomId < 1)
             {
@@ -104,8 +110,7 @@ namespace ChatupNET.Remoting
 
                 if (roomInformation.Password == null || roomInformation.Password.Equals(userPassword))
                 {
-                    OnUpdate?.Invoke(roomId, roomInformation.Count, roomInformation.Capacity);
-                    ChatupServer.Instance.Lobby.UpdateRoom(roomId, roomInformation.Count, roomInformation.Capacity);
+                    OnUpdate?.Invoke(roomInformation);
                 }
                 else
                 {
@@ -114,7 +119,7 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                 return new CustomResponse(RemoteResponse.NotFound, null);
+                return new CustomResponse(RemoteResponse.NotFound, null);
             }
 
             return new CustomResponse(RemoteResponse.Success, ChatupServer.Instance.LookupChatroom(roomId));
@@ -142,18 +147,18 @@ namespace ChatupNET.Remoting
                 return new CustomResponse(RemoteResponse.BadRequest, null);
             }
 
-            var roomId = ChatupServer.Instance.NextID;
+            roomInformation.ID = ChatupServer.Instance.NextID;
 
-            if (ChatupServer.Instance.RegisterChatrooom(roomId, roomInformation))
+            if (ChatupServer.Instance.RegisterChatrooom(roomInformation))
             {
-                OnInsert?.Invoke(roomId, roomInformation);
+                OnInsert?.Invoke(roomInformation);
             }
             else
             {
                 return new CustomResponse(RemoteResponse.OperationFailed, null);
             }
 
-            return new CustomResponse(RemoteResponse.Success, roomId);
+            return new CustomResponse(RemoteResponse.Success, roomInformation);
         }
 
         /// <summary>

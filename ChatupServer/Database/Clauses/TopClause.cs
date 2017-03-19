@@ -4,16 +4,21 @@ namespace ChatupNET.Database
 {
     public struct TopClause
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public TopUnit Unit;
 
-        public TopClause(int nr)
-        {
-            Quantity = nr;
-            Unit = TopUnit.Records;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int Quantity;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nr"></param>
+        /// <param name="aUnit"></param>
         public TopClause(int nr, TopUnit aUnit)
         {
             Quantity = nr;

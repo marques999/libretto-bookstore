@@ -1,11 +1,16 @@
-﻿namespace ChatupNET.Forms
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ChatupNET.Forms
 {
     partial class PasswordForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -17,10 +22,9 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -137,13 +141,11 @@
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.FlowLayoutPanel flowLayout;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonConfirm;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label labelPrompt;
-        private System.Windows.Forms.TextBox fieldPassword;
+        private FlowLayoutPanel flowLayout;
+        private Button buttonCancel;
+        private Button buttonConfirm;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label labelPrompt;
+        private TextBox fieldPassword;
     }
 }

@@ -75,16 +75,16 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(609, 425);
+            this.splitContainer1.Size = new System.Drawing.Size(688, 425);
             this.splitContainer1.SplitterDistance = 96;
             this.splitContainer1.TabIndex = 3;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.90669F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.09331F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.5567F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.4433F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel2.Controls.Add(this.buttonAddress, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.labelStats, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.staticUsers, 0, 2);
@@ -103,7 +103,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(609, 96);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(688, 96);
             this.tableLayoutPanel2.TabIndex = 8;
             // 
             // buttonAddress
@@ -114,7 +114,7 @@
             this.buttonAddress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAddress.Location = new System.Drawing.Point(3, 35);
             this.buttonAddress.Name = "buttonAddress";
-            this.buttonAddress.Size = new System.Drawing.Size(101, 26);
+            this.buttonAddress.Size = new System.Drawing.Size(102, 26);
             this.buttonAddress.TabIndex = 4;
             this.buttonAddress.Text = "Address";
             this.buttonAddress.UseVisualStyleBackColor = false;
@@ -124,9 +124,9 @@
             // 
             this.labelStats.AutoSize = true;
             this.labelStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelStats.Location = new System.Drawing.Point(110, 64);
+            this.labelStats.Location = new System.Drawing.Point(111, 64);
             this.labelStats.Name = "labelStats";
-            this.labelStats.Size = new System.Drawing.Size(375, 32);
+            this.labelStats.Size = new System.Drawing.Size(468, 32);
             this.labelStats.TabIndex = 13;
             this.labelStats.Text = "0 active, 0 inactive";
             this.labelStats.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -139,7 +139,7 @@
             this.staticUsers.Location = new System.Drawing.Point(4, 68);
             this.staticUsers.Margin = new System.Windows.Forms.Padding(4);
             this.staticUsers.Name = "staticUsers";
-            this.staticUsers.Size = new System.Drawing.Size(99, 24);
+            this.staticUsers.Size = new System.Drawing.Size(100, 24);
             this.staticUsers.TabIndex = 11;
             this.staticUsers.Text = "Users";
             this.staticUsers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -150,10 +150,10 @@
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelStatus.ForeColor = System.Drawing.Color.ForestGreen;
-            this.labelStatus.Location = new System.Drawing.Point(111, 4);
+            this.labelStatus.Location = new System.Drawing.Point(112, 4);
             this.labelStatus.Margin = new System.Windows.Forms.Padding(4);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(373, 24);
+            this.labelStatus.Size = new System.Drawing.Size(466, 24);
             this.labelStatus.TabIndex = 9;
             this.labelStatus.Text = "Running";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -166,7 +166,7 @@
             this.staticStatus.Location = new System.Drawing.Point(4, 4);
             this.staticStatus.Margin = new System.Windows.Forms.Padding(4);
             this.staticStatus.Name = "staticStatus";
-            this.staticStatus.Size = new System.Drawing.Size(99, 24);
+            this.staticStatus.Size = new System.Drawing.Size(100, 24);
             this.staticStatus.TabIndex = 6;
             this.staticStatus.Text = "Status";
             this.staticStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -177,9 +177,9 @@
             this.buttonStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Location = new System.Drawing.Point(491, 3);
+            this.buttonStart.Location = new System.Drawing.Point(585, 3);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(115, 26);
+            this.buttonStart.Size = new System.Drawing.Size(100, 26);
             this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Stop";
             this.buttonStart.UseVisualStyleBackColor = false;
@@ -192,9 +192,9 @@
             this.buttonRestart.Enabled = false;
             this.buttonRestart.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRestart.Location = new System.Drawing.Point(491, 35);
+            this.buttonRestart.Location = new System.Drawing.Point(585, 35);
             this.buttonRestart.Name = "buttonRestart";
-            this.buttonRestart.Size = new System.Drawing.Size(115, 26);
+            this.buttonRestart.Size = new System.Drawing.Size(100, 26);
             this.buttonRestart.TabIndex = 2;
             this.buttonRestart.Text = "Restart";
             this.buttonRestart.UseVisualStyleBackColor = false;
@@ -206,9 +206,9 @@
             this.buttonExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonExit.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExit.Location = new System.Drawing.Point(491, 67);
+            this.buttonExit.Location = new System.Drawing.Point(585, 67);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(115, 26);
+            this.buttonExit.Size = new System.Drawing.Size(100, 26);
             this.buttonExit.TabIndex = 3;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = false;
@@ -218,9 +218,9 @@
             // 
             this.labelAddress.AutoSize = true;
             this.labelAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAddress.Location = new System.Drawing.Point(110, 32);
+            this.labelAddress.Location = new System.Drawing.Point(111, 32);
             this.labelAddress.Name = "labelAddress";
-            this.labelAddress.Size = new System.Drawing.Size(375, 32);
+            this.labelAddress.Size = new System.Drawing.Size(468, 32);
             this.labelAddress.TabIndex = 12;
             this.labelAddress.Text = "127.0.0.1:12480";
             this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -239,8 +239,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer2.Size = new System.Drawing.Size(609, 325);
-            this.splitContainer2.SplitterDistance = 374;
+            this.splitContainer2.Size = new System.Drawing.Size(688, 325);
+            this.splitContainer2.SplitterDistance = 338;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox1
@@ -250,7 +250,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(8);
-            this.groupBox1.Size = new System.Drawing.Size(374, 325);
+            this.groupBox1.Size = new System.Drawing.Size(338, 325);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Chatrooms";
@@ -261,7 +261,7 @@
             this.treeView1.Location = new System.Drawing.Point(8, 21);
             this.treeView1.Margin = new System.Windows.Forms.Padding(0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(358, 296);
+            this.treeView1.Size = new System.Drawing.Size(322, 296);
             this.treeView1.TabIndex = 5;
             // 
             // groupBox2
@@ -271,7 +271,7 @@
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(8);
-            this.groupBox2.Size = new System.Drawing.Size(231, 325);
+            this.groupBox2.Size = new System.Drawing.Size(346, 325);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Users";
@@ -284,7 +284,7 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Location = new System.Drawing.Point(8, 21);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(215, 296);
+            this.listView1.Size = new System.Drawing.Size(330, 296);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -292,19 +292,19 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Username";
-            this.columnHeader1.Width = 132;
+            this.columnHeader1.Width = 97;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Active";
-            this.columnHeader2.Width = 79;
+            this.columnHeader2.Text = "Host";
+            this.columnHeader2.Width = 228;
             // 
             // MainForm
             // 
             this.AcceptButton = this.buttonStart;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 441);
+            this.ClientSize = new System.Drawing.Size(704, 441);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";

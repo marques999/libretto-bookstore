@@ -11,81 +11,12 @@ namespace ChatupNET.Database
         protected TopClause _topClause = new TopClause(100, TopUnit.Percent);
         private List<SqlColumn> _selectedColumns = new List<SqlColumn>();
         protected List<string> _selectedTables = new List<string>();
-        protected List<JoinClause> _joins = new List<JoinClause>();
         protected WhereStatement _whereStatement = new WhereStatement();
-        protected List<OrderByClause> _orderByStatement = new List<OrderByClause>();
         protected List<string> _groupByColumns = new List<string>();
         protected WhereStatement _havingStatement = new WhereStatement();
 
-        internal WhereStatement WhereStatement
-        {
-            get
-            {
-                return _whereStatement;
-            }
-            set
-            {
-                _whereStatement = value;
-            }
-        }
-
         public SqlBuilder()
         {
-        }
-
-        private bool Distinct
-        {
-            get
-            {
-                return _distinct;
-            }
-            set
-            {
-                _distinct = value;
-            }
-        }
-
-        public int TopRecords
-        {
-            get
-            {
-                return _topClause.Quantity;
-            }
-            set
-            {
-                _topClause.Quantity = value;
-                _topClause.Unit = TopUnit.Records;
-            }
-        }
-
-        public TopClause TopClause
-        {
-            get
-            {
-                return _topClause;
-            }
-            set
-            {
-                _topClause = value;
-            }
-        }
-
-        public string[] SelectedTables
-        {
-            get
-            {
-                return _selectedTables.ToArray();
-            }
-        }
-
-        public void SelectAllColumns()
-        {
-            _selectedColumns.Clear();
-        }
-
-        public SqlBuilder SelectCount()
-        {
-            return Column("count(*)", "Count");
         }
 
         public SqlBuilder Column(string column)
@@ -104,27 +35,6 @@ namespace ChatupNET.Database
             return this;
         }
 
-        public SqlBuilder Columns(params string[] columns)
-        {
-            _selectedColumns.Clear();
-
-            foreach (string column in columns)
-            {
-                _selectedColumns.Add(new SqlColumn
-                {
-                    Name = column,
-                    Alias = null
-                });
-            }
-
-            return this;
-        }
-
-        internal object FromTable(object tableRooms)
-        {
-            throw new NotImplementedException();
-        }
-
         public SqlBuilder Columns(params SqlColumn[] columns)
         {
             _selectedColumns.Clear();
@@ -140,72 +50,6 @@ namespace ChatupNET.Database
             return this;
         }
 
-        public SqlBuilder SelectFromTables(params string[] tables)
-        {
-            _selectedTables.Clear();
-            _selectedTables.AddRange(tables);
-
-            return this;
-        }
-
-        public SqlBuilder AddJoin(JoinClause newJoin)
-        {
-            _joins.Add(newJoin);
-
-            return this;
-        }
-
-        public SqlBuilder LeftJoin(string toTableName, string toColumnName, Comparison @operator, string fromTableName, string fromColumnName)
-        {
-            return Join(JoinType.LeftJoin, toTableName, toColumnName, @operator, fromTableName, fromColumnName);
-        }
-
-        public SqlBuilder RightJoin(string toTableName, string toColumnName, Comparison @operator, string fromTableName, string fromColumnName)
-        {
-            return Join(JoinType.RightJoin, toTableName, toColumnName, @operator, fromTableName, fromColumnName);
-        }
-
-        public SqlBuilder InnerJoin(string toTableName, string toColumnName, Comparison @operator, string fromTableName, string fromColumnName)
-        {
-            return Join(JoinType.InnerJoin, toTableName, toColumnName, @operator, fromTableName, fromColumnName);
-        }
-
-        public SqlBuilder OuterJoin(string toTableName, string toColumnName, Comparison @operator, string fromTableName, string fromColumnName)
-        {
-            return Join(JoinType.OuterJoin, toTableName, toColumnName, @operator, fromTableName, fromColumnName);
-        }
-
-        private SqlBuilder Join(JoinType join, string toTableName, string toColumnName, Comparison @operator, string fromTableName, string fromColumnName)
-        {
-            _joins.Add(new JoinClause(join, toTableName, toColumnName, @operator, fromTableName, fromColumnName));
-
-            return this;
-        }
-
-        public WhereStatement MyWhere
-        {
-            get
-            {
-                return _whereStatement;
-            }
-            set
-            {
-                _whereStatement = value;
-            }
-        }
-
-        public SqlBuilder Where(WhereClause clause)
-        {
-            return Where(clause, 1);
-        }
-
-        public SqlBuilder Where(WhereClause clause, int level)
-        {
-            _whereStatement.Add(clause, level);
-
-            return this;
-        }
-
         public SqlBuilder Where(string field, Comparison @operator, object compareValue)
         {
             Where(field, @operator, compareValue, 1);
@@ -213,79 +57,10 @@ namespace ChatupNET.Database
             return this;
         }
 
-        public WhereClause Where(Enum field, Comparison @operator, object compareValue)
-        {
-            return Where(field.ToString(), @operator, compareValue, 1);
-        }
-
         public WhereClause Where(string field, Comparison @operator, object compareValue, int level)
         {
             WhereClause NewWhereClause = new WhereClause(field, @operator, compareValue);
             _whereStatement.Add(NewWhereClause, level);
-            return NewWhereClause;
-        }
-
-        public void AddOrderBy(OrderByClause clause)
-        {
-            _orderByStatement.Add(clause);
-        }
-
-        public void AddOrderBy(Enum field, Sorting order)
-        {
-            this.AddOrderBy(field.ToString(), order);
-        }
-
-        public void AddOrderBy(string field, Sorting order)
-        {
-            _orderByStatement.Add(new OrderByClause(field, order));
-        }
-
-        public SqlBuilder GroupBy(params string[] columns)
-        {
-            foreach (string Column in columns)
-            {
-                _groupByColumns.Add(Column);
-            }
-
-            return this;
-        }
-
-        public WhereStatement Having
-        {
-            get
-            {
-                return _havingStatement;
-            }
-            set
-            {
-                _havingStatement = value;
-            }
-        }
-
-        public void AddHaving(WhereClause clause)
-        {
-            AddHaving(clause, 1);
-        }
-
-        public void AddHaving(WhereClause clause, int level)
-        {
-            _havingStatement.Add(clause, level);
-        }
-
-        public WhereClause AddHaving(string field, Comparison @operator, object compareValue)
-        {
-            return AddHaving(field, @operator, compareValue, 1);
-        }
-
-        public WhereClause AddHaving(Enum field, Comparison @operator, object compareValue)
-        {
-            return AddHaving(field.ToString(), @operator, compareValue, 1);
-        }
-
-        public WhereClause AddHaving(string field, Comparison @operator, object compareValue, int level)
-        {
-            WhereClause NewWhereClause = new WhereClause(field, @operator, compareValue);
-            _havingStatement.Add(NewWhereClause, level);
             return NewWhereClause;
         }
 
@@ -350,34 +125,6 @@ namespace ChatupNET.Database
                 Query += ' ';
             }
 
-            if (_joins.Count > 0)
-            {
-                foreach (JoinClause Clause in _joins)
-                {
-                    string JoinString = "";
-
-                    switch (Clause.JoinType)
-                    {
-                    case JoinType.InnerJoin:
-                        JoinString = "INNER JOIN";
-                        break;
-                    case JoinType.OuterJoin:
-                        JoinString = "OUTER JOIN";
-                        break;
-                    case JoinType.LeftJoin:
-                        JoinString = "LEFT JOIN";
-                        break;
-                    case JoinType.RightJoin:
-                        JoinString = "RIGHT JOIN";
-                        break;
-                    }
-
-                    JoinString += " " + Clause.ToTable + " ON ";
-                    JoinString += WhereStatement.CreateComparisonClause(Clause.FromTable + '.' + Clause.FromColumn, Clause.ComparisonOperator, new SqlLiteral(Clause.ToTable + '.' + Clause.ToColumn));
-                    Query += JoinString + ' ';
-                }
-            }
-
             if (_whereStatement.ClauseLevels > 0)
             {
                 Query += " WHERE " + _whereStatement.BuildWhereStatement();
@@ -404,31 +151,6 @@ namespace ChatupNET.Database
                 }
 
                 Query += " HAVING " + _havingStatement.BuildWhereStatement();
-            }
-
-            if (_orderByStatement.Count > 0)
-            {
-                Query += " ORDER BY ";
-
-                foreach (OrderByClause Clause in _orderByStatement)
-                {
-                    string OrderByClause = "";
-
-                    switch (Clause.SortOrder)
-                    {
-                    case Sorting.Ascending:
-                        OrderByClause = Clause.FieldName + " ASC";
-                        break;
-                    case Sorting.Descending:
-                        OrderByClause = Clause.FieldName + " DESC";
-                        break;
-                    }
-
-                    Query += OrderByClause + ',';
-                }
-
-                Query = Query.TrimEnd(',');
-                Query += ' ';
             }
 
             return Query;

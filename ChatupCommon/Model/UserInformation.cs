@@ -9,32 +9,23 @@ namespace ChatupNET.Model
         /// Default constructor
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="fullName"></param>
+        /// <param name="userhost"></param>
         /// <param name="userStatus"></param>
-        public UserInformation(string userName, string fullName, bool userStatus)
+        public UserInformation(string userName, string fullName, string userHost)
         {
             mUsername = userName;
             mFullname = fullName;
-            mStatus = userStatus;
+            mHost = userHost;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool mStatus;
 
         /// <summary>
         /// Public getter property for the "mStatus" private member
         /// </summary>
-        public bool Status
+        public bool Online
         {
             get
             {
-                return mStatus;
-            }
-            set
-            {
-                mStatus = value;
+                return mHost != null;
             }
         }
 
@@ -54,19 +45,33 @@ namespace ChatupNET.Model
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private string mFullname;
 
-        /// <summary>
-        /// Public getter property for the "mFullname" private member
-        /// </summary>
         public string Name
         {
             get
             {
                 return mFullname;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string mHost;
+
+        /// <summary>
+        /// Public getter property for the "mFullname" private member
+        /// </summary>
+        public string Host
+        {
+            get
+            {
+                return mHost;
+            }
+            set
+            {
+                mHost = value;
             }
         }
 
