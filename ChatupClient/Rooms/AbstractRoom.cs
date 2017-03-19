@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using ChatupNET.Model;
+using ChatupNET.Remoting;
 
 namespace ChatupNET.Rooms
 {
@@ -12,13 +13,6 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<string, Color> mUsers = new Dictionary<string, Color>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomInformation"></param>
-        /// <param name="remoteHost"></param>
         public AbstractRoom()
         {
             InitializeComponent();
@@ -27,14 +21,19 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="textContents"></param>
-        /// <param name="textColor"></param>
-        protected void AppendText(string textContents, Color textColor)
+        private Dictionary<string, Color> _users = new Dictionary<string, Color>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messageContent"></param>
+        /// <param name="messageColor"></param>
+        protected void AppendText(string messageContent, Color messageColor)
         {
             richTextBox1.SelectionStart = richTextBox1.TextLength;
             richTextBox1.SelectionLength = 0;
-            richTextBox1.SelectionColor = textColor;
-            richTextBox1.AppendText(textContents);
+            richTextBox1.SelectionColor = messageColor;
+            richTextBox1.AppendText(messageContent);
             richTextBox1.SelectionColor = richTextBox1.ForeColor;
         }
 
@@ -42,45 +41,88 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="userColor"></param>
-        protected virtual void UserJoined(UserProfile userProfile)
+        protected void UserJoined(UserProfile userProfile)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new JoinHandler(JoinRoom), new object[]
+                {
+                    userProfile
+                });
+            }
+            else
+            {
+                JoinRoom(userProfile);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userProfile"></param>
+        protected virtual void JoinRoom(UserProfile userProfile)
         {
             listBox1.Items.Add(userProfile.Username);
+            _users.Add(userProfile.Username, userProfile.Color);
             AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
             AppendText(userProfile.Username, userProfile.Color);
             AppendText(" has joined the conversation." + "\n", Color.DimGray);
-            mUsers.Add(userProfile.Username, userProfile.Color);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        protected virtual void UserLeft(string userName)
+        protected void UserLeft(string userName)
         {
-            if (listBox1.Items.Contains(userName))
+            if (InvokeRequired)
             {
-                listBox1.Items.Remove(userName);
+                BeginInvoke(new LeaveHandler(LeaveRoom), new object[]
+                {
+                    userName
+                });
             }
-
-            if (mUsers.ContainsKey(userName))
+            else
             {
-                AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
-                AppendText(userName, mUsers[userName]);
-                AppendText(" has left the conversation." + "\n", Color.DimGray);
-                mUsers.Remove(userName);
+                LeaveRoom(userName);
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
-        protected void AppendMessage(RemoteMessage messageInstance, bool clearInput)
+        /// <param name="userName"></param>
+        protected virtual void LeaveRoom(string userName)
         {
-            AppendText("(" + messageInstance.Timestamp.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(messageInstance.Author + ": ", mUsers[messageInstance.Author]);
-            AppendText(messageInstance.Contents + "\n", Color.Black);
+            if (listBox1.Items.Contains(userName))
+            {
+                listBox1.Items.Remove(userName);
+            }
+
+            if (_users.ContainsKey(userName))
+            {
+                AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
+                AppendText(userName, _users[userName]);
+                AppendText(" has left the conversation." + "\n", Color.DimGray);
+                _users.Remove(userName);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userMessage"></param>
+        /// <param name="clearInput"></param>
+        protected void AppendMessage(RemoteMessage userMessage, bool clearInput)
+        {
+            if (userMessage.Author == ChatupClient.Instance.Username)
+            {
+                clearInput = true;
+            }
+
+            AppendText("(" + userMessage.Timestamp.ToShortTimeString() + ") ", Color.DimGray);
+            AppendText(userMessage.Author + ": ", _users[userMessage.Author]);
+            AppendText(userMessage.Contents + "\n", Color.Black);
 
             if (clearInput)
             {
@@ -91,10 +133,27 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userMessage"></param>
+        /// <param name="clearInput"></param>
+        delegate void AppendHandler(RemoteMessage userMessage, bool clearInput);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="messageInstance"></param>
         public void AppendMessage(RemoteMessage messageInstance)
         {
-            AppendMessage(messageInstance, false);
+            if (InvokeRequired)
+            {
+                BeginInvoke(new AppendHandler(AppendMessage), new object[]
+                {
+                    messageInstance, false
+                });
+            }
+            else
+            {
+                AppendMessage(messageInstance, false);
+            }
         }
 
         /// <summary>
@@ -110,8 +169,6 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageAuthor"></param>
-        /// <param name="messageContents"></param>
         /// <returns></returns>
         protected RemoteMessage GenerateMessage()
         {

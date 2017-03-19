@@ -53,19 +53,19 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="messageInstance"></param>
-        RemoteResponse Insert(RemoteMessage messageInstance);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
-        RemoteResponse Join(string userName, string userPassword);
+        RemoteResponse Send(RemoteMessage messageInstance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         RemoteResponse Leave(string userName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPassword"></param>
+        CustomResponse Join(string userName, string userPassword);
     }
 }

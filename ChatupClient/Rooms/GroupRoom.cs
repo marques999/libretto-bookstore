@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Runtime.Remoting;
 
 using ChatupNET.Remoting;
 using ChatupNET.Model;
@@ -12,29 +11,29 @@ namespace ChatupNET.Rooms
     /// 
     /// </summary>
     /// <param name="roomInformation"></param>
-    public delegate void ExitHandler(Room roomInformation);
+    delegate void ExitHandler(Room roomInformation);
 
     /// <summary>
     /// 
     /// </summary>
-    public class GroupRoom : AbstractRoom
+    class GroupRoom : AbstractRoom
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="remoteHost"></param>
-        public GroupRoom(Room roomInformation, string remoteHost) : base()
+        public GroupRoom(Room roomInformation, RoomInterface roomInterface, MessageQueue messageHistory) : base()
         {
-            mInstance = roomInformation;
-            mIntermediate = new RoomIntermediate();
-            mIntermediate.OnJoin += UserJoined;
-            mIntermediate.OnLeave += UserLeft;
-            mIntermediate.OnMessage += AppendMessage;
-            roomInterface = (RoomInterface)RemotingServices.Connect(typeof(RoomInterface), remoteHost);
-            roomInterface.OnJoin += mIntermediate.JoinRoom;
-            roomInterface.OnLeave += mIntermediate.LeaveRoom;
-            roomInterface.OnSend += mIntermediate.SendMessage;
+            _server = roomInterface;
+            _instance = roomInformation;
+            _proxy = new RoomIntermediate();
+            _proxy.OnJoin += UserJoined;
+            _proxy.OnLeave += UserLeft;
+            _proxy.OnMessage += AppendMessage;
+            _server.OnJoin += _proxy.JoinRoom;
+            _server.OnLeave += _proxy.LeaveRoom;
+            _server.OnSend += _proxy.SendMessage;
 
             var userList = roomInterface.List();
 
@@ -42,8 +41,16 @@ namespace ChatupNET.Rooms
             {
                 foreach (var userEntry in userList)
                 {
-                    UserJoined(new UserProfile(userEntry.Key, userEntry.Value));
+                    JoinRoom(new UserProfile(userEntry.Key, userEntry.Value));
                 }
+            }
+
+            var q = messageHistory.Dequeue();
+
+            while (q != null)
+            {
+                AppendMessage(q);
+                q = messageHistory.Dequeue();
             }
         }
 
@@ -51,38 +58,38 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        protected override void UserJoined(UserProfile userProfile)
+        protected override void JoinRoom(UserProfile userProfile)
         {
-            base.UserJoined(userProfile);
-            mInstance.Count++;
-            Text = string.Format("{0} [{1:D}/{2:D}]", mInstance.Name, mInstance.Count, mInstance.Capacity);
+            base.JoinRoom(userProfile);
+            _instance.Count++;
+            Text = string.Format("{0} [{1:D}/{2:D}]", _instance.Name, _instance.Count, _instance.Capacity);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        protected override void UserLeft(string userName)
+        protected override void LeaveRoom(string userName)
         {
-            base.UserLeft(userName);
-            mInstance.Count--;
-            Text = string.Format("{0} [{1:D}/{2:D}]", mInstance.Name, mInstance.Count, mInstance.Capacity);
+            base.LeaveRoom(userName);
+            _instance.Count--;
+            Text = string.Format("{0} [{1:D}/{2:D}]", _instance.Name, _instance.Count, _instance.Capacity);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private Room mInstance;
+        private Room _instance;
 
         /// <summary>
         /// 
         /// </summary>
-        private RoomInterface roomInterface;
+        private RoomInterface _server;
 
         /// <summary>
         /// 
         /// </summary>
-        private RoomIntermediate mIntermediate;
+        private RoomIntermediate _proxy;
 
         /// <summary>
         /// 
@@ -95,13 +102,13 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
-            mIntermediate.OnJoin -= UserJoined;
-            mIntermediate.OnLeave -= UserLeft;
-            mIntermediate.OnMessage -= AppendMessage;
+            _proxy.OnLeave -= LeaveRoom;
+            _proxy.OnJoin -= JoinRoom;
+            _proxy.OnMessage -= AppendMessage;
 
-            if (roomInterface != null)
+            if (_server != null)
             {
-                var operationResult = roomInterface.Leave(ChatupClient.Instance.Username);
+                var operationResult = _server.Leave(ChatupClient.Instance.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
@@ -120,14 +127,23 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         protected override void buttonValidate_Click(object sender, EventArgs args)
         {
-            AppendMessage(GenerateMessage(), true);
+            var remoteMessage = GenerateMessage();
+
+            if (remoteMessage != null)
+            {
+                var operationResult = _server.Send(remoteMessage);
+
+                if (operationResult != RemoteResponse.Success)
+                {
+                    ErrorHandler.DisplayError(this, operationResult);
+                }
+            }
         }
 
         /// <summary>
@@ -137,7 +153,7 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         private void RoomForm_FormClosing(object sender, FormClosingEventArgs args)
         {
-            ExitHandler?.Invoke(mInstance);
+            ExitHandler?.Invoke(_instance);
         }
     }
 }

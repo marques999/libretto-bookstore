@@ -170,7 +170,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool IsFull()
         {
-            return Count < Capacity;
+            return Count >= Capacity;
         }
     }
 }

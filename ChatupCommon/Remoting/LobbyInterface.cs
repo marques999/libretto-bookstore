@@ -47,7 +47,14 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        string Lookup(string userName);
+        string LookupUser(string userName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        string LookupRoom(int roomId);
 
         /// <summary>
         /// 
@@ -69,15 +76,6 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomInstance"></param>
         /// <returns></returns>
-        CustomResponse New(Room roomInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
-        /// <returns></returns>
-        CustomResponse Join(int roomId, string userName, string userPassword);
+        CustomResponse Insert(Room roomInformation);
     }
 }

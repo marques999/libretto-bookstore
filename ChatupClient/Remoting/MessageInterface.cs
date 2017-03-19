@@ -46,9 +46,9 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
+        /// <param name="userMessage"></param>
         /// <returns></returns>
-        RemoteResponse Send(RemoteMessage messageInstance);
+        RemoteResponse Send(RemoteMessage userMessage);
 
         /// <summary>
         /// 

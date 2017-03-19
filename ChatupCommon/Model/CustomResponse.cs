@@ -6,6 +6,14 @@ namespace ChatupNET.Model
     public class CustomResponse
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="responseCode"></param>
+        public CustomResponse(RemoteResponse responseCode) : this(responseCode, null)
+        {
+        }
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="responseCode"></param>

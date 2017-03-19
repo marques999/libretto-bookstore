@@ -61,8 +61,8 @@ namespace ChatupNET
             else
             {
                 MessageBox.Show(parentForm,
-                    "Unknown Error",
-                    "Unknown Error",
+                    operationResult.ToString(),
+                    operationResult.ToString(),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }

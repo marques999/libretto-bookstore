@@ -20,11 +20,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        private HashSet<string> users = new HashSet<string>();
-
-        /// <summary>
-        /// 
-        /// </summary>
         public event MessageHandler OnReceive;
 
         /// <summary>
@@ -40,6 +35,11 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        private HashSet<string> _users = new HashSet<string>();
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public RemoteResponse Disconnect(string userName)
@@ -49,9 +49,9 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (users.Contains(userName))
+            if (_users.Contains(userName))
             {
-                users.Remove(userName);
+                _users.Remove(userName);
             }
 
             OnDisconnect?.Invoke(userName, false);
@@ -62,26 +62,26 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
+        /// <param name="userMessage"></param>
         /// <returns></returns>
-        public RemoteResponse Send(RemoteMessage messageInstance)
+        public RemoteResponse Send(RemoteMessage userMessage)
         {
-            if (messageInstance == null)
+            if (userMessage == null)
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrEmpty(messageInstance.Author))
+            if (string.IsNullOrEmpty(userMessage.Author))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrWhiteSpace(messageInstance.Contents))
+            if (string.IsNullOrWhiteSpace(userMessage.Contents))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            OnReceive?.Invoke(messageInstance);
+            OnReceive?.Invoke(userMessage);
 
             return RemoteResponse.Success;
         }
@@ -89,7 +89,8 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userProfile"></param>
+        /// <param name="userHost"></param>
         /// <returns></returns>
         public CustomResponse Connect(UserProfile userProfile, string userHost)
         {
@@ -105,9 +106,9 @@ namespace ChatupNET.Remoting
                 return new CustomResponse(RemoteResponse.SessionExists, null);
             }*/
 
-            if (!users.Contains(userName))
+            if (!_users.Contains(userName))
             {
-                users.Add(userName);
+                _users.Add(userName);
             }
 
             OnConnect?.Invoke(userProfile, userHost);

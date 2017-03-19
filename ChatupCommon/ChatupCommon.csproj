@@ -44,6 +44,7 @@
     <Compile Include="ColorGenerator.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\CustomResponse.cs" />
+    <Compile Include="Model\MessageQueue.cs" />
     <Compile Include="Model\RemoteMessage.cs" />
     <Compile Include="Model\RemoteResponse.cs" />
     <Compile Include="Model\UserLogin.cs" />

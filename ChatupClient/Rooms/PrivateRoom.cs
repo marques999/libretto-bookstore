@@ -4,30 +4,28 @@ using System.Runtime.Remoting;
 
 using ChatupNET.Model;
 using ChatupNET.Remoting;
-using System.Windows.Forms;
 
 namespace ChatupNET.Rooms
 {
     /// <summary>
     /// 
     /// </summary>
-    public class PrivateRoom : AbstractRoom
+    class PrivateRoom : AbstractRoom
     {
-        private string mUsername;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="remoteHost"></param>
-        public PrivateRoom(string remoteHost) : base() // CLIENT MODE
+        public PrivateRoom(string remoteHost)
         {
             try
             {
-                messageInterface = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
+                _server = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
                 InitializeRemote();
             }
             catch (Exception ex)
             {
-                mConnected = false;
+                _connected = false;
                 ErrorHandler.DisplayException(this, ex);
             }
         }
@@ -37,23 +35,31 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="remoteHost"></param>
-        public PrivateRoom(UserProfile userProfile, string remoteHost) // SERVER MODE
+        public PrivateRoom(UserProfile userProfile, string remoteHost)
         {
             try
             {
-                messageInterface = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
+                _server = (MessageInterface)RemotingServices.Connect(typeof(MessageInterface), remoteHost);
                 InitializeRoom(userProfile);
             }
             catch (Exception ex)
             {
-                mConnected = false;
+                _connected = false;
                 ErrorHandler.DisplayException(this, ex);
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private string _username;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void InitializeRemote()
         {
-            var operationResult = messageInterface.Connect(ChatupClient.Instance.Profile, ChatupClient.Instance.LocalAddress);
+            var operationResult = _server.Connect(ChatupClient.Instance.Profile, ChatupClient.Instance.LocalAddress);
 
             if (operationResult == null)
             {
@@ -79,27 +85,28 @@ namespace ChatupNET.Rooms
             }
         }
 
-        private bool mConnected = false;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool _connected = false;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        /// <param name="remoteHost"></param>
         private void InitializeRoom(UserProfile userProfile)
         {
-            mConnected = true;
-            mUsername = userProfile.Username;
-            UserJoined(ChatupClient.Instance.Profile);
-            UserJoined(userProfile);
-            Text = string.Format("{0} [PRIVATE]", mUsername);
+            _connected = true;
+            _username = userProfile.Username;
+            JoinRoom(ChatupClient.Instance.Profile);
+            JoinRoom(userProfile);
+            Text = string.Format("{0} [PRIVATE]", _username);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private MessageInterface messageInterface;
+        private MessageInterface _server;
 
         /// <summary>
         /// 
@@ -107,13 +114,13 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
-            if (mConnected && messageInterface != null)
+            if (_connected && _server != null)
             {
-                var operationResult = messageInterface.Disconnect(ChatupClient.Instance.Username);
+                var operationResult = _server.Disconnect(ChatupClient.Instance.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
-                    ChatupClient.Instance.Disconnect(mUsername, true);
+                    ChatupClient.Instance.Disconnect(_username, true);
                     base.OnClosing(args);
                 }
                 else
@@ -139,7 +146,7 @@ namespace ChatupNET.Rooms
 
             if (remoteMessage != null)
             {
-                var operationResult = messageInterface.Send(remoteMessage);
+                var operationResult = _server.Send(remoteMessage);
 
                 if (operationResult == RemoteResponse.Success)
                 {
@@ -152,9 +159,12 @@ namespace ChatupNET.Rooms
             }
         }
 
-        internal void Disconnect()
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Disconnect()
         {
-            mConnected = false;
+            _connected = false;
         }
     }
 }

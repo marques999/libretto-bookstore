@@ -45,9 +45,24 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        public string LookupRoom(int roomId)
+        {
+            if (Rooms.ContainsKey(roomId))
+            {
+                return ChatupServer.Instance.LookupChatroom(roomId);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public string Lookup(string userName)
+        public string LookupUser(string userName)
         {
             return ChatupServer.Instance.LookupHost(userName);
         }
@@ -93,58 +108,23 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
-        /// <returns></returns>
-        public CustomResponse Join(int roomId, string userName, string userPassword)
-        {
-            if (string.IsNullOrEmpty(userName) || roomId < 1)
-            {
-                return new CustomResponse(RemoteResponse.BadRequest, null);
-            }
-
-            if (Rooms.ContainsKey(roomId))
-            {
-                var roomInformation = Rooms[roomId];
-
-                if (roomInformation.Password == null || roomInformation.Password.Equals(userPassword))
-                {
-                    OnUpdate?.Invoke(roomInformation);
-                }
-                else
-                {
-                    return new CustomResponse(RemoteResponse.AuthenticationFailed, null);
-                }
-            }
-            else
-            {
-                return new CustomResponse(RemoteResponse.NotFound, null);
-            }
-
-            return new CustomResponse(RemoteResponse.Success, ChatupServer.Instance.LookupChatroom(roomId));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
-        public CustomResponse New(Room roomInformation)
+        public CustomResponse Insert(Room roomInformation)
         {
             if (roomInformation == null)
             {
-                return new CustomResponse(RemoteResponse.BadRequest, null);
+                return new CustomResponse(RemoteResponse.BadRequest);
             }
 
             if (string.IsNullOrEmpty(roomInformation.Owner))
             {
-                return new CustomResponse(RemoteResponse.BadRequest, null);
+                return new CustomResponse(RemoteResponse.BadRequest);
             }
 
             if (string.IsNullOrEmpty(roomInformation.Name))
             {
-                return new CustomResponse(RemoteResponse.BadRequest, null);
+                return new CustomResponse(RemoteResponse.BadRequest);
             }
 
             roomInformation.ID = ChatupServer.Instance.NextID;
@@ -155,7 +135,7 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return new CustomResponse(RemoteResponse.OperationFailed, null);
+                return new CustomResponse(RemoteResponse.OperationFailed);
             }
 
             return new CustomResponse(RemoteResponse.Success, roomInformation);

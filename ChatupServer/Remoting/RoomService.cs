@@ -15,7 +15,6 @@ namespace ChatupNET.Remoting
         public RoomService(Room roomInformation)
         {
             _instance = roomInformation;
-            InsertUser(roomInformation.Owner);
         }
 
         /// <summary>
@@ -41,12 +40,12 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected Dictionary<string, Color> _users = new Dictionary<string, Color>();
+        protected MessageQueue _messages = new MessageQueue(100);
 
         /// <summary>
         /// 
         /// </summary>
-        protected HashSet<RemoteMessage> _messages = new HashSet<RemoteMessage>();
+        protected Dictionary<string, Color> _users = new Dictionary<string, Color>();
 
         /// <summary>
         /// 
@@ -62,7 +61,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="messageInstance"></param>
         /// <returns></returns>
-        public RemoteResponse Insert(RemoteMessage messageInstance)
+        public RemoteResponse Send(RemoteMessage messageInstance)
         {
             if (messageInstance == null)
             {
@@ -76,14 +75,8 @@ namespace ChatupNET.Remoting
 
             if (_users.ContainsKey(messageInstance.Author))
             {
-                if (_messages.Add(messageInstance))
-                {
-                    OnSend?.Invoke(messageInstance);
-                }
-                else
-                {
-                    return RemoteResponse.ObjectExists;
-                }
+                _messages.Enqueue(messageInstance);
+                OnSend?.Invoke(messageInstance);
             }
             else
             {
@@ -157,21 +150,21 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public RemoteResponse Join(string userName, string userPassword)
+        public CustomResponse Join(string userName, string userPassword)
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return RemoteResponse.BadRequest;
+                return new CustomResponse(RemoteResponse.BadRequest);
             }
 
             if (_instance.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(_instance.Password)))
             {
-                return RemoteResponse.AuthenticationFailed;
+                return new CustomResponse(RemoteResponse.AuthenticationFailed);
             }
 
             if (_instance.IsFull())
             {
-                return RemoteResponse.RoomFull;
+                return new CustomResponse(RemoteResponse.RoomFull);
             }
 
             if (InsertUser(userName))
@@ -180,10 +173,10 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return RemoteResponse.ObjectExists;
+                return new CustomResponse(RemoteResponse.ObjectExists);
             }
 
-            return RemoteResponse.Success;
+            return new CustomResponse(RemoteResponse.Success, _messages);
         }
 
         /// <summary>
