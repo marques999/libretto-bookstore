@@ -103,6 +103,7 @@ namespace ChatupNET.Remoting
                 if (_users.Remove(userName))
                 {
                     OnLeave?.Invoke(userName);
+                    ChatupServer.Instance.LeaveRoom(_instance, userName);
                 }
                 else
                 {
@@ -128,7 +129,7 @@ namespace ChatupNET.Remoting
 
             if (operationResult)
             {
-                InsertUser(new UserProfile(userName, ColorGenerator.Random()));
+                InsertUser(new Tuple<string, Color>(userName, ColorGenerator.Random()));
             }
 
             return operationResult;
@@ -138,9 +139,9 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private void InsertUser(UserProfile userProfile)
+        private void InsertUser(Tuple<string, Color> userProfile)
         {
-            _users.Add(userProfile.Username, userProfile.Color);
+            _users.Add(userProfile.Item1, userProfile.Item2);
             OnJoin?.Invoke(userProfile);
         }
 
@@ -150,33 +151,33 @@ namespace ChatupNET.Remoting
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
         /// <returns></returns>
-        public CustomResponse Join(string userName, string userPassword)
+        public Tuple<RemoteResponse, MessageQueue> Join(string userName, string userPassword)
         {
             if (string.IsNullOrEmpty(userName))
             {
-                return new CustomResponse(RemoteResponse.BadRequest);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
             }
 
             if (_instance.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(_instance.Password)))
             {
-                return new CustomResponse(RemoteResponse.AuthenticationFailed);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.AuthenticationFailed, null);
             }
 
             if (_instance.IsFull())
             {
-                return new CustomResponse(RemoteResponse.RoomFull);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.RoomFull, null);
             }
 
             if (InsertUser(userName))
             {
-                ChatupServer.Instance.Lobby.UpdateRoom(_instance);
+                ChatupServer.Instance.JoinRoom(_instance, userName);
             }
             else
             {
-                return new CustomResponse(RemoteResponse.ObjectExists);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.ObjectExists, null);
             }
 
-            return new CustomResponse(RemoteResponse.Success, _messages);
+            return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.Success, _messages);
         }
 
         /// <summary>

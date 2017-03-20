@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 using ChatupNET.Remoting;
@@ -22,14 +23,15 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        /// <param name="remoteHost"></param>
+        /// <param name="roomInterface"></param>
+        /// <param name="messageHistory"></param>
         public GroupRoom(Room roomInformation, RoomInterface roomInterface, MessageQueue messageHistory) : base()
         {
             _server = roomInterface;
             _instance = roomInformation;
             _proxy = new RoomIntermediate();
-            _proxy.OnJoin += UserJoined;
-            _proxy.OnLeave += UserLeft;
+            _proxy.OnJoin += OnJoin;
+            _proxy.OnLeave += OnLeave;
             _proxy.OnMessage += AppendMessage;
             _server.OnJoin += _proxy.JoinRoom;
             _server.OnLeave += _proxy.LeaveRoom;
@@ -41,7 +43,7 @@ namespace ChatupNET.Rooms
             {
                 foreach (var userEntry in userList)
                 {
-                    JoinRoom(new UserProfile(userEntry.Key, userEntry.Value));
+                    JoinRoom(new Tuple<string, Color>(userEntry.Key, userEntry.Value));
                 }
             }
 
@@ -58,7 +60,7 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        protected override void JoinRoom(UserProfile userProfile)
+        protected override void JoinRoom(Tuple<string, Color> userProfile)
         {
             base.JoinRoom(userProfile);
             _instance.Count++;

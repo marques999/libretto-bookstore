@@ -6,7 +6,7 @@ namespace ChatupNET.Model
     public class RemoteMessage
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         /// <param name="messageAuthor"></param>
         /// <param name="messageContents"></param>
@@ -23,7 +23,7 @@ namespace ChatupNET.Model
         private string _author;
 
         /// <summary>
-        /// Public getter property for the "_author" private attribute
+        /// 
         /// </summary>
         public string Author
         {

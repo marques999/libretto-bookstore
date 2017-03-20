@@ -1,7 +1,8 @@
-﻿using ChatupNET.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+
+using ChatupNET.Model;
 
 namespace ChatupNET
 {

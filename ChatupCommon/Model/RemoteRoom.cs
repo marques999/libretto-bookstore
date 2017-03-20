@@ -6,8 +6,9 @@ namespace ChatupNET.Remoting
     public class Room
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
+        /// <param name="roomId"></param>
         /// <param name="roomName"></param>
         /// <param name="roomOwner"></param>
         /// <param name="roomPassword"></param>
@@ -28,7 +29,7 @@ namespace ChatupNET.Remoting
         private int _id;
 
         /// <summary>
-        /// 
+        /// Public getter property for the "_id" private member
         /// </summary>
         public int ID
         {
@@ -48,7 +49,7 @@ namespace ChatupNET.Remoting
         private string _name;
 
         /// <summary>
-        /// Public getter property for the "mName" private member
+        /// Public getter property for the "_name" private member
         /// </summary>
         public string Name
         {
@@ -64,7 +65,7 @@ namespace ChatupNET.Remoting
         private string _owner;
 
         /// <summary>
-        /// Public getter property for the "mOwner" private member
+        /// Public getter property for the "_owner" private member
         /// </summary>
         public string Owner
         {
@@ -80,7 +81,7 @@ namespace ChatupNET.Remoting
         private int _count;
 
         /// <summary>
-        /// Public getter property for the "mCount" private member
+        /// Public getter property for the "_count" private member
         /// </summary>
         public int Count
         {
@@ -100,7 +101,7 @@ namespace ChatupNET.Remoting
         private string _password;
 
         /// <summary>
-        /// Public getter property for the "mPassword" private member
+        /// Public getter property for the "_password" private member
         /// </summary>
         public string Password
         {
@@ -116,7 +117,7 @@ namespace ChatupNET.Remoting
         private int _capacity;
 
         /// <summary>
-        /// Public getter property for the "mCapacity" private member
+        /// Public getter property for the "_capacity" private member
         /// </summary>
         public int Capacity
         {

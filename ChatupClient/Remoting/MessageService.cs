@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 using ChatupNET.Model;
 
@@ -7,31 +8,6 @@ namespace ChatupNET.Remoting
 {
     class MessageService : MarshalByRefObject, MessageInterface
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public MessageService()
-        {
-            OnReceive += ChatupClient.Instance.Push;
-            OnConnect += ChatupClient.Instance.Connect;
-            OnDisconnect += ChatupClient.Instance.Disconnect;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event MessageHandler OnReceive;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event ConnectHandler OnConnect;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event DisconnectHandler OnDisconnect;
-
         /// <summary>
         /// 
         /// </summary>
@@ -54,7 +30,7 @@ namespace ChatupNET.Remoting
                 _users.Remove(userName);
             }
 
-            OnDisconnect?.Invoke(userName, false);
+            ChatupClient.Instance.Messaging.p2pDisconnect(userName, false);
 
             return RemoteResponse.Success;
         }
@@ -62,26 +38,46 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userMessage"></param>
+        /// <param name="remoteMessage"></param>
         /// <returns></returns>
-        public RemoteResponse Send(RemoteMessage userMessage)
+        public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            if (userMessage == null)
+            if (remoteMessage == null)
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrEmpty(userMessage.Author))
+            if (string.IsNullOrEmpty(remoteMessage.Author))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrWhiteSpace(userMessage.Contents))
+            if (string.IsNullOrWhiteSpace(remoteMessage.Contents))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            OnReceive?.Invoke(userMessage);
+            ChatupClient.Instance.Messaging.p2pReceive(remoteMessage);
+
+            return RemoteResponse.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomPassword"></param>
+        /// <returns></returns>
+        public RemoteResponse Invite(RoomInvitation roomInvitation)
+        {
+            if (roomInvitation != null && roomInvitation.ID >= 0)
+            {
+                ChatupClient.Instance.Messaging.p2pInvite(roomInvitation);
+            }
+            else
+            {
+                return RemoteResponse.BadRequest;
+            }
 
             return RemoteResponse.Success;
         }
@@ -92,13 +88,13 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
         /// <returns></returns>
-        public CustomResponse Connect(UserProfile userProfile, string userHost)
+        public Tuple<RemoteResponse, Tuple<string, Color>> Connect(Tuple<string, Color> userProfile, string userHost)
         {
-            var userName = userProfile.Username;
+            var userName = userProfile.Item1;
 
             if (string.IsNullOrEmpty(userName))
             {
-                return new CustomResponse(RemoteResponse.BadRequest, null);
+                return new Tuple<RemoteResponse, Tuple<string, Color>>(RemoteResponse.BadRequest, null);
             }
 
             /*if (users.Contains(userName))
@@ -111,9 +107,9 @@ namespace ChatupNET.Remoting
                 _users.Add(userName);
             }
 
-            OnConnect?.Invoke(userProfile, userHost);
+            ChatupClient.Instance.Messaging.p2pConnect(userProfile, userHost);
 
-            return new CustomResponse(RemoteResponse.Success, ChatupClient.Instance.Profile);
+            return new Tuple<RemoteResponse, Tuple<string, Color>>(RemoteResponse.Success, ChatupClient.Instance.Profile);
         }
 
         /// <summary>

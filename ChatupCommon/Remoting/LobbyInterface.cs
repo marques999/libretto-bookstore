@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using ChatupNET.Model;
 
@@ -15,7 +16,14 @@ namespace ChatupNET.Remoting
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
-    public delegate void RoomHandler(Room roomInformation);
+    public delegate void InsertHandler(Room roomInformation);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roomId"></param>
+    /// <param name="roomCount"></param>
+    public delegate void UpdateHandler(int roomId, int roomCount);
 
     /// <summary>
     /// 
@@ -25,12 +33,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        event RoomHandler OnInsert;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        event RoomHandler OnUpdate;
+        event InsertHandler OnInsert;
 
         /// <summary>
         /// 
@@ -54,14 +57,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomId"></param>
         /// <returns></returns>
-        string LookupRoom(int roomId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <returns></returns>
-        RemoteResponse IsPrivate(int roomId);
+        Tuple<bool, string> QueryRoom(int roomId);
 
         /// <summary>
         /// 
@@ -76,6 +72,6 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomInstance"></param>
         /// <returns></returns>
-        CustomResponse Insert(Room roomInformation);
+        Tuple<RemoteResponse, Room> Insert(Room roomInformation);
     }
 }

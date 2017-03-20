@@ -61,7 +61,8 @@ namespace ChatupNET.Forms
         {
             InitializeComponent();
             ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
-            ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete, OnUpdate);
+            ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete);
+            ChatupServer.Instance.InitializeRoom(OnJoin, OnLeave);
         }
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace ChatupNET.Forms
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomHandler(InsertRoom), new object[]
+                BeginInvoke(new InsertHandler(InsertRoom), new object[]
                 {
                     roomInformation
                 });
@@ -175,18 +176,131 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        private void OnUpdate(Room roomInformation)
+        /// <param name="userName"></param>
+        /// <param name="fullName"></param>
+        private void OnJoin(Room roomInformation, string userName, string fullName)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomHandler(UpdateRoom), new object[]
+                BeginInvoke(new RoomHandler(JoinRoom), new object[]
                 {
-                    roomInformation
+                    roomInformation, userName, fullName
                 });
             }
             else
             {
-                UpdateRoom(roomInformation);
+                JoinRoom(roomInformation, userName, fullName);
+            }
+        }
+
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="roomInformation"></param>
+        /// <param name="userName"></param>
+        /// <param name="fullName"></param>
+        private void OnLeave(Room roomInformation, string userName, string fullName)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new RoomHandler(LeaveRoom), new object[]
+                {
+                    roomInformation, userName, fullName
+                });
+            }
+            else
+            {
+                LeaveRoom(roomInformation, userName, fullName);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInformation"></param>
+        /// <param name="userName"></param>
+        /// <param name="fullName"></param>
+        private void JoinRoom(Room roomInformation, string userName, string fullName)
+        {
+            AppendTime();
+            AppendText(fullName, colorBlue);
+            AppendText(" (" + userName + ") ", colorYellow);
+            AppendText("has joined chatroom ", colorDefault);
+            AppendText(roomInformation.Name, colorBlue);
+            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
+
+            int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.ID));
+
+            if (nodeIndex >= 0)
+            {
+                var nodeItem = treeView1.Nodes[nodeIndex];
+
+                if (nodeItem != null)
+                {
+                    InsertNode(nodeItem, userName);
+                    nodeItem.Text = FormatRoom(roomInformation);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInformation"></param>
+        /// <param name="userName"></param>
+        /// <param name="fullName"></param>
+        private void LeaveRoom(Room roomInformation, string userName, string fullName)
+        {
+            AppendTime();
+            AppendText(fullName, colorBlue);
+            AppendText(" (" + userName + ") ", colorYellow);
+            AppendText("has left chatroom ", colorDefault);
+            AppendText(roomInformation.Name, colorBlue);
+            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
+
+            int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.ID));
+
+            if (nodeIndex >= 0)
+            {
+                var nodeItem = treeView1.Nodes[nodeIndex];
+
+                if (nodeItem != null)
+                {
+                    RemoveNode(nodeItem, userName);
+                    nodeItem.Text = FormatRoom(roomInformation);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeItem"></param>
+        /// <param name="userName"></param>
+        private void InsertNode(TreeNode nodeItem, string userName)
+        {
+            if (nodeItem != null && nodeItem.Nodes != null)
+            {
+                if (!nodeItem.Nodes.ContainsKey(userName))
+                {
+                    nodeItem.Nodes.Add(userName, userName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeItem"></param>
+        /// <param name="userName"></param>
+        private void RemoveNode(TreeNode nodeItem, string userName)
+        {
+            if (nodeItem != null && nodeItem.Nodes != null)
+            {
+                if (nodeItem.Nodes.ContainsKey(userName))
+                {
+                    nodeItem.Nodes.RemoveByKey(userName);
+                }
             }
         }
 
@@ -198,8 +312,15 @@ namespace ChatupNET.Forms
         {
             treeView1.Nodes.Add(
                 Convert.ToString(roomInformation.ID),
-                FormatCapacity(roomInformation)
+                FormatRoom(roomInformation)
             );
+
+            AppendTime();
+            AppendText(ChatupServer.Instance.Users[roomInformation.Owner].Name, colorBlue);
+            AppendText(" (" + roomInformation.Owner + ") ", colorYellow);
+            AppendText("has created chatroom ", colorDefault);
+            AppendText(roomInformation.Name, colorBlue);
+            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
         }
 
         /// <summary>
@@ -214,26 +335,43 @@ namespace ChatupNET.Forms
             {
                 treeView1.Nodes.RemoveByKey(_roomId);
             }
+
+            if (ChatupServer.Instance.Rooms.ContainsKey(roomId))
+            {
+                var roomInformation = ChatupServer.Instance.Rooms[roomId];
+
+                if (roomInformation != null)
+                {
+                    AppendTime();
+                    AppendText(ChatupServer.Instance.Rooms[roomId].Name, colorBlue);
+                    AppendText(" (id=" + roomId + ") ", colorYellow);
+                    AppendText("was deleted by owner request.\n", colorDefault);
+                }
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInformation"></param>
-        private void UpdateRoom(Room roomInformation)
+        /// <param name="userInformation"></param>
+        /// <param name="userAction"></param>
+        private void LogUser(UserInformation userInformation, UserAction userAction)
         {
-            var _roomId = Convert.ToString(roomInformation.ID);
-            var nodeIndex = treeView1.Nodes.IndexOfKey(_roomId);
+            AppendTime();
+            AppendText(userInformation.Name, colorBlue);
+            AppendText(" (" + userInformation.Username + ") ", colorYellow);
 
-            if (nodeIndex >= 0)
+            if (userAction == UserAction.Login)
             {
-                var nodeItem = treeView1.Nodes[nodeIndex];
-
-                if (nodeItem != null)
-                {
-                    nodeItem.Nodes.RemoveAt(0);
-                    nodeItem.Nodes.Insert(0, FormatCapacity(roomInformation));
-                }
+                AppendText("has connected.\n", colorDefault);
+            }
+            else if (userAction == UserAction.Logout)
+            {
+                AppendText("has terminated session.\n", colorDefault);
+            }
+            else
+            {
+                AppendText("account registered.\n", colorDefault);
             }
         }
 
@@ -269,7 +407,16 @@ namespace ChatupNET.Forms
 
             lvi.Name = userInformation.Username;
             listView1.Items.Insert(0, lvi);
+            LogUser(userInformation, userAction);
             UpdateStats();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void AppendTime()
+        {
+            AppendText("[" + DateTime.Now.ToLongTimeString() + "] ", colorGreen);
         }
 
         /// <summary>
@@ -298,32 +445,58 @@ namespace ChatupNET.Forms
 
             switch (serverStatus)
             {
-            case ServerStatus.Restarting:
-                buttonStart.Enabled = true;
-                buttonRestart.Enabled = true;
-                buttonExit.Enabled = true;
-                break;
+                case ServerStatus.Restarting:
+                    buttonStart.Enabled = true;
+                    buttonRestart.Enabled = true;
+                    buttonExit.Enabled = true;
+                    break;
             }
 
             switch (nextStatus)
             {
-            case ServerStatus.Stopped:
-                buttonStart.Text = Properties.Resources.status_Start;
-                buttonRestart.Enabled = false;
-                break;
-            case ServerStatus.Running:
-                buttonStart.Text = Properties.Resources.status_Stopped;
-                buttonRestart.Enabled = true;
-                break;
-            case ServerStatus.Restarting:
-                buttonStart.Text = Properties.Resources.status_Restarting;
-                buttonStart.Enabled = false;
-                buttonRestart.Enabled = false;
-                buttonExit.Enabled = false;
-                break;
+                case ServerStatus.Stopped:
+                    buttonStart.Text = Properties.Resources.status_Start;
+                    buttonRestart.Enabled = false;
+                    break;
+                case ServerStatus.Running:
+                    buttonStart.Text = Properties.Resources.status_Stopped;
+                    buttonRestart.Enabled = true;
+                    break;
+                case ServerStatus.Restarting:
+                    buttonStart.Text = Properties.Resources.status_Restarting;
+                    buttonStart.Enabled = false;
+                    buttonRestart.Enabled = false;
+                    buttonExit.Enabled = false;
+                    break;
             }
 
+            LogStatus(nextStatus);
             serverStatus = nextStatus;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serverStatus"></param>
+        private void LogStatus(ServerStatus serverStatus)
+        {
+            AppendTime();
+            AppendText("ChatupServer ", colorYellow);
+
+            switch (serverStatus)
+            {
+                case ServerStatus.Stopped:
+                    AppendText("stopped as requested by the user.\n", colorDefault);
+                    break;
+                case ServerStatus.Running:
+                    AppendText("running at ", colorDefault);
+                    AppendText(labelAddress.Text, colorBlue);
+                    AppendText("...\n", colorDefault);
+                    break;
+                case ServerStatus.Restarting:
+                    AppendText("restarting...\n", colorDefault);
+                    break;
+            }
         }
 
         /// <summary>
@@ -381,7 +554,7 @@ namespace ChatupNET.Forms
         protected override void OnClosing(CancelEventArgs args)
         {
             base.OnClosing(args);
-            ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete, OnUpdate);
+            ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete);
             ChatupServer.Instance.DestroySession(OnLogin, OnLogout, OnRegister);
         }
 
@@ -390,9 +563,33 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="roomInstance"></param>
         /// <returns></returns>
-        private string FormatCapacity(Room roomInstance)
+        private string FormatRoom(Room roomInstance)
         {
-            return string.Format("{0} ({1}/{2})", roomInstance.Name, roomInstance.Count, roomInstance.Capacity);
+            return string.Format("{0} ({1:D}/{2:D})", roomInstance.Name, roomInstance.Count, roomInstance.Capacity);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private Color colorPink = Color.FromArgb(249, 38, 114);
+        private Color colorGreen = Color.FromArgb(166, 226, 46);
+        private Color colorBlue = Color.FromArgb(102, 217, 239);
+        private Color colorYellow = Color.FromArgb(244, 191, 117);
+        private Color colorDefault = Color.FromArgb(248, 248, 242);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messageContent"></param>
+        /// <param name="messageColor"></param>
+        protected void AppendText(string messageContent, Color messageColor)
+        {
+            richTextBox1.SelectionStart = richTextBox1.TextLength;
+            richTextBox1.SelectionLength = 0;
+            richTextBox1.SelectionColor = messageColor;
+            richTextBox1.AppendText(messageContent);
+            richTextBox1.SelectionColor = richTextBox1.ForeColor;
+            richTextBox1.ScrollToCaret();
         }
 
         /// <summary>
@@ -402,16 +599,6 @@ namespace ChatupNET.Forms
         /// <param name="args"></param>
         private void MainForm_Load(object sender, EventArgs args)
         {
-            var roomList = ChatupServer.Instance.Rooms;
-
-            if (roomList.Count > 0)
-            {
-                foreach (var roomInfo in roomList)
-                {
-                    InsertRoom(roomInfo.Value);
-                }
-            }
-
             var userList = ChatupServer.Instance.Users;
 
             if (userList.Count > 0)
@@ -419,6 +606,16 @@ namespace ChatupNET.Forms
                 foreach (var userInformation in userList)
                 {
                     UpsertUser(userInformation.Value, UserAction.Register);
+                }
+            }
+
+            var roomList = ChatupServer.Instance.Rooms;
+
+            if (roomList.Count > 0)
+            {
+                foreach (var roomInfo in roomList)
+                {
+                    InsertRoom(roomInfo.Value);
                 }
             }
 
@@ -433,6 +630,7 @@ namespace ChatupNET.Forms
         private void UpdateAddress(Address objectInstance)
         {
             labelAddress.Text = objectInstance.Host.ToString() + ":" + objectInstance.Port;
+            LogStatus(ServerStatus.Running);
         }
     }
 }

@@ -5,22 +5,28 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roomInformation"></param>
+    /// <param name="userName"></param>
+    /// <param name="fullName"></param>
+    delegate void RoomHandler(Room roomInformation, string userName, string fullName);
+
+    /// <summary>
+    /// 
+    /// </summary>
     class LobbyService : MarshalByRefObject, LobbyInterface
     {
         /// <summary>
         /// 
         /// </summary>
-        public event RoomHandler OnInsert;
+        public event InsertHandler OnInsert;
 
         /// <summary>
         /// 
         /// </summary>
         public event DeleteHandler OnDelete;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event RoomHandler OnUpdate;
 
         /// <summary>
         /// 
@@ -40,21 +46,6 @@ namespace ChatupNET.Remoting
         public Dictionary<int, Room> List()
         {
             return ChatupServer.Instance.Rooms;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <returns></returns>
-        public string LookupRoom(int roomId)
-        {
-            if (Rooms.ContainsKey(roomId))
-            {
-                return ChatupServer.Instance.LookupChatroom(roomId);
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -113,21 +104,21 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
-        public CustomResponse Insert(Room roomInformation)
+        public Tuple<RemoteResponse, Room> Insert(Room roomInformation)
         {
             if (roomInformation == null)
             {
-                return new CustomResponse(RemoteResponse.BadRequest);
+                return new Tuple<RemoteResponse, Room>(RemoteResponse.BadRequest, null);
             }
 
             if (string.IsNullOrEmpty(roomInformation.Owner))
             {
-                return new CustomResponse(RemoteResponse.BadRequest);
+                return new Tuple<RemoteResponse, Room>(RemoteResponse.BadRequest, null);
             }
 
             if (string.IsNullOrEmpty(roomInformation.Name))
             {
-                return new CustomResponse(RemoteResponse.BadRequest);
+                return new Tuple<RemoteResponse, Room>(RemoteResponse.BadRequest, null);
             }
 
             roomInformation.ID = ChatupServer.Instance.NextID;
@@ -138,10 +129,10 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return new CustomResponse(RemoteResponse.OperationFailed);
+                return new Tuple<RemoteResponse, Room>(RemoteResponse.OperationFailed, null);
             }
 
-            return new CustomResponse(RemoteResponse.Success, roomInformation);
+            return new Tuple<RemoteResponse, Room>(RemoteResponse.Success, roomInformation);
         }
 
         /// <summary>
@@ -149,24 +140,16 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="roomId"></param>
         /// <returns></returns>
-        public RemoteResponse IsPrivate(int roomId)
+        public Tuple<bool, string> QueryRoom(int roomId)
         {
-            if (roomId < 1)
-            {
-                return RemoteResponse.BadRequest;
-            }
-
             if (Rooms.ContainsKey(roomId))
             {
-                if (Rooms[roomId].IsPrivate())
-                {
-                    return RemoteResponse.Success;
-                }
-
-                return RemoteResponse.OperationFailed;
+                return new Tuple<bool, string>(Rooms[roomId].IsPrivate(), ChatupServer.Instance.LookupChatroom(roomId));
             }
-
-            return RemoteResponse.NotFound;
+            else
+            {
+                return new Tuple<bool, string>(false, null);
+            }
         }
 
         /// <summary>

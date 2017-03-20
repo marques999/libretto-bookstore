@@ -154,6 +154,7 @@
             this.columnHeader3,
             this.columnHeader4});
             this.roomsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roomsList.FullRowSelect = true;
             listViewGroup1.Header = "Public";
             listViewGroup1.Name = "Public";
             listViewGroup2.Header = "Private";
@@ -162,6 +163,7 @@
             listViewGroup1,
             listViewGroup2});
             this.roomsList.Location = new System.Drawing.Point(3, 44);
+            this.roomsList.MultiSelect = false;
             this.roomsList.Name = "roomsList";
             this.roomsList.Size = new System.Drawing.Size(276, 244);
             this.roomsList.TabIndex = 4;
@@ -186,7 +188,9 @@
             this.columnHeader1,
             this.columnHeader2});
             this.usersList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.usersList.FullRowSelect = true;
             this.usersList.Location = new System.Drawing.Point(285, 44);
+            this.usersList.MultiSelect = false;
             this.usersList.Name = "usersList";
             this.usersList.Size = new System.Drawing.Size(276, 244);
             this.usersList.TabIndex = 3;
@@ -232,7 +236,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(278, 37);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Friends";
+            this.label2.Text = "Peers";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -325,7 +329,8 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
             // 
             // MainForm
             // 

@@ -97,26 +97,26 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="registerObject"></param>
+        /// <param name="userForm"></param>
         /// <returns></returns>
-        public RemoteResponse Register(UserForm registerObject)
+        public RemoteResponse Register(UserForm userForm)
         {
-            if (registerObject == null)
+            if (userForm == null)
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrEmpty(registerObject.Username) || string.IsNullOrEmpty(registerObject.Password))
+            if (string.IsNullOrEmpty(userForm.Username) || string.IsNullOrEmpty(userForm.Password))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            var userInformation = new UserInformation(registerObject.Username, registerObject.Name, null);
+            var userInformation = new UserInformation(userForm.Username, userForm.Name, null);
 
-            if (SqliteDatabase.Instance.InsertUser(registerObject))
+            if (SqliteDatabase.Instance.InsertUser(userForm))
             {
                 OnRegister?.Invoke(userInformation);
-                ChatupServer.Instance.Users.Add(registerObject.Username, userInformation);
+                ChatupServer.Instance.Users.Add(userForm.Username, userInformation);
                 ChatupServer.Instance.Session.Register(userInformation);
             }
             else

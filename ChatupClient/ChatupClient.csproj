@@ -69,7 +69,9 @@
     <Compile Include="Forms\InsertForm.Designer.cs">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\RoomInvitation.cs" />
     <Compile Include="Remoting\MessageInterface.cs" />
+    <Compile Include="Remoting\MessageIntermediate.cs" />
     <Compile Include="Remoting\MessageService.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>

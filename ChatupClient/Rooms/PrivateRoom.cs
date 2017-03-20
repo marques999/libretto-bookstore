@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.Remoting;
 
 using ChatupNET.Model;
@@ -7,9 +8,6 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Rooms
 {
-    /// <summary>
-    /// 
-    /// </summary>
     class PrivateRoom : AbstractRoom
     {
         /// <summary>
@@ -35,7 +33,7 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="remoteHost"></param>
-        public PrivateRoom(UserProfile userProfile, string remoteHost)
+        public PrivateRoom(Tuple<string, Color> userProfile, string remoteHost)
         {
             try
             {
@@ -66,13 +64,11 @@ namespace ChatupNET.Rooms
                 return;
             }
 
-            if (operationResult.Response == RemoteResponse.Success)
+            if (operationResult.Item1 == RemoteResponse.Success)
             {
-                var userProfile = operationResult.Contents as UserProfile;
-
-                if (userProfile != null)
+                if (operationResult.Item2 != null)
                 {
-                    InitializeRoom(userProfile);
+                    InitializeRoom(operationResult.Item2);
                 }
                 else
                 {
@@ -81,7 +77,7 @@ namespace ChatupNET.Rooms
             }
             else
             {
-                ErrorHandler.DisplayError(this, operationResult.Response);
+                ErrorHandler.DisplayError(this, operationResult.Item1);
             }
         }
 
@@ -94,10 +90,10 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private void InitializeRoom(UserProfile userProfile)
+        private void InitializeRoom(Tuple<string, Color> userProfile)
         {
             _connected = true;
-            _username = userProfile.Username;
+            _username = userProfile.Item1;
             JoinRoom(ChatupClient.Instance.Profile);
             JoinRoom(userProfile);
             Text = string.Format("{0} [PRIVATE]", _username);
@@ -120,7 +116,7 @@ namespace ChatupNET.Rooms
 
                 if (operationResult == RemoteResponse.Success)
                 {
-                    ChatupClient.Instance.Disconnect(_username, true);
+                    ChatupClient.Instance.Messaging.p2pDisconnect(_username, true);
                     base.OnClosing(args);
                 }
                 else

@@ -25,18 +25,18 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userInformation"></param>
-        public void Login(UserInformation userInformation)
+        public void Logout(UserInformation userInformation)
         {
-            OnLogin?.Invoke(userInformation);
+            OnLogout?.Invoke(userInformation);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userInformation"></param>
-        public void Logout(UserInformation userInformation)
+        public void Login(UserInformation userInformation)
         {
-            OnLogout?.Invoke(userInformation);
+            OnLogin?.Invoke(userInformation);
         }
 
         /// <summary>

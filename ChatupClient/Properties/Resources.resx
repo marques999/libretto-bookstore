@@ -146,7 +146,7 @@
     <value>Wrong password</value>
   </data>
   <data name="PromptInvite" xml:space="preserve">
-    <value>@{0} has asked you to participate in a private conversation with him/her. Do you want to accept the invitation?</value>
+    <value>@{0} has asked you to participate in the group conversation "{1}". Do you want to accept the invitation?</value>
   </data>
   <data name="PromptInviteTitle" xml:space="preserve">
     <value>Private conversation</value>

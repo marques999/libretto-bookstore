@@ -1,13 +1,15 @@
-﻿using ChatupNET.Model;
+﻿using System;
+using System.Drawing;
+
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userProfile"></param>
-    /// <param name="remoteHost"></param>
-    public delegate void ConnectHandler(UserProfile userProfile, string remoteHost);
+    /// <param name="roomInvitation"></param>
+    public delegate void InviteHandler(RoomInvitation roomInvitation);
 
     /// <summary>
     /// 
@@ -19,23 +21,15 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="userProfile"></param>
+    /// <param name="userHost"></param>
+    public delegate void ConnectHandler(Tuple<string, Color> userProfile, string userHost);
+
+    /// <summary>
+    /// 
+    /// </summary>
     public interface MessageInterface
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        event MessageHandler OnReceive;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        event ConnectHandler OnConnect;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        event DisconnectHandler OnDisconnect;
-
         /// <summary>
         /// 
         /// </summary>
@@ -46,9 +40,16 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userMessage"></param>
+        /// <param name="remoteMessage"></param>
         /// <returns></returns>
-        RemoteResponse Send(RemoteMessage userMessage);
+        RemoteResponse Send(RemoteMessage remoteMessage);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInvitation"></param>
+        /// <returns></returns>
+        RemoteResponse Invite(RoomInvitation roomInvitation);
 
         /// <summary>
         /// 
@@ -56,6 +57,6 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
         /// <returns></returns>
-        CustomResponse Connect(UserProfile userProfile, string userHost);
+        Tuple<RemoteResponse, Tuple<string, Color>> Connect(Tuple<string, Color> userProfile, string userHost);
     }
 }

@@ -19,7 +19,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "mStatus" private member
+        /// Public getter property for the "_host" private member
         /// </summary>
         public bool Online
         {

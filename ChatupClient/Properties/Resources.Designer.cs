@@ -143,7 +143,7 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @{0} has asked you to participate in a private conversation with him/her. Do you want to accept the invitation?.
+        ///   Looks up a localized string similar to @{0} has asked you to participate in the group conversation &quot;{1}&quot;. Do you want to accept the invitation?.
         /// </summary>
         internal static string PromptInvite {
             get {

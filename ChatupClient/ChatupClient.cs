@@ -30,9 +30,11 @@ class ChatupClient
         }, new BinaryClientFormatterSinkProvider(), serverProvider);
 
         ChannelServices.RegisterChannel(tcpChannel, false);
-        mLobby = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
-        mSession = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
-        mHost = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
+        _p2pInterface = new MessageIntermediate();
+        _lobbyInterface = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
+        _sessionInterface = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+        RemotingConfiguration.RegisterActivatedServiceType(typeof(RoomInterface));
+        _userAddress = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
 
         RemotingConfiguration.RegisterWellKnownServiceType(
             typeof(MessageService),
@@ -44,52 +46,42 @@ class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private Address mHost;
+    private Color _userColor;
 
     /// <summary>
     /// 
     /// </summary>
-    private string mUsername;
+    private Address _userAddress;
 
     /// <summary>
     /// 
     /// </summary>
-    private static ChatupClient mInstance;
+    private string _userName;
 
     /// <summary>
     /// 
     /// </summary>
-    public event MessageHandler OnReceive;
+    private static ChatupClient _instance;
 
     /// <summary>
     /// 
     /// </summary>
-    public event ConnectHandler OnConnect;
+    private LobbyInterface _lobbyInterface;
 
     /// <summary>
     /// 
     /// </summary>
-    public event DisconnectHandler OnDisconnect;
+    private SessionInterface _sessionInterface;
+
+    /// <summary>
+    /// a
+    /// </summary>
+    private MessageIntermediate _p2pInterface;
 
     /// <summary>
     /// 
     /// </summary>
-    private Color mColor = ColorGenerator.Random();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private LobbyInterface mLobby;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private SessionInterface mSession;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private Dictionary<int, RoomInterface> mRooms = new Dictionary<int, RoomInterface>();
+    private Dictionary<int, RoomInterface> _rooms = new Dictionary<int, RoomInterface>();
 
     /// <summary>
     /// 
@@ -98,7 +90,7 @@ class ChatupClient
     {
         get
         {
-            return mColor;
+            return _userColor;
         }
     }
 
@@ -109,7 +101,7 @@ class ChatupClient
     {
         get
         {
-            return mHost;
+            return _userAddress;
         }
     }
 
@@ -120,7 +112,7 @@ class ChatupClient
     {
         get
         {
-            return string.Format("tcp://{0}:{1:D}/messaging.rem", mHost.Host, mHost.Port);
+            return string.Format("tcp://{0}:{1:D}/messaging.rem", _userAddress.Host, _userAddress.Port);
         }
     }
 
@@ -130,8 +122,8 @@ class ChatupClient
     /// <param name="sessionIntermediate"></param>
     public void InitializeSession(SessionIntermediate sessionIntermediate)
     {
-        mSession.OnLogin += sessionIntermediate.Login;
-        mSession.OnLogout += sessionIntermediate.Logout;
+        _sessionInterface.OnLogin += sessionIntermediate.Login;
+        _sessionInterface.OnLogout += sessionIntermediate.Logout;
     }
 
     /// <summary>
@@ -140,8 +132,8 @@ class ChatupClient
     /// <param name="sessionIntermediate"></param>
     public void DestroySession(SessionIntermediate sessionIntermediate)
     {
-        mSession.OnLogin -= sessionIntermediate.Login;
-        mSession.OnLogout -= sessionIntermediate.Logout;
+        _sessionInterface.OnLogin -= sessionIntermediate.Login;
+        _sessionInterface.OnLogout -= sessionIntermediate.Logout;
     }
 
     /// <summary>
@@ -150,9 +142,8 @@ class ChatupClient
     /// <param name="lobbyIntermediate"></param>
     public void InitializeLobby(LobbyIntermediate lobbyIntermediate)
     {
-        mLobby.OnInsert += lobbyIntermediate.CreateRoom;
-        mLobby.OnDelete += lobbyIntermediate.DeleteRoom;
-        mLobby.OnUpdate += lobbyIntermediate.UpdateRoom;
+        _lobbyInterface.OnInsert += lobbyIntermediate.CreateRoom;
+        _lobbyInterface.OnDelete += lobbyIntermediate.DeleteRoom;
     }
 
     /// <summary>
@@ -161,9 +152,8 @@ class ChatupClient
     /// <param name="lobbyIntermediate"></param>
     public void DestroyLobby(LobbyIntermediate lobbyIntermediate)
     {
-        mLobby.OnInsert -= lobbyIntermediate.CreateRoom;
-        mLobby.OnDelete -= lobbyIntermediate.DeleteRoom;
-        mLobby.OnUpdate -= lobbyIntermediate.UpdateRoom;
+        _lobbyInterface.OnInsert -= lobbyIntermediate.CreateRoom;
+        _lobbyInterface.OnDelete -= lobbyIntermediate.DeleteRoom;
     }
 
     /// <summary>
@@ -171,12 +161,14 @@ class ChatupClient
     /// </summary>
     /// <param name="joinHandler"></param>
     /// <param name="leaveHandler"></param>
+    /// <param name="inviteHandler"></param>
     /// <param name="messageHandler"></param>
-    public void InitializeMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, MessageHandler messageHandler)
+    public void InitializeMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, InviteHandler inviteHandler, MessageHandler messageHandler)
     {
-        OnConnect += joinHandler;
-        OnDisconnect += leaveHandler;
-        OnReceive += messageHandler;
+        _p2pInterface.OnInvite += inviteHandler;
+        _p2pInterface.OnConnect += joinHandler;
+        _p2pInterface.OnDisconnect += leaveHandler;
+        _p2pInterface.OnReceive += messageHandler;
     }
 
     /// <summary>
@@ -184,41 +176,14 @@ class ChatupClient
     /// </summary>
     /// <param name="joinHandler"></param>
     /// <param name="leaveHandler"></param>
+    /// <param name="inviteHandler"></param>
     /// <param name="messageHandler"></param>
-    public void DestroyMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, MessageHandler messageHandler)
+    public void DestroyMessaging(ConnectHandler joinHandler, DisconnectHandler leaveHandler, InviteHandler inviteHandler, MessageHandler messageHandler)
     {
-        OnConnect -= joinHandler;
-        OnDisconnect -= leaveHandler;
-        OnReceive -= messageHandler;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userProfile"></param>
-    /// <param name="remoteHost"></param>
-    public void Connect(UserProfile userProfile, string remoteHost)
-    {
-        OnConnect?.Invoke(userProfile, remoteHost);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="userAction"></param>
-    public void Disconnect(string userName, bool userAction)
-    {
-        OnDisconnect?.Invoke(userName, userAction);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="remoteMessage"></param>
-    public void Push(RemoteMessage remoteMessage)
-    {
-        OnReceive?.Invoke(remoteMessage);
+        _p2pInterface.OnInvite -= inviteHandler;
+        _p2pInterface.OnConnect -= joinHandler;
+        _p2pInterface.OnDisconnect -= leaveHandler;
+        _p2pInterface.OnReceive -= messageHandler;
     }
 
     /// <summary>
@@ -228,7 +193,7 @@ class ChatupClient
     {
         get
         {
-            return mSession;
+            return _sessionInterface;
         }
     }
 
@@ -239,7 +204,18 @@ class ChatupClient
     {
         get
         {
-            return mLobby;
+            return _lobbyInterface;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public MessageIntermediate Messaging
+    {
+        get
+        {
+            return _p2pInterface;
         }
     }
 
@@ -250,12 +226,12 @@ class ChatupClient
     {
         get
         {
-            if (mInstance == null)
+            if (_instance == null)
             {
-                mInstance = new ChatupClient();
+                _instance = new ChatupClient();
             }
 
-            return mInstance;
+            return _instance;
         }
     }
 
@@ -266,18 +242,18 @@ class ChatupClient
     {
         get
         {
-            return mUsername;
+            return _userName;
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public UserProfile Profile
+    public Tuple<string, Color> Profile
     {
         get
         {
-            return new UserProfile(mUsername, mColor);
+            return new Tuple<string, Color>(_userName, _userColor);
         }
     }
 
@@ -289,12 +265,13 @@ class ChatupClient
     /// <returns></returns>
     public RemoteResponse Login(string userName, string userPassword)
     {
-        var userLogin = new UserLogin(userName, userPassword, mHost);
-        var operationResult = mSession.Login(userLogin);
+        var userLogin = new UserLogin(userName, userPassword, _userAddress);
+        var operationResult = _sessionInterface.Login(userLogin);
 
         if (operationResult == RemoteResponse.Success)
         {
-            mUsername = userLogin.Username;
+            _userName = userLogin.Username;
+            _userColor = ColorGenerator.Random();
         }
 
         return operationResult;
@@ -306,11 +283,12 @@ class ChatupClient
     /// <returns></returns>
     public RemoteResponse Logout()
     {
-        var operationResult = mSession.Logout(mUsername);
+        var operationResult = _sessionInterface.Logout(_userName);
 
         if (operationResult == RemoteResponse.Success)
         {
-            mUsername = null;
+            _userName = null;
+            _userColor = Color.Black;
         }
 
         return operationResult;

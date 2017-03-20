@@ -40,8 +40,8 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        protected void UserJoined(UserProfile userProfile)
+        /// <param name="userProfile"></param>
+        protected void OnJoin(Tuple<string, Color> userProfile)
         {
             if (InvokeRequired)
             {
@@ -60,12 +60,12 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        protected virtual void JoinRoom(UserProfile userProfile)
+        protected virtual void JoinRoom(Tuple<string, Color> userProfile)
         {
-            listBox1.Items.Add(userProfile.Username);
-            _users.Add(userProfile.Username, userProfile.Color);
+            listBox1.Items.Add(userProfile.Item1);
+            _users.Add(userProfile.Item1, userProfile.Item2);
             AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(userProfile.Username, userProfile.Color);
+            AppendText(userProfile.Item1, userProfile.Item2);
             AppendText(" has joined the conversation." + "\n", Color.DimGray);
         }
 
@@ -73,7 +73,7 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        protected void UserLeft(string userName)
+        protected void OnLeave(string userName)
         {
             if (InvokeRequired)
             {

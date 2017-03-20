@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 using ChatupNET.Model;
@@ -15,7 +16,7 @@ namespace ChatupNET.Remoting
     /// 
     /// </summary>
     /// <param name="userProfile"></param>
-    public delegate void JoinHandler(UserProfile userProfile);
+    public delegate void JoinHandler(Tuple<string, Color> userProfile);
 
     /// <summary>
     /// 
@@ -52,20 +53,23 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        RemoteResponse Leave(string userName);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="messageInstance"></param>
+        /// <returns></returns>
         RemoteResponse Send(RemoteMessage messageInstance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        RemoteResponse Leave(string userName);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        CustomResponse Join(string userName, string userPassword);
+        /// <returns></returns>
+        Tuple<RemoteResponse, MessageQueue> Join(string userName, string userPassword);
     }
 }
