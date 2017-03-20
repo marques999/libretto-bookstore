@@ -1,48 +1,45 @@
-using System;
 using System.Collections.Generic;
-
-using ChatupNET.Database.Enums;
 
 namespace ChatupNET.Database
 {
     class SqlBuilder
     {
-        protected bool _distinct = false;
-        protected TopClause _topClause = new TopClause(100, TopUnit.Percent);
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<string> _selectedTables = new List<string>();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private List<SqlColumn> _selectedColumns = new List<SqlColumn>();
-        protected List<string> _selectedTables = new List<string>();
-        protected WhereStatement _whereStatement = new WhereStatement();
-        protected List<string> _groupByColumns = new List<string>();
-        protected WhereStatement _havingStatement = new WhereStatement();
 
-        public SqlBuilder()
-        {
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private WhereStatement _whereStatement = new WhereStatement();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public SqlBuilder Column(string column)
-        {
-            return Column(column, null);
-        }
-
-        public SqlBuilder Column(string column, string columnAs)
         {
             _selectedColumns.Add(new SqlColumn
             {
                 Name = column,
-                Alias = columnAs
+                Alias = null
             });
 
             return this;
         }
 
-        public SqlBuilder Columns(params SqlColumn[] columns)
-        {
-            _selectedColumns.Clear();
-            _selectedColumns.AddRange(columns);
-
-            return this;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
         public SqlBuilder FromTable(string table)
         {
             _selectedTables.Add(table);
@@ -50,40 +47,27 @@ namespace ChatupNET.Database
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="operator"></param>
+        /// <param name="compareValue"></param>
+        /// <returns></returns>
         public SqlBuilder Where(string field, Comparison @operator, object compareValue)
         {
-            Where(field, @operator, compareValue, 1);
+            _whereStatement.Add(new WhereClause(field, @operator, compareValue), 1);
 
             return this;
         }
 
-        public WhereClause Where(string field, Comparison @operator, object compareValue, int level)
-        {
-            WhereClause NewWhereClause = new WhereClause(field, @operator, compareValue);
-            _whereStatement.Add(NewWhereClause, level);
-            return NewWhereClause;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string BuildQuery()
         {
             string Query = "SELECT ";
-
-            if (_distinct)
-            {
-                Query += "DISTINCT ";
-            }
-
-            if (!(_topClause.Quantity == 100 & _topClause.Unit == TopUnit.Percent))
-            {
-                Query += "TOP " + _topClause.Quantity;
-
-                if (_topClause.Unit == TopUnit.Percent)
-                {
-                    Query += " PERCENT";
-                }
-
-                Query += " ";
-            }
 
             if (_selectedColumns.Count == 0)
             {
@@ -128,29 +112,6 @@ namespace ChatupNET.Database
             if (_whereStatement.ClauseLevels > 0)
             {
                 Query += " WHERE " + _whereStatement.BuildWhereStatement();
-            }
-
-            if (_groupByColumns.Count > 0)
-            {
-                Query += " GROUP BY ";
-
-                foreach (string Column in _groupByColumns)
-                {
-                    Query += Column + ',';
-                }
-
-                Query = Query.TrimEnd(',');
-                Query += ' ';
-            }
-
-            if (_havingStatement.ClauseLevels > 0)
-            {
-                if (_groupByColumns.Count == 0)
-                {
-                    throw new Exception("Having statement was set without Group By");
-                }
-
-                Query += " HAVING " + _havingStatement.BuildWhereStatement();
             }
 
             return Query;

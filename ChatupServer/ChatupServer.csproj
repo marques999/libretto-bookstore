@@ -74,9 +74,6 @@
     <StartupObject>ChatupServer</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IPAddressControlLib">
-      <HintPath>..\..\..\..\..\Downloads\IPAddressControlLib\bin\Release\IPAddressControlLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -97,23 +94,12 @@
     <Compile Include="Remoting\LobbyService.cs" />
     <Compile Include="SqliteConstants.cs" />
     <Compile Include="SqliteDatabase.cs" />
-    <Compile Include="Database\Clauses\TopClause.cs" />
-    <Compile Include="Database\Clauses\WhereClause.cs" />
-    <Compile Include="Database\Clauses\WhereStatement.cs" />
-    <Compile Include="Database\Enums\Comparison.cs" />
-    <Compile Include="Database\Enums\JoinType.cs" />
-    <Compile Include="Database\Enums\LogicOperator.cs" />
-    <Compile Include="Database\Enums\Sorting.cs" />
-    <Compile Include="Database\Enums\TopUnit.cs" />
+    <Compile Include="Database\WhereClause.cs" />
+    <Compile Include="Database\WhereStatement.cs" />
+    <Compile Include="Database\SqlEnums.cs" />
     <Compile Include="Database\SqlBuilder.cs" />
     <Compile Include="Database\SqlColumn.cs" />
     <Compile Include="Database\SqlLiteral.cs" />
-    <Compile Include="Forms\AddressForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddressForm.Designer.cs">
-      <DependentUpon>AddressForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Remoting\RoomService.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -126,9 +112,6 @@
     <Compile Include="Remoting\SessionService.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddressForm.resx">
-      <DependentUpon>AddressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

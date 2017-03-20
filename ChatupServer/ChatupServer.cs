@@ -252,6 +252,7 @@ class ChatupServer
             RemotingServices.Marshal(new RoomService(roomInformation), FormatUri(roomInformation.ID));
             rooms.Add(roomInformation.ID, roomInformation);
             lobbyIntermediate.CreateRoom(roomInformation);
+            SqliteDatabase.Instance.InsertRoom(roomInformation);
         }
         catch (RemotingException)
         {

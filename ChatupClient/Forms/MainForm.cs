@@ -2,33 +2,16 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Remoting;
 using System.Windows.Forms;
 
 using ChatupNET.Model;
 using ChatupNET.Rooms;
 using ChatupNET.Remoting;
-using System.Runtime.Remoting;
 
 namespace ChatupNET.Forms
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userName"></param>
-    /// <param name="actionDescription"></param>
-    delegate void ActionUserHandler(UserInformation userInformation);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="listItem"></param>
-    /// <returns></returns>
-    delegate ListViewItem ListViewInsert(ListViewItem listItem);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public partial class MainForm : Form
+    partial class MainForm : Form
     {
         /// <summary>
         /// 
@@ -45,6 +28,13 @@ namespace ChatupNET.Forms
             ChatupClient.Instance.InitializeLobby(lobbyIntermediate);
             ChatupClient.Instance.InitializeMessaging(OnConnect, OnDisconnect, OnReceive);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listItem"></param>
+        /// <returns></returns>
+        private delegate ListViewItem ListViewInsert(ListViewItem listItem);
 
         /// <summary>
         /// 
@@ -79,7 +69,7 @@ namespace ChatupNET.Forms
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new ActionUserHandler(UpsertUser), new object[]
+                BeginInvoke(new UserHandler(UpsertUser), new object[]
                 {
                     userInformation
                 });
@@ -98,7 +88,7 @@ namespace ChatupNET.Forms
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new ActionUserHandler(UpsertUser), new object[]
+                BeginInvoke(new UserHandler(UpsertUser), new object[]
                 {
                     userInformation
                 });
@@ -112,7 +102,6 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
         private void OnCreate(Room roomInformation)
         {
@@ -151,9 +140,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="roomCount"></param>
-        /// <param name="roomCapacity"></param>
+        /// <param name="roomInformation"></param>
         private void OnUpdate(Room roomInformation)
         {
             if (InvokeRequired)
@@ -291,7 +278,6 @@ namespace ChatupNET.Forms
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -328,7 +314,6 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
         private void InsertRoom(Room roomInformation)
         {
@@ -378,9 +363,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="roomCount"></param>
-        /// <param name="roomCapacity"></param>
+        /// <param name="roomInformation"></param>
         private void UpdateRoom(Room roomInformation)
         {
             var listItems = roomsList.Items.Find(Convert.ToString(roomInformation.ID), false);
@@ -494,7 +477,6 @@ namespace ChatupNET.Forms
 
             UpdateRoomButtons();
             UpdatePrivateButtons();
-            //HandleInvitation("koreris");
             labelUser.Text = "User: " + ChatupClient.Instance.Username;
         }
 
@@ -641,7 +623,12 @@ namespace ChatupNET.Forms
         {
             if (roomsList.SelectedItems.Count > 0)
             {
-                JoinRoom(Convert.ToInt32(roomsList.SelectedItems[0].Name));
+                var listItem = roomsList.SelectedItems[0];
+
+                if (listItem != null)
+                {
+                    JoinRoom(Convert.ToInt32(listItem.Name));
+                }
             }
         }
 
@@ -654,7 +641,12 @@ namespace ChatupNET.Forms
         {
             if (roomsList.SelectedItems.Count > 0)
             {
-                JoinRoom(Convert.ToInt32(roomsList.SelectedItems[0].Name));
+                var listItem = roomsList.SelectedItems[0];
+
+                if (listItem != null)
+                {
+                    JoinRoom(Convert.ToInt32(listItem.Name));
+                }
             }
         }
 
@@ -671,7 +663,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="chatroomInstance"></param>
+        /// <param name="roomInformation"></param>
         private void LeaveGroup(Room roomInformation)
         {
             var roomId = roomInformation.ID;
@@ -717,6 +709,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userName"></param>
         private void JoinPrivate(string userName)
         {
             if (userName == ChatupClient.Instance.Username)
@@ -800,11 +793,11 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInstance"></param>
+        /// <param name="roomInformation"></param>
         /// <returns></returns>
-        private string FormatCapacity(Room roomInstance)
+        private string FormatCapacity(Room roomInformation)
         {
-            return FormatCapacity(roomInstance.Count, roomInstance.Capacity);
+            return FormatCapacity(roomInformation.Count, roomInformation.Capacity);
         }
 
         /// <summary>

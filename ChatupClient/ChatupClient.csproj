@@ -39,6 +39,9 @@
     <StartupObject>ChatupClient</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IPAddressControlLib">
+      <HintPath>..\..\..\..\..\Downloads\IPAddressControlLib\bin\Release\IPAddressControlLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Remoting" />
@@ -54,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Forms\AddressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddressForm.Designer.cs">
+      <DependentUpon>AddressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InsertForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +109,9 @@
     <Compile Include="Rooms\PrivateRoom.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\AddressForm.resx">
+      <DependentUpon>AddressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\InsertForm.resx">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </EmbeddedResource>

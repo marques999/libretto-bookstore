@@ -9,26 +9,6 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Forms
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    enum UserAction
-    {
-        Login,
-        Logout,
-        Register
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="userInformation"></param>
-    /// <param name="userAction"></param>
-    delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
-
-    /// <summary>
-    /// 
-    /// </summary>
     partial class MainForm : Form
     {
         /// <summary>
@@ -40,6 +20,16 @@ namespace ChatupNET.Forms
             Running = 1,
             Restarting = 2,
             Failure = 3
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private enum UserAction
+        {
+            Login,
+            Logout,
+            Register
         }
 
         /// <summary>
@@ -63,6 +53,23 @@ namespace ChatupNET.Forms
             Color.DarkOrange,
             Color.Red
         };
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public MainForm()
+        {
+            InitializeComponent();
+            ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
+            ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete, OnUpdate);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        /// <param name="userAction"></param>
+        private delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
 
         /// <summary>
         /// 
@@ -129,7 +136,6 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
         private void OnInsert(Room roomInformation)
         {
@@ -168,9 +174,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="roomCount"></param>
-        /// <param name="roomCapacity"></param>
+        /// <param name="roomInformation"></param>
         private void OnUpdate(Room roomInformation)
         {
             if (InvokeRequired)
@@ -187,19 +191,8 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// Default constructor
-        /// </summary>
-        public MainForm()
-        {
-            InitializeComponent();
-            ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
-            ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete, OnUpdate);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
         /// <param name="roomInformation"></param>
         private void InsertRoom(Room roomInformation)
         {
@@ -226,8 +219,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
-        /// <param name="roomExit"></param>
+        /// <param name="roomInformation"></param>
         private void UpdateRoom(Room roomInformation)
         {
             var _roomId = Convert.ToString(roomInformation.ID);
@@ -249,7 +241,7 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="userInformation"></param>
-        /// <param name="userStatus"></param>
+        /// <param name="userAction"></param>
         private void UpsertUser(UserInformation userInformation, UserAction userAction)
         {
             if (listView1.Items.ContainsKey(userInformation.Username))
@@ -306,29 +298,29 @@ namespace ChatupNET.Forms
 
             switch (serverStatus)
             {
-                case ServerStatus.Restarting:
-                    buttonStart.Enabled = true;
-                    buttonRestart.Enabled = true;
-                    buttonExit.Enabled = true;
-                    break;
+            case ServerStatus.Restarting:
+                buttonStart.Enabled = true;
+                buttonRestart.Enabled = true;
+                buttonExit.Enabled = true;
+                break;
             }
 
             switch (nextStatus)
             {
-                case ServerStatus.Stopped:
-                    buttonStart.Text = Properties.Resources.status_Start;
-                    buttonRestart.Enabled = false;
-                    break;
-                case ServerStatus.Running:
-                    buttonStart.Text = Properties.Resources.status_Stopped;
-                    buttonRestart.Enabled = true;
-                    break;
-                case ServerStatus.Restarting:
-                    buttonStart.Text = Properties.Resources.status_Restarting;
-                    buttonStart.Enabled = false;
-                    buttonRestart.Enabled = false;
-                    buttonExit.Enabled = false;
-                    break;
+            case ServerStatus.Stopped:
+                buttonStart.Text = Properties.Resources.status_Start;
+                buttonRestart.Enabled = false;
+                break;
+            case ServerStatus.Running:
+                buttonStart.Text = Properties.Resources.status_Stopped;
+                buttonRestart.Enabled = true;
+                break;
+            case ServerStatus.Restarting:
+                buttonStart.Text = Properties.Resources.status_Restarting;
+                buttonStart.Enabled = false;
+                buttonRestart.Enabled = false;
+                buttonExit.Enabled = false;
+                break;
             }
 
             serverStatus = nextStatus;
@@ -385,30 +377,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private void LoadUsers()
-        {
-            foreach (var userInformation in ChatupServer.Instance.Users)
-            {
-                UpsertUser(userInformation.Value, UserAction.Register);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void LoadRooms()
-        {
-            foreach (var roomInfo in ChatupServer.Instance.Rooms)
-            {
-                var roomInstance = roomInfo.Value;
-
-                if (roomInstance != null)
-                {
-
-                }
-            }
-        }
-
+        /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
             base.OnClosing(args);
@@ -433,16 +402,29 @@ namespace ChatupNET.Forms
         /// <param name="args"></param>
         private void MainForm_Load(object sender, EventArgs args)
         {
-            LoadRooms();
-            LoadUsers();
-            UpdateAddress(new Address(IPAddress.Loopback, 12480));
-            UpdateStats();
-        }
+            var roomList = ChatupServer.Instance.Rooms;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private Address addressObject;
+            if (roomList.Count > 0)
+            {
+                foreach (var roomInfo in roomList)
+                {
+                    InsertRoom(roomInfo.Value);
+                }
+            }
+
+            var userList = ChatupServer.Instance.Users;
+
+            if (userList.Count > 0)
+            {
+                foreach (var userInformation in userList)
+                {
+                    UpsertUser(userInformation.Value, UserAction.Register);
+                }
+            }
+
+            UpdateStats();
+            UpdateAddress(new Address(IPAddress.Loopback, 12480));
+        }
 
         /// <summary>
         /// 
@@ -450,23 +432,7 @@ namespace ChatupNET.Forms
         /// <param name="objectInstance"></param>
         private void UpdateAddress(Address objectInstance)
         {
-            addressObject = objectInstance;
-            labelAddress.Text = addressObject.Host.ToString() + ":" + addressObject.Port;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void buttonAddress_click(object sender, EventArgs args)
-        {
-            var addressForm = new AddressForm(addressObject);
-
-            if (addressForm.ShowDialog() == DialogResult.OK)
-            {
-                UpdateAddress(addressForm.ModalData);
-            }
+            labelAddress.Text = objectInstance.Host.ToString() + ":" + objectInstance.Port;
         }
     }
 }

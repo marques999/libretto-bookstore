@@ -2,8 +2,6 @@ using System;
 using System.Data.Common;
 using System.Collections.Generic;
 
-using ChatupNET.Database.Enums;
-
 namespace ChatupNET.Database
 {
     class WhereStatement : List<List<WhereClause>>

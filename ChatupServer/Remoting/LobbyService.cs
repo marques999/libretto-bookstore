@@ -89,8 +89,11 @@ namespace ChatupNET.Remoting
             {
                 if (Rooms.Remove(roomId))
                 {
-                    OnDelete?.Invoke(roomId);
-                    ChatupServer.Instance.Lobby.DeleteRoom(roomId);
+                    if (SqliteDatabase.Instance.DeleteRoom(roomId, userName))
+                    {
+                        OnDelete?.Invoke(roomId);
+                        ChatupServer.Instance.Lobby.DeleteRoom(roomId);
+                    }
                 }
                 else
                 {

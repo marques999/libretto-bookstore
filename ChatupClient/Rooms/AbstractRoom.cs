@@ -8,7 +8,7 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Rooms
 {
-    public abstract partial class AbstractRoom : Form
+    abstract partial class AbstractRoom : Form
     {
         /// <summary>
         /// 

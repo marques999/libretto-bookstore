@@ -87,7 +87,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private string ReadAddress(byte[] ipDigits)
         {
-            return string.Format(Properties.Resources.address_Mask, ipDigits[0], ipDigits[1], ipDigits[2], ipDigits[3]);
+            return string.Format("{0:D}.{1:D}.{2:D}.{3:D}", ipDigits[0], ipDigits[1], ipDigits[2], ipDigits[3]);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-namespace ChatupNET.Database.Enums
+namespace ChatupNET.Database
 {
     enum Comparison
     {
@@ -11,5 +11,11 @@ namespace ChatupNET.Database.Enums
         LessThan,
         LessOrEquals,
         In
+    }
+
+    enum LogicOperator
+    {
+        And,
+        Or
     }
 }

@@ -61,15 +61,6 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0:D}.{1:D}.{2:D}.{3:D}.
-        /// </summary>
-        internal static string address_Mask {
-            get {
-                return ResourceManager.GetString("address_Mask", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon chatup {

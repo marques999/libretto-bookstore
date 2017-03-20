@@ -34,6 +34,21 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
+        private void buttonAddress_click(object sender, EventArgs args)
+        {
+            var addressForm = new AddressForm(null);
+
+            if (addressForm.ShowDialog() == DialogResult.OK)
+            {
+                //UpdateAddress(addressForm.ModalData);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void buttonValidate_Click(object sender, EventArgs args)
         {
             var operationResult = ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text);

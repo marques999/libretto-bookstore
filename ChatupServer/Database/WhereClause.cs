@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 
-using ChatupNET.Database.Enums;
-
 namespace ChatupNET.Database
 {
     class WhereClause
@@ -16,13 +14,11 @@ namespace ChatupNET.Database
         /// </summary>
         private string m_FieldName;
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal struct SubClause
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            public object Value;
-
             /// <summary>
             /// 
             /// </summary>
@@ -35,6 +31,11 @@ namespace ChatupNET.Database
                 ComparisonOperator = compareOperator;
                 Value = compareValue;
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public object Value;
 
             /// <summary>
             /// 

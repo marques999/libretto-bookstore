@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 
 using ChatupNET.Database;
-using ChatupNET.Database.Enums;
 using ChatupNET.Model;
 using ChatupNET.Remoting;
 
@@ -47,26 +46,6 @@ namespace ChatupNET
                 return mInstance;
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private SqlColumn[] roomColumns = new SqlColumn[]
-        {
-            new SqlColumn(SqliteConstants.Id, null),
-            new SqlColumn(SqliteConstants.Name, null),
-            new SqlColumn(SqliteConstants.Password, null),
-            new SqlColumn(SqliteConstants.Capacity, null)
-        };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private SqlColumn[] userColumns = new SqlColumn[]
-        {
-            new SqlColumn(SqliteConstants.Name, null),
-            new SqlColumn(SqliteConstants.Username, null)
-        };
 
         /// <summary>
         /// 
@@ -118,7 +97,7 @@ namespace ChatupNET
                 .Column(SqliteConstants.Password)
                 .Where(SqliteConstants.Username, Comparison.Equals, userName);
 
-            using (SQLiteDataReader userInfo = QueryDatabase(sqlQuery))
+            using (var userInfo = QueryDatabase(sqlQuery))
             {
                 if (userInfo.Read())
                 {
@@ -132,10 +111,9 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomId"></param>
         /// <param name="groupChatroom"></param>
         /// <returns></returns>
-        public bool InsertRoom(int roomId, Room groupChatroom)
+        public bool InsertRoom(Room groupChatroom)
         {
             bool operationResult = false;
             var queryString = SqliteConstants.rooms_INSERT_Public;
@@ -145,9 +123,9 @@ namespace ChatupNET
                 queryString = SqliteConstants.rooms_INSERT_Private;
             }
 
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(queryString, sqliteConnection))
+            using (var sqlCommand = new SQLiteCommand(queryString, sqliteConnection))
             {
-                AddParameter(sqlCommand, SqliteConstants.Id, roomId);
+                AddParameter(sqlCommand, SqliteConstants.Id, groupChatroom.ID);
                 AddParameter(sqlCommand, SqliteConstants.Name, groupChatroom.Name);
                 AddParameter(sqlCommand, SqliteConstants.Owner, groupChatroom.Owner);
 
@@ -184,7 +162,7 @@ namespace ChatupNET
         {
             bool operationResult = false;
 
-            using (SQLiteCommand sqlCommand = new SQLiteCommand(SqliteConstants.rooms_DELETE, sqliteConnection))
+            using (var sqlCommand = new SQLiteCommand(SqliteConstants.rooms_DELETE, sqliteConnection))
             {
                 AddParameter(sqlCommand, SqliteConstants.Id, roomId);
                 AddParameter(sqlCommand, SqliteConstants.Owner, roomOwner);
@@ -201,7 +179,7 @@ namespace ChatupNET
         /// <param name="tableSql"></param>
         private void GenerateTable(string tableName, string tableSql)
         {
-            using (SQLiteCommand sqlQuery = sqliteConnection.CreateCommand())
+            using (var sqlQuery = sqliteConnection.CreateCommand())
             {
                 sqlQuery.CommandText = new SqlBuilder()
                     .FromTable("sqlite_master")
@@ -224,18 +202,22 @@ namespace ChatupNET
         /// <returns></returns>
         public Dictionary<string, UserInformation> QueryUsers()
         {
-            Dictionary<string, UserInformation> users = new Dictionary<string, UserInformation>();
-            SqlBuilder sqlQuery = new SqlBuilder().FromTable(SqliteConstants.USERS).Columns(userColumns);
+            var users = new Dictionary<string, UserInformation>();
 
-            using (SQLiteDataReader userEntry = QueryDatabase(sqlQuery))
+            var sqlQuery = new SqlBuilder()
+                .FromTable(SqliteConstants.USERS)
+                .Column(SqliteConstants.Name)
+                .Column(SqliteConstants.Username);
+
+            using (var entryRow = QueryDatabase(sqlQuery))
             {
-                while (userEntry.Read())
+                while (entryRow.Read())
                 {
-                    string userName = ReadString(userEntry, SqliteConstants.Username);
+                    string userName = ReadString(entryRow, SqliteConstants.Username);
 
                     users.Add(userName, new UserInformation(
                         userName,
-                        ReadString(userEntry, SqliteConstants.Name),
+                        ReadString(entryRow, SqliteConstants.Name),
                         null
                     ));
                 }
@@ -252,7 +234,14 @@ namespace ChatupNET
         /// <returns></returns>
         private string ReadString(SQLiteDataReader sqliteReader, string sqlColumn)
         {
-            return sqliteReader.GetString(sqliteReader.GetOrdinal(sqlColumn));
+            int dbIndex = sqliteReader.GetOrdinal(sqlColumn);
+
+            if (sqliteReader.IsDBNull(dbIndex))
+            {
+                return null;
+            }
+
+            return sqliteReader.GetString(dbIndex);
         }
 
         /// <summary>
@@ -263,7 +252,14 @@ namespace ChatupNET
         /// <returns></returns>
         private int ReadInteger(SQLiteDataReader sqliteReader, string sqlColumn)
         {
-            return sqliteReader.GetInt32(sqliteReader.GetOrdinal(sqlColumn));
+            int dbIndex = sqliteReader.GetOrdinal(sqlColumn);
+
+            if (sqliteReader.IsDBNull(dbIndex))
+            {
+                return 0;
+            }
+
+            return sqliteReader.GetInt32(dbIndex);
         }
 
         /// <summary>
@@ -272,20 +268,27 @@ namespace ChatupNET
         /// <returns></returns>
         public Dictionary<int, Room> QueryRooms()
         {
-            Dictionary<int, Room> rooms = new Dictionary<int, Room>();
-            SqlBuilder sqlQuery = new SqlBuilder().FromTable(SqliteConstants.ROOMS).Columns(roomColumns);
+            var rooms = new Dictionary<int, Room>();
 
-            using (SQLiteDataReader roomEntry = QueryDatabase(sqlQuery))
+            var sqlQuery = new SqlBuilder()
+                .FromTable(SqliteConstants.ROOMS)
+                .Column(SqliteConstants.Id)
+                .Column(SqliteConstants.Name)
+                .Column(SqliteConstants.Owner)
+                .Column(SqliteConstants.Password)
+                .Column(SqliteConstants.Capacity);
+
+            using (var entryRow = QueryDatabase(sqlQuery))
             {
-                while (roomEntry.Read())
+                while (entryRow.Read())
                 {
-                    var roomId = ReadInteger(roomEntry, SqliteConstants.Id);
+                    var roomId = ReadInteger(entryRow, SqliteConstants.Id);
 
                     rooms.Add(roomId, new Room(roomId,
-                        ReadString(roomEntry, SqliteConstants.Name),
-                        ReadString(roomEntry, SqliteConstants.Owner),
-                        ReadString(roomEntry, SqliteConstants.Password),
-                        ReadInteger(roomEntry, SqliteConstants.Capacity))
+                        ReadString(entryRow, SqliteConstants.Name),
+                        ReadString(entryRow, SqliteConstants.Owner),
+                        ReadString(entryRow, SqliteConstants.Password),
+                        ReadInteger(entryRow, SqliteConstants.Capacity))
                     );
                 }
             }
