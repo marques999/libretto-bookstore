@@ -17,6 +17,7 @@
         /// </summary>
         public static readonly string ROOMS = "rooms";
         public static readonly string USERS = "users";
+        public static readonly string MASTER = "sqlite_master";
 
         /// <summary>
         /// 

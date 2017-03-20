@@ -5,8 +5,8 @@ using System.Runtime.Remoting;
 using System.Windows.Forms;
 
 using ChatupNET;
-using ChatupNET.Model;
 using ChatupNET.Forms;
+using ChatupNET.Model;
 using ChatupNET.Remoting;
 
 class ChatupServer
@@ -160,12 +160,12 @@ class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="createHandler"></param>
+    /// <param name="insertHandler"></param>
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
-    public void InitializeLobby(RoomHandler createHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
+    public void InitializeLobby(RoomHandler insertHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
     {
-        lobbyIntermediate.OnCreate += createHandler;
+        lobbyIntermediate.OnInsert += insertHandler;
         lobbyIntermediate.OnDelete += deleteHandler;
         lobbyIntermediate.OnUpdate += updateHandler;
     }
@@ -173,12 +173,12 @@ class ChatupServer
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="createHandler"></param>
+    /// <param name="insertHandler"></param>
     /// <param name="deleteHandler"></param>
     /// <param name="updateHandler"></param>
-    public void DestroyLobby(RoomHandler createHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
+    public void DestroyLobby(RoomHandler insertHandler, DeleteHandler deleteHandler, RoomHandler updateHandler)
     {
-        lobbyIntermediate.OnCreate -= createHandler;
+        lobbyIntermediate.OnInsert -= insertHandler;
         lobbyIntermediate.OnDelete -= deleteHandler;
         lobbyIntermediate.OnUpdate -= updateHandler;
     }

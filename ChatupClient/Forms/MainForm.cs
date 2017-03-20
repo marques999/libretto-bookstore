@@ -21,7 +21,7 @@ namespace ChatupNET.Forms
             InitializeComponent();
             sessionIntermediate.OnLogin += OnLogin;
             sessionIntermediate.OnLogout += OnLogout;
-            lobbyIntermediate.OnCreate += OnCreate;
+            lobbyIntermediate.OnInsert += OnCreate;
             lobbyIntermediate.OnDelete += OnDelete;
             lobbyIntermediate.OnUpdate += OnUpdate;
             ChatupClient.Instance.InitializeSession(sessionIntermediate);

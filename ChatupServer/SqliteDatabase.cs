@@ -182,9 +182,9 @@ namespace ChatupNET
             using (var sqlQuery = sqliteConnection.CreateCommand())
             {
                 sqlQuery.CommandText = new SqlBuilder()
-                    .FromTable("sqlite_master")
-                    .Column("name")
-                    .Where("name", Comparison.Equals, tableName).BuildQuery();
+                    .FromTable(SqliteConstants.MASTER)
+                    .Column(SqliteConstants.Name)
+                    .Where(SqliteConstants.Name, Comparison.Equals, tableName).BuildQuery();
 
                 var queryResult = sqlQuery.ExecuteScalar();
 

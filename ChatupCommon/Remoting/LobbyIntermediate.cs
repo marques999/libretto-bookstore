@@ -7,7 +7,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event RoomHandler OnCreate;
+        public event RoomHandler OnInsert;
 
         /// <summary>
         /// 
@@ -25,7 +25,7 @@ namespace ChatupNET.Remoting
         /// <param name="roomInstance"></param>
         public void CreateRoom(Room roomInformation)
         {
-            OnCreate?.Invoke(roomInformation);
+            OnInsert?.Invoke(roomInformation);
         }
 
         /// <summary>

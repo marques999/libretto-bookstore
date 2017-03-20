@@ -1,7 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 using ChatupNET.Model;
-using System.Collections.Generic;
 
 namespace ChatupNET.Remoting
 {
