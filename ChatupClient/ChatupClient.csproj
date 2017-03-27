@@ -70,6 +70,7 @@
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\RoomInvitation.cs" />
+    <Compile Include="RemoteAccess.cs" />
     <Compile Include="Remoting\MessageInterface.cs" />
     <Compile Include="Remoting\MessageIntermediate.cs" />
     <Compile Include="Remoting\MessageService.cs" />
@@ -151,11 +152,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chatup.ico" />

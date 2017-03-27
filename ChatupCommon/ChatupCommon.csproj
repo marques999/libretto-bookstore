@@ -48,7 +48,6 @@
     <Compile Include="Model\RemoteResponse.cs" />
     <Compile Include="Model\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoteAccess.cs" />
     <Compile Include="Remoting\RoomInterface.cs" />
     <Compile Include="Remoting\RoomIntermediate.cs" />
     <Compile Include="Remoting\LobbyInterface.cs" />

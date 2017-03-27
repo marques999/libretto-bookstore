@@ -121,28 +121,4 @@
   <data name="chatup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chatup.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="database_Url" xml:space="preserve">
-    <value>Data Source={0}ChatupServer.db;Version=3;</value>
-  </data>
-  <data name="label_Capacity" xml:space="preserve">
-    <value>{0} / {1}</value>
-  </data>
-  <data name="label_Stats" xml:space="preserve">
-    <value>{0} active, {1} inactive</value>
-  </data>
-  <data name="status_Restarting" xml:space="preserve">
-    <value>Restarting...</value>
-  </data>
-  <data name="status_Start" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="status_Stopped" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="user_Active" xml:space="preserve">
-    <value>Active</value>
-  </data>
-  <data name="user_Offline" xml:space="preserve">
-    <value>Offline</value>
-  </data>
 </root>

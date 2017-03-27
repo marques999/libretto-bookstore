@@ -18,6 +18,11 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        private Address remoteHost = new Address(12480);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         private bool ValidateForm()
         {
@@ -34,28 +39,19 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonAddress_click(object sender, EventArgs args)
-        {
-            var addressForm = new AddressForm(null);
-
-            if (addressForm.ShowDialog() == DialogResult.OK)
-            {
-                //UpdateAddress(addressForm.ModalData);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void buttonValidate_Click(object sender, EventArgs args)
         {
+            if (buttonConfigure.Enabled)
+            {
+                ChatupClient.Instance.InitializeRemoting(remoteHost);
+            }
+
             var operationResult = ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text);
 
             if (operationResult == RemoteResponse.Success)
             {
                 Hide();
+                buttonConfigure.Enabled = false;
                 new MainForm().ShowDialog();
                 Show();
             }
@@ -70,9 +66,21 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonCancel_Click(object sender, EventArgs args)
+        private void buttonConfigure_Click(object sender, EventArgs args)
         {
-            Application.Exit();
+            var addressForm = new AddressForm(remoteHost);
+
+            if (addressForm.ShowDialog() == DialogResult.OK)
+            {
+                var serverAddress = addressForm.ModalData;
+
+                if (serverAddress != null)
+                {
+                    remoteHost = serverAddress;
+                    ChatupClient.Instance.InitializeRemoting(remoteHost);
+                    buttonConfigure.Enabled = false;
+                }
+            }
         }
 
         /// <summary>
@@ -91,6 +99,11 @@ namespace ChatupNET.Forms
                 if (registrationData == null)
                 {
                     return;
+                }
+
+                if (buttonConfigure.Enabled)
+                {
+                    ChatupClient.Instance.InitializeRemoting(remoteHost);
                 }
 
                 var operationResult = ChatupClient.Instance.Session.Register(registrationData);
@@ -141,6 +154,7 @@ namespace ChatupNET.Forms
         /// <param name="args"></param>
         private void LoginForm_Load(object sender, EventArgs args)
         {
+            buttonConfigure.Enabled = true;
             buttonValidate.Enabled = ValidateForm();
         }
     }

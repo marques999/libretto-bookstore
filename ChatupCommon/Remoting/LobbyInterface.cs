@@ -48,13 +48,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        string LookupUser(string userName);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="roomId"></param>
         /// <returns></returns>
         Tuple<bool, string> QueryRoom(int roomId);

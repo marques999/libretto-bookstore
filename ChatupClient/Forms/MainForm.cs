@@ -1,13 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 
 using ChatupNET.Model;
 using ChatupNET.Rooms;
 using ChatupNET.Remoting;
-using System.Drawing;
 
 namespace ChatupNET.Forms
 {
@@ -556,15 +556,6 @@ namespace ChatupNET.Forms
             {
                 Connect(roomId, operationResult.Item2, passwordForm.Password);
             }
-            else
-            {
-                MessageBox.Show(this,
-                    Properties.Resources.PasswordError,
-                    Properties.Resources.PasswordErrorTitle,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
         }
 
         /// <summary>
@@ -575,7 +566,6 @@ namespace ChatupNET.Forms
         /// <param name="roomPassword"></param>
         private void Connect(int roomId, string remoteHost, string roomPassword)
         {
-            MessageBox.Show(remoteHost);
             var roomInterface = (RoomInterface)RemotingServices.Connect(typeof(RoomInterface), remoteHost);
 
             if (roomInterface == null)

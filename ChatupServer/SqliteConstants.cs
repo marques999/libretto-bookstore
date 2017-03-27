@@ -1,4 +1,6 @@
-﻿namespace ChatupNET
+﻿using System;
+
+namespace ChatupNET
 {
     class SqliteConstants
     {
@@ -18,7 +20,7 @@
         public static readonly string ROOMS = "rooms";
         public static readonly string USERS = "users";
         public static readonly string MASTER = "sqlite_master";
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -28,5 +30,16 @@
         public static readonly string rooms_CREATE = "CREATE TABLE `rooms`(`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL UNIQUE, `owner` TEXT NOT NULL, `password` TEXT, `capacity` INTEGER DEFAULT 4 CHECK(capacity > 0), FOREIGN KEY(`owner`) REFERENCES `users`(`username`))";
         public static readonly string users_INSERT = "INSERT INTO users(username, name, password) VALUES(:username, :name, :password)";
         public static readonly string users_CREATE = "CREATE TABLE `users`(`username` TEXT NOT NULL UNIQUE, `name` TEXT NOT NULL, `password` TEXT NOT NULL)";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string Database_Url
+        {
+            get
+            {
+                return string.Format("Data Source={0}ChatupServer.db;Version=3;", AppDomain.CurrentDomain.BaseDirectory);
+            }
+        }
     }
 }

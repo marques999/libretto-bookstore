@@ -51,16 +51,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public string LookupUser(string userName)
-        {
-            return ChatupServer.Instance.LookupHost(userName);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="roomId"></param>
         /// <param name="userName"></param>
         /// <returns></returns>

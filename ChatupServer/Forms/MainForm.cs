@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 
@@ -14,17 +13,6 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private enum ServerStatus
-        {
-            Stopped = 0,
-            Running = 1,
-            Restarting = 2,
-            Failure = 3
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         private enum UserAction
         {
             Login,
@@ -33,33 +21,12 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private static string[] statusMessages =
-        {
-            "Stopped",
-            "Running",
-            "Restarting",
-            "Failure"
-        };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static Color[] statusColor =
-        {
-            Color.Black,
-            Color.ForestGreen,
-            Color.DarkOrange,
-            Color.Red
-        };
-
-        /// <summary>
         /// Default constructor
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
+            _console = new ConsoleInterface(richTextBox1);
             ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
             ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete);
             ChatupServer.Instance.InitializeRoom(OnJoin, OnLeave);
@@ -68,14 +35,24 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInformation"></param>
-        /// <param name="userAction"></param>
-        private delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
+        private string mHost;
 
         /// <summary>
         /// 
         /// </summary>
-        private ServerStatus serverStatus = ServerStatus.Running;
+        private int activeUsers = 0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private ConsoleInterface _console;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInformation"></param>
+        /// <param name="userAction"></param>
+        private delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
 
         /// <summary>
         /// 
@@ -222,12 +199,12 @@ namespace ChatupNET.Forms
         /// <param name="fullName"></param>
         private void JoinRoom(Room roomInformation, string userName, string fullName)
         {
-            AppendTime();
-            AppendText(fullName, colorBlue);
-            AppendText(" (" + userName + ") ", colorYellow);
-            AppendText("has joined chatroom ", colorDefault);
-            AppendText(roomInformation.Name, colorBlue);
-            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
+            _console.Timestamp();
+            _console.Print(fullName, ConsoleInterface.Blue);
+            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
+            _console.Print("has joined chatroom ", ConsoleInterface.Default);
+            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (id=" + roomInformation.ID + ")\n", ConsoleInterface.Yellow);
 
             int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.ID));
 
@@ -251,12 +228,12 @@ namespace ChatupNET.Forms
         /// <param name="fullName"></param>
         private void LeaveRoom(Room roomInformation, string userName, string fullName)
         {
-            AppendTime();
-            AppendText(fullName, colorBlue);
-            AppendText(" (" + userName + ") ", colorYellow);
-            AppendText("has left chatroom ", colorDefault);
-            AppendText(roomInformation.Name, colorBlue);
-            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
+            _console.Timestamp();
+            _console.Print(fullName, ConsoleInterface.Blue);
+            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
+            _console.Print("has left chatroom ", ConsoleInterface.Default);
+            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (id=" + roomInformation.ID + ")\n", ConsoleInterface.Yellow);
 
             int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.ID));
 
@@ -271,7 +248,7 @@ namespace ChatupNET.Forms
                 }
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -315,12 +292,12 @@ namespace ChatupNET.Forms
                 FormatRoom(roomInformation)
             );
 
-            AppendTime();
-            AppendText(ChatupServer.Instance.Users[roomInformation.Owner].Name, colorBlue);
-            AppendText(" (" + roomInformation.Owner + ") ", colorYellow);
-            AppendText("has created chatroom ", colorDefault);
-            AppendText(roomInformation.Name, colorBlue);
-            AppendText(" (id=" + roomInformation.ID + ")\n", colorYellow);
+            _console.Timestamp();
+            _console.Print(ChatupServer.Instance.Users[roomInformation.Owner].Name, ConsoleInterface.Blue);
+            _console.Print(" (" + roomInformation.Owner + ") ", ConsoleInterface.Yellow);
+            _console.Print("has created chatroom ", ConsoleInterface.Default);
+            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (id=" + roomInformation.ID + ")\n", ConsoleInterface.Yellow);
         }
 
         /// <summary>
@@ -342,10 +319,10 @@ namespace ChatupNET.Forms
 
                 if (roomInformation != null)
                 {
-                    AppendTime();
-                    AppendText(ChatupServer.Instance.Rooms[roomId].Name, colorBlue);
-                    AppendText(" (id=" + roomId + ") ", colorYellow);
-                    AppendText("was deleted by owner request.\n", colorDefault);
+                    _console.Timestamp();
+                    _console.Print(ChatupServer.Instance.Rooms[roomId].Name, ConsoleInterface.Blue);
+                    _console.Print(" (id=" + roomId + ") ", ConsoleInterface.Yellow);
+                    _console.Print("was deleted by owner request.\n", ConsoleInterface.Default);
                 }
             }
         }
@@ -357,21 +334,21 @@ namespace ChatupNET.Forms
         /// <param name="userAction"></param>
         private void LogUser(UserInformation userInformation, UserAction userAction)
         {
-            AppendTime();
-            AppendText(userInformation.Name, colorBlue);
-            AppendText(" (" + userInformation.Username + ") ", colorYellow);
+            _console.Timestamp();
+            _console.Print(userInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (" + userInformation.Username + ") ", ConsoleInterface.Yellow);
 
             if (userAction == UserAction.Login)
             {
-                AppendText("has connected.\n", colorDefault);
+                _console.Print("has connected.\n", ConsoleInterface.Default);
             }
             else if (userAction == UserAction.Logout)
             {
-                AppendText("has terminated session.\n", colorDefault);
+                _console.Print("has terminated session.\n", ConsoleInterface.Default);
             }
             else
             {
-                AppendText("account registered.\n", colorDefault);
+                _console.Print("account registered.\n", ConsoleInterface.Default);
             }
         }
 
@@ -387,12 +364,9 @@ namespace ChatupNET.Forms
                 listView1.Items.RemoveByKey(userInformation.Username);
             }
 
-            var userStatus = Properties.Resources.user_Offline;
-
             if (userAction == UserAction.Login)
             {
                 activeUsers++;
-                userStatus = Properties.Resources.user_Active;
             }
             else if (userAction == UserAction.Logout)
             {
@@ -414,106 +388,9 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private void AppendTime()
-        {
-            AppendText("[" + DateTime.Now.ToLongTimeString() + "] ", colorGreen);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int activeUsers = 0;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private void UpdateStats()
         {
-            labelStats.Text = string.Format(Properties.Resources.label_Stats, activeUsers, listView1.Items.Count - activeUsers);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nextStatus"></param>
-        private void HandleChange(ServerStatus nextStatus)
-        {
-            if (serverStatus == nextStatus)
-            {
-                return;
-            }
-
-            switch (serverStatus)
-            {
-                case ServerStatus.Restarting:
-                    buttonStart.Enabled = true;
-                    buttonRestart.Enabled = true;
-                    buttonExit.Enabled = true;
-                    break;
-            }
-
-            switch (nextStatus)
-            {
-                case ServerStatus.Stopped:
-                    buttonStart.Text = Properties.Resources.status_Start;
-                    buttonRestart.Enabled = false;
-                    break;
-                case ServerStatus.Running:
-                    buttonStart.Text = Properties.Resources.status_Stopped;
-                    buttonRestart.Enabled = true;
-                    break;
-                case ServerStatus.Restarting:
-                    buttonStart.Text = Properties.Resources.status_Restarting;
-                    buttonStart.Enabled = false;
-                    buttonRestart.Enabled = false;
-                    buttonExit.Enabled = false;
-                    break;
-            }
-
-            LogStatus(nextStatus);
-            serverStatus = nextStatus;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serverStatus"></param>
-        private void LogStatus(ServerStatus serverStatus)
-        {
-            AppendTime();
-            AppendText("ChatupServer ", colorYellow);
-
-            switch (serverStatus)
-            {
-                case ServerStatus.Stopped:
-                    AppendText("stopped as requested by the user.\n", colorDefault);
-                    break;
-                case ServerStatus.Running:
-                    AppendText("running at ", colorDefault);
-                    AppendText(labelAddress.Text, colorBlue);
-                    AppendText("...\n", colorDefault);
-                    break;
-                case ServerStatus.Restarting:
-                    AppendText("restarting...\n", colorDefault);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void buttonStart_Click(object sender, EventArgs args)
-        {
-            if (serverStatus == ServerStatus.Stopped)
-            {
-                ChangeStatus(ServerStatus.Running);
-            }
-            else if (serverStatus == ServerStatus.Running)
-            {
-                ChangeStatus(ServerStatus.Stopped);
-            }
+            groupBox2.Text = string.Format("Peers ({0} active, {1} inactive)", activeUsers, listView1.Items.Count - activeUsers);
         }
 
         /// <summary>
@@ -529,33 +406,13 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void buttonRestart_Click(object sender, EventArgs args)
-        {
-            ChangeStatus(ServerStatus.Restarting);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="statusValue"></param>
-        private void ChangeStatus(ServerStatus statusValue)
-        {
-            HandleChange(statusValue);
-            labelStatus.ForeColor = statusColor[(int)serverStatus];
-            labelStatus.Text = statusMessages[(int)serverStatus];
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
             base.OnClosing(args);
             ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete);
             ChatupServer.Instance.DestroySession(OnLogin, OnLogout, OnRegister);
+            ChatupServer.Instance.DestroyRoom(OnJoin, OnLeave);
         }
 
         /// <summary>
@@ -566,30 +423,6 @@ namespace ChatupNET.Forms
         private string FormatRoom(Room roomInstance)
         {
             return string.Format("{0} ({1:D}/{2:D})", roomInstance.Name, roomInstance.Count, roomInstance.Capacity);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Color colorPink = Color.FromArgb(249, 38, 114);
-        private Color colorGreen = Color.FromArgb(166, 226, 46);
-        private Color colorBlue = Color.FromArgb(102, 217, 239);
-        private Color colorYellow = Color.FromArgb(244, 191, 117);
-        private Color colorDefault = Color.FromArgb(248, 248, 242);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="messageContent"></param>
-        /// <param name="messageColor"></param>
-        protected void AppendText(string messageContent, Color messageColor)
-        {
-            richTextBox1.SelectionStart = richTextBox1.TextLength;
-            richTextBox1.SelectionLength = 0;
-            richTextBox1.SelectionColor = messageColor;
-            richTextBox1.AppendText(messageContent);
-            richTextBox1.SelectionColor = richTextBox1.ForeColor;
-            richTextBox1.ScrollToCaret();
         }
 
         /// <summary>
@@ -629,8 +462,12 @@ namespace ChatupNET.Forms
         /// <param name="objectInstance"></param>
         private void UpdateAddress(Address objectInstance)
         {
-            labelAddress.Text = objectInstance.Host.ToString() + ":" + objectInstance.Port;
-            LogStatus(ServerStatus.Running);
+            mHost = objectInstance.Host.ToString() + ":" + objectInstance.Port;
+            _console.Timestamp();
+            _console.Print("ChatupServer ", ConsoleInterface.Yellow);
+            _console.Print("running at ", ConsoleInterface.Default);
+            _console.Print(mHost, ConsoleInterface.Blue);
+            _console.Print("...\n", ConsoleInterface.Default);
         }
     }
 }

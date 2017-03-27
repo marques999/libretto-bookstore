@@ -1,5 +1,8 @@
 namespace ChatupNET.Database
 {
+    /// <summary>
+    /// 
+    /// </summary>
     enum Comparison
     {
         Equals,
@@ -13,6 +16,9 @@ namespace ChatupNET.Database
         In
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     enum LogicOperator
     {
         And,

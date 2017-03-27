@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Windows.Forms;
 
 using ChatupNET.Remoting;
 using ChatupNET.Model;
@@ -107,6 +106,7 @@ namespace ChatupNET.Rooms
             _proxy.OnLeave -= LeaveRoom;
             _proxy.OnJoin -= JoinRoom;
             _proxy.OnMessage -= AppendMessage;
+            ExitHandler?.Invoke(_instance);
 
             if (_server != null)
             {
@@ -146,16 +146,6 @@ namespace ChatupNET.Rooms
                     ErrorHandler.DisplayError(this, operationResult);
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void RoomForm_FormClosing(object sender, FormClosingEventArgs args)
-        {
-            ExitHandler?.Invoke(_instance);
         }
     }
 }

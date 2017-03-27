@@ -7,8 +7,15 @@ namespace ChatupNET.Forms
 {
     partial class InsertForm
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private IContainer components = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && components != null)
@@ -19,6 +26,9 @@ namespace ChatupNET.Forms
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void InitializeComponent()
         {
             flowLayout = new FlowLayoutPanel();

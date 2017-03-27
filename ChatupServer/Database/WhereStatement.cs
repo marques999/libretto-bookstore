@@ -117,16 +117,16 @@ namespace ChatupNET.Database
                         WhereClause = CreateComparisonClause(Clause.FieldName, Clause.ComparisonOperator, Clause.Value);
                     }
 
-                    foreach (WhereClause.SubClause SubWhereClause in Clause.SubClauses)	// Loop through all subclauses, append them together with the specified logic operator
+                    foreach (WhereClause.SubClause SubWhereClause in Clause.SubClauses)
                     {
                         switch (SubWhereClause.LogicOperator)
                         {
-                            case LogicOperator.And:
-                                WhereClause += " AND ";
-                                break;
-                            case LogicOperator.Or:
-                                WhereClause += " OR ";
-                                break;
+                        case LogicOperator.And:
+                            WhereClause += " AND ";
+                            break;
+                        case LogicOperator.Or:
+                            WhereClause += " OR ";
+                            break;
                         }
 
                         if (useCommandObject)
@@ -137,12 +137,11 @@ namespace ChatupNET.Database
                                 Clause.FieldName.Replace('.', '_')
                                 );
 
-                            DbParameter parameter = usedDbCommand.CreateParameter();
+                            var parameter = usedDbCommand.CreateParameter();
+
                             parameter.ParameterName = parameterName;
                             parameter.Value = SubWhereClause.Value;
                             usedDbCommand.Parameters.Add(parameter);
-
-                            // Create a where clause using the parameter, instead of its value
                             WhereClause += CreateComparisonClause(Clause.FieldName, SubWhereClause.ComparisonOperator, new SqlLiteral(parameterName));
                         }
                         else
@@ -150,9 +149,12 @@ namespace ChatupNET.Database
                             WhereClause += CreateComparisonClause(Clause.FieldName, SubWhereClause.ComparisonOperator, SubWhereClause.Value);
                         }
                     }
+
                     LevelWhere += "(" + WhereClause + ") AND ";
                 }
-                LevelWhere = LevelWhere.Substring(0, LevelWhere.Length - 5); // Trim de last AND inserted by foreach loop
+
+                LevelWhere = LevelWhere.Substring(0, LevelWhere.Length - 5);
+
                 if (WhereStatement.Count > 1)
                 {
                     Result += " (" + LevelWhere + ") ";
@@ -161,11 +163,11 @@ namespace ChatupNET.Database
                 {
                     Result += " " + LevelWhere + " ";
                 }
+
                 Result += " OR";
             }
-            Result = Result.Substring(0, Result.Length - 2); // Trim de last OR inserted by foreach loop
 
-            return Result;
+            return Result.Substring(0, Result.Length - 2);
         }
 
         internal static string CreateComparisonClause(string fieldName, Comparison comparisonOperator, object value)
@@ -176,33 +178,33 @@ namespace ChatupNET.Database
             {
                 switch (comparisonOperator)
                 {
-                    case Comparison.Equals:
-                        Output = fieldName + " = " + FormatSQLValue(value);
-                        break;
-                    case Comparison.NotEquals:
-                        Output = fieldName + " <> " + FormatSQLValue(value);
-                        break;
-                    case Comparison.GreaterThan:
-                        Output = fieldName + " > " + FormatSQLValue(value);
-                        break;
-                    case Comparison.GreaterOrEquals:
-                        Output = fieldName + " >= " + FormatSQLValue(value);
-                        break;
-                    case Comparison.LessThan:
-                        Output = fieldName + " < " + FormatSQLValue(value);
-                        break;
-                    case Comparison.LessOrEquals:
-                        Output = fieldName + " <= " + FormatSQLValue(value);
-                        break;
-                    case Comparison.Like:
-                        Output = fieldName + " LIKE " + FormatSQLValue(value);
-                        break;
-                    case Comparison.NotLike:
-                        Output = "NOT " + fieldName + " LIKE " + FormatSQLValue(value);
-                        break;
-                    case Comparison.In:
-                        Output = fieldName + " IN (" + FormatSQLValue(value) + ")";
-                        break;
+                case Comparison.Equals:
+                    Output = fieldName + " = " + FormatSQLValue(value);
+                    break;
+                case Comparison.NotEquals:
+                    Output = fieldName + " <> " + FormatSQLValue(value);
+                    break;
+                case Comparison.GreaterThan:
+                    Output = fieldName + " > " + FormatSQLValue(value);
+                    break;
+                case Comparison.GreaterOrEquals:
+                    Output = fieldName + " >= " + FormatSQLValue(value);
+                    break;
+                case Comparison.LessThan:
+                    Output = fieldName + " < " + FormatSQLValue(value);
+                    break;
+                case Comparison.LessOrEquals:
+                    Output = fieldName + " <= " + FormatSQLValue(value);
+                    break;
+                case Comparison.Like:
+                    Output = fieldName + " LIKE " + FormatSQLValue(value);
+                    break;
+                case Comparison.NotLike:
+                    Output = "NOT " + fieldName + " LIKE " + FormatSQLValue(value);
+                    break;
+                case Comparison.In:
+                    Output = fieldName + " IN (" + FormatSQLValue(value) + ")";
+                    break;
                 }
             }
             else
@@ -215,15 +217,16 @@ namespace ChatupNET.Database
                 {
                     switch (comparisonOperator)
                     {
-                        case Comparison.Equals:
-                            Output = fieldName + " IS NULL";
-                            break;
-                        case Comparison.NotEquals:
-                            Output = "NOT " + fieldName + " IS NULL";
-                            break;
+                    case Comparison.Equals:
+                        Output = fieldName + " IS NULL";
+                        break;
+                    case Comparison.NotEquals:
+                        Output = "NOT " + fieldName + " IS NULL";
+                        break;
                     }
                 }
             }
+
             return Output;
         }
 
@@ -234,38 +237,26 @@ namespace ChatupNET.Database
         /// <returns></returns>
         internal static string FormatSQLValue(object someValue)
         {
-            string FormattedValue = "";
-
             if (someValue == null)
             {
-                FormattedValue = "NULL";
-            }
-            else
-            {
-                switch (someValue.GetType().Name)
-                {
-                    case "String":
-                        FormattedValue = "'" + ((string)someValue).Replace("'", "''") + "'";
-                        break;
-                    case "DateTime":
-                        FormattedValue = "'" + ((DateTime)someValue).ToString("yyyy/MM/dd hh:mm:ss") + "'";
-                        break;
-                    case "DBNull":
-                        FormattedValue = "NULL";
-                        break;
-                    case "Boolean":
-                        FormattedValue = (bool)someValue ? "1" : "0";
-                        break;
-                    case "SqlLiteral":
-                        FormattedValue = ((SqlLiteral)someValue).Value;
-                        break;
-                    default:
-                        FormattedValue = someValue.ToString();
-                        break;
-                }
+                return "NULL";
             }
 
-            return FormattedValue;
+            switch (someValue.GetType().Name)
+            {
+            case "String":
+                return "'" + ((string)someValue).Replace("'", "''") + "'";
+            case "DateTime":
+                return "'" + ((DateTime)someValue).ToString("yyyy/MM/dd hh:mm:ss") + "'";
+            case "DBNull":
+                return "NULL";
+            case "Boolean":
+                return (bool)someValue ? "1" : "0";
+            case "SqlLiteral":
+                return ((SqlLiteral)someValue).Value;
+            }
+
+            return someValue.ToString();
         }
 
         /// <summary>

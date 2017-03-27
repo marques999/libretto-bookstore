@@ -25,11 +25,6 @@ namespace ChatupNET.Database
         /// <summary>
         /// 
         /// </summary>
-        public static string StatementRowsAffected = "SELECT @@ROWCOUNT";
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="value"></param>
         public SqlLiteral(string value)
         {

@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleInterface.cs" />
     <Compile Include="Remoting\LobbyService.cs" />
     <Compile Include="SqliteConstants.cs" />
     <Compile Include="SqliteDatabase.cs" />

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 using ChatupNET.Model;
 
-namespace ChatupNET
+namespace ChatupNET.Forms
 {
     /// <summary>
     /// 

@@ -20,6 +20,11 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        private Room _instance;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event JoinHandler OnJoin;
 
         /// <summary>
@@ -31,11 +36,6 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         public event MessageHandler OnSend;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Room _instance;
 
         /// <summary>
         /// 
@@ -149,16 +149,16 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
+        /// <param name="roomPassword"></param>
         /// <returns></returns>
-        public Tuple<RemoteResponse, MessageQueue> Join(string userName, string userPassword)
+        public Tuple<RemoteResponse, MessageQueue> Join(string userName, string roomPassword)
         {
             if (string.IsNullOrEmpty(userName))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
             }
 
-            if (_instance.IsPrivate() && (string.IsNullOrEmpty(userPassword) || !userPassword.Equals(_instance.Password)))
+            if (_instance.IsPrivate() && (string.IsNullOrEmpty(roomPassword) || !roomPassword.Equals(_instance.Password)))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.AuthenticationFailed, null);
             }

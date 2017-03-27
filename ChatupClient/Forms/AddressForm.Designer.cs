@@ -1,22 +1,23 @@
-﻿using IPAddressControlLib;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
+using IPAddressControlLib;
 
 namespace ChatupNET.Forms
 {
     partial class AddressForm
     {
         /// <summary>
-        /// Required designer variable.
+        /// 
         /// </summary>
         private IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// 
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,151 +29,149 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// 
         /// </summary>
         private void InitializeComponent()
         {
-            this.flowLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonConfirm = new System.Windows.Forms.Button();
-            this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.fieldAddress = new IPAddressControlLib.IPAddressControl();
-            this.fieldPort = new System.Windows.Forms.TextBox();
-            this.labelName = new System.Windows.Forms.Label();
-            this.labelPassword = new System.Windows.Forms.Label();
-            this.flowLayout.SuspendLayout();
-            this.tableLayout.SuspendLayout();
-            this.SuspendLayout();
+            flowLayout = new FlowLayoutPanel();
+            buttonCancel = new Button();
+            buttonConfirm = new Button();
+            tableLayout = new TableLayoutPanel();
+            fieldAddress = new IPAddressControl();
+            fieldPort = new TextBox();
+            labelName = new Label();
+            labelPassword = new Label();
+            flowLayout.SuspendLayout();
+            tableLayout.SuspendLayout();
+            SuspendLayout();
             // 
             // flowLayout
             // 
-            this.flowLayout.Controls.Add(this.buttonCancel);
-            this.flowLayout.Controls.Add(this.buttonConfirm);
-            this.flowLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayout.Location = new System.Drawing.Point(0, 71);
-            this.flowLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayout.Name = "flowLayout";
-            this.flowLayout.Padding = new System.Windows.Forms.Padding(2);
-            this.flowLayout.Size = new System.Drawing.Size(284, 34);
-            this.flowLayout.TabIndex = 3;
+            flowLayout.Controls.Add(buttonCancel);
+            flowLayout.Controls.Add(buttonConfirm);
+            flowLayout.Dock = DockStyle.Bottom;
+            flowLayout.FlowDirection = FlowDirection.RightToLeft;
+            flowLayout.Location = new Point(0, 71);
+            flowLayout.Margin = new Padding(0);
+            flowLayout.Name = "flowLayout";
+            flowLayout.Padding = new Padding(2);
+            flowLayout.Size = new Size(284, 34);
+            flowLayout.TabIndex = 3;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(145, 5);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(132, 24);
-            this.buttonCancel.TabIndex = 9;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            buttonCancel.BackColor = SystemColors.Control;
+            buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            buttonCancel.FlatStyle = FlatStyle.Flat;
+            buttonCancel.Location = new Point(145, 5);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(132, 24);
+            buttonCancel.TabIndex = 9;
+            buttonCancel.Text = "Cancel";
+            buttonCancel.UseVisualStyleBackColor = false;
+            buttonCancel.Click += new EventHandler(buttonCancel_Click);
             // 
             // buttonConfirm
             // 
-            this.buttonConfirm.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(7, 5);
-            this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(132, 24);
-            this.buttonConfirm.TabIndex = 10;
-            this.buttonConfirm.Text = "Apply";
-            this.buttonConfirm.UseVisualStyleBackColor = false;
-            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
+            buttonConfirm.BackColor = SystemColors.Control;
+            buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            buttonConfirm.FlatStyle = FlatStyle.Flat;
+            buttonConfirm.Location = new Point(7, 5);
+            buttonConfirm.Name = "buttonConfirm";
+            buttonConfirm.Size = new Size(132, 24);
+            buttonConfirm.TabIndex = 10;
+            buttonConfirm.Text = "Apply";
+            buttonConfirm.UseVisualStyleBackColor = false;
+            buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
             // 
             // tableLayout
             // 
-            this.tableLayout.ColumnCount = 2;
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayout.Controls.Add(this.fieldAddress, 1, 0);
-            this.tableLayout.Controls.Add(this.fieldPort, 1, 1);
-            this.tableLayout.Controls.Add(this.labelName, 0, 0);
-            this.tableLayout.Controls.Add(this.labelPassword, 0, 1);
-            this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayout.Location = new System.Drawing.Point(0, 0);
-            this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayout.Name = "tableLayout";
-            this.tableLayout.Padding = new System.Windows.Forms.Padding(4);
-            this.tableLayout.RowCount = 2;
-            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayout.Size = new System.Drawing.Size(284, 71);
-            this.tableLayout.TabIndex = 12;
+            tableLayout.ColumnCount = 2;
+            tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            tableLayout.Controls.Add(fieldAddress, 1, 0);
+            tableLayout.Controls.Add(fieldPort, 1, 1);
+            tableLayout.Controls.Add(labelName, 0, 0);
+            tableLayout.Controls.Add(labelPassword, 0, 1);
+            tableLayout.Dock = DockStyle.Fill;
+            tableLayout.Location = new Point(0, 0);
+            tableLayout.Margin = new Padding(0);
+            tableLayout.Name = "tableLayout";
+            tableLayout.Padding = new Padding(4);
+            tableLayout.RowCount = 2;
+            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayout.Size = new Size(284, 71);
+            tableLayout.TabIndex = 12;
             // 
             // fieldAddress
             // 
-            this.fieldAddress.AllowInternalTab = false;
-            this.fieldAddress.AutoHeight = true;
-            this.fieldAddress.BackColor = System.Drawing.SystemColors.Window;
-            this.fieldAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.fieldAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.fieldAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldAddress.Location = new System.Drawing.Point(90, 8);
-            this.fieldAddress.Margin = new System.Windows.Forms.Padding(4);
-            this.fieldAddress.MinimumSize = new System.Drawing.Size(87, 20);
-            this.fieldAddress.Name = "fieldAddress";
-            this.fieldAddress.ReadOnly = false;
-            this.fieldAddress.Size = new System.Drawing.Size(186, 20);
-            this.fieldAddress.TabIndex = 13;
-            this.fieldAddress.Text = "...";
+            fieldAddress.AllowInternalTab = false;
+            fieldAddress.AutoHeight = true;
+            fieldAddress.BackColor = SystemColors.Window;
+            fieldAddress.BorderStyle = BorderStyle.Fixed3D;
+            fieldAddress.Cursor = Cursors.IBeam;
+            fieldAddress.Dock = DockStyle.Fill;
+            fieldAddress.Location = new Point(90, 8);
+            fieldAddress.Margin = new Padding(4);
+            fieldAddress.MinimumSize = new Size(87, 20);
+            fieldAddress.Name = "fieldAddress";
+            fieldAddress.ReadOnly = false;
+            fieldAddress.Size = new Size(186, 20);
+            fieldAddress.TabIndex = 13;
+            fieldAddress.Text = "...";
             // 
             // fieldPort
             // 
-            this.fieldPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.fieldPort.Location = new System.Drawing.Point(90, 41);
-            this.fieldPort.Margin = new System.Windows.Forms.Padding(4);
-            this.fieldPort.Name = "fieldPort";
-            this.fieldPort.Size = new System.Drawing.Size(186, 20);
-            this.fieldPort.TabIndex = 4;
-            this.fieldPort.TextChanged += new System.EventHandler(this.fieldPassword_TextChanged);
+            fieldPort.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            fieldPort.Location = new Point(90, 41);
+            fieldPort.Margin = new Padding(4);
+            fieldPort.Name = "fieldPort";
+            fieldPort.Size = new Size(186, 20);
+            fieldPort.TabIndex = 4;
+            fieldPort.TextChanged += new EventHandler(fieldPassword_TextChanged);
             // 
             // labelName
             // 
-            this.labelName.AutoSize = true;
-            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelName.Location = new System.Drawing.Point(7, 4);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(76, 31);
-            this.labelName.TabIndex = 0;
-            this.labelName.Text = "Address";
-            this.labelName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelName.AutoSize = true;
+            labelName.Dock = DockStyle.Fill;
+            labelName.Location = new Point(7, 4);
+            labelName.Name = "labelName";
+            labelName.Size = new Size(76, 31);
+            labelName.TabIndex = 0;
+            labelName.Text = "Address";
+            labelName.TextAlign = ContentAlignment.MiddleRight;
             // 
             // labelPassword
             // 
-            this.labelPassword.AutoSize = true;
-            this.labelPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelPassword.Location = new System.Drawing.Point(7, 35);
-            this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(76, 32);
-            this.labelPassword.TabIndex = 1;
-            this.labelPassword.Text = "Port";
-            this.labelPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelPassword.AutoSize = true;
+            labelPassword.Dock = DockStyle.Fill;
+            labelPassword.Location = new Point(7, 35);
+            labelPassword.Name = "labelPassword";
+            labelPassword.Size = new Size(76, 32);
+            labelPassword.TabIndex = 1;
+            labelPassword.Text = "Port";
+            labelPassword.TextAlign = ContentAlignment.MiddleRight;
             // 
             // AddressForm
             // 
-            this.AcceptButton = this.buttonConfirm;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 105);
-            this.Controls.Add(this.tableLayout);
-            this.Controls.Add(this.flowLayout);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "AddressForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Configure address";
-            this.Load += new System.EventHandler(this.RegisterForm_Load);
-            this.flowLayout.ResumeLayout(false);
-            this.tableLayout.ResumeLayout(false);
-            this.tableLayout.PerformLayout();
-            this.ResumeLayout(false);
-
+            AcceptButton = buttonConfirm;
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(284, 105);
+            Controls.Add(tableLayout);
+            Controls.Add(flowLayout);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "AddressForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Configure address";
+            Load += new EventHandler(RegisterForm_Load);
+            flowLayout.ResumeLayout(false);
+            tableLayout.ResumeLayout(false);
+            tableLayout.PerformLayout();
+            ResumeLayout(false);
         }
 
         private FlowLayoutPanel flowLayout;

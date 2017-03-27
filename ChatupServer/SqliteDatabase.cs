@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SQLite;
 
 using ChatupNET.Database;
@@ -15,7 +14,7 @@ namespace ChatupNET
         /// </summary>
         private SqliteDatabase()
         {
-            sqliteConnection = new SQLiteConnection(string.Format(Properties.Resources.database_Url, AppDomain.CurrentDomain.BaseDirectory));
+            sqliteConnection = new SQLiteConnection(SqliteConstants.Database_Url);
             sqliteConnection.Open();
             GenerateTable(SqliteConstants.USERS, SqliteConstants.users_CREATE);
             GenerateTable(SqliteConstants.ROOMS, SqliteConstants.rooms_CREATE);
@@ -230,11 +229,11 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="sqliteReader"></param>
-        /// <param name="sqlColumn"></param>
+        /// <param name="dbColumn"></param>
         /// <returns></returns>
-        private string ReadString(SQLiteDataReader sqliteReader, string sqlColumn)
+        private string ReadString(SQLiteDataReader sqliteReader, string dbColumn)
         {
-            int dbIndex = sqliteReader.GetOrdinal(sqlColumn);
+            int dbIndex = sqliteReader.GetOrdinal(dbColumn);
 
             if (sqliteReader.IsDBNull(dbIndex))
             {
@@ -248,11 +247,11 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="sqliteReader"></param>
-        /// <param name="sqlColumn"></param>
+        /// <param name="dbColumn"></param>
         /// <returns></returns>
-        private int ReadInteger(SQLiteDataReader sqliteReader, string sqlColumn)
+        private int ReadInteger(SQLiteDataReader sqliteReader, string dbColumn)
         {
-            int dbIndex = sqliteReader.GetOrdinal(sqlColumn);
+            int dbIndex = sqliteReader.GetOrdinal(dbColumn);
 
             if (sqliteReader.IsDBNull(dbIndex))
             {

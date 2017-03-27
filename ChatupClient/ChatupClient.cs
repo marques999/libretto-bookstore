@@ -15,26 +15,20 @@ using ChatupNET.Model;
 class ChatupClient
 {
     /// <summary>
-    /// Default constructor for the "ChatupCient" class
+    /// 
     /// </summary>
     private ChatupClient()
     {
-        var serverProvider = new BinaryServerFormatterSinkProvider();
-
-        RemotingConfiguration.Configure("ChatupClient.exe.config", false);
-        serverProvider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
-
         var tcpChannel = new TcpChannel(new Hashtable()
         {
             { "port", 0 }
-        }, new BinaryClientFormatterSinkProvider(), serverProvider);
+        }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider()
+        {
+            TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
+        });
 
         ChannelServices.RegisterChannel(tcpChannel, false);
-        _p2pInterface = new MessageIntermediate();
-        _lobbyInterface = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
-        _sessionInterface = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
-        RemotingConfiguration.RegisterActivatedServiceType(typeof(RoomInterface));
-        _userAddress = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
+        _localHost = new Address((ushort)new Uri(((ChannelDataStore)tcpChannel.ChannelData).ChannelUris[0]).Port);
 
         RemotingConfiguration.RegisterWellKnownServiceType(
             typeof(MessageService),
@@ -51,7 +45,12 @@ class ChatupClient
     /// <summary>
     /// 
     /// </summary>
-    private Address _userAddress;
+    private Address _localHost;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Address _remoteHost;
 
     /// <summary>
     /// 
@@ -101,7 +100,7 @@ class ChatupClient
     {
         get
         {
-            return _userAddress;
+            return _localHost;
         }
     }
 
@@ -112,7 +111,7 @@ class ChatupClient
     {
         get
         {
-            return string.Format("tcp://{0}:{1:D}/messaging.rem", _userAddress.Host, _userAddress.Port);
+            return string.Format("tcp://{0}:{1:D}/messaging.rem", _localHost.Host, _localHost.Port);
         }
     }
 
@@ -260,12 +259,36 @@ class ChatupClient
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="endPoint"></param>
+    /// <returns></returns>
+    private string FormatAddress(string endPoint)
+    {
+        return string.Format("tcp://{0}:{1}/{2}", _remoteHost.Host, _remoteHost.Port, endPoint);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void InitializeRemoting(Address remoteHost)
+    {
+        _remoteHost = remoteHost;
+        _p2pInterface = new MessageIntermediate();
+        RemotingConfiguration.RegisterActivatedServiceType(typeof(RoomInterface));
+        RemotingConfiguration.RegisterWellKnownClientType(typeof(LobbyInterface), FormatAddress("lobby.rem"));
+        RemotingConfiguration.RegisterWellKnownClientType(typeof(SessionInterface), FormatAddress("session.rem"));
+        _lobbyInterface = (LobbyInterface)RemoteAccess.New(typeof(LobbyInterface));
+        _sessionInterface = (SessionInterface)RemoteAccess.New(typeof(SessionInterface));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="userName"></param>
     /// <param name="userPassword"></param>
     /// <returns></returns>
     public RemoteResponse Login(string userName, string userPassword)
     {
-        var userLogin = new UserLogin(userName, userPassword, _userAddress);
+        var userLogin = new UserLogin(userName, userPassword, _localHost);
         var operationResult = _sessionInterface.Login(userLogin);
 
         if (operationResult == RemoteResponse.Success)
