@@ -163,4 +163,16 @@
   <data name="WarnLogoutTitle" xml:space="preserve">
     <value>Terminate session</value>
   </data>
+  <data name="MainForm_UserOffline" xml:space="preserve">
+    <value>The user you selected is currently offline!</value>
+  </data>
+  <data name="MainForm_SelfClicked" xml:space="preserve">
+    <value>You can't launch a private conversation with yourself!</value>
+  </data>
+  <data name="MainForm_SelfClickedTitle" xml:space="preserve">
+    <value>Self conversation</value>
+  </data>
+  <data name="MainForm_UserOfflineTitle" xml:space="preserve">
+    <value>User offline</value>
+  </data>
 </root>

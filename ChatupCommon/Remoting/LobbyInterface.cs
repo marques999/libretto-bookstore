@@ -14,7 +14,6 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
     /// <param name="roomInformation"></param>
     public delegate void InsertHandler(Room roomInformation);
 
@@ -43,6 +42,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
         Dictionary<int, Room> List();
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInstance"></param>
+        /// <param name="roomInformation"></param>
         /// <returns></returns>
         Tuple<RemoteResponse, Room> Insert(Room roomInformation);
     }

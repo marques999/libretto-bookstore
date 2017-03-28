@@ -11,12 +11,20 @@ namespace ChatupNET.Rooms
     /// 
     /// </summary>
     /// <param name="roomInformation"></param>
-    delegate void ExitHandler(Room roomInformation);
+    internal delegate void ExitHandler(Room roomInformation);
 
     /// <summary>
     /// 
     /// </summary>
-    class GroupRoom : AbstractRoom
+    /// <param name="roomId"></param>
+    /// <param name="roomCount"></param>
+    /// <param name="roomCapacity"></param>
+    internal delegate void UpdateHandler(int roomId, int roomCount, int roomCapacity);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    internal sealed class GroupRoom : AbstractRoom
     {
         /// <summary>
         /// 
@@ -24,17 +32,16 @@ namespace ChatupNET.Rooms
         /// <param name="roomInformation"></param>
         /// <param name="roomInterface"></param>
         /// <param name="messageHistory"></param>
-        public GroupRoom(Room roomInformation, RoomInterface roomInterface, MessageQueue messageHistory) : base()
+        public GroupRoom(Room roomInformation, RoomInterface roomInterface, MessageQueue messageHistory)
         {
-            _server = roomInterface;
             _instance = roomInformation;
-            _proxy = new RoomIntermediate();
-            _proxy.OnJoin += OnJoin;
-            _proxy.OnLeave += OnLeave;
-            _proxy.OnMessage += AppendMessage;
-            _server.OnJoin += _proxy.JoinRoom;
-            _server.OnLeave += _proxy.LeaveRoom;
-            _server.OnSend += _proxy.SendMessage;
+            _roomInterface = roomInterface;
+            _roomIntermediate.OnJoin += OnJoin;
+            _roomIntermediate.OnLeave += OnLeave;
+            _roomIntermediate.OnMessage += AppendMessage;
+            _roomInterface.OnJoin += _roomIntermediate.JoinRoom;
+            _roomInterface.OnLeave += _roomIntermediate.LeaveRoom;
+            _roomInterface.OnSend += _roomIntermediate.SendMessage;
 
             var userList = roomInterface.List();
 
@@ -46,56 +53,52 @@ namespace ChatupNET.Rooms
                 }
             }
 
-            var q = messageHistory.Dequeue();
+            if (messageHistory == null)
+            {
+                return;
+            }
 
-            while (q != null)
+            RemoteMessage q;
+
+            while (messageHistory.TryDequeue(out q))
             {
                 AppendMessage(q);
-                q = messageHistory.Dequeue();
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userProfile"></param>
-        protected override void JoinRoom(Tuple<string, Color> userProfile)
+        public event ExitHandler OnExit;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event UpdateHandler OnUpdate;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly Room _instance;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly RoomInterface _roomInterface;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly RoomIntermediate _roomIntermediate = new RoomIntermediate();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void UpdateRoom()
         {
-            base.JoinRoom(userProfile);
-            _instance.Count++;
-            Text = string.Format("{0} [{1:D}/{2:D}]", _instance.Name, _instance.Count, _instance.Capacity);
+            OnUpdate?.Invoke(_instance.Id, Users.Count, _instance.Capacity);
+            Text = $@"{_instance.Name} [{Users.Count:D}/{_instance.Capacity:D}]";
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        protected override void LeaveRoom(string userName)
-        {
-            base.LeaveRoom(userName);
-            _instance.Count--;
-            Text = string.Format("{0} [{1:D}/{2:D}]", _instance.Name, _instance.Count, _instance.Capacity);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Room _instance;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private RoomInterface _server;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private RoomIntermediate _proxy;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event ExitHandler ExitHandler;
 
         /// <summary>
         /// 
@@ -103,14 +106,14 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
-            _proxy.OnLeave -= LeaveRoom;
-            _proxy.OnJoin -= JoinRoom;
-            _proxy.OnMessage -= AppendMessage;
-            ExitHandler?.Invoke(_instance);
+            _roomIntermediate.OnLeave -= LeaveRoom;
+            _roomIntermediate.OnJoin -= JoinRoom;
+            _roomIntermediate.OnMessage -= AppendMessage;
+            OnExit?.Invoke(_instance);
 
-            if (_server != null)
+            if (_roomInterface != null)
             {
-                var operationResult = _server.Leave(ChatupClient.Instance.Username);
+                var operationResult = _roomInterface.Leave(ChatupClient.Instance.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
@@ -119,7 +122,7 @@ namespace ChatupNET.Rooms
                 else
                 {
                     args.Cancel = true;
-                    ErrorHandler.DisplayError(this, operationResult);
+                    ErrorHandler.DisplayError(operationResult);
                 }
             }
             else
@@ -135,16 +138,11 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         protected override void buttonValidate_Click(object sender, EventArgs args)
         {
-            var remoteMessage = GenerateMessage();
+            var operationResult = _roomInterface.Send(GenerateMessage());
 
-            if (remoteMessage != null)
+            if (operationResult != RemoteResponse.Success)
             {
-                var operationResult = _server.Send(remoteMessage);
-
-                if (operationResult != RemoteResponse.Success)
-                {
-                    ErrorHandler.DisplayError(this, operationResult);
-                }
+                ErrorHandler.DisplayError(operationResult);
             }
         }
     }

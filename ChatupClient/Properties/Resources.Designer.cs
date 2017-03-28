@@ -125,6 +125,42 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t launch a private conversation with yourself!.
+        /// </summary>
+        internal static string MainForm_SelfClicked {
+            get {
+                return ResourceManager.GetString("MainForm_SelfClicked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self conversation.
+        /// </summary>
+        internal static string MainForm_SelfClickedTitle {
+            get {
+                return ResourceManager.GetString("MainForm_SelfClickedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user is currently offline!.
+        /// </summary>
+        internal static string MainForm_UserOffline {
+            get {
+                return ResourceManager.GetString("MainForm_UserOffline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User offline.
+        /// </summary>
+        internal static string MainForm_UserOfflineTitle {
+            get {
+                return ResourceManager.GetString("MainForm_UserOfflineTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password you entered was recognized as invalid!.
         /// </summary>
         internal static string PasswordError {

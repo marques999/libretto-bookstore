@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using ChatupNET.Remoting;
+using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
-    public partial class InsertForm : Form
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class InsertForm : Form
     {
         /// <summary>
         /// 

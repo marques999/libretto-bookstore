@@ -8,7 +8,7 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Rooms
 {
-    class PrivateRoom : AbstractRoom
+    internal sealed class PrivateRoom : AbstractRoom
     {
         /// <summary>
         /// 
@@ -24,7 +24,7 @@ namespace ChatupNET.Rooms
             catch (Exception ex)
             {
                 _connected = false;
-                ErrorHandler.DisplayException(this, ex);
+                ErrorHandler.DisplayException(ex);
             }
         }
 
@@ -43,7 +43,7 @@ namespace ChatupNET.Rooms
             catch (Exception ex)
             {
                 _connected = false;
-                ErrorHandler.DisplayException(this, ex);
+                ErrorHandler.DisplayException(ex);
             }
         }
 
@@ -51,6 +51,16 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         private string _username;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool _connected;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly MessageInterface _server;
 
         /// <summary>
         /// 
@@ -72,19 +82,14 @@ namespace ChatupNET.Rooms
                 }
                 else
                 {
-                    ErrorHandler.DisplayError(this, RemoteResponse.BadRequest);
+                    ErrorHandler.DisplayError(RemoteResponse.BadRequest);
                 }
             }
             else
             {
-                ErrorHandler.DisplayError(this, operationResult.Item1);
+                ErrorHandler.DisplayError(operationResult.Item1);
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool _connected = false;
 
         /// <summary>
         /// 
@@ -96,13 +101,7 @@ namespace ChatupNET.Rooms
             _username = userProfile.Item1;
             JoinRoom(ChatupClient.Instance.Profile);
             JoinRoom(userProfile);
-            Text = string.Format("{0} [PRIVATE]", _username);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private MessageInterface _server;
 
         /// <summary>
         /// 
@@ -116,13 +115,13 @@ namespace ChatupNET.Rooms
 
                 if (operationResult == RemoteResponse.Success)
                 {
-                    ChatupClient.Instance.Messaging.p2pDisconnect(_username, true);
+                    ChatupClient.Instance.Messaging.P2PDisconnect(_username, true);
                     base.OnClosing(args);
                 }
                 else
                 {
                     args.Cancel = true;
-                    ErrorHandler.DisplayError(this, operationResult);
+                    ErrorHandler.DisplayError(operationResult);
                 }
             }
             else
@@ -139,19 +138,15 @@ namespace ChatupNET.Rooms
         protected override void buttonValidate_Click(object sender, EventArgs args)
         {
             var remoteMessage = GenerateMessage();
+            var operationResult = _server.Send(remoteMessage);
 
-            if (remoteMessage != null)
+            if (operationResult == RemoteResponse.Success)
             {
-                var operationResult = _server.Send(remoteMessage);
-
-                if (operationResult == RemoteResponse.Success)
-                {
-                    AppendMessage(remoteMessage, true);
-                }
-                else
-                {
-                    ErrorHandler.DisplayError(this, operationResult);
-                }
+                AppendMessage(remoteMessage, true);
+            }
+            else
+            {
+                ErrorHandler.DisplayError(operationResult);
             }
         }
 
@@ -161,6 +156,14 @@ namespace ChatupNET.Rooms
         public void Disconnect()
         {
             _connected = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void UpdateRoom()
+        {
+            Text = $@"{_username} [PRIVATE]";
         }
     }
 }

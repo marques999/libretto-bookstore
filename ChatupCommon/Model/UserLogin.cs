@@ -2,6 +2,9 @@
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class UserLogin
     {
@@ -9,61 +12,37 @@ namespace ChatupNET.Model
         /// 
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="userPasword"></param>
+        /// <param name="userPassword"></param>
         /// <param name="userHost"></param>
-        public UserLogin(string userName, string userPasword, Address userHost)
+        public UserLogin(string userName, string userPassword, Address userHost)
         {
-            _host = userHost;
-            _username = userName;
-            _password = userPasword;
+            Host = userHost;
+            Username = userName;
+            Password = userPassword;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _username;
-
-        /// <summary>
-        /// Public getter property for the "_username" private member
-        /// </summary>
-        public string Username
-        {
-            get
-            {
-                return _username;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _password;
-
-        /// <summary>
-        /// Public getter property for the "_password" private member
-        /// </summary>
-        public string Pasword
-        {
-            get
-            {
-                return _password;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private Address _host;
-
-        /// <summary>
-        /// Public getter property for the "_host" private member
+        /// Public getter property for the "Host" private member
         /// </summary>
         public Address Host
         {
-            get
-            {
-                return _host;
-            }
+            get;
+        }
+
+        /// <summary>
+        /// Public getter property for the "Username" private member
+        /// </summary>
+        public string Username
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Public getter property for the "Passwowrd" private member
+        /// </summary>
+        public string Password
+        {
+            get;
         }
     }
 }

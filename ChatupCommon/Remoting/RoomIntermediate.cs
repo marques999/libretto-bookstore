@@ -5,6 +5,9 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RoomIntermediate : MarshalByRefObject
     {
         /// <summary>
@@ -34,10 +37,10 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
-        public void SendMessage(RemoteMessage messageInstance)
+        /// <param name="remoteMessage"></param>
+        public void SendMessage(RemoteMessage remoteMessage)
         {
-            OnMessage?.Invoke(messageInstance);
+            OnMessage?.Invoke(remoteMessage);
         }
 
         /// <summary>

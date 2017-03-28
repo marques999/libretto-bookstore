@@ -5,37 +5,39 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
-    public partial class LoginForm : Form
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class LoginForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public LoginForm()
         {
             InitializeComponent();
+            buttonConfigure.Enabled = true;
+            _errorHandler = new ErrorHandler(this);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private Address remoteHost = new Address(12480);
+        private readonly ErrorHandler _errorHandler;
+
+        /// <summary>
+        ///
+        /// </summary>
+        private Address _remoteHost = new Address(ChatupCommon.DefaultPort);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private bool ValidateForm()
-        {
-            if (string.IsNullOrWhiteSpace(fieldUsername.Text))
-            {
-                return false;
-            }
-
-            return !string.IsNullOrWhiteSpace(fieldPassword.Text);
-        }
+        private bool ValidateForm() => !string.IsNullOrWhiteSpace(fieldUsername.Text) && !string.IsNullOrWhiteSpace(fieldPassword.Text);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -43,7 +45,7 @@ namespace ChatupNET.Forms
         {
             if (buttonConfigure.Enabled)
             {
-                ChatupClient.Instance.InitializeRemoting(remoteHost);
+                ChatupClient.Instance.InitializeRemoting(_remoteHost);
             }
 
             var operationResult = ChatupClient.Instance.Login(fieldUsername.Text, fieldPassword.Text);
@@ -57,34 +59,29 @@ namespace ChatupNET.Forms
             }
             else
             {
-                ErrorHandler.DisplayError(this, operationResult);
+                _errorHandler.DisplayError(operationResult);
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void buttonConfigure_Click(object sender, EventArgs args)
         {
-            var addressForm = new AddressForm(remoteHost);
+            var addressForm = new AddressForm(_remoteHost);
 
             if (addressForm.ShowDialog() == DialogResult.OK)
             {
-                var serverAddress = addressForm.ModalData;
-
-                if (serverAddress != null)
-                {
-                    remoteHost = serverAddress;
-                    ChatupClient.Instance.InitializeRemoting(remoteHost);
-                    buttonConfigure.Enabled = false;
-                }
+                _remoteHost = addressForm.ModalData;
+                ChatupClient.Instance.InitializeRemoting(_remoteHost);
+                buttonConfigure.Enabled = false;
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -92,43 +89,40 @@ namespace ChatupNET.Forms
         {
             var registrationForm = new RegisterForm();
 
-            if (registrationForm.ShowDialog() == DialogResult.OK)
+            if (registrationForm.ShowDialog() != DialogResult.OK)
             {
-                var registrationData = registrationForm.RegistrationData;
+                return;
+            }
 
-                if (registrationData == null)
-                {
-                    return;
-                }
+            if (buttonConfigure.Enabled)
+            {
+                ChatupClient.Instance.InitializeRemoting(_remoteHost);
+                buttonConfigure.Enabled = false;
+            }
 
-                if (buttonConfigure.Enabled)
-                {
-                    ChatupClient.Instance.InitializeRemoting(remoteHost);
-                }
+            var registrationData = registrationForm.RegistrationData;
+            var operationResult = ChatupClient.Instance.Session.Register(registrationData);
 
-                var operationResult = ChatupClient.Instance.Session.Register(registrationData);
-
-                if (operationResult == RemoteResponse.Success)
+            if (operationResult == RemoteResponse.Success)
+            {
+                if (MessageBox.Show(this,
+                        Properties.Resources.InfoRegister,
+                        Properties.Resources.InfoRegisterTitle,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information) == DialogResult.OK)
                 {
-                    if (MessageBox.Show(this,
-                       Properties.Resources.InfoRegister,
-                       Properties.Resources.InfoRegisterTitle,
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Information) == DialogResult.OK)
-                    {
-                        fieldUsername.Text = registrationData.Username;
-                        fieldPassword.Text = registrationData.Password;
-                    }
+                    fieldUsername.Text = registrationData.Username;
+                    fieldPassword.Text = registrationData.Password;
                 }
-                else
-                {
-                    ErrorHandler.DisplayError(this, operationResult);
-                }
+            }
+            else
+            {
+                _errorHandler.DisplayError(operationResult);
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -138,7 +132,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -148,13 +142,12 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void LoginForm_Load(object sender, EventArgs args)
         {
-            buttonConfigure.Enabled = true;
             buttonValidate.Enabled = ValidateForm();
         }
     }

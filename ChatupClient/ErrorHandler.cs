@@ -6,14 +6,17 @@ using ChatupNET.Model;
 
 namespace ChatupNET
 {
-    class ErrorHandler
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class ErrorHandler
     {
         /// <summary>
         /// 
         /// </summary>
-        private static Dictionary<RemoteResponse, string> responseMessages = new Dictionary<RemoteResponse, string>()
+        private static readonly Dictionary<RemoteResponse, string> ResponseMessages = new Dictionary<RemoteResponse, string>()
         {
-            { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginError },
+            { RemoteResponse.AuthenticationFailed, "We couldn't sign you in, please check your username and password and try again!" },
             { RemoteResponse.SessionExists, "Selected user is currently logged in to this service!" },
             { RemoteResponse.BadRequest, "Please check if the information you entered is complete and try again." },
             { RemoteResponse.PermissionDenied, "You currently don't have sufficient permissions to access this!" }
@@ -22,9 +25,9 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private static Dictionary<RemoteResponse, string> responseTitles = new Dictionary<RemoteResponse, string>()
+        private static readonly Dictionary<RemoteResponse, string> ResponseTitles = new Dictionary<RemoteResponse, string>()
         {
-            { RemoteResponse.AuthenticationFailed, Properties.Resources.LoginErrorTitle },
+            { RemoteResponse.AuthenticationFailed, "Login failed" },
             { RemoteResponse.SessionExists, "Session exists" },
             { RemoteResponse.BadRequest, "Missing parameters" },
             { RemoteResponse.PermissionDenied, "Insufficient permissions" }
@@ -34,34 +37,47 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="parentForm"></param>
-        /// <param name="ex"></param>
-        public static void DisplayException(Form parentForm, Exception ex)
+        public ErrorHandler(Form parentForm)
         {
-            MessageBox.Show(parentForm,
-                ex.Message,
-                ex.Source,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+            _parent = parentForm;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="parentForm"></param>
-        /// <param name="operationResult"></param>
-        public static void DisplayError(Form parentForm, RemoteResponse operationResult)
+        private readonly Form _parent;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        public void DisplayException(Exception ex)
         {
-            if (responseMessages.ContainsKey(operationResult))
+            MessageBox.Show(_parent,
+                ex.Message,
+                ex.Source,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operationResult"></param>
+        public void DisplayError(RemoteResponse operationResult)
+        {
+            if (ResponseMessages.ContainsKey(operationResult))
             {
-                MessageBox.Show(parentForm,
-                    responseMessages[operationResult],
-                    responseTitles[operationResult],
+                MessageBox.Show(_parent,
+                    ResponseMessages[operationResult],
+                    ResponseTitles[operationResult],
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show(parentForm,
+                MessageBox.Show(_parent,
                     operationResult.ToString(),
                     operationResult.ToString(),
                     MessageBoxButtons.OK,

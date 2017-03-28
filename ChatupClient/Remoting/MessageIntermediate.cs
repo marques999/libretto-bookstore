@@ -5,34 +5,37 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    public class MessageIntermediate
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class MessageIntermediate
     {
         /// <summary>
         /// 
         /// </summary>
-        public event InviteHandler OnInvite;
+        internal event InviteHandler OnInvite;
 
         /// <summary>
         /// 
         /// </summary>
-        public event MessageHandler OnReceive;
+        internal event MessageHandler OnReceive;
 
         /// <summary>
         /// 
         /// </summary>
-        public event ConnectHandler OnConnect;
+        internal event ConnectHandler OnConnect;
 
         /// <summary>
         /// 
         /// </summary>
-        public event DisconnectHandler OnDisconnect;
+        internal event DisconnectHandler OnDisconnect;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="remoteInvocation"></param>
-        public void p2pDisconnect(string userName, bool remoteInvocation)
+        public void P2PDisconnect(string userName, bool remoteInvocation)
         {
             OnDisconnect?.Invoke(userName, remoteInvocation);
         }
@@ -41,7 +44,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="remoteMessage"></param>
-        public void p2pReceive(RemoteMessage remoteMessage)
+        public void P2PReceive(RemoteMessage remoteMessage)
         {
             OnReceive?.Invoke(remoteMessage);
         }
@@ -50,7 +53,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="roomInvitation"></param>
-        public void p2pInvite(RoomInvitation roomInvitation)
+        public void P2PInvite(RoomInvitation roomInvitation)
         {
             OnInvite?.Invoke(roomInvitation);
         }
@@ -60,7 +63,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
-        public void p2pConnect(Tuple<string, Color> userProfile, string userHost)
+        public void P2PConnect(Tuple<string, Color> userProfile, string userHost)
         {
             OnConnect?.Invoke(userProfile, userHost);
         }

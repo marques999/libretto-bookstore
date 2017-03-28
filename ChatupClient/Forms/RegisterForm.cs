@@ -8,7 +8,7 @@ namespace ChatupNET.Forms
     /// <summary>
     /// 
     /// </summary>
-    public partial class RegisterForm : Form
+    internal partial class RegisterForm : Form
     {
         /// <summary>
         /// 
@@ -25,7 +25,7 @@ namespace ChatupNET.Forms
         {
             get;
             private set;
-        }
+        } = new UserForm("dummy", "dummy", "dummy");
 
         /// <summary>
         /// 

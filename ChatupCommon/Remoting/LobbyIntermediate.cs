@@ -1,7 +1,12 @@
 ﻿using System;
 
+using ChatupNET.Model;
+
 namespace ChatupNET.Remoting
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class LobbyIntermediate : MarshalByRefObject
     {
         /// <summary>
@@ -26,7 +31,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInstance"></param>
+        /// <param name="roomInformation"></param>
         public void CreateRoom(Room roomInformation)
         {
             OnInsert?.Invoke(roomInformation);

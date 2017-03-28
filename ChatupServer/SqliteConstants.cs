@@ -2,7 +2,10 @@
 
 namespace ChatupNET
 {
-    class SqliteConstants
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class SqliteConstants
     {
         /// <summary>
         /// 
@@ -20,7 +23,7 @@ namespace ChatupNET
         public static readonly string ROOMS = "rooms";
         public static readonly string USERS = "users";
         public static readonly string MASTER = "sqlite_master";
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,12 +37,6 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public static string Database_Url
-        {
-            get
-            {
-                return string.Format("Data Source={0}ChatupServer.db;Version=3;", AppDomain.CurrentDomain.BaseDirectory);
-            }
-        }
+        public static readonly string DatabaseUrl = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}ChatupServer.db;Version=3;";
     }
 }

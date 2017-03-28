@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows.Forms;
 
@@ -6,7 +7,10 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Forms
 {
-    partial class AddressForm : Form
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class AddressForm : Form
     {
         /// <summary>
         /// 
@@ -70,7 +74,7 @@ namespace ChatupNET.Forms
                 return false;
             }
 
-            ushort inputPort = 0;
+            ushort inputPort;
 
             if (string.IsNullOrEmpty(fieldPort.Text))
             {
@@ -85,9 +89,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="ipDigits"></param>
         /// <returns></returns>
-        private string ReadAddress(byte[] ipDigits)
+        private static string ReadAddress(IReadOnlyList<byte> ipDigits)
         {
-            return string.Format("{0:D}.{1:D}.{2:D}.{3:D}", ipDigits[0], ipDigits[1], ipDigits[2], ipDigits[3]);
+            return $"{ipDigits[0]:D}.{ipDigits[1]:D}.{ipDigits[2]:D}.{ipDigits[3]:D}";
         }
 
         /// <summary>

@@ -5,7 +5,10 @@ using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
-    partial class PasswordForm
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class PasswordForm
     {
         /// <summary>
         /// 

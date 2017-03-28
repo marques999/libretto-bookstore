@@ -2,6 +2,9 @@
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class UserInformation
     {
@@ -13,101 +16,52 @@ namespace ChatupNET.Model
         /// <param name="userHost"></param>
         public UserInformation(string userName, string fullName, string userHost)
         {
-            _username = userName;
-            _name = fullName;
-            _host = userHost;
+            Host = userHost;
+            Name = fullName;
+            Username = userName;
         }
-
-        /// <summary>
-        /// Public getter property for the "_host" private member
-        /// </summary>
-        public bool Online
-        {
-            get
-            {
-                return _host != null;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _username;
-
-        /// <summary>
-        /// Public getter property for the "_username" private member
-        /// </summary>
-        public string Username
-        {
-            get
-            {
-                return _username;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        /// Public getter property for the "_name" private member
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _host;
 
         /// <summary>
         /// Public getter property for the "_host" private member
         /// </summary>
         public string Host
         {
-            get
-            {
-                return _host;
-            }
-            set
-            {
-                _host = value;
-            }
+            get;
+            set;
         }
+
+        /// <summary>
+        /// Public getter property for the "Name" private member
+        /// </summary>
+        public string Name
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Public getter property for the "Username" private member
+        /// </summary>
+        public string Username
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Public getter property for the "_host" private member
+        /// </summary>
+        public bool Online => Host != null;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return _username.GetHashCode();
-        }
+        public override int GetHashCode() => Username.GetHashCode();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object otherInstance)
-        {
-            if (otherInstance != null)
-            {
-                var otherInformation = otherInstance as UserInformation;
-
-                if (otherInformation != null)
-                {
-                    return _username.Equals(otherInformation._username);
-                }
-            }
-
-            return false;
-        }
+        public override bool Equals(object otherInstance) => Username.Equals((otherInstance as UserInformation)?.Username);
     }
 }

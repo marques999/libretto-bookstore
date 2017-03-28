@@ -4,18 +4,15 @@ using System.Collections.Generic;
 
 namespace ChatupNET.Database
 {
-    class WhereStatement : List<List<WhereClause>>
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class WhereStatement : List<List<WhereClause>>
     {
         /// <summary>
         /// 
         /// </summary>
-        public int ClauseLevels
-        {
-            get
-            {
-                return Count;
-            }
-        }
+        public int ClauseLevels => Count;
 
         /// <summary>
         /// 
@@ -27,7 +24,8 @@ namespace ChatupNET.Database
             {
                 throw new Exception("Level " + level + " not allowed because level " + (level - 1) + " does not exist.");
             }
-            else if (Count < level)
+
+            if (Count < level)
             {
                 Add(new List<WhereClause>());
             }
@@ -53,9 +51,9 @@ namespace ChatupNET.Database
         /// <returns></returns>
         public WhereClause Add(string field, Comparison @operator, object compareValue, int level)
         {
-            var NewWhereClause = new WhereClause(field, @operator, compareValue);
-            AddWhereClauseToLevel(NewWhereClause, level);
-            return NewWhereClause;
+            var newWhereClause = new WhereClause(field, @operator, compareValue);
+            AddWhereClauseToLevel(newWhereClause, level);
+            return newWhereClause;
         }
 
         /// <summary>
@@ -87,123 +85,113 @@ namespace ChatupNET.Database
         /// <returns></returns>
         public string BuildWhereStatement(bool useCommandObject, ref DbCommand usedDbCommand)
         {
-            string Result = "";
+            var result = "";
 
-            foreach (var WhereStatement in this)
+            foreach (var whereStatement in this)
             {
-                string LevelWhere = "";
+                var levelWhere = "";
 
-                foreach (var Clause in WhereStatement)
+                foreach (var clause in whereStatement)
                 {
-                    string WhereClause = "";
+                    var whereClause = "";
 
                     if (useCommandObject)
                     {
-                        string parameterName = string.Format(
-                            "@p{0}_{1}",
-                            usedDbCommand.Parameters.Count + 1,
-                            Clause.FieldName.Replace('.', '_')
-                            );
-
+                        var parameterName = $"@p{usedDbCommand.Parameters.Count + 1}_{clause.FieldName.Replace('.', '_')}";
                         var parameter = usedDbCommand.CreateParameter();
 
                         parameter.ParameterName = parameterName;
-                        parameter.Value = Clause.Value;
+                        parameter.Value = clause.Value;
                         usedDbCommand.Parameters.Add(parameter);
-                        WhereClause += CreateComparisonClause(Clause.FieldName, Clause.ComparisonOperator, new SqlLiteral(parameterName));
+                        whereClause += CreateComparisonClause(clause.FieldName, clause.ComparisonOperator, new SqlLiteral(parameterName));
                     }
                     else
                     {
-                        WhereClause = CreateComparisonClause(Clause.FieldName, Clause.ComparisonOperator, Clause.Value);
+                        whereClause = CreateComparisonClause(clause.FieldName, clause.ComparisonOperator, clause.Value);
                     }
 
-                    foreach (WhereClause.SubClause SubWhereClause in Clause.SubClauses)
+                    foreach (WhereClause.SubClause subWhereClause in clause.SubClauses)
                     {
-                        switch (SubWhereClause.LogicOperator)
+                        switch (subWhereClause.LogicOperator)
                         {
                         case LogicOperator.And:
-                            WhereClause += " AND ";
+                            whereClause += " AND ";
                             break;
                         case LogicOperator.Or:
-                            WhereClause += " OR ";
+                            whereClause += " OR ";
                             break;
                         }
 
                         if (useCommandObject)
                         {
-                            string parameterName = string.Format(
-                                "@p{0}_{1}",
-                                usedDbCommand.Parameters.Count + 1,
-                                Clause.FieldName.Replace('.', '_')
-                                );
-
+                            var parameterName = $"@p{usedDbCommand.Parameters.Count + 1}_{clause.FieldName.Replace('.', '_')}";
                             var parameter = usedDbCommand.CreateParameter();
 
                             parameter.ParameterName = parameterName;
-                            parameter.Value = SubWhereClause.Value;
+                            parameter.Value = subWhereClause.Value;
                             usedDbCommand.Parameters.Add(parameter);
-                            WhereClause += CreateComparisonClause(Clause.FieldName, SubWhereClause.ComparisonOperator, new SqlLiteral(parameterName));
+                            whereClause += CreateComparisonClause(clause.FieldName, subWhereClause.ComparisonOperator, new SqlLiteral(parameterName));
                         }
                         else
                         {
-                            WhereClause += CreateComparisonClause(Clause.FieldName, SubWhereClause.ComparisonOperator, SubWhereClause.Value);
+                            whereClause += CreateComparisonClause(clause.FieldName, subWhereClause.ComparisonOperator, subWhereClause.Value);
                         }
                     }
 
-                    LevelWhere += "(" + WhereClause + ") AND ";
+                    levelWhere += "(" + whereClause + ") AND ";
                 }
 
-                LevelWhere = LevelWhere.Substring(0, LevelWhere.Length - 5);
+                levelWhere = levelWhere.Substring(0, levelWhere.Length - 5);
 
-                if (WhereStatement.Count > 1)
+                if (whereStatement.Count > 1)
                 {
-                    Result += " (" + LevelWhere + ") ";
+                    result += " (" + levelWhere + ") ";
                 }
                 else
                 {
-                    Result += " " + LevelWhere + " ";
+                    result += " " + levelWhere + " ";
                 }
 
-                Result += " OR";
+                result += " OR";
             }
 
-            return Result.Substring(0, Result.Length - 2);
+            return result.Substring(0, result.Length - 2);
         }
 
         internal static string CreateComparisonClause(string fieldName, Comparison comparisonOperator, object value)
         {
-            string Output = "";
+            var output = "";
 
             if (value != null && value != DBNull.Value)
             {
                 switch (comparisonOperator)
                 {
                 case Comparison.Equals:
-                    Output = fieldName + " = " + FormatSQLValue(value);
+                    output = fieldName + " = " + FormatSqlValue(value);
                     break;
                 case Comparison.NotEquals:
-                    Output = fieldName + " <> " + FormatSQLValue(value);
+                    output = fieldName + " <> " + FormatSqlValue(value);
                     break;
                 case Comparison.GreaterThan:
-                    Output = fieldName + " > " + FormatSQLValue(value);
+                    output = fieldName + " > " + FormatSqlValue(value);
                     break;
                 case Comparison.GreaterOrEquals:
-                    Output = fieldName + " >= " + FormatSQLValue(value);
+                    output = fieldName + " >= " + FormatSqlValue(value);
                     break;
                 case Comparison.LessThan:
-                    Output = fieldName + " < " + FormatSQLValue(value);
+                    output = fieldName + " < " + FormatSqlValue(value);
                     break;
                 case Comparison.LessOrEquals:
-                    Output = fieldName + " <= " + FormatSQLValue(value);
+                    output = fieldName + " <= " + FormatSqlValue(value);
                     break;
                 case Comparison.Like:
-                    Output = fieldName + " LIKE " + FormatSQLValue(value);
+                    output = fieldName + " LIKE " + FormatSqlValue(value);
                     break;
                 case Comparison.NotLike:
-                    Output = "NOT " + fieldName + " LIKE " + FormatSQLValue(value);
+                    output = "NOT " + fieldName + " LIKE " + FormatSqlValue(value);
                     break;
                 case Comparison.In:
-                    Output = fieldName + " IN (" + FormatSQLValue(value) + ")";
+                    output = fieldName + " IN (" + FormatSqlValue(value) + ")";
                     break;
                 }
             }
@@ -213,21 +201,19 @@ namespace ChatupNET.Database
                 {
                     throw new Exception("Cannot use comparison operator " + comparisonOperator.ToString() + " for NULL values.");
                 }
-                else
+
+                switch (comparisonOperator)
                 {
-                    switch (comparisonOperator)
-                    {
-                    case Comparison.Equals:
-                        Output = fieldName + " IS NULL";
-                        break;
-                    case Comparison.NotEquals:
-                        Output = "NOT " + fieldName + " IS NULL";
-                        break;
-                    }
+                case Comparison.Equals:
+                    output = fieldName + " IS NULL";
+                    break;
+                case Comparison.NotEquals:
+                    output = "NOT " + fieldName + " IS NULL";
+                    break;
                 }
             }
 
-            return Output;
+            return output;
         }
 
         /// <summary>
@@ -235,7 +221,7 @@ namespace ChatupNET.Database
         /// </summary>
         /// <param name="someValue"></param>
         /// <returns></returns>
-        internal static string FormatSQLValue(object someValue)
+        internal static string FormatSqlValue(object someValue)
         {
             if (someValue == null)
             {

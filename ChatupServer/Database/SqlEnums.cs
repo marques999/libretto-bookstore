@@ -3,7 +3,7 @@ namespace ChatupNET.Database
     /// <summary>
     /// 
     /// </summary>
-    enum Comparison
+    internal enum Comparison
     {
         Equals,
         NotEquals,
@@ -19,7 +19,7 @@ namespace ChatupNET.Database
     /// <summary>
     /// 
     /// </summary>
-    enum LogicOperator
+    internal enum LogicOperator
     {
         And,
         Or

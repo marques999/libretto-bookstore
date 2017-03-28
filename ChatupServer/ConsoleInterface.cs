@@ -4,7 +4,10 @@ using System.Windows.Forms;
 
 namespace ChatupNET
 {
-    class ConsoleInterface
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class ConsoleInterface
     {
         /// <summary>
         /// 
@@ -18,7 +21,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private RichTextBox _richText;
+        private readonly RichTextBox _richText;
 
         /// <summary>
         /// 
@@ -44,6 +47,17 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="messageContent"></param>
+        public void Print(string messageContent) => Print(messageContent, Default);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Timestamp() => Print("[" + DateTime.Now.ToLongTimeString() + "] ", Green);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messageContent"></param>
         /// <param name="messageColor"></param>
         public void Print(string messageContent, Color messageColor)
         {
@@ -53,14 +67,6 @@ namespace ChatupNET
             _richText.AppendText(messageContent);
             _richText.SelectionColor = _richText.ForeColor;
             _richText.ScrollToCaret();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Timestamp()
-        {
-            Print("[" + DateTime.Now.ToLongTimeString() + "] ", Green);
         }
     }
 }

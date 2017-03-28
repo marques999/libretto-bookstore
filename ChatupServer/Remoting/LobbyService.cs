@@ -11,12 +11,12 @@ namespace ChatupNET.Remoting
     /// <param name="roomInformation"></param>
     /// <param name="userName"></param>
     /// <param name="fullName"></param>
-    delegate void RoomHandler(Room roomInformation, string userName, string fullName);
+    internal delegate void RoomHandler(Room roomInformation, string userName, string fullName);
 
     /// <summary>
     /// 
     /// </summary>
-    class LobbyService : MarshalByRefObject, LobbyInterface
+    internal class LobbyService : MarshalByRefObject, LobbyInterface
     {
         /// <summary>
         /// 
@@ -31,22 +31,13 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        private Dictionary<int, Room> Rooms
-        {
-            get
-            {
-                return ChatupServer.Instance.Rooms;
-            }
-        }
+        /// <returns></returns>
+        public Dictionary<int, Room> List() => ChatupServer.Instance.Rooms;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public Dictionary<int, Room> List()
-        {
-            return ChatupServer.Instance.Rooms;
-        }
+        private static Dictionary<int, Room> Rooms => ChatupServer.Instance.Rooms;
 
         /// <summary>
         /// 
@@ -111,7 +102,7 @@ namespace ChatupNET.Remoting
                 return new Tuple<RemoteResponse, Room>(RemoteResponse.BadRequest, null);
             }
 
-            roomInformation.ID = ChatupServer.Instance.NextID;
+            roomInformation.Id = ChatupServer.Instance.NextId;
 
             if (ChatupServer.Instance.RegisterChatrooom(roomInformation))
             {
@@ -136,10 +127,8 @@ namespace ChatupNET.Remoting
             {
                 return new Tuple<bool, string>(Rooms[roomId].IsPrivate(), ChatupServer.Instance.LookupChatroom(roomId));
             }
-            else
-            {
-                return new Tuple<bool, string>(false, null);
-            }
+
+            return new Tuple<bool, string>(false, null);
         }
 
         /// <summary>

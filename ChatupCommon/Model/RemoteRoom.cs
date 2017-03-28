@@ -1,7 +1,10 @@
 ﻿using System;
 
-namespace ChatupNET.Remoting
+namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class Room
     {
@@ -15,163 +18,87 @@ namespace ChatupNET.Remoting
         /// <param name="roomCapacity"></param>
         public Room(int roomId, string roomName, string roomOwner, string roomPassword, int roomCapacity)
         {
-            _count = 0;
-            _id = roomId;
-            _name = roomName;
-            _owner = roomOwner;
-            _capacity = roomCapacity;
-            _password = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
+            Count = 0;
+            Id = roomId;
+            Name = roomName;
+            Owner = roomOwner;
+            Capacity = roomCapacity;
+            Password = string.IsNullOrEmpty(roomPassword) ? null : roomPassword.Trim();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int _id;
 
         /// <summary>
         /// Public getter property for the "_id" private member
         /// </summary>
-        public int ID
+        public int Id
         {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        /// Public getter property for the "_name" private member
+        /// Public getter property for the "Name" private member
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _owner;
-
-        /// <summary>
-        /// Public getter property for the "_owner" private member
+        /// Public getter property for the "Owner" private member
         /// </summary>
         public string Owner
         {
-            get
-            {
-                return _owner;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private int _count;
-
-        /// <summary>
-        /// Public getter property for the "_count" private member
+        /// Public getter property for the "Count" private member
         /// </summary>
         public int Count
         {
-            get
-            {
-                return _count;
-            }
-            set
-            {
-                _count = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _password;
-
-        /// <summary>
-        /// Public getter property for the "_password" private member
+        /// Public getter property for the "Password" private member
         /// </summary>
         public string Password
         {
-            get
-            {
-                return _password;
-            }
+            get;
+        }
+
+        /// <summary>
+        /// Public getter property for the "Capacity" private member
+        /// </summary>
+        public int Capacity
+        {
+            get;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private int _capacity;
+        /// <returns></returns>
+        public bool IsPrivate() => (Password != null);
 
         /// <summary>
-        /// Public getter property for the "_capacity" private member
+        /// 
         /// </summary>
-        public int Capacity
-        {
-            get
-            {
-                return _capacity;
-            }
-        }
+        /// <returns></returns>
+        public bool IsFull() => (Count >= Capacity);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() => Id;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object otherInstance)
-        {
-            if (otherInstance != null)
-            {
-                var otherChatroom = otherInstance as Room;
-
-                if (otherChatroom != null)
-                {
-                    return ID == otherChatroom.ID;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return ID;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsPrivate()
-        {
-            return _password != null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsFull()
-        {
-            return Count >= Capacity;
-        }
+        public override bool Equals(object otherInstance) => (Id == (otherInstance as Room)?.Id);
     }
 }

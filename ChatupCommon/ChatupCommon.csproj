@@ -7,7 +7,7 @@
     <ProjectGuid>{F2A6B882-D61E-4304-9BD3-9A5C532DC713}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChatupCommon</RootNamespace>
+    <RootNamespace>ChatupNET</RootNamespace>
     <AssemblyName>ChatupCommon</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatupCommon.cs" />
     <Compile Include="ColorGenerator.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\MessageQueue.cs" />

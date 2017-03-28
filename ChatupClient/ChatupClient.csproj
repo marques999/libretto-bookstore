@@ -36,7 +36,7 @@
     <ApplicationIcon>Resources\chatup.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ChatupClient</StartupObject>
+    <StartupObject>ChatupNET.ChatupClient</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IPAddressControlLib">
@@ -71,9 +71,8 @@
     </Compile>
     <Compile Include="Model\RoomInvitation.cs" />
     <Compile Include="RemoteAccess.cs" />
-    <Compile Include="Remoting\MessageInterface.cs" />
     <Compile Include="Remoting\MessageIntermediate.cs" />
-    <Compile Include="Remoting\MessageService.cs" />
+    <Compile Include="Remoting\MessageInterface.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

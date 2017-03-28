@@ -4,6 +4,9 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SessionIntermediate : MarshalByRefObject
     {
         /// <summary>

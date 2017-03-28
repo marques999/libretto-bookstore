@@ -1,82 +1,51 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class Address
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serverPort"></param>
-        public Address(ushort serverPort)
+        /// <param name="remotePort"></param>
+        public Address(ushort remotePort)
         {
-            host = FindAddress();
-            port = serverPort;
+            Port = remotePort;
+            Host = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ipAddress => ipAddress.AddressFamily == AddressFamily.InterNetwork);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serverHost"></param>
-        /// <param name="serverPort"></param>
-        public Address(IPAddress serverHost, ushort serverPort)
+        /// <param name="remoteHost"></param>
+        /// <param name="remotePort"></param>
+        public Address(IPAddress remoteHost, ushort remotePort)
         {
-            host = serverHost;
-            port = serverPort;
+            Host = remoteHost;
+            Port = remotePort;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private IPAddress FindAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private IPAddress host;
-
-        /// <summary>
-        /// 
+        /// Public getter property for the "Host" private member
         /// </summary>
         public IPAddress Host
         {
-            get
-            {
-                return host;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private ushort port;
-
-        /// <summary>
-        /// 
+        /// Public getter property for the "Port" private member
         /// </summary>
         public ushort Port
         {
-            get
-            {
-                return port;
-            }
+            get;
         }
     }
 }

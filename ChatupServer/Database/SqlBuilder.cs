@@ -1,23 +1,27 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChatupNET.Database
 {
-    class SqlBuilder
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class SqlBuilder
     {
         /// <summary>
         /// 
         /// </summary>
-        private List<string> _selectedTables = new List<string>();
+        private readonly List<string> _selectedTables = new List<string>();
 
         /// <summary>
         /// 
         /// </summary>
-        private List<SqlColumn> _selectedColumns = new List<SqlColumn>();
+        private readonly List<SqlColumn> _selectedColumns = new List<SqlColumn>();
 
         /// <summary>
         /// 
         /// </summary>
-        private WhereStatement _whereStatement = new WhereStatement();
+        private readonly WhereStatement _whereStatement = new WhereStatement();
 
         /// <summary>
         /// 
@@ -43,7 +47,6 @@ namespace ChatupNET.Database
         public SqlBuilder FromTable(string table)
         {
             _selectedTables.Add(table);
-
             return this;
         }
 
@@ -57,7 +60,6 @@ namespace ChatupNET.Database
         public SqlBuilder Where(string field, Comparison @operator, object compareValue)
         {
             _whereStatement.Add(new WhereClause(field, @operator, compareValue), 1);
-
             return this;
         }
 
@@ -67,54 +69,38 @@ namespace ChatupNET.Database
         /// <returns></returns>
         public string BuildQuery()
         {
-            string Query = "SELECT ";
+            var query = "SELECT ";
 
             if (_selectedColumns.Count == 0)
             {
                 if (_selectedTables.Count == 1)
                 {
-                    Query += _selectedTables[0] + ".";
+                    query += _selectedTables[0] + ".";
                 }
 
-                Query += "*";
+                query += "*";
             }
             else
             {
-                foreach (var CurrentColumn in _selectedColumns)
-                {
-                    if (CurrentColumn.Alias == null)
-                    {
-                        Query += CurrentColumn.Name + ',';
-                    }
-                    else
-                    {
-                        Query += CurrentColumn.Name + " AS " + CurrentColumn.Alias + ',';
-                    }
-                }
-
-                Query = Query.TrimEnd(',');
-                Query += ' ';
+                query = _selectedColumns.Aggregate(query, (current, currentColumn) => current + (currentColumn.Alias == null ? currentColumn.Name + ',' : currentColumn.Name + " AS " + currentColumn.Alias + ','));
+                query = query.TrimEnd(',');
+                query += ' ';
             }
 
             if (_selectedTables.Count > 0)
             {
-                Query += " FROM ";
-
-                foreach (string TableName in _selectedTables)
-                {
-                    Query += TableName + ',';
-                }
-
-                Query = Query.TrimEnd(',');
-                Query += ' ';
+                query += " FROM ";
+                query = _selectedTables.Aggregate(query, (current, tableName) => current + (tableName + ','));
+                query = query.TrimEnd(',');
+                query += ' ';
             }
 
             if (_whereStatement.ClauseLevels > 0)
             {
-                Query += " WHERE " + _whereStatement.BuildWhereStatement();
+                query += " WHERE " + _whereStatement.BuildWhereStatement();
             }
 
-            return Query;
+            return query;
         }
     }
 }

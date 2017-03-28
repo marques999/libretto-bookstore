@@ -21,8 +21,8 @@ namespace ChatupNET.Remoting
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="messageInstance"></param>
-    public delegate void MessageHandler(RemoteMessage messageInstance);
+    /// <param name="remoteMessage"></param>
+    public delegate void MessageHandler(RemoteMessage remoteMessage);
 
     /// <summary>
     /// 
@@ -60,9 +60,9 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
+        /// <param name="remoteMessage"></param>
         /// <returns></returns>
-        RemoteResponse Send(RemoteMessage messageInstance);
+        RemoteResponse Send(RemoteMessage remoteMessage);
 
         /// <summary>
         /// 

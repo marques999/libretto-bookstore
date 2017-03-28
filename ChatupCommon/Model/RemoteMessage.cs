@@ -2,6 +2,9 @@
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class RemoteMessage
     {
@@ -12,57 +15,33 @@ namespace ChatupNET.Model
         /// <param name="messageContents"></param>
         public RemoteMessage(string messageAuthor, string messageContents)
         {
-            _author = messageAuthor;
-            _contents = messageContents;
-            _timestamp = DateTime.Now;
+            Author = messageAuthor;
+            Contents = messageContents;
+            Timestamp = DateTime.Now;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _author;
 
         /// <summary>
         /// 
         /// </summary>
         public string Author
         {
-            get
-            {
-                return _author;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _contents;
-
-        /// <summary>
-        /// Public getter property for the "_contents" private member
+        /// Public getter property for the "Contents" private member
         /// </summary>
         public string Contents
         {
-            get
-            {
-                return _contents;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private DateTime _timestamp;
-
-        /// <summary>
-        /// Public getter property for the "_timestamp" private member
+        /// Public getter property for the "Timestamp" private member
         /// </summary>
         public DateTime Timestamp
         {
-            get
-            {
-                return _timestamp;
-            }
+            get;
         }
 
         /// <summary>
@@ -71,7 +50,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _timestamp.GetHashCode() * 31 + _author.GetHashCode();
+            return Timestamp.GetHashCode() * 31 + Author.GetHashCode();
         }
 
         /// <summary>
@@ -81,14 +60,11 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override bool Equals(object otherInstance)
         {
-            if (otherInstance != null)
-            {
-                var otherMessage = otherInstance as RemoteMessage;
+            var otherMessage = otherInstance as RemoteMessage;
 
-                if (otherMessage != null)
-                {
-                    return Timestamp == otherMessage.Timestamp && Author == otherMessage.Author;
-                }
+            if (otherMessage != null)
+            {
+                return Timestamp == otherMessage.Timestamp && Author == otherMessage.Author;
             }
 
             return false;

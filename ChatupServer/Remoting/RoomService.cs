@@ -6,7 +6,10 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    class RoomService : MarshalByRefObject, RoomInterface
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class RoomService : MarshalByRefObject, RoomInterface
     {
         /// <summary>
         /// 
@@ -20,7 +23,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        private Room _instance;
+        private readonly Room _instance;
 
         /// <summary>
         /// 
@@ -40,43 +43,35 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        protected MessageQueue _messages = new MessageQueue(100);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected Dictionary<string, Color> _users = new Dictionary<string, Color>();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
-        public Dictionary<string, Color> List()
-        {
-            return _users;
-        }
+        public Dictionary<string, Color> List() => _users;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInstance"></param>
+        private readonly MessageQueue _messages = new MessageQueue();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly Dictionary<string, Color> _users = new Dictionary<string, Color>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="remoteMessage"></param>
         /// <returns></returns>
-        public RemoteResponse Send(RemoteMessage messageInstance)
+        public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            if (messageInstance == null)
+            if (string.IsNullOrEmpty(remoteMessage?.Author))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrEmpty(messageInstance.Author))
+            if (_users.ContainsKey(remoteMessage.Author))
             {
-                return RemoteResponse.BadRequest;
-            }
-
-            if (_users.ContainsKey(messageInstance.Author))
-            {
-                _messages.Enqueue(messageInstance);
-                OnSend?.Invoke(messageInstance);
+                _messages.Enqueue(remoteMessage);
+                OnSend?.Invoke(remoteMessage);
             }
             else
             {
@@ -125,7 +120,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public bool InsertUser(string userName)
         {
-            bool operationResult = !_users.ContainsKey(userName);
+            var operationResult = !_users.ContainsKey(userName);
 
             if (operationResult)
             {

@@ -10,12 +10,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private static Random mRandom = new Random();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly Color[] mColors = typeof(Color)
+        private static readonly Color[] ColorArray = typeof(Color)
             .GetProperties(BindingFlags.Public | BindingFlags.Static)
             .Select(propInfo => propInfo.GetValue(null, null))
             .Cast<Color>()
@@ -27,7 +22,7 @@ namespace ChatupNET
         /// <returns></returns>
         public static Color Random()
         {
-            return mColors[mRandom.Next(0, mColors.Length)];
+            return ColorArray[new Random().Next(0, ColorArray.Length)];
         }
     }
 }

@@ -3,7 +3,10 @@ using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
-    public partial class PasswordForm : Form
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class PasswordForm : Form
     {
         /// <summary>
         /// 
@@ -16,22 +19,13 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        public string Password
-        {
-            get
-            {
-                return fieldPassword.Text;
-            }
-        }
+        public string Password => fieldPassword.Text;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private bool ValidateForm()
-        {
-            return string.IsNullOrEmpty(fieldPassword.Text) == false;
-        }
+        private bool ValidateForm() => !string.IsNullOrEmpty(fieldPassword.Text);
 
         /// <summary>
         /// 

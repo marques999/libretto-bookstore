@@ -4,7 +4,10 @@ using System.Runtime.Remoting;
 
 namespace ChatupNET
 {
-    public class RemoteAccess
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class RemoteAccess
     {
         /// <summary>
         /// 
@@ -13,12 +16,12 @@ namespace ChatupNET
         /// <returns></returns>
         public static object New(Type classType)
         {
-            if (wellKnownTypes == null)
+            if (_wellKnownTypes == null)
             {
                 InitTypeCache();
             }
 
-            var wellKnownType = (WellKnownClientTypeEntry)wellKnownTypes[classType];
+            var wellKnownType = (WellKnownClientTypeEntry)_wellKnownTypes[classType];
 
             if (wellKnownType == null)
             {
@@ -31,7 +34,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        private static IDictionary wellKnownTypes;
+        private static IDictionary _wellKnownTypes;
 
         /// <summary>
         /// 
@@ -50,7 +53,7 @@ namespace ChatupNET
                 typeTable.Add(registeredObject.ObjectType, registeredObject);
             }
 
-            wellKnownTypes = typeTable;
+            _wellKnownTypes = typeTable;
         }
     }
 }

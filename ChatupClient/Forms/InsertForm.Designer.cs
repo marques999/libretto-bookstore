@@ -5,7 +5,10 @@ using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
-    partial class InsertForm
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class InsertForm
     {
         /// <summary>
         /// 
@@ -114,6 +117,7 @@ namespace ChatupNET.Forms
             fieldPassword.Location = new Point(90, 36);
             fieldPassword.Margin = new Padding(4);
             fieldPassword.Name = "fieldPassword";
+            fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(186, 20);
             fieldPassword.TabIndex = 4;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
@@ -172,6 +176,9 @@ namespace ChatupNET.Forms
             fieldCapacity.Size = new Size(186, 20);
             fieldCapacity.TabIndex = 5;
             fieldCapacity.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            // 
+            // InsertForm
+            // 
             AcceptButton = buttonConfirm;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;

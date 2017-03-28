@@ -2,6 +2,9 @@
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class UserForm
     {
@@ -13,57 +16,33 @@ namespace ChatupNET.Model
         /// <param name="userPassword"></param>
         public UserForm(string userName, string fullName, string userPassword)
         {
-            _name = fullName;
-            _username = userName;
-            _password = userPassword;
+            Name = fullName;
+            Username = userName;
+            Password = userPassword;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string _username;
-
-        /// <summary>
-        /// Public getter property for the "_username" private member
-        /// </summary>
-        public string Username
-        {
-            get
-            {
-                return _username;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string _name;
-
-        /// <summary>
-        /// Public getter property for the "_name" private member
+        /// Public getter property for the "Name" private member
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get;
         }
 
         /// <summary>
-        /// 
+        /// Public getter property for the "Username" private member
         /// </summary>
-        private string _password;
+        public string Username
+        {
+            get;
+        }
 
         /// <summary>
-        /// Public getter property for the "_password" private member
+        /// Public getter property for the "Password" private member
         /// </summary>
         public string Password
         {
-            get
-            {
-                return _password;
-            }
+            get;
         }
 
         /// <summary>
@@ -72,7 +51,7 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _username.GetHashCode() * 31 + _password.GetHashCode();
+            return Username.GetHashCode() * 31 + Password.GetHashCode();
         }
 
         /// <summary>
@@ -82,14 +61,11 @@ namespace ChatupNET.Model
         /// <returns></returns>
         public override bool Equals(object otherInstance)
         {
-            if (otherInstance != null)
-            {
-                var otherForm = otherInstance as UserForm;
+            var otherForm = otherInstance as UserForm;
 
-                if (otherForm != null)
-                {
-                    return _username.Equals(otherForm._username) && _password.Equals(otherForm._password);
-                }
+            if (otherForm != null)
+            {
+                return Username.Equals(otherForm.Username) && Password.Equals(otherForm.Password);
             }
 
             return false;

@@ -7,7 +7,7 @@ using IPAddressControlLib;
 
 namespace ChatupNET.Forms
 {
-    partial class AddressForm
+    internal partial class AddressForm
     {
         /// <summary>
         /// 
@@ -120,6 +120,7 @@ namespace ChatupNET.Forms
             fieldAddress.Size = new Size(186, 20);
             fieldAddress.TabIndex = 13;
             fieldAddress.Text = "...";
+            fieldAddress.TextChanged += new EventHandler(fieldName_TextChanged);
             // 
             // fieldPort
             // 

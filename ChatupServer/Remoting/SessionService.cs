@@ -5,7 +5,10 @@ using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
-    class SessionService : MarshalByRefObject, SessionInterface
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class SessionService : MarshalByRefObject, SessionInterface
     {
         /// <summary>
         /// 
@@ -66,32 +69,30 @@ namespace ChatupNET.Remoting
         {
             var userName = userLogin.Username;
 
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userLogin.Pasword))
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userLogin.Password))
             {
                 return RemoteResponse.BadRequest;
             }
 
             var storedPassword = SqliteDatabase.Instance.QueryPassword(userName);
 
-            if (storedPassword.Equals(userLogin.Pasword))
-            {
-                var userInformation = ChatupServer.Instance.Login(userLogin);
-
-                if (userInformation != null)
-                {
-                    OnLogin?.Invoke(userInformation);
-                }
-                else
-                {
-                    return RemoteResponse.SessionExists;
-                }
-
-                return RemoteResponse.Success;
-            }
-            else
+            if (!storedPassword.Equals(userLogin.Password))
             {
                 return RemoteResponse.AuthenticationFailed;
             }
+
+            var userInformation = ChatupServer.Instance.Login(userLogin);
+
+            if (userInformation != null)
+            {
+                OnLogin?.Invoke(userInformation);
+            }
+            else
+            {
+                return RemoteResponse.SessionExists;
+            }
+
+            return RemoteResponse.Success;
         }
 
         /// <summary>
@@ -101,12 +102,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Register(UserForm userForm)
         {
-            if (userForm == null)
-            {
-                return RemoteResponse.BadRequest;
-            }
-
-            if (string.IsNullOrEmpty(userForm.Username) || string.IsNullOrEmpty(userForm.Password))
+            if (string.IsNullOrEmpty(userForm?.Username) || string.IsNullOrEmpty(userForm.Password))
             {
                 return RemoteResponse.BadRequest;
             }

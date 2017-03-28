@@ -3,60 +3,38 @@ using System.Collections.Concurrent;
 
 namespace ChatupNET.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
-    public class MessageQueue
+    public class MessageQueue : ConcurrentQueue<RemoteMessage>
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageLimit"></param>
-        public MessageQueue(int messageLimit)
+        private readonly int _limit = ChatupCommon.QueueLimit;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly object _syncObject = new object();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        public new void Enqueue(RemoteMessage obj)
         {
-            _limit = messageLimit;
-        }
+            base.Enqueue(obj);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private int _limit;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private ConcurrentQueue<RemoteMessage> _queue = new ConcurrentQueue<RemoteMessage>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="messageInstance"></param>
-        public void Enqueue(RemoteMessage messageInstance)
-        {
-            _queue.Enqueue(messageInstance);
-
-            lock (this)
+            lock (_syncObject)
             {
-                RemoteMessage overflowMessage;
-
-                while (_queue.Count > _limit && _queue.TryDequeue(out overflowMessage))
+                while (Count > _limit)
                 {
+                    RemoteMessage remoteMessage;
+                    TryDequeue(out remoteMessage);
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-		public RemoteMessage Dequeue()
-        {
-            RemoteMessage enqueuedMessage;
-
-            if (_queue.TryDequeue(out enqueuedMessage))
-            {
-                return enqueuedMessage;
-            }
-
-            return null;
         }
     }
 }
