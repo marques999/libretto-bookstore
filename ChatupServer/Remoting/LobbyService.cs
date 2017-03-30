@@ -123,12 +123,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public Tuple<bool, string> QueryRoom(int roomId)
         {
-            if (Rooms.ContainsKey(roomId))
-            {
-                return new Tuple<bool, string>(Rooms[roomId].IsPrivate(), ChatupServer.Instance.LookupChatroom(roomId));
-            }
-
-            return new Tuple<bool, string>(false, null);
+            return Rooms.ContainsKey(roomId) ? new Tuple<bool, string>(Rooms[roomId].IsPrivate(), ChatupServer.Instance.LookupChatroom(roomId)) : new Tuple<bool, string>(false, null);
         }
 
         /// <summary>

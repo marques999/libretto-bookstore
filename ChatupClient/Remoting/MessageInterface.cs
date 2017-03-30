@@ -65,7 +65,12 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            if (string.IsNullOrEmpty(remoteMessage?.Author))
+            if (remoteMessage == null || remoteMessage.Author == null)
+            {
+                return RemoteResponse.BadRequest;
+            }
+
+            if (string.IsNullOrEmpty(remoteMessage.Author.Item1))
             {
                 return RemoteResponse.BadRequest;
             }

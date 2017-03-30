@@ -107,24 +107,6 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We couldn&apos;t sign you in, please check your username and password and try again!.
-        /// </summary>
-        internal static string LoginError {
-            get {
-                return ResourceManager.GetString("LoginError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login failed.
-        /// </summary>
-        internal static string LoginErrorTitle {
-            get {
-                return ResourceManager.GetString("LoginErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You can&apos;t launch a private conversation with yourself!.
         /// </summary>
         internal static string MainForm_SelfClicked {
@@ -143,7 +125,7 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This user is currently offline!.
+        ///   Looks up a localized string similar to The user you selected is currently offline!.
         /// </summary>
         internal static string MainForm_UserOffline {
             get {
@@ -157,24 +139,6 @@ namespace ChatupNET.Properties {
         internal static string MainForm_UserOfflineTitle {
             get {
                 return ResourceManager.GetString("MainForm_UserOfflineTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The password you entered was recognized as invalid!.
-        /// </summary>
-        internal static string PasswordError {
-            get {
-                return ResourceManager.GetString("PasswordError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wrong password.
-        /// </summary>
-        internal static string PasswordErrorTitle {
-            get {
-                return ResourceManager.GetString("PasswordErrorTitle", resourceCulture);
             }
         }
         

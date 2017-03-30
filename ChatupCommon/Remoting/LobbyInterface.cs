@@ -22,7 +22,7 @@ namespace ChatupNET.Remoting
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="roomCount"></param>
-    public delegate void UpdateHandler(int roomId, int roomCount);
+    public delegate void UpdateHandler(int roomId, int roomCount, int roomCapacity);
 
     /// <summary>
     /// 

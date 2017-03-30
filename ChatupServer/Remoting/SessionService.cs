@@ -117,7 +117,7 @@ namespace ChatupNET.Remoting
             }
             else
             {
-                return RemoteResponse.ObjectExists;
+                return RemoteResponse.UserExists;
             }
 
             return RemoteResponse.Success;

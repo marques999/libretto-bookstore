@@ -16,14 +16,6 @@ namespace ChatupNET.Rooms
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="roomCount"></param>
-    /// <param name="roomCapacity"></param>
-    internal delegate void UpdateHandler(int roomId, int roomCount, int roomCapacity);
-
-    /// <summary>
-    /// 
-    /// </summary>
     internal sealed class GroupRoom : AbstractRoom
     {
         /// <summary>
@@ -36,33 +28,34 @@ namespace ChatupNET.Rooms
         {
             _instance = roomInformation;
             _roomInterface = roomInterface;
+            _roomIntermediate = new RoomIntermediate();
             _roomIntermediate.OnJoin += OnJoin;
             _roomIntermediate.OnLeave += OnLeave;
-            _roomIntermediate.OnMessage += AppendMessage;
+            _roomIntermediate.OnSend += OnReceive;
             _roomInterface.OnJoin += _roomIntermediate.JoinRoom;
             _roomInterface.OnLeave += _roomIntermediate.LeaveRoom;
             _roomInterface.OnSend += _roomIntermediate.SendMessage;
 
-            var userList = roomInterface.List();
-
-            if (userList.Count > 0)
+            if (messageHistory != null)
             {
-                foreach (var userEntry in userList)
+                RemoteMessage q;
+
+                while (messageHistory.TryDequeue(out q))
                 {
-                    JoinRoom(new Tuple<string, Color>(userEntry.Key, userEntry.Value));
+                    OnReceive(q);
                 }
             }
 
-            if (messageHistory == null)
+            var userList = roomInterface.List();
+
+            if (userList.Count <= 0)
             {
                 return;
             }
 
-            RemoteMessage q;
-
-            while (messageHistory.TryDequeue(out q))
+            foreach (var userEntry in userList)
             {
-                AppendMessage(q);
+                JoinRoom(new Tuple<string, Color>(userEntry.Key, userEntry.Value));
             }
         }
 
@@ -89,7 +82,7 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        private readonly RoomIntermediate _roomIntermediate = new RoomIntermediate();
+        private readonly RoomIntermediate _roomIntermediate;
 
         /// <summary>
         /// 
@@ -106,17 +99,13 @@ namespace ChatupNET.Rooms
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
         {
-            _roomIntermediate.OnLeave -= LeaveRoom;
-            _roomIntermediate.OnJoin -= JoinRoom;
-            _roomIntermediate.OnMessage -= AppendMessage;
-            OnExit?.Invoke(_instance);
-
             if (_roomInterface != null)
             {
                 var operationResult = _roomInterface.Leave(ChatupClient.Instance.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
+                    OnDisconnect();
                     base.OnClosing(args);
                 }
                 else
@@ -127,8 +116,20 @@ namespace ChatupNET.Rooms
             }
             else
             {
+                OnDisconnect();
                 base.OnClosing(args);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OnDisconnect()
+        {
+            _roomInterface.OnJoin -= _roomIntermediate.JoinRoom;
+            _roomInterface.OnLeave -= _roomIntermediate.LeaveRoom;
+            _roomInterface.OnSend -= _roomIntermediate.SendMessage;
+            OnExit?.Invoke(_instance);
         }
 
         /// <summary>

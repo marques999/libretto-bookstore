@@ -45,6 +45,7 @@ namespace ChatupNET.Forms
         {
             if (buttonConfigure.Enabled)
             {
+                buttonConfigure.Enabled = false;
                 ChatupClient.Instance.InitializeRemoting(_remoteHost);
             }
 
@@ -53,7 +54,6 @@ namespace ChatupNET.Forms
             if (operationResult == RemoteResponse.Success)
             {
                 Hide();
-                buttonConfigure.Enabled = false;
                 new MainForm().ShowDialog();
                 Show();
             }
@@ -75,8 +75,6 @@ namespace ChatupNET.Forms
             if (addressForm.ShowDialog() == DialogResult.OK)
             {
                 _remoteHost = addressForm.ModalData;
-                ChatupClient.Instance.InitializeRemoting(_remoteHost);
-                buttonConfigure.Enabled = false;
             }
         }
 
@@ -96,23 +94,23 @@ namespace ChatupNET.Forms
 
             if (buttonConfigure.Enabled)
             {
-                ChatupClient.Instance.InitializeRemoting(_remoteHost);
                 buttonConfigure.Enabled = false;
+                ChatupClient.Instance.InitializeRemoting(_remoteHost);
             }
 
-            var registrationData = registrationForm.RegistrationData;
-            var operationResult = ChatupClient.Instance.Session.Register(registrationData);
+            var registrationInfo = registrationForm.RegistrationData;
+            var operationResult = ChatupClient.Instance.Session.Register(registrationInfo);
 
             if (operationResult == RemoteResponse.Success)
             {
                 if (MessageBox.Show(this,
-                        Properties.Resources.InfoRegister,
-                        Properties.Resources.InfoRegisterTitle,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information) == DialogResult.OK)
+                    Properties.Resources.InfoRegister,
+                    Properties.Resources.InfoRegisterTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information) == DialogResult.OK)
                 {
-                    fieldUsername.Text = registrationData.Username;
-                    fieldPassword.Text = registrationData.Password;
+                    fieldUsername.Text = registrationInfo.Username;
+                    fieldPassword.Text = registrationInfo.Password;
                 }
             }
             else

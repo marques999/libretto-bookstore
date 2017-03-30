@@ -43,15 +43,15 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public Tuple<string, Color> Profile => new Tuple<string, Color>(Username, Color);
+        private readonly Random _randomGenerator = new Random();
 
         /// <summary>
-        /// Public getter property for the "mInstance" private member
+        /// Public getter property for the "_instance" private member
         /// </summary>
         public static ChatupClient Instance => _instance ?? (_instance = new ChatupClient());
 
         /// <summary>
-        /// 
+        /// Public getter property for the "LocalAddress" private member
         /// </summary>
         public string LocalAddress => ChatupCommon.FormatAddress(LocalHost, ChatupCommon.MessagingEndpoint);
 
@@ -126,6 +126,11 @@ namespace ChatupNET
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string Username => Profile.Item1;
+
+        /// <summary>
         /// Public getter property for the "LocalHost" private member
         /// </summary>
         public Address LocalHost
@@ -143,22 +148,13 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// Public getter property for the "Color" private member
+        /// 
         /// </summary>
-        public Color Color
+        public Tuple<string, Color> Profile
         {
             get;
             private set;
-        }
-
-        /// <summary>
-        /// Public getter property for the "Username" private member
-        /// </summary>
-        public string Username
-        {
-            get;
-            private set;
-        }
+        } = new Tuple<string, Color>(null, Color.White);
 
         /// <summary>
         /// Public getter property for the "Lobby" private member
@@ -223,8 +219,7 @@ namespace ChatupNET
 
             if (operationResult == RemoteResponse.Success)
             {
-                Username = userLogin.Username;
-                Color = ColorGenerator.Random();
+                Profile = new Tuple<string, Color>(userLogin.Username, Color.FromArgb(_randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224)));
             }
 
             return operationResult;
@@ -236,12 +231,11 @@ namespace ChatupNET
         /// <returns></returns>
         public RemoteResponse Logout()
         {
-            var operationResult = Session.Logout(Username);
+            var operationResult = Session.Logout(Profile.Item1);
 
             if (operationResult == RemoteResponse.Success)
             {
-                Username = null;
-                Color = Color.Black;
+                Profile = null;
             }
 
             return operationResult;

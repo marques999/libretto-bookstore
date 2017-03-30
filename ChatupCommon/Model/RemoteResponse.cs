@@ -14,8 +14,10 @@ namespace ChatupNET.Model
         Success,
         BadRequest,
         SessionExists,
-        ObjectExists,
+        ConversationExists,
+        UserExists,
         OperationFailed,
-        RoomFull
+        RoomFull,
+        InvalidPassword
     }
 }

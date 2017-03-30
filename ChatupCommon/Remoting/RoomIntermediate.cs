@@ -23,7 +23,7 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        public event MessageHandler OnMessage;
+        public event MessageHandler OnSend;
 
         /// <summary>
         /// 
@@ -40,7 +40,7 @@ namespace ChatupNET.Remoting
         /// <param name="remoteMessage"></param>
         public void SendMessage(RemoteMessage remoteMessage)
         {
-            OnMessage?.Invoke(remoteMessage);
+            OnSend?.Invoke(remoteMessage);
         }
 
         /// <summary>

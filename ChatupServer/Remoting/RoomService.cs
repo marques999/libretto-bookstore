@@ -63,12 +63,14 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            if (string.IsNullOrEmpty(remoteMessage?.Author))
+            var messageAuthor = remoteMessage?.Author.Item1;
+
+            if (string.IsNullOrEmpty(messageAuthor))
             {
                 return RemoteResponse.BadRequest;
             }
 
-            if (_users.ContainsKey(remoteMessage.Author))
+            if (_users.ContainsKey(messageAuthor))
             {
                 _messages.Enqueue(remoteMessage);
                 OnSend?.Invoke(remoteMessage);
@@ -97,6 +99,7 @@ namespace ChatupNET.Remoting
             {
                 if (_users.Remove(userName))
                 {
+                    _instance.Count--;
                     OnLeave?.Invoke(userName);
                     ChatupServer.Instance.LeaveRoom(_instance, userName);
                 }
@@ -116,46 +119,36 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public bool InsertUser(string userName)
+        /// <param name="userProfile"></param>
+        private bool InsertUser(Tuple<string, Color> userProfile)
         {
-            var operationResult = !_users.ContainsKey(userName);
-
-            if (operationResult)
+            if (_users.ContainsKey(userProfile.Item1))
             {
-                InsertUser(new Tuple<string, Color>(userName, ColorGenerator.Random()));
+                return false;
             }
 
-            return operationResult;
+            _users.Add(userProfile.Item1, userProfile.Item2);
+            OnJoin?.Invoke(userProfile);
+
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private void InsertUser(Tuple<string, Color> userProfile)
-        {
-            _users.Add(userProfile.Item1, userProfile.Item2);
-            OnJoin?.Invoke(userProfile);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
         /// <param name="roomPassword"></param>
         /// <returns></returns>
-        public Tuple<RemoteResponse, MessageQueue> Join(string userName, string roomPassword)
+        public Tuple<RemoteResponse, MessageQueue> Join(Tuple<string, Color> userProfile, string roomPassword)
         {
-            if (string.IsNullOrEmpty(userName))
+            if (string.IsNullOrEmpty(userProfile?.Item1))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
             }
 
             if (_instance.IsPrivate() && (string.IsNullOrEmpty(roomPassword) || !roomPassword.Equals(_instance.Password)))
             {
-                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.AuthenticationFailed, null);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.InvalidPassword, null);
             }
 
             if (_instance.IsFull())
@@ -163,13 +156,14 @@ namespace ChatupNET.Remoting
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.RoomFull, null);
             }
 
-            if (InsertUser(userName))
+            if (InsertUser(userProfile))
             {
-                ChatupServer.Instance.JoinRoom(_instance, userName);
+                _instance.Count++;
+                ChatupServer.Instance.JoinRoom(_instance, userProfile);
             }
             else
             {
-                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.ObjectExists, null);
+                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.ConversationExists, null);
             }
 
             return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.Success, _messages);

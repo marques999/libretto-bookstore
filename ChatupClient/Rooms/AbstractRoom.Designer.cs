@@ -43,9 +43,9 @@
             this.buttonValidate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonValidate.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonValidate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonValidate.Location = new System.Drawing.Point(361, 359);
+            this.buttonValidate.Location = new System.Drawing.Point(395, 380);
             this.buttonValidate.Name = "buttonValidate";
-            this.buttonValidate.Size = new System.Drawing.Size(121, 24);
+            this.buttonValidate.Size = new System.Drawing.Size(134, 26);
             this.buttonValidate.TabIndex = 1;
             this.buttonValidate.Text = "Send";
             this.buttonValidate.UseVisualStyleBackColor = false;
@@ -55,9 +55,9 @@
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(5, 359);
+            this.textBox2.Location = new System.Drawing.Point(5, 380);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(350, 23);
+            this.textBox2.Size = new System.Drawing.Size(384, 23);
             this.textBox2.TabIndex = 19;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
@@ -68,7 +68,8 @@
             this.richTextBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(5, 5);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(350, 348);
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(384, 369);
             this.richTextBox1.TabIndex = 21;
             this.richTextBox1.Text = "";
             // 
@@ -89,7 +90,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.26804F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.731959F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(487, 388);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(534, 411);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
             // listBox1
@@ -101,9 +102,9 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.IntegralHeight = false;
             this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(361, 5);
+            this.listBox1.Location = new System.Drawing.Point(395, 5);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(121, 348);
+            this.listBox1.Size = new System.Drawing.Size(134, 369);
             this.listBox1.TabIndex = 18;
             // 
             // AbstractRoom
@@ -111,7 +112,7 @@
             this.AcceptButton = this.buttonValidate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 388);
+            this.ClientSize = new System.Drawing.Size(534, 411);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AbstractRoom";

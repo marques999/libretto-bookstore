@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
@@ -13,7 +14,7 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET
 {
-    class ChatupServer
+    internal class ChatupServer
     {
         /// <summary>
         /// Default constructor
@@ -44,14 +45,16 @@ namespace ChatupNET
                 WellKnownObjectMode.Singleton
             );
 
-            if (Rooms.Count > 0)
+            if (Rooms.Count <= 0)
             {
-                _lastId = Rooms.Aggregate((l, r) => l.Key > r.Key ? l : r).Key;
+                return;
+            }
 
-                foreach (var roomInformation in Rooms)
-                {
-                    LaunchChatroom(roomInformation.Value);
-                }
+            _lastId = Rooms.Aggregate((l, r) => l.Key > r.Key ? l : r).Key;
+
+            foreach (var roomInformation in Rooms)
+            {
+                LaunchChatroom(roomInformation.Value);
             }
         }
 
@@ -59,6 +62,11 @@ namespace ChatupNET
         /// 
         /// </summary>
         private int _lastId;
+
+        /// <summary>
+        /// Public getter property for the "_lastid" private member
+        /// </summary>
+        public int NextId => ++_lastId;
 
         /// <summary>
         /// 
@@ -79,11 +87,6 @@ namespace ChatupNET
         ///
         /// </summary>
         private readonly Dictionary<string, Address> _connections = new Dictionary<string, Address>();
-
-        /// <summary>
-        /// Public getter property for the "_lastid" private member
-        /// </summary>
-        public int NextId => ++_lastId;
 
         /// <summary>
         /// Public getter property for the "_instance" private member
@@ -206,10 +209,9 @@ namespace ChatupNET
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userName"></param>
-        public void JoinRoom(Room roomInformation, string userName)
+        public void JoinRoom(Room roomInformation, Tuple<string, Color> userName)
         {
-            OnJoin?.Invoke(roomInformation, userName, Users[userName].Name);
-            roomInformation.Count++;
+            OnJoin?.Invoke(roomInformation, userName.Item1, Users[userName.Item1].Name);
         }
 
         /// <summary>
@@ -220,7 +222,6 @@ namespace ChatupNET
         public void LeaveRoom(Room roomInformation, string userName)
         {
             OnLeave?.Invoke(roomInformation, userName, Users[userName].Name);
-            roomInformation.Count--;
         }
 
         /// <summary>
@@ -328,7 +329,7 @@ namespace ChatupNET
         /// 
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

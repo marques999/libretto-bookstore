@@ -276,11 +276,11 @@ namespace ChatupNET.Forms
         /// <param name="remoteMessage"></param>
         public void OnReceiveAux(RemoteMessage remoteMessage)
         {
-            var userName = remoteMessage.Author;
+            var userName = remoteMessage.Author.Item1;
 
             if (string.IsNullOrEmpty(userName) == false && _privateChatrooms.ContainsKey(userName))
             {
-                _privateChatrooms[userName]?.AppendMessage(remoteMessage);
+                _privateChatrooms[userName]?.OnReceive(remoteMessage);
             }
         }
 
@@ -355,6 +355,24 @@ namespace ChatupNET.Forms
             {
                 roomsList.Items.RemoveByKey(convertedId);
                 _groupChatrooms.Remove(roomId);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
+        private void OnUpdate(int roomId, int roomCount, int roomCapacity)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new UpdateHandler(UpdateRoom), roomId, roomCount, roomCapacity);
+            }
+            else
+            {
+                UpdateRoom(roomId, roomCount, roomCapacity);
             }
         }
 
@@ -492,7 +510,7 @@ namespace ChatupNET.Forms
         {
             UpdatePrivateButtons();
             grouproomInstance.OnExit += LeaveGroup;
-            grouproomInstance.OnUpdate += UpdateRoom;
+            grouproomInstance.OnUpdate += OnUpdate;
             _context.Add(roomId, contextMenuStrip1.Items.Add(grouproomInstance.Name));
             grouproomInstance.Show(this);
         }
@@ -533,7 +551,7 @@ namespace ChatupNET.Forms
         /// <param name="roomPassword"></param>
         private void Connect(int roomId, string remoteHost, string roomPassword)
         {
-            var roomInterface = (RoomInterface)RemotingServices.Connect(typeof(RoomInterface), remoteHost);
+            var roomInterface = RemotingServices.Connect(typeof(RoomInterface), remoteHost) as RoomInterface;
 
             if (roomInterface == null)
             {
@@ -542,7 +560,7 @@ namespace ChatupNET.Forms
 
             if (_groupChatrooms.ContainsKey(roomId))
             {
-                var operationResult = roomInterface.Join(ChatupClient.Instance.Username, roomPassword);
+                var operationResult = roomInterface.Join(ChatupClient.Instance.Profile, roomPassword);
 
                 if (operationResult.Item1 == RemoteResponse.Success)
                 {
@@ -555,12 +573,7 @@ namespace ChatupNET.Forms
             }
             else
             {
-                MessageBox.Show(this,
-                    Resources.PasswordError,
-                    Resources.PasswordErrorTitle,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                _errorHandler.DisplayError(RemoteResponse.NotFound);
             }
         }
 
@@ -612,23 +625,20 @@ namespace ChatupNET.Forms
         {
             var roomId = roomInformation.Id;
 
-            if (_context.ContainsKey(roomId))
+            if (!_context.ContainsKey(roomId))
             {
-                var toolStripItem = _context[roomId];
-
-                if (toolStripItem != null)
-                {
-                    contextMenuStrip1.Items.Remove(_context[roomId]);
-                }
-
-                _context.Remove(roomId);
-                UpdatePrivateButtons();
+                return;
             }
 
-            if (_groupChatrooms.ContainsKey(roomId))
+            var toolStripItem = _context[roomId];
+
+            if (toolStripItem != null)
             {
-                _groupChatrooms.Remove(roomId);
+                contextMenuStrip1.Items.Remove(_context[roomId]);
             }
+
+            _context.Remove(roomId);
+            UpdatePrivateButtons();
         }
 
         /// <summary>
@@ -753,7 +763,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private static string FormatCapacity(int roomCount, int roomCapacity)
         {
-            return $"{roomCount} / {roomCapacity}";
+            return $"{roomCount:D} / {roomCapacity:D}";
         }
 
         /// <summary>

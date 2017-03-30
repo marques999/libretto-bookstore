@@ -11,6 +11,13 @@ namespace ChatupNET.Rooms
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="userMessage"></param>
+    /// <param name="clearInput"></param>
+    internal delegate void AppendHandler(RemoteMessage userMessage, bool clearInput);
+
+    /// <summary>
+    /// 
+    /// </summary>
     internal abstract partial class AbstractRoom : Form
     {
         /// <summary>
@@ -47,6 +54,7 @@ namespace ChatupNET.Rooms
             richTextBox1.SelectionColor = messageColor;
             richTextBox1.AppendText(messageContent);
             richTextBox1.SelectionColor = richTextBox1.ForeColor;
+            richTextBox1.ScrollToCaret();
         }
 
         /// <summary>
@@ -71,9 +79,13 @@ namespace ChatupNET.Rooms
         /// <param name="userProfile"></param>
         protected void JoinRoom(Tuple<string, Color> userProfile)
         {
+            if (!Users.ContainsKey(userProfile.Item1))
+            {
+                Users.Add(userProfile.Item1, userProfile.Item2);
+            }
+
             listBox1.Items.Add(userProfile.Item1);
-            Users.Add(userProfile.Item1, userProfile.Item2);
-            AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
+            AppendTime(DateTime.Now);
             AppendText(userProfile.Item1, userProfile.Item2);
             AppendText(" has joined the conversation." + "\n", Color.DimGray);
             UpdateRoom();
@@ -101,20 +113,12 @@ namespace ChatupNET.Rooms
         /// <param name="userName"></param>
         protected void LeaveRoom(string userName)
         {
-            if (listBox1.Items.Contains(userName))
-            {
-                listBox1.Items.Remove(userName);
-            }
-
-            if (Users.ContainsKey(userName))
-            {
-                Users.Remove(userName);
-            }
-
-            UpdateRoom();
-            AppendText("(" + DateTime.Now.ToShortTimeString() + ") ", Color.DimGray);
+            listBox1.Items.Remove(userName);
+            AppendTime(DateTime.Now);
             AppendText(userName, Users[userName]);
             AppendText(" has left the conversation." + "\n", Color.DimGray);
+            Users.Remove(userName);
+            UpdateRoom();
         }
 
         /// <summary>
@@ -124,13 +128,15 @@ namespace ChatupNET.Rooms
         /// <param name="clearInput"></param>
         protected void AppendMessage(RemoteMessage userMessage, bool clearInput)
         {
-            if (userMessage.Author == ChatupClient.Instance.Username)
+            var messageAuthor = userMessage.Author;
+
+            if (messageAuthor.Item1 == ChatupClient.Instance.Username)
             {
                 clearInput = true;
             }
 
-            AppendText("(" + userMessage.Timestamp.ToShortTimeString() + ") ", Color.DimGray);
-            AppendText(userMessage.Author + ": ", Users[userMessage.Author]);
+            AppendTime(userMessage.Timestamp);
+            AppendText(messageAuthor.Item1 + ": ", messageAuthor.Item2);
             AppendText(userMessage.Contents + "\n", Color.Black);
 
             if (clearInput)
@@ -142,15 +148,17 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userMessage"></param>
-        /// <param name="clearInput"></param>
-        delegate void AppendHandler(RemoteMessage userMessage, bool clearInput);
+        /// <param name="dateTime"></param>
+        private void AppendTime(DateTime dateTime)
+        {
+            AppendText(dateTime.ToString("(HH:mm:ss) "), Color.DimGray);
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="messageInstance"></param>
-        public void AppendMessage(RemoteMessage messageInstance)
+        public void OnReceive(RemoteMessage messageInstance)
         {
             if (InvokeRequired)
             {
@@ -175,10 +183,20 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        protected void textBox2_TextChanged(object sender, EventArgs args)
+        {
+            buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         protected RemoteMessage GenerateMessage()
         {
-            return new RemoteMessage(ChatupClient.Instance.Username, textBox2.Text);
+            return new RemoteMessage(ChatupClient.Instance.Profile, textBox2.Text);
         }
 
         /// <summary>
@@ -192,15 +210,5 @@ namespace ChatupNET.Rooms
         /// <param name="sender"></param>
         /// <param name="args"></param>
         protected abstract void buttonValidate_Click(object sender, EventArgs args);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        protected void textBox2_TextChanged(object sender, EventArgs args)
-        {
-            buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
-        }
     }
 }

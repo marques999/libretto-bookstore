@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatupCommon.cs" />
-    <Compile Include="ColorGenerator.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\MessageQueue.cs" />
     <Compile Include="Model\RemoteMessage.cs" />
