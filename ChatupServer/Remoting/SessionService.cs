@@ -29,10 +29,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, UserInformation> List()
-        {
-            return ChatupServer.Instance.Users;
-        }
+        public Dictionary<string, UserInformation> Users => ChatupServer.Instance.Users;
 
         /// <summary>
         /// 
@@ -76,7 +73,7 @@ namespace ChatupNET.Remoting
 
             var storedPassword = SqliteDatabase.Instance.QueryPassword(userName);
 
-            if (!storedPassword.Equals(userLogin.Password))
+            if (storedPassword != userLogin.Password)
             {
                 return RemoteResponse.AuthenticationFailed;
             }
@@ -109,15 +106,20 @@ namespace ChatupNET.Remoting
 
             var userInformation = new UserInformation(userForm.Username, userForm.Name, null);
 
+            if (Users.ContainsKey(userForm.Username))
+            {
+                return RemoteResponse.UserExists;
+            }
+
             if (SqliteDatabase.Instance.InsertUser(userForm))
             {
                 OnRegister?.Invoke(userInformation);
-                ChatupServer.Instance.Users.Add(userForm.Username, userInformation);
+                Users.Add(userForm.Username, userInformation);
                 ChatupServer.Instance.Session.Register(userInformation);
             }
             else
             {
-                return RemoteResponse.UserExists;
+                return RemoteResponse.OperationFailed;
             }
 
             return RemoteResponse.Success;

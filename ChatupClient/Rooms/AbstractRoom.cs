@@ -210,5 +210,12 @@ namespace ChatupNET.Rooms
         /// <param name="sender"></param>
         /// <param name="args"></param>
         protected abstract void buttonValidate_Click(object sender, EventArgs args);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected abstract void AbstractRoom_FormClosing(object sender, FormClosingEventArgs e);
     }
 }

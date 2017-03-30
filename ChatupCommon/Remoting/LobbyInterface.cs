@@ -43,7 +43,10 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<int, Room> List();
+        Dictionary<int, Room> Rooms
+        {
+            get;
+        }
 
         /// <summary>
         /// 

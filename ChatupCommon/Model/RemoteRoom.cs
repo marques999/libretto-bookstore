@@ -27,7 +27,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "_id" private member
+        /// Public getter property for the "Id" private member
         /// </summary>
         public int Id
         {
@@ -80,13 +80,13 @@ namespace ChatupNET.Model
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool IsPrivate() => (Password != null);
+        public bool IsPrivate() => Password != null;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool IsFull() => (Count >= Capacity);
+        public bool IsFull() => Count >= Capacity;
 
         /// <summary>
         /// 
@@ -99,6 +99,6 @@ namespace ChatupNET.Model
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object otherInstance) => (Id == (otherInstance as Room)?.Id);
+        public override bool Equals(object otherInstance) => Id == (otherInstance as Room)?.Id;
     }
 }

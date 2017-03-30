@@ -65,7 +65,7 @@ namespace ChatupNET.Model
 
             if (otherForm != null)
             {
-                return Username.Equals(otherForm.Username) && Password.Equals(otherForm.Password);
+                return Username == otherForm.Username && Password == otherForm.Password;
             }
 
             return false;

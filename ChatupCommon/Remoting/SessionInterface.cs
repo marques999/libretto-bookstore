@@ -34,7 +34,10 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, UserInformation> List();
+        Dictionary<string, UserInformation> Users
+        {
+            get;
+        }
 
         /// <summary>
         /// 

@@ -26,22 +26,6 @@ namespace ChatupNET.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        public SqlBuilder Column(string column)
-        {
-            _selectedColumns.Add(new SqlColumn
-            {
-                Name = column,
-                Alias = null
-            });
-
-            return this;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
         public SqlBuilder FromTable(string table)
@@ -60,6 +44,22 @@ namespace ChatupNET.Database
         public SqlBuilder Where(string field, Comparison @operator, object compareValue)
         {
             _whereStatement.Add(new WhereClause(field, @operator, compareValue), 1);
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public SqlBuilder Column(string column)
+        {
+            _selectedColumns.Add(new SqlColumn
+            {
+                Name = column,
+                Alias = null
+            });
+
             return this;
         }
 

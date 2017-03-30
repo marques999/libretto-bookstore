@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
+using System.Windows.Forms;
 
 using ChatupNET.Remoting;
 using ChatupNET.Model;
@@ -96,8 +95,9 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected override void OnClosing(CancelEventArgs args)
+        protected override void AbstractRoom_FormClosing(object sender, FormClosingEventArgs args)
         {
             if (_roomInterface != null)
             {
@@ -106,7 +106,6 @@ namespace ChatupNET.Rooms
                 if (operationResult == RemoteResponse.Success)
                 {
                     OnDisconnect();
-                    base.OnClosing(args);
                 }
                 else
                 {
@@ -117,7 +116,6 @@ namespace ChatupNET.Rooms
             else
             {
                 OnDisconnect();
-                base.OnClosing(args);
             }
         }
 

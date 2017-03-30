@@ -294,9 +294,18 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        public void LaunchChatroom(Room roomInformation)
+        private static bool LaunchChatroom(Room roomInformation)
         {
-            RemotingServices.Marshal(new RoomService(roomInformation), ChatupCommon.FormatChatroom(roomInformation.Id));
+            try
+            {
+                RemotingServices.Marshal(new RoomService(roomInformation), ChatupCommon.FormatChatroom(roomInformation.Id));
+            }
+            catch (RemotingException)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -306,22 +315,17 @@ namespace ChatupNET
         /// <returns></returns>
         public bool RegisterChatrooom(Room roomInformation)
         {
-            try
+            if (LaunchChatroom(roomInformation))
             {
-                LaunchChatroom(roomInformation);
                 Rooms.Add(roomInformation.Id, roomInformation);
                 Lobby.CreateRoom(roomInformation);
-
-                if (SqliteDatabase.Instance.InsertRoom(roomInformation))
-                {
-                    return true;
-                }
             }
-            catch (RemotingException)
+            else
             {
+                return false;
             }
 
-            return false;
+            return SqliteDatabase.Instance.InsertRoom(roomInformation);
         }
 
         /// <summary>

@@ -118,6 +118,7 @@
             this.Name = "AbstractRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Default [1/1]";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AbstractRoom_FormClosing);
             this.Load += new System.EventHandler(this.RoomForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

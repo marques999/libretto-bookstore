@@ -62,6 +62,6 @@ namespace ChatupNET.Model
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>
-        public override bool Equals(object otherInstance) => Username.Equals((otherInstance as UserInformation)?.Username);
+        public override bool Equals(object otherInstance) => Username == (otherInstance as UserInformation)?.Username;
     }
 }

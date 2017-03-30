@@ -23,7 +23,7 @@ namespace ChatupNET
             { RemoteResponse.SessionExists, "User is currently logged in to this service, please sign out first!" },
             { RemoteResponse.BadRequest, "Please check if the information you entered is complete and try again." },
             { RemoteResponse.AuthenticationFailed, "We couldn't authenticate with the details you provided, please check your username and password and try again!" },
-            { RemoteResponse.RoomFull, "The room you are trying to join is currently full, please wait until someone leaves!" },          
+            { RemoteResponse.RoomFull, "The room you are trying to join is currently full, please wait until someone leaves!" },
         };
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ChatupNET
             { RemoteResponse.InvalidPassword, "Wrong password" },
             { RemoteResponse.SessionExists, "Session exists" },
             { RemoteResponse.BadRequest, "Missing parameters" },
-            { RemoteResponse.OperationFailed, "Operation failed" },        
+            { RemoteResponse.OperationFailed, "Operation failed" },
             { RemoteResponse.AuthenticationFailed, "Login error" },
             { RemoteResponse.PermissionDenied, "Insufficient permissions" },
         };

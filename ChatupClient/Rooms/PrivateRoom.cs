@@ -1,6 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Runtime.Remoting;
+using System.Windows.Forms;
 
 using ChatupNET.Model;
 using ChatupNET.Remoting;
@@ -105,27 +105,25 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected override void OnClosing(CancelEventArgs args)
+        protected override void AbstractRoom_FormClosing(object sender, FormClosingEventArgs args)
         {
-            if (_connected && _server != null)
+            if (!_connected || _server == null)
             {
-                var operationResult = _server.Disconnect(ChatupClient.Instance.Username);
+                return;
+            }
 
-                if (operationResult == RemoteResponse.Success)
-                {
-                    ChatupClient.Instance.Messaging.P2PDisconnect(_username, true);
-                    base.OnClosing(args);
-                }
-                else
-                {
-                    args.Cancel = true;
-                    ErrorHandler.DisplayError(operationResult);
-                }
+            var operationResult = _server.Disconnect(ChatupClient.Instance.Username);
+
+            if (operationResult == RemoteResponse.Success)
+            {
+                ChatupClient.Instance.Messaging.P2PDisconnect(_username, true);
             }
             else
             {
-                base.OnClosing(args);
+                args.Cancel = true;
+                ErrorHandler.DisplayError(operationResult);
             }
         }
 

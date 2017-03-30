@@ -52,7 +52,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public void Timestamp() => Print("[" + DateTime.Now.ToLongTimeString() + "] ", Green);
+        public void Timestamp() => Print(DateTime.Now.ToString("[HH:mm:ss] "), Green);
 
         /// <summary>
         /// 

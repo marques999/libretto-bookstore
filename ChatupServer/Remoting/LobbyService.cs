@@ -32,12 +32,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, Room> List() => ChatupServer.Instance.Rooms;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static Dictionary<int, Room> Rooms => ChatupServer.Instance.Rooms;
+        public Dictionary<int, Room> Rooms => ChatupServer.Instance.Rooms;
 
         /// <summary>
         /// 
@@ -59,10 +54,11 @@ namespace ChatupNET.Remoting
 
             if (Rooms[roomId].Owner == userName)
             {
-                if (Rooms.Remove(roomId) && SqliteDatabase.Instance.DeleteRoom(roomId, userName))
+                if (SqliteDatabase.Instance.DeleteRoom(roomId, userName))
                 {
                     OnDelete?.Invoke(roomId);
                     ChatupServer.Instance.Lobby.DeleteRoom(roomId);
+                    Rooms.Remove(roomId);
                 }
                 else
                 {

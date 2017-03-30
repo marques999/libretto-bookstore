@@ -107,6 +107,24 @@ namespace ChatupNET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t invite yourself to join a group conversation!.
+        /// </summary>
+        internal static string MainForm_InviteSelf {
+            get {
+                return ResourceManager.GetString("MainForm_InviteSelf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversation exists.
+        /// </summary>
+        internal static string MainForm_InviteSelfTitle {
+            get {
+                return ResourceManager.GetString("MainForm_InviteSelfTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can&apos;t launch a private conversation with yourself!.
         /// </summary>
         internal static string MainForm_SelfClicked {

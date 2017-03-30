@@ -206,7 +206,7 @@ namespace ChatupNET
         /// <returns></returns>
         private static string ReadString(SQLiteDataReader sqliteReader, string dbColumn)
         {
-            return (sqliteReader == null || sqliteReader.IsDBNull(sqliteReader.GetOrdinal(dbColumn))) ? null : sqliteReader.GetString(sqliteReader.GetOrdinal(dbColumn));
+            return sqliteReader == null || sqliteReader.IsDBNull(sqliteReader.GetOrdinal(dbColumn)) ? null : sqliteReader.GetString(sqliteReader.GetOrdinal(dbColumn));
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace ChatupNET
         /// <returns></returns>
         private static int ReadInteger(SQLiteDataReader sqliteReader, string dbColumn)
         {
-            return (sqliteReader == null || sqliteReader.IsDBNull(sqliteReader.GetOrdinal(dbColumn))) ? 0 : sqliteReader.GetInt32(sqliteReader.GetOrdinal(dbColumn));
+            return sqliteReader == null || sqliteReader.IsDBNull(sqliteReader.GetOrdinal(dbColumn)) ? 0 : sqliteReader.GetInt32(sqliteReader.GetOrdinal(dbColumn));
         }
 
         /// <summary>

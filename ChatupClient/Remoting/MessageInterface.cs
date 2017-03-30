@@ -64,12 +64,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            if (remoteMessage == null || remoteMessage.Author == null)
-            {
-                return RemoteResponse.BadRequest;
-            }
-
-            if (string.IsNullOrEmpty(remoteMessage.Author.Username))
+            if (string.IsNullOrEmpty(remoteMessage?.Author?.Username))
             {
                 return RemoteResponse.BadRequest;
             }
@@ -118,16 +113,11 @@ namespace ChatupNET.Remoting
                 return new Tuple<RemoteResponse, UserProfile>(RemoteResponse.BadRequest, null);
             }
 
-            /*if (users.Contains(userName))
-            {
-                return new CustomResponse(RemoteResponse.SessionExists, null);
-            }*/
-
-            if (!_users.Contains(userName))
+            if (_users.Contains(userName) == false)
             {
                 _users.Add(userName);
             }
-
+   
             ChatupClient.Instance.Messaging.P2PConnect(userProfile, userHost);
 
             return new Tuple<RemoteResponse, UserProfile>(RemoteResponse.Success, ChatupClient.Instance.Profile);
