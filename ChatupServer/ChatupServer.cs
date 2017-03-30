@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
@@ -208,10 +207,10 @@ namespace ChatupNET
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        /// <param name="userName"></param>
-        public void JoinRoom(Room roomInformation, Tuple<string, Color> userName)
+        /// <param name="userProfile"></param>
+        public void JoinRoom(Room roomInformation, UserProfile userProfile)
         {
-            OnJoin?.Invoke(roomInformation, userName.Item1, Users[userName.Item1].Name);
+            OnJoin?.Invoke(roomInformation, userProfile, Users[userProfile.Username].Name);
         }
 
         /// <summary>
@@ -219,9 +218,9 @@ namespace ChatupNET
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userName"></param>
-        public void LeaveRoom(Room roomInformation, string userName)
+        public void LeaveRoom(Room roomInformation, UserProfile userName)
         {
-            OnLeave?.Invoke(roomInformation, userName, Users[userName].Name);
+            OnLeave?.Invoke(roomInformation, userName, Users[userName.Username].Name);
         }
 
         /// <summary>

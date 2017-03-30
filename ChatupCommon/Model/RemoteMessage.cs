@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace ChatupNET.Model
 {
@@ -14,25 +13,25 @@ namespace ChatupNET.Model
         /// </summary>
         /// <param name="messageAuthor"></param>
         /// <param name="messageContents"></param>
-        public RemoteMessage(Tuple<string, Color> messageAuthor, string messageContents)
+        public RemoteMessage(UserProfile messageAuthor, string messageContents)
         {
             Author = messageAuthor;
-            Contents = messageContents;
             Timestamp = DateTime.Now;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Tuple<string, Color> Author
-        {
-            get;
+            Contents = messageContents;
         }
 
         /// <summary>
         /// Public getter property for the "Contents" private member
         /// </summary>
         public string Contents
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public UserProfile Author
         {
             get;
         }

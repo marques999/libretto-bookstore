@@ -55,7 +55,7 @@ namespace ChatupNET.Rooms
 
             foreach (var userEntry in userList)
             {
-                JoinRoom(new Tuple<string, Color>(userEntry.Key, userEntry.Value));
+                JoinRoom(new UserProfile(userEntry.Key, userEntry.Value));
             }
         }
 

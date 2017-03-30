@@ -11,7 +11,7 @@ namespace ChatupNET.Remoting
     /// <param name="roomInformation"></param>
     /// <param name="userName"></param>
     /// <param name="fullName"></param>
-    internal delegate void RoomHandler(Room roomInformation, string userName, string fullName);
+    internal delegate void RoomHandler(Room roomInformation, UserProfile userName, string fullName);
 
     /// <summary>
     /// 
@@ -59,13 +59,10 @@ namespace ChatupNET.Remoting
 
             if (Rooms[roomId].Owner == userName)
             {
-                if (Rooms.Remove(roomId))
+                if (Rooms.Remove(roomId) && SqliteDatabase.Instance.DeleteRoom(roomId, userName))
                 {
-                    if (SqliteDatabase.Instance.DeleteRoom(roomId, userName))
-                    {
-                        OnDelete?.Invoke(roomId);
-                        ChatupServer.Instance.Lobby.DeleteRoom(roomId);
-                    }
+                    OnDelete?.Invoke(roomId);
+                    ChatupServer.Instance.Lobby.DeleteRoom(roomId);
                 }
                 else
                 {

@@ -63,7 +63,7 @@ namespace ChatupNET.Remoting
         /// <returns></returns>
         public RemoteResponse Send(RemoteMessage remoteMessage)
         {
-            var messageAuthor = remoteMessage?.Author.Item1;
+            var messageAuthor = remoteMessage?.Author.Username;
 
             if (string.IsNullOrEmpty(messageAuthor))
             {
@@ -97,11 +97,13 @@ namespace ChatupNET.Remoting
 
             if (_users.ContainsKey(userName))
             {
+                var userProfile = new UserProfile(userName, _users[userName]);
+
                 if (_users.Remove(userName))
                 {
                     _instance.Count--;
                     OnLeave?.Invoke(userName);
-                    ChatupServer.Instance.LeaveRoom(_instance, userName);
+                    ChatupServer.Instance.LeaveRoom(_instance, userProfile);
                 }
                 else
                 {
@@ -120,14 +122,14 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private bool InsertUser(Tuple<string, Color> userProfile)
+        private bool InsertUser(UserProfile userProfile)
         {
-            if (_users.ContainsKey(userProfile.Item1))
+            if (_users.ContainsKey(userProfile.Username))
             {
                 return false;
             }
 
-            _users.Add(userProfile.Item1, userProfile.Item2);
+            _users.Add(userProfile.Username, userProfile.Color);
             OnJoin?.Invoke(userProfile);
 
             return true;
@@ -139,9 +141,9 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="roomPassword"></param>
         /// <returns></returns>
-        public Tuple<RemoteResponse, MessageQueue> Join(Tuple<string, Color> userProfile, string roomPassword)
+        public Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile, string roomPassword)
         {
-            if (string.IsNullOrEmpty(userProfile?.Item1))
+            if (string.IsNullOrEmpty(userProfile?.Username))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 using ChatupNET.Model;
 
@@ -24,7 +23,7 @@ namespace ChatupNET.Remoting
     /// </summary>
     /// <param name="userProfile"></param>
     /// <param name="userHost"></param>
-    internal delegate void ConnectHandler(Tuple<string, Color> userProfile, string userHost);
+    internal delegate void ConnectHandler(UserProfile userProfile, string userHost);
 
     /// <summary>
     /// 
@@ -70,7 +69,7 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (string.IsNullOrEmpty(remoteMessage.Author.Item1))
+            if (string.IsNullOrEmpty(remoteMessage.Author.Username))
             {
                 return RemoteResponse.BadRequest;
             }
@@ -110,13 +109,13 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
         /// <returns></returns>
-        public Tuple<RemoteResponse, Tuple<string, Color>> Connect(Tuple<string, Color> userProfile, string userHost)
+        public Tuple<RemoteResponse, UserProfile> Connect(UserProfile userProfile, string userHost)
         {
-            var userName = userProfile.Item1;
+            var userName = userProfile.Username;
 
             if (string.IsNullOrEmpty(userName))
             {
-                return new Tuple<RemoteResponse, Tuple<string, Color>>(RemoteResponse.BadRequest, null);
+                return new Tuple<RemoteResponse, UserProfile>(RemoteResponse.BadRequest, null);
             }
 
             /*if (users.Contains(userName))
@@ -131,7 +130,7 @@ namespace ChatupNET.Remoting
 
             ChatupClient.Instance.Messaging.P2PConnect(userProfile, userHost);
 
-            return new Tuple<RemoteResponse, Tuple<string, Color>>(RemoteResponse.Success, ChatupClient.Instance.Profile);
+            return new Tuple<RemoteResponse, UserProfile>(RemoteResponse.Success, ChatupClient.Instance.Profile);
         }
 
         /// <summary>

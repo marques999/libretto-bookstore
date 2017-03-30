@@ -16,7 +16,7 @@ namespace ChatupNET.Remoting
     /// 
     /// </summary>
     /// <param name="userProfile"></param>
-    public delegate void JoinHandler(Tuple<string, Color> userProfile);
+    public delegate void JoinHandler(UserProfile userProfile);
 
     /// <summary>
     /// 
@@ -70,6 +70,6 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="roomPassword"></param>
         /// <returns></returns>
-        Tuple<RemoteResponse, MessageQueue> Join(Tuple<string, Color> userProfile, string roomPassword);
+        Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile, string roomPassword);
     }
 }

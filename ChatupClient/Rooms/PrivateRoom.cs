@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.Remoting;
 
 using ChatupNET.Model;
@@ -33,7 +32,7 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="remoteHost"></param>
-        public PrivateRoom(Tuple<string, Color> userProfile, string remoteHost)
+        public PrivateRoom(UserProfile userProfile, string remoteHost)
         {
             try
             {
@@ -95,10 +94,10 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private void InitializeRoom(Tuple<string, Color> userProfile)
+        private void InitializeRoom(UserProfile userProfile)
         {
             _connected = true;
-            _username = userProfile.Item1;
+            _username = userProfile.Username;
             JoinRoom(ChatupClient.Instance.Profile);
             JoinRoom(userProfile);
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 using ChatupNET.Model;
 
@@ -47,7 +46,7 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        public void JoinRoom(Tuple<string, Color> userProfile)
+        public void JoinRoom(UserProfile userProfile)
         {
             OnJoin?.Invoke(userProfile);
         }

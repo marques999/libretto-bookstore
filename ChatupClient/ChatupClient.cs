@@ -128,7 +128,7 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public string Username => Profile.Item1;
+        public string Username => Profile.Username;
 
         /// <summary>
         /// Public getter property for the "LocalHost" private member
@@ -150,11 +150,11 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        public Tuple<string, Color> Profile
+        public UserProfile Profile
         {
             get;
             private set;
-        } = new Tuple<string, Color>(null, Color.White);
+        } = new UserProfile(null, Color.White);
 
         /// <summary>
         /// Public getter property for the "Lobby" private member
@@ -219,7 +219,7 @@ namespace ChatupNET
 
             if (operationResult == RemoteResponse.Success)
             {
-                Profile = new Tuple<string, Color>(userLogin.Username, Color.FromArgb(_randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224)));
+                Profile = new UserProfile(userLogin.Username, Color.FromArgb(_randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224), _randomGenerator.Next(32, 224)));
             }
 
             return operationResult;
@@ -231,7 +231,7 @@ namespace ChatupNET
         /// <returns></returns>
         public RemoteResponse Logout()
         {
-            var operationResult = Session.Logout(Profile.Item1);
+            var operationResult = Session.Logout(Profile.Username);
 
             if (operationResult == RemoteResponse.Success)
             {

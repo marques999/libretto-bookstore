@@ -61,7 +61,7 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        protected void OnJoin(Tuple<string, Color> userProfile)
+        protected void OnJoin(UserProfile userProfile)
         {
             if (InvokeRequired)
             {
@@ -77,16 +77,16 @@ namespace ChatupNET.Rooms
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        protected void JoinRoom(Tuple<string, Color> userProfile)
+        protected void JoinRoom(UserProfile userProfile)
         {
-            if (!Users.ContainsKey(userProfile.Item1))
+            if (!Users.ContainsKey(userProfile.Username))
             {
-                Users.Add(userProfile.Item1, userProfile.Item2);
+                Users.Add(userProfile.Username, userProfile.Color);
             }
 
-            listBox1.Items.Add(userProfile.Item1);
+            listBox1.Items.Add(userProfile.Username);
             AppendTime(DateTime.Now);
-            AppendText(userProfile.Item1, userProfile.Item2);
+            AppendText(userProfile.Username, userProfile.Color);
             AppendText(" has joined the conversation." + "\n", Color.DimGray);
             UpdateRoom();
         }
@@ -130,13 +130,13 @@ namespace ChatupNET.Rooms
         {
             var messageAuthor = userMessage.Author;
 
-            if (messageAuthor.Item1 == ChatupClient.Instance.Username)
+            if (messageAuthor.Username == ChatupClient.Instance.Username)
             {
                 clearInput = true;
             }
 
             AppendTime(userMessage.Timestamp);
-            AppendText(messageAuthor.Item1 + ": ", messageAuthor.Item2);
+            AppendText(messageAuthor.Username + ": ", messageAuthor.Color);
             AppendText(userMessage.Contents + "\n", Color.Black);
 
             if (clearInput)

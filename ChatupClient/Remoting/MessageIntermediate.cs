@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-using ChatupNET.Model;
+﻿using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
@@ -63,7 +60,7 @@ namespace ChatupNET.Remoting
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
-        public void P2PConnect(Tuple<string, Color> userProfile, string userHost)
+        public void P2PConnect(UserProfile userProfile, string userHost)
         {
             OnConnect?.Invoke(userProfile, userHost);
         }

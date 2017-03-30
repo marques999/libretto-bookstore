@@ -132,7 +132,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
-        public void OnConnect(Tuple<string, Color> userProfile, string userHost)
+        public void OnConnect(UserProfile userProfile, string userHost)
         {
             if (InvokeRequired)
             {
@@ -149,9 +149,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
-        private void OnConnectAux(Tuple<string, Color> userProfile, string userHost)
+        private void OnConnectAux(UserProfile userProfile, string userHost)
         {
-            LaunchPrivate(new PrivateRoom(userProfile, userHost), userProfile.Item1);
+            LaunchPrivate(new PrivateRoom(userProfile, userHost), userProfile.Username);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace ChatupNET.Forms
         /// <param name="remoteMessage"></param>
         public void OnReceiveAux(RemoteMessage remoteMessage)
         {
-            var userName = remoteMessage.Author.Item1;
+            var userName = remoteMessage.Author.Username;
 
             if (string.IsNullOrEmpty(userName) == false && _privateChatrooms.ContainsKey(userName))
             {

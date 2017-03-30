@@ -135,7 +135,7 @@ namespace ChatupNET.Forms
         /// <param name="roomInformation"></param>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
-        private void OnJoin(Room roomInformation, string userName, string fullName)
+        private void OnJoin(Room roomInformation, UserProfile userName, string fullName)
         {
             if (InvokeRequired)
             {
@@ -151,17 +151,17 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        /// <param name="userName"></param>
+        /// <param name="userProfile"></param>
         /// <param name="fullName"></param>
-        private void OnLeave(Room roomInformation, string userName, string fullName)
+        private void OnLeave(Room roomInformation, UserProfile userProfile, string fullName)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new RoomHandler(LeaveRoom), roomInformation, userName, fullName);
+                BeginInvoke(new RoomHandler(LeaveRoom), roomInformation, userProfile, fullName);
             }
             else
             {
-                LeaveRoom(roomInformation, userName, fullName);
+                LeaveRoom(roomInformation, userProfile, fullName);
             }
         }
 
@@ -169,9 +169,9 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        /// <param name="userName"></param>
+        /// <param name="userProfile"></param>
         /// <param name="fullName"></param>
-        private void JoinRoom(Room roomInformation, string userName, string fullName)
+        private void JoinRoom(Room roomInformation, UserProfile userProfile, string fullName)
         {
             int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
 
@@ -182,14 +182,14 @@ namespace ChatupNET.Forms
 
             _console.Timestamp();
             _console.Print(fullName, ConsoleInterface.Blue);
-            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
+            _console.Print(" (" + userProfile.Username + ") ", ConsoleInterface.Yellow);
             _console.Print("has joined chatroom ");
             _console.Print(roomInformation.Name, ConsoleInterface.Blue);
             _console.Print(" (id=" + roomInformation.Id + ")\n", ConsoleInterface.Yellow);
 
             var nodeItem = treeView1.Nodes[nodeIndex];
 
-            if (InsertSubnode(nodeItem, userName))
+            if (InsertSubnode(nodeItem, userProfile))
             {
                 nodeItem.Text = ChatupCommon.FormatRoom(roomInformation);
             }
@@ -199,9 +199,9 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
-        /// <param name="userName"></param>
+        /// <param name="userProfile"></param>
         /// <param name="fullName"></param>
-        private void LeaveRoom(Room roomInformation, string userName, string fullName)
+        private void LeaveRoom(Room roomInformation, UserProfile userProfile, string fullName)
         {
             int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
 
@@ -212,14 +212,14 @@ namespace ChatupNET.Forms
 
             _console.Timestamp();
             _console.Print(fullName, ConsoleInterface.Blue);
-            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
+            _console.Print(" (" + userProfile.Username + ") ", ConsoleInterface.Yellow);
             _console.Print("has left chatroom ");
             _console.Print(roomInformation.Name, ConsoleInterface.Blue);
             _console.Print(" (id=" + roomInformation.Id + ")\n", ConsoleInterface.Yellow);
 
             var nodeItem = treeView1.Nodes[nodeIndex];
 
-            if (RemoveSubnode(nodeItem, userName))
+            if (RemoveSubnode(nodeItem, userProfile.Username))
             {
                 nodeItem.Text = ChatupCommon.FormatRoom(roomInformation);
             }
@@ -229,15 +229,20 @@ namespace ChatupNET.Forms
         /// 
         /// </summary>
         /// <param name="nodeItem"></param>
-        /// <param name="userName"></param>
-        private static bool InsertSubnode(TreeNode nodeItem, string userName)
+        /// <param name="userProfile"></param>
+        /// <returns></returns>
+        private static bool InsertSubnode(TreeNode nodeItem, UserProfile userProfile)
         {
-            if (nodeItem == null || nodeItem.Nodes.ContainsKey(userName))
+            if (nodeItem == null || nodeItem.Nodes.ContainsKey(userProfile.Username))
             {
                 return false;
             }
 
-            nodeItem.Nodes.Add(userName, userName);
+            nodeItem.Nodes.Add(new TreeNode(userProfile.Username)
+            {
+                Name = userProfile.Username,
+                ForeColor = userProfile.Color
+            });
 
             return true;
         }
