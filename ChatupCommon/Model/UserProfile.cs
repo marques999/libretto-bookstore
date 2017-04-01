@@ -4,7 +4,7 @@ using System.Drawing;
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class UserProfile
@@ -21,7 +21,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Username
         {
@@ -29,7 +29,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Color Color
         {
@@ -37,13 +37,13 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode() => Username.GetHashCode();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>

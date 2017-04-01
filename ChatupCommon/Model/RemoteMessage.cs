@@ -3,13 +3,13 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class RemoteMessage
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="messageAuthor"></param>
         /// <param name="messageContents"></param>
@@ -21,7 +21,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Contents" private member
+        ///
         /// </summary>
         public string Contents
         {
@@ -29,7 +29,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public UserProfile Author
         {
@@ -37,7 +37,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Timestamp" private member
+        ///
         /// </summary>
         public DateTime Timestamp
         {
@@ -45,7 +45,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
@@ -54,7 +54,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>

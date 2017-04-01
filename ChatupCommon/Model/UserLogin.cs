@@ -3,13 +3,13 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class UserLogin
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
@@ -22,7 +22,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Host" private member
+        ///
         /// </summary>
         public Address Host
         {
@@ -30,7 +30,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Username" private member
+        ///
         /// </summary>
         public string Username
         {
@@ -38,7 +38,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Passwowrd" private member
+        ///
         /// </summary>
         public string Password
         {

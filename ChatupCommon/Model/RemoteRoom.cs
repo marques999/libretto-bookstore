@@ -3,13 +3,13 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class Room
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomName"></param>
@@ -27,7 +27,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Id" private member
+        ///
         /// </summary>
         public int Id
         {
@@ -36,7 +36,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Name" private member
+        ///
         /// </summary>
         public string Name
         {
@@ -44,7 +44,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Owner" private member
+        ///
         /// </summary>
         public string Owner
         {
@@ -52,7 +52,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Count" private member
+        ///
         /// </summary>
         public int Count
         {
@@ -61,7 +61,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Password" private member
+        ///
         /// </summary>
         public string Password
         {
@@ -69,7 +69,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Capacity" private member
+        ///
         /// </summary>
         public int Capacity
         {
@@ -77,25 +77,25 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsPrivate() => Password != null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsFull() => Count >= Capacity;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode() => Id;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>

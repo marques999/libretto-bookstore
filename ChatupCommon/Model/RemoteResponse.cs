@@ -3,7 +3,7 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public enum RemoteResponse

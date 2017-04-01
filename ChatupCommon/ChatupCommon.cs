@@ -5,20 +5,20 @@ namespace ChatupNET
     public class ChatupCommon
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly int QueueLimit = 100;
         public static readonly ushort DefaultPort = 12480;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string LobbyEndpoint = "lobby.rem";
         public static readonly string MessagingEndpoint = "messaging.rem";
         public static readonly string SessionEndpoint = "session.rem";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <returns></returns>
@@ -28,7 +28,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userAddress"></param>
         /// <param name="endPoint"></param>
@@ -39,7 +39,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInstance"></param>
         /// <returns></returns>

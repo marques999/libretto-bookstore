@@ -3,13 +3,13 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class UserForm
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
@@ -22,7 +22,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Name" private member
+        ///
         /// </summary>
         public string Name
         {
@@ -30,7 +30,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Username" private member
+        ///
         /// </summary>
         public string Username
         {
@@ -38,7 +38,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Password" private member
+        ///
         /// </summary>
         public string Password
         {
@@ -46,7 +46,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
@@ -55,7 +55,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>

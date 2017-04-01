@@ -3,13 +3,13 @@
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class UserInformation
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fullName"></param>
@@ -22,7 +22,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "_host" private member
+        ///
         /// </summary>
         public string Host
         {
@@ -31,7 +31,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Name" private member
+        ///
         /// </summary>
         public string Name
         {
@@ -39,7 +39,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Username" private member
+        ///
         /// </summary>
         public string Username
         {
@@ -47,18 +47,18 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "_host" private member
+        ///
         /// </summary>
         public bool Online => Host != null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode() => Username.GetHashCode();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherInstance"></param>
         /// <returns></returns>

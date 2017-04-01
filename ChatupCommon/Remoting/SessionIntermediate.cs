@@ -5,27 +5,27 @@ using ChatupNET.Model;
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class SessionIntermediate : MarshalByRefObject
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnLogin;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnLogout;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnRegister;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         public void Logout(UserInformation userInformation)
@@ -34,7 +34,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         public void Login(UserInformation userInformation)
@@ -43,7 +43,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         public void Register(UserInformation userInformation)
@@ -52,7 +52,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

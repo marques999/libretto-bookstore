@@ -6,13 +6,13 @@ using System.Net.Sockets;
 namespace ChatupNET.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public class Address
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remotePort"></param>
         public Address(ushort remotePort)
@@ -22,7 +22,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteHost"></param>
         /// <param name="remotePort"></param>
@@ -33,7 +33,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Host" private member
+        ///
         /// </summary>
         public IPAddress Host
         {
@@ -41,7 +41,7 @@ namespace ChatupNET.Model
         }
 
         /// <summary>
-        /// Public getter property for the "Port" private member
+        ///
         /// </summary>
         public ushort Port
         {
