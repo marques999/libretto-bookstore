@@ -12,7 +12,7 @@ namespace ChatupNET
     internal class SqliteDatabase
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         private SqliteDatabase()
         {
@@ -27,7 +27,7 @@ namespace ChatupNET
         private static SqliteDatabase _instance;
 
         /// <summary>
-        /// Public getter property for the "_instance" private member
+        /// 
         /// </summary>
         public static SqliteDatabase Instance => _instance ?? (_instance = new SqliteDatabase());
 

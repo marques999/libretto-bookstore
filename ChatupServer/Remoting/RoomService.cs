@@ -122,23 +122,6 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        private bool InsertUser(UserProfile userProfile)
-        {
-            if (_users.ContainsKey(userProfile.Username))
-            {
-                return false;
-            }
-
-            _users.Add(userProfile.Username, userProfile.Color);
-            OnJoin?.Invoke(userProfile);
-
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userProfile"></param>
         /// <returns></returns>
         public Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile)
         {
@@ -147,15 +130,15 @@ namespace ChatupNET.Remoting
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
             }
 
-            if (InsertUser(userProfile))
-            {
-                _instance.Count++;
-                ChatupServer.Instance.JoinRoom(_instance, userProfile);
-            }
-            else
+            if (_users.ContainsKey(userProfile.Username))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.ConversationExists, null);
             }
+
+            _instance.Count++;
+            OnJoin?.Invoke(userProfile);
+            _users.Add(userProfile.Username, userProfile.Color);
+            ChatupServer.Instance.JoinRoom(_instance, userProfile);
 
             return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.Success, _messages);
         }

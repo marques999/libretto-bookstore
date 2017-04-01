@@ -13,10 +13,13 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal class ChatupServer
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         private ChatupServer()
         {
@@ -63,14 +66,19 @@ namespace ChatupNET
         private int _lastId;
 
         /// <summary>
-        /// Public getter property for the "_lastid" private member
+        /// 
         /// </summary>
         public int NextId => ++_lastId;
 
         /// <summary>
         /// 
         /// </summary>
-        private UpdateHandler _roomHandler;
+        public int Active => _connections.Count;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private UpdateHandler _updateHandler;
 
         /// <summary>
         /// 
@@ -88,17 +96,17 @@ namespace ChatupNET
         private static ChatupServer _instance;
 
         /// <summary>
-        /// Public getter property for the "_instance" private member
+        /// 
         /// </summary>
         public static ChatupServer Instance => _instance ?? (_instance = new ChatupServer());
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         private readonly Dictionary<string, Address> _connections = new Dictionary<string, Address>();
 
         /// <summary>
-        /// Public getter property for the "_localHost" private member
+        /// 
         /// </summary>
         public Address LocalHost
         {
@@ -107,7 +115,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// Public getter property for the "Lobby" private member
+        /// 
         /// </summary>
         public LobbyIntermediate Lobby
         {
@@ -115,7 +123,7 @@ namespace ChatupNET
         } = new LobbyIntermediate();
 
         /// <summary>
-        /// Public getter property for the "Rooms" private member
+        /// 
         /// </summary>
         public Dictionary<int, Room> Rooms
         {
@@ -123,7 +131,7 @@ namespace ChatupNET
         } = SqliteDatabase.Instance.QueryRooms();
 
         /// <summary>
-        /// Public getter property for the "Session" private member
+        /// 
         /// </summary>
         public SessionIntermediate Session
         {
@@ -131,7 +139,7 @@ namespace ChatupNET
         } = new SessionIntermediate();
 
         /// <summary>
-        /// Public getter property for the "Users" private member
+        /// 
         /// </summary>
         public Dictionary<string, UserInformation> Users
         {
@@ -191,18 +199,18 @@ namespace ChatupNET
         /// </summary>
         /// <param name="joinHandler"></param>
         /// <param name="leaveHandler"></param>
-        public void InitializeRoom(RoomHandler joinHandler, RoomHandler leaveHandler)
+        public void InitializeChatrooms(RoomHandler joinHandler, RoomHandler leaveHandler)
         {
             OnJoin += joinHandler;
             OnLeave += leaveHandler;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="joinHandler"></param>
         /// <param name="leaveHandler"></param>
-        public void DestroyRoom(RoomHandler joinHandler, RoomHandler leaveHandler)
+        public void DestroyChatrooms(RoomHandler joinHandler, RoomHandler leaveHandler)
         {
             OnJoin -= joinHandler;
             OnLeave -= leaveHandler;
@@ -233,23 +241,13 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        private bool ValidateSession(string userName)
-        {
-            return Users.ContainsKey(userName) && Users[userName].Online;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="userLogin"></param>
         /// <returns></returns>
         public UserInformation Login(UserLogin userLogin)
         {
             var userName = userLogin.Username;
 
-            if (ValidateSession(userName))
+            if (Users.ContainsKey(userName) && Users[userName].Online)
             {
                 return null;
             }
@@ -268,7 +266,7 @@ namespace ChatupNET
         /// <returns></returns>
         public UserInformation Logout(string userName)
         {
-            if (ValidateSession(userName))
+            if (Users.ContainsKey(userName) && Users[userName].Online)
             {
                 Users[userName].Host = null;
 
@@ -300,10 +298,10 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ss"></param>
-        public void InitializeUpdates(UpdateHandler ss)
+        /// <param name="updateHandler"></param>
+        public void InitializeUpdates(UpdateHandler updateHandler)
         {
-            _roomHandler = ss;
+            _updateHandler = updateHandler;
         }
 
         /// <summary>
@@ -312,13 +310,14 @@ namespace ChatupNET
         /// <param name="roomInformation"></param>
         public void NotifyUpdates(Room roomInformation)
         {
-            _roomHandler?.Invoke(roomInformation.Id, roomInformation.Count, roomInformation.Capacity);
+            _updateHandler?.Invoke(roomInformation.Id, roomInformation.Count, roomInformation.Capacity);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="roomInformation"></param>
+        /// <returns></returns>
         private static bool LaunchChatroom(Room roomInformation)
         {
             try

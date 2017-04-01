@@ -28,7 +28,6 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
         public Dictionary<string, UserInformation> Users => ChatupServer.Instance.Users;
 
         /// <summary>

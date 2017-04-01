@@ -8,73 +8,79 @@ namespace ChatupNET.Database
     internal class WhereClause
     {
         /// <summary>
-        ///
+        /// 
         /// </summary>
         internal struct SubClause
         {
             /// <summary>
-            ///
+            /// 
             /// </summary>
             /// <param name="logic"></param>
             /// <param name="compareOperator"></param>
             /// <param name="compareValue"></param>
             public SubClause(LogicOperator logic, Comparison compareOperator, object compareValue)
             {
+                Value = compareValue;
                 LogicOperator = logic;
                 ComparisonOperator = compareOperator;
-                Value = compareValue;
             }
 
             /// <summary>
-            ///
+            /// 
             /// </summary>
-            public object Value;
+            public object Value
+            {
+                get;
+            }
 
             /// <summary>
-            ///
+            /// 
             /// </summary>
-            public LogicOperator LogicOperator;
+            public LogicOperator LogicOperator
+            {
+                get;
+            }
 
             /// <summary>
-            ///
+            /// 
             /// </summary>
-            public Comparison ComparisonOperator;
+            public Comparison ComparisonOperator
+            {
+                get;
+            }
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         internal List<SubClause> SubClauses;
 
         /// <summary>
-        ///
-        /// </summary>
-        public string FieldName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public Comparison ComparisonOperator
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        ///
+        /// 
         /// </summary>
         public object Value
         {
             get;
-            private set;
         }
 
         /// <summary>
-        ///
+        /// 
+        /// </summary>
+        public string FieldName
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Comparison ComparisonOperator
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
         /// </summary>
         /// <param name="field"></param>
         /// <param name="firstCompareOperator"></param>
@@ -83,8 +89,8 @@ namespace ChatupNET.Database
         {
             FieldName = field;
             Value = firstCompareValue;
-            ComparisonOperator = firstCompareOperator;
             SubClauses = new List<SubClause>();
+            ComparisonOperator = firstCompareOperator;
         }
     }
 }

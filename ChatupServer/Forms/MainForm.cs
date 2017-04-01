@@ -13,7 +13,7 @@ namespace ChatupNET.Forms
     internal partial class MainForm : Form
     {
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         public MainForm()
         {
@@ -21,7 +21,7 @@ namespace ChatupNET.Forms
             _console = new ConsoleInterface(richTextBox1);
             ChatupServer.Instance.InitializeSession(OnLogin, OnLogout, OnRegister);
             ChatupServer.Instance.InitializeLobby(OnInsert, OnDelete);
-            ChatupServer.Instance.InitializeRoom(OnJoin, OnLeave);
+            ChatupServer.Instance.InitializeChatrooms(OnJoin, OnLeave);
         }
 
         /// <summary>
@@ -31,11 +31,6 @@ namespace ChatupNET.Forms
         {
             Login, Logout, Register
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int _activeCount;
 
         /// <summary>
         /// 
@@ -116,6 +111,36 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomInformation"></param>
+        private void InsertRoom(Room roomInformation)
+        {
+            var userName = roomInformation.Owner;
+
+            if (ChatupServer.Instance.Users.ContainsKey(userName) == false)
+            {
+                return;
+            }
+
+            var convertedId = Convert.ToString(roomInformation.Id);
+            var userInformation = ChatupServer.Instance.Users[userName];
+
+            if (userInformation == null || treeView1.Nodes.ContainsKey(convertedId))
+            {
+                return;
+            }
+
+            _console.Timestamp();
+            _console.Print(userInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
+            _console.Print("has created chatroom ");
+            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (id=" + roomInformation.Id + ")\n", ConsoleInterface.Yellow);
+            treeView1.Nodes.Add(convertedId, ChatupCommon.FormatRoom(roomInformation));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="roomId"></param>
         private void OnDelete(int roomId)
         {
@@ -127,6 +152,32 @@ namespace ChatupNET.Forms
             {
                 DeleteRoom(roomId);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        private void DeleteRoom(int roomId)
+        {
+            if (ChatupServer.Instance.Rooms.ContainsKey(roomId) == false)
+            {
+                return;
+            }
+
+            var convertedId = Convert.ToString(roomId);
+            var roomInformation = ChatupServer.Instance.Rooms[roomId];
+
+            if (roomInformation == null || treeView1.Nodes.ContainsKey(convertedId) == false)
+            {
+                return;
+            }
+
+            treeView1.Nodes.RemoveByKey(convertedId);
+            _console.Timestamp();
+            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
+            _console.Print(" (id=" + roomId + ") ", ConsoleInterface.Yellow);
+            _console.Print("was deleted by owner request.\n");
         }
 
         /// <summary>
@@ -144,24 +195,6 @@ namespace ChatupNET.Forms
             else
             {
                 JoinRoom(roomInformation, userName, fullName);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomInformation"></param>
-        /// <param name="userProfile"></param>
-        /// <param name="fullName"></param>
-        private void OnLeave(Room roomInformation, UserProfile userProfile, string fullName)
-        {
-            if (InvokeRequired)
-            {
-                BeginInvoke(new RoomHandler(LeaveRoom), roomInformation, userProfile, fullName);
-            }
-            else
-            {
-                LeaveRoom(roomInformation, userProfile, fullName);
             }
         }
 
@@ -192,6 +225,24 @@ namespace ChatupNET.Forms
             if (InsertSubnode(nodeItem, userProfile))
             {
                 nodeItem.Text = ChatupCommon.FormatRoom(roomInformation);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInformation"></param>
+        /// <param name="userProfile"></param>
+        /// <param name="fullName"></param>
+        private void OnLeave(Room roomInformation, UserProfile userProfile, string fullName)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new RoomHandler(LeaveRoom), roomInformation, userProfile, fullName);
+            }
+            else
+            {
+                LeaveRoom(roomInformation, userProfile, fullName);
             }
         }
 
@@ -252,14 +303,17 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="nodeItem"></param>
         /// <param name="userName"></param>
+        /// <returns></returns>
         private static bool RemoveSubnode(TreeNode nodeItem, string userName)
         {
-            if (nodeItem == null || !nodeItem.Nodes.ContainsKey(userName))
+            if (nodeItem != null && nodeItem.Nodes.ContainsKey(userName))
+            {
+                nodeItem.Nodes.RemoveByKey(userName);
+            }
+            else
             {
                 return false;
             }
-
-            nodeItem.Nodes.RemoveByKey(userName);
 
             return true;
         }
@@ -267,69 +321,28 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="roomInformation"></param>
-        private void InsertRoom(Room roomInformation)
-        {
-            var userName = roomInformation.Owner;
-
-            if (ChatupServer.Instance.Users.ContainsKey(userName) == false)
-            {
-                return;
-            }
-
-            var convertedId = Convert.ToString(roomInformation.Id);
-            var userInformation = ChatupServer.Instance.Users[userName];
-
-            if (userInformation == null || treeView1.Nodes.ContainsKey(convertedId))
-            {
-                return;
-            }
-
-            _console.Timestamp();
-            _console.Print(userInformation.Name, ConsoleInterface.Blue);
-            _console.Print(" (" + userName + ") ", ConsoleInterface.Yellow);
-            _console.Print("has created chatroom ");
-            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
-            _console.Print(" (id=" + roomInformation.Id + ")\n", ConsoleInterface.Yellow);
-            treeView1.Nodes.Add(convertedId, ChatupCommon.FormatRoom(roomInformation));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        private void DeleteRoom(int roomId)
-        {
-            if (ChatupServer.Instance.Rooms.ContainsKey(roomId) == false)
-            {
-                return;
-            }
-
-            var convertedId = Convert.ToString(roomId);
-            var roomInformation = ChatupServer.Instance.Rooms[roomId];
-
-            if (roomInformation == null || treeView1.Nodes.ContainsKey(convertedId) == false)
-            {
-                return;
-            }
-
-            treeView1.Nodes.RemoveByKey(convertedId);
-            _console.Timestamp();
-            _console.Print(roomInformation.Name, ConsoleInterface.Blue);
-            _console.Print(" (id=" + roomId + ") ", ConsoleInterface.Yellow);
-            _console.Print("was deleted by owner request.\n");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="userInformation"></param>
         /// <param name="userAction"></param>
-        private void LogUser(UserInformation userInformation, UserAction userAction)
+        private void UpsertUser(UserInformation userInformation, UserAction userAction)
         {
+            if (listView1.Items.ContainsKey(userInformation.Username))
+            {
+                listView1.Items.RemoveByKey(userInformation.Username);
+            }
+
+            listView1.Items.Insert(0, new ListViewItem(new[]
+            {
+                userInformation.Username,
+                userAction == UserAction.Login ? userInformation.Host : "Offline"
+            })
+            {
+                Name = userInformation.Username
+            });
+
             _console.Timestamp();
             _console.Print(userInformation.Name, ConsoleInterface.Blue);
             _console.Print(" (" + userInformation.Username + ") ", ConsoleInterface.Yellow);
+            UpdateStats(ChatupServer.Instance.Active, listView1.Items.Count);
 
             if (userAction == UserAction.Login)
             {
@@ -348,40 +361,8 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userInformation"></param>
-        /// <param name="userAction"></param>
-        private void UpsertUser(UserInformation userInformation, UserAction userAction)
-        {
-            if (listView1.Items.ContainsKey(userInformation.Username))
-            {
-                listView1.Items.RemoveByKey(userInformation.Username);
-            }
-
-            if (userAction == UserAction.Login)
-            {
-                _activeCount++;
-            }
-            else if (userAction == UserAction.Logout)
-            {
-                _activeCount--;
-            }
-
-            listView1.Items.Insert(0, new ListViewItem(new[]
-            {
-                userInformation.Username,
-                userAction == UserAction.Login ? userInformation.Host : "Offline"
-            })
-            {
-                Name = userInformation.Username
-            });
-
-            LogUser(userInformation, userAction);
-            UpdateStats(_activeCount, listView1.Items.Count);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <param name="activeUsers"></param>
+        /// <param name="numberUsers"></param>
         private void UpdateStats(int activeUsers, int numberUsers)
         {
             groupBox2.Text = $@"Peers ({activeUsers:D} active, {numberUsers - activeUsers:D} inactive)";
@@ -396,7 +377,7 @@ namespace ChatupNET.Forms
             base.OnClosing(args);
             ChatupServer.Instance.DestroyLobby(OnInsert, OnDelete);
             ChatupServer.Instance.DestroySession(OnLogin, OnLogout, OnRegister);
-            ChatupServer.Instance.DestroyRoom(OnJoin, OnLeave);
+            ChatupServer.Instance.DestroyChatrooms(OnJoin, OnLeave);
         }
 
         /// <summary>
@@ -426,7 +407,7 @@ namespace ChatupNET.Forms
                 }
             }
 
-            UpdateStats(_activeCount, listView1.Items.Count);
+            UpdateStats(ChatupServer.Instance.Active, listView1.Items.Count);
             _console.Timestamp();
             _console.Print("ChatupServer ", ConsoleInterface.Yellow);
             _console.Print("running at ");

@@ -54,12 +54,7 @@ namespace ChatupNET.Database
         /// <returns></returns>
         public SqlBuilder Column(string column)
         {
-            _selectedColumns.Add(new SqlColumn
-            {
-                Name = column,
-                Alias = null
-            });
-
+            _selectedColumns.Add(new SqlColumn(column, null));
             return this;
         }
 

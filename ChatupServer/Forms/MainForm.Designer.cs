@@ -4,7 +4,10 @@ using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
-    partial class MainForm
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class MainForm
     {
         /// <summary>
         /// 
@@ -17,7 +20,7 @@ namespace ChatupNET.Forms
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && components != null)
             {
                 components.Dispose();
             }
@@ -37,8 +40,8 @@ namespace ChatupNET.Forms
             treeView1 = new TreeView();
             groupBox2 = new GroupBox();
             listView1 = new ListView();
-            columnHeader1 = ((ColumnHeader)(new ColumnHeader()));
-            columnHeader2 = ((ColumnHeader)(new ColumnHeader()));
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             richTextBox1 = new RichTextBox();
             ((ISupportInitialize)(splitContainer1)).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -107,6 +110,8 @@ namespace ChatupNET.Forms
             // treeView1
             // 
             treeView1.Dock = DockStyle.Fill;
+            treeView1.FullRowSelect = true;
+            treeView1.Indent = 16;
             treeView1.Location = new Point(4, 21);
             treeView1.Margin = new Padding(0);
             treeView1.Name = "treeView1";
@@ -128,11 +133,13 @@ namespace ChatupNET.Forms
             // listView1
             // 
             listView1.BackColor = SystemColors.Window;
-            listView1.Columns.AddRange(new ColumnHeader[] {
-            columnHeader1,
-            columnHeader2});
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
             listView1.Dock = DockStyle.Fill;
+            listView1.FullRowSelect = true;
+            listView1.GridLines = true;
+            listView1.LabelWrap = false;
             listView1.Location = new Point(4, 21);
+            listView1.MultiSelect = false;
             listView1.Name = "listView1";
             listView1.Size = new Size(339, 326);
             listView1.TabIndex = 6;
@@ -154,7 +161,7 @@ namespace ChatupNET.Forms
             richTextBox1.BackColor = Color.FromArgb(39, 40, 34);
             richTextBox1.BorderStyle = BorderStyle.FixedSingle;
             richTextBox1.Dock = DockStyle.Fill;
-            richTextBox1.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            richTextBox1.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             richTextBox1.ForeColor = Color.FromArgb(248, 248, 242);
             richTextBox1.Location = new Point(0, 0);
             richTextBox1.Name = "richTextBox1";
@@ -172,7 +179,7 @@ namespace ChatupNET.Forms
             BackColor = Color.Gainsboro;
             ClientSize = new Size(704, 601);
             Controls.Add(splitContainer1);
-            Icon = ((Icon)(resources.GetObject("$Icon")));
+            Icon = ((Icon)(resources.GetObject("$this.Icon")));
             Name = "MainForm";
             Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterScreen;

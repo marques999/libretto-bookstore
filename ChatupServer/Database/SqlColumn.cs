@@ -8,22 +8,28 @@
         /// <summary>
         /// 
         /// </summary>
-        public string Name;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Alias;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="paramName"></param>
-        /// <param name="paramAlias"></param>
-        public SqlColumn(string paramName, string paramAlias)
+        /// <param name="sqlName"></param>
+        /// <param name="sqlAlias"></param>
+        public SqlColumn(string sqlName, string sqlAlias)
         {
-            Name = paramName;
-            Alias = paramAlias;
+            Name = sqlName;
+            Alias = sqlAlias;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Alias
+        {
+            get;
         }
     }
 }

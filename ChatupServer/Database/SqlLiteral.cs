@@ -20,7 +20,6 @@ namespace ChatupNET.Database
         public string Value
         {
             get;
-            set;
         }
     }
 }

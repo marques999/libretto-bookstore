@@ -158,6 +158,13 @@ namespace ChatupNET.Database
             return result.Substring(0, result.Length - 2);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="comparisonOperator"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         internal static string CreateComparisonClause(string fieldName, Comparison comparisonOperator, object value)
         {
             var output = "";
