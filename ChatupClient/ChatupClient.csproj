@@ -75,6 +75,12 @@
     <Compile Include="Forms\InsertForm.Designer.cs">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\RoomInvitation.cs" />
     <Compile Include="RemoteAccess.cs" />
     <Compile Include="Remoting\MessageIntermediate.cs" />
@@ -98,12 +104,6 @@
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\RegisterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RegisterForm.Designer.cs">
-      <DependentUpon>RegisterForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Rooms\AbstractRoom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +135,9 @@
     <EmbeddedResource Include="Forms\PasswordForm.resx">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -145,9 +148,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Forms\RegisterForm.resx">
-      <DependentUpon>RegisterForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Rooms\AbstractRoom.resx">
       <DependentUpon>AbstractRoom.cs</DependentUpon>
     </EmbeddedResource>

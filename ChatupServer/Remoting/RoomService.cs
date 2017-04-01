@@ -139,23 +139,12 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="userProfile"></param>
-        /// <param name="roomPassword"></param>
         /// <returns></returns>
-        public Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile, string roomPassword)
+        public Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile)
         {
             if (string.IsNullOrEmpty(userProfile?.Username))
             {
                 return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.BadRequest, null);
-            }
-
-            if (_instance.IsPrivate() && (string.IsNullOrEmpty(roomPassword) || !roomPassword.Equals(_instance.Password)))
-            {
-                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.InvalidPassword, null);
-            }
-
-            if (_instance.IsFull())
-            {
-                return new Tuple<RemoteResponse, MessageQueue>(RemoteResponse.RoomFull, null);
             }
 
             if (InsertUser(userProfile))

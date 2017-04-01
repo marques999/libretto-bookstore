@@ -83,6 +83,7 @@ namespace ChatupNET
         {
             Lobby.OnInsert += lobbyIntermediate.CreateRoom;
             Lobby.OnDelete += lobbyIntermediate.DeleteRoom;
+            Lobby.OnUpdate += lobbyIntermediate.UpdateRoom;
         }
 
         /// <summary>
@@ -93,6 +94,7 @@ namespace ChatupNET
         {
             Lobby.OnInsert -= lobbyIntermediate.CreateRoom;
             Lobby.OnDelete -= lobbyIntermediate.DeleteRoom;
+            Lobby.OnUpdate -= lobbyIntermediate.UpdateRoom;
         }
 
         /// <summary>
@@ -231,14 +233,15 @@ namespace ChatupNET
         /// <returns></returns>
         public RemoteResponse Logout()
         {
-            var operationResult = Session.Logout(Profile.Username);
+            return Session.Logout(Profile.Username);
+        }
 
-            if (operationResult == RemoteResponse.Success)
-            {
-                Profile = null;
-            }
-
-            return operationResult;
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Reset()
+        {
+            Profile = null;
         }
 
         /// <summary>

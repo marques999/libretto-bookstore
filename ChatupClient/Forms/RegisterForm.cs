@@ -48,7 +48,24 @@ namespace ChatupNET.Forms
                 return false;
             }
 
-            return fieldPassword.Text.Length > 6;
+            return ValidateUsername(fieldName.Text) && fieldPassword.Text.Length > 6;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private bool ValidateUsername(string userName)
+        {
+            int index = 0;
+
+            while (index < userName.Length && !char.IsWhiteSpace(userName[index]))
+            {
+                index++;
+            }
+
+            return !char.IsWhiteSpace(userName[index]);
         }
 
         /// <summary>

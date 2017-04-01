@@ -9,9 +9,9 @@ namespace ChatupNET.Remoting
     /// 
     /// </summary>
     /// <param name="roomInformation"></param>
-    /// <param name="userName"></param>
+    /// <param name="userProfile"></param>
     /// <param name="fullName"></param>
-    internal delegate void RoomHandler(Room roomInformation, UserProfile userName, string fullName);
+    internal delegate void RoomHandler(Room roomInformation, UserProfile userProfile, string fullName);
 
     /// <summary>
     /// 
@@ -31,8 +31,31 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
+        public event UpdateHandler OnUpdate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Dictionary<int, Room> Rooms => ChatupServer.Instance.Rooms;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private LobbyService()
+        {
+            ChatupServer.Instance.InitializeUpdates(UpdateRoom);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomCount"></param>
+        /// <param name="roomCapacity"></param>
+        public void UpdateRoom(int roomId, int roomCount, int roomCapacity)
+        {
+            OnUpdate?.Invoke(roomId, roomCount, roomCapacity);
+        }
 
         /// <summary>
         /// 
@@ -52,7 +75,14 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.NotFound;
             }
 
-            if (Rooms[roomId].Owner == userName)
+            var roomInformation = Rooms[roomId];
+
+            if (roomInformation.Count > 0)
+            {
+                return RemoteResponse.NotEmpty;
+            }
+
+            if (roomInformation.Owner == userName)
             {
                 if (SqliteDatabase.Instance.DeleteRoom(roomId, userName))
                 {
@@ -113,10 +143,35 @@ namespace ChatupNET.Remoting
         /// 
         /// </summary>
         /// <param name="roomId"></param>
+        /// <param name="roomPassword"></param>
         /// <returns></returns>
-        public Tuple<bool, string> QueryRoom(int roomId)
+        public Tuple<RemoteResponse, string> Join(int roomId, string roomPassword)
         {
-            return Rooms.ContainsKey(roomId) ? new Tuple<bool, string>(Rooms[roomId].IsPrivate(), ChatupServer.Instance.LookupChatroom(roomId)) : new Tuple<bool, string>(false, null);
+            if (Rooms.ContainsKey(roomId) == false)
+            {
+                return new Tuple<RemoteResponse, string>(RemoteResponse.NotFound, null);
+            }
+
+            var roomInformation = Rooms[roomId];
+
+            if (roomInformation == null)
+            {
+                return new Tuple<RemoteResponse, string>(RemoteResponse.NotFound, null);
+            }
+
+            if (roomInformation.IsPrivate() && (string.IsNullOrEmpty(roomPassword) || roomPassword != roomInformation.Password))
+            {
+                return new Tuple<RemoteResponse, string>(RemoteResponse.InvalidPassword, null);
+            }
+
+            if (roomInformation.IsFull())
+            {
+                return new Tuple<RemoteResponse, string>(RemoteResponse.RoomFull, null);
+            }
+
+            OnUpdate?.Invoke(roomId, roomInformation.Count, roomInformation.Capacity);
+
+            return new Tuple<RemoteResponse, string>(RemoteResponse.Success, ChatupServer.Instance.LookupChatroom(roomId));
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 
@@ -27,6 +28,7 @@ namespace ChatupNET.Forms
             _sessionIntermediate.OnLogout += OnLogout;
             _lobbyIntermediate.OnInsert += OnCreate;
             _lobbyIntermediate.OnDelete += OnDelete;
+            _lobbyIntermediate.OnUpdate += OnUpdate;
             ChatupClient.Instance.InitializeSession(_sessionIntermediate);
             ChatupClient.Instance.InitializeLobby(_lobbyIntermediate);
             ChatupClient.Instance.InitializeMessaging(OnConnect, OnDisconnect, OnInvite, OnReceive);
@@ -40,7 +42,7 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private readonly HashSet<Room> _context = new HashSet<Room>();
+        private readonly LobbyIntermediate _lobbyIntermediate = new LobbyIntermediate();
 
         /// <summary>
         /// 
@@ -50,12 +52,12 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
-        private readonly LobbyIntermediate _lobbyIntermediate = new LobbyIntermediate();
+        private readonly SessionIntermediate _sessionIntermediate = new SessionIntermediate();
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly SessionIntermediate _sessionIntermediate = new SessionIntermediate();
+        private readonly Dictionary<Room, GroupRoom> _context = new Dictionary<Room, GroupRoom>();
 
         /// <summary>
         /// 
@@ -248,20 +250,15 @@ namespace ChatupNET.Forms
                 return;
             }
 
-            var roomId = roomInvitation.Id;
-            var operationResult = ChatupClient.Instance.Lobby.QueryRoom(roomId);
+            var operationResult = ChatupClient.Instance.Lobby.Join(roomInvitation.Id, roomInvitation.Password);
 
-            if (operationResult.Item2 == null)
+            if (operationResult.Item1 == RemoteResponse.Success)
+            {
+                Connect(roomInvitation.Id, operationResult.Item2);
+            }
+            else
             {
                 _errorHandler.DisplayError(RemoteResponse.NotFound);
-            }
-            else if (operationResult.Item1 == false)
-            {
-                Connect(roomId, operationResult.Item2, null);
-            }
-            else if (!string.IsNullOrEmpty(roomInvitation.Password))
-            {
-                Connect(roomId, operationResult.Item2, roomInvitation.Password);
             }
         }
 
@@ -317,6 +314,13 @@ namespace ChatupNET.Forms
                     ChatupClient.Instance.DestroyLobby(_lobbyIntermediate);
                     ChatupClient.Instance.DestroySession(_sessionIntermediate);
                     ChatupClient.Instance.DestroyMessaging(OnConnect, OnDisconnect, OnInvite, OnReceive);
+
+                    while (_context.Count > 0)
+                    {
+                        _context.Values.First()?.Close();
+                    }
+
+                    ChatupClient.Instance.Reset();
                 }
                 else
                 {
@@ -515,12 +519,13 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="roomInformation"></param>
         /// <param name="grouproomInstance"></param>
-        private void LaunchRoom(GroupRoom grouproomInstance)
+        private void LaunchRoom(Room roomInformation, GroupRoom grouproomInstance)
         {
             UpdatePrivateButtons();
             grouproomInstance.OnExit += LeaveGroup;
-            grouproomInstance.OnUpdate += OnUpdate;
+            _context.Add(roomInformation, grouproomInstance);
             grouproomInstance.Show(this);
         }
 
@@ -530,25 +535,40 @@ namespace ChatupNET.Forms
         /// <param name="roomId"></param>
         private void JoinRoom(int roomId)
         {
-            var operationResult = ChatupClient.Instance.Lobby.QueryRoom(roomId);
+            var operationResult = ChatupClient.Instance.Lobby.Join(roomId, null);
 
-            if (operationResult.Item2 == null)
-            {
-                _errorHandler.DisplayError(RemoteResponse.NotFound);
-            }
-            else if (!operationResult.Item1)
-            {
-                Connect(roomId, operationResult.Item2, null);
-            }
-            else
+            if (operationResult.Item1 == RemoteResponse.InvalidPassword)
             {
                 using (var passwordForm = new PasswordForm())
                 {
-                    if (passwordForm.ShowDialog() == DialogResult.OK)
+                    if (passwordForm.ShowDialog() != DialogResult.OK)
                     {
-                        Connect(roomId, operationResult.Item2, passwordForm.Password);
+                        return;
                     }
+
+                    Connect(roomId, ChatupClient.Instance.Lobby.Join(roomId, passwordForm.Password));
                 }
+            }
+            else
+            {
+                Connect(roomId, operationResult);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="operationResult"></param>
+        private void Connect(int roomId, Tuple<RemoteResponse, string> operationResult)
+        {
+            if (operationResult.Item1 == RemoteResponse.Success)
+            {
+                Connect(roomId, operationResult.Item2);
+            }
+            else
+            {
+                _errorHandler.DisplayError(operationResult.Item1);
             }
         }
 
@@ -557,8 +577,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="remoteHost"></param>
-        /// <param name="roomPassword"></param>
-        private void Connect(int roomId, string remoteHost, string roomPassword)
+        private void Connect(int roomId, string remoteHost)
         {
             var roomInterface = RemotingServices.Connect(typeof(RoomInterface), remoteHost) as RoomInterface;
 
@@ -570,12 +589,11 @@ namespace ChatupNET.Forms
             if (_groupChatrooms.ContainsKey(roomId))
             {
                 var roomInformation = _groupChatrooms[roomId];
-                var operationResult = roomInterface.Join(ChatupClient.Instance.Profile, roomPassword);
+                var operationResult = roomInterface.Join(ChatupClient.Instance.Profile);
 
                 if (operationResult.Item1 == RemoteResponse.Success)
                 {
-                    _context.Add(roomInformation);
-                    LaunchRoom(new GroupRoom(roomInformation, roomInterface, operationResult.Item2));                  
+                    LaunchRoom(roomInformation, new GroupRoom(roomInformation, roomInterface, operationResult.Item2));
                 }
                 else
                 {
@@ -634,7 +652,7 @@ namespace ChatupNET.Forms
         /// <param name="roomInformation"></param>
         private void LeaveGroup(Room roomInformation)
         {
-            if (_context.Contains(roomInformation))
+            if (_context.ContainsKey(roomInformation))
             {
                 _context.Remove(roomInformation);
                 UpdatePrivateButtons();
@@ -834,7 +852,7 @@ namespace ChatupNET.Forms
             }
             else if (_connections.ContainsKey(userName))
             {
-                var inviteForm = new InviteForm(_context);
+                var inviteForm = new InviteForm(_context.Keys);
 
                 if (inviteForm.ShowDialog() == DialogResult.OK)
                 {
@@ -884,6 +902,8 @@ namespace ChatupNET.Forms
             {
                 _errorHandler.DisplayError(operationResult);
             }
+
+            RemotingServices.Disconnect(remoteUser);
         }
     }
 }

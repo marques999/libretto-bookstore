@@ -20,7 +20,7 @@ namespace ChatupNET.Database
         /// <param name="level"></param>
         private void AssertLevelExistance(int level)
         {
-            if (Count < (level - 1))
+            if (Count < level - 1)
             {
                 throw new Exception("Level " + level + " not allowed because level " + (level - 1) + " does not exist.");
             }

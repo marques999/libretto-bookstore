@@ -17,13 +17,14 @@ namespace ChatupNET
         private static readonly Dictionary<RemoteResponse, string> ResponseMessages = new Dictionary<RemoteResponse, string>()
         {
             { RemoteResponse.UserExists, "A person with the same username already exists in the server!" },
-            { RemoteResponse.PermissionDenied, "You don't have enough permissions to perform this action!" },
-            { RemoteResponse.InvalidPassword, "The room password you entered was recognized as invalid!" },
             { RemoteResponse.ConversationExists, "You're currently participating in this conversation!" },
+            { RemoteResponse.InvalidPassword, "The room password you entered was recognized as invalid!" },
+            { RemoteResponse.PermissionDenied, "You don't have enough permissions to perform this action!" },
             { RemoteResponse.SessionExists, "User is currently logged in to this service, please sign out first!" },
             { RemoteResponse.BadRequest, "Please check if the information you entered is complete and try again." },
-            { RemoteResponse.AuthenticationFailed, "We couldn't authenticate with the details you provided, please check your username and password and try again!" },
+            { RemoteResponse.NotEmpty, "Room is not empty, please make sure everyone leaves before requesting delete!" },
             { RemoteResponse.RoomFull, "The room you are trying to join is currently full, please wait until someone leaves!" },
+            { RemoteResponse.AuthenticationFailed, "We couldn't authenticate with the details you provided, please check your username and password and try again!" }
         };
 
         /// <summary>
@@ -32,14 +33,15 @@ namespace ChatupNET
         private static readonly Dictionary<RemoteResponse, string> ResponseTitles = new Dictionary<RemoteResponse, string>()
         {
             { RemoteResponse.RoomFull, "Room full" },
-            { RemoteResponse.NotFound, "Invalid entity" },
+            { RemoteResponse.NotEmpty, "Delete room" },
             { RemoteResponse.UserExists, "User exists" },
-            { RemoteResponse.ConversationExists, "Conversation exists" },
-            { RemoteResponse.InvalidPassword, "Wrong password" },
+            { RemoteResponse.NotFound, "Invalid entity" },
             { RemoteResponse.SessionExists, "Session exists" },
             { RemoteResponse.BadRequest, "Missing parameters" },
+            { RemoteResponse.InvalidPassword, "Wrong password" },
             { RemoteResponse.OperationFailed, "Operation failed" },
             { RemoteResponse.AuthenticationFailed, "Login error" },
+            { RemoteResponse.ConversationExists, "Conversation exists" },
             { RemoteResponse.PermissionDenied, "Insufficient permissions" },
         };
 

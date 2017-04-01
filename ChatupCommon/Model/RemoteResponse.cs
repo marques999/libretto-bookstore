@@ -18,6 +18,7 @@ namespace ChatupNET.Model
         UserExists,
         OperationFailed,
         RoomFull,
-        InvalidPassword
+        InvalidPassword,
+        NotEmpty
     }
 }

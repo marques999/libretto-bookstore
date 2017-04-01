@@ -66,11 +66,6 @@ namespace ChatupNET.Rooms
         /// <summary>
         /// 
         /// </summary>
-        public event UpdateHandler OnUpdate;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly Room _instance;
 
         /// <summary>
@@ -88,7 +83,6 @@ namespace ChatupNET.Rooms
         /// </summary>
         protected override void UpdateRoom()
         {
-            OnUpdate?.Invoke(_instance.Id, Users.Count, _instance.Capacity);
             Text = $@"{_instance.Name} [{Users.Count:D}/{_instance.Capacity:D}]";
         }
 
@@ -115,7 +109,7 @@ namespace ChatupNET.Rooms
             }
             else
             {
-                OnDisconnect();
+                OnExit?.Invoke(_instance);
             }
         }
 

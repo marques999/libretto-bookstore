@@ -22,7 +22,7 @@ namespace ChatupNET
         {
             var tcpChannel = new TcpChannel(new Hashtable()
             {
-                { "port", ChatupCommon.DefaultPort }
+                {"port", ChatupCommon.DefaultPort}
             }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider()
             {
                 TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
@@ -70,6 +70,11 @@ namespace ChatupNET
         /// <summary>
         /// 
         /// </summary>
+        private UpdateHandler _roomHandler;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private event RoomHandler OnJoin;
 
         /// <summary>
@@ -83,14 +88,14 @@ namespace ChatupNET
         private static ChatupServer _instance;
 
         /// <summary>
-        ///
-        /// </summary>
-        private readonly Dictionary<string, Address> _connections = new Dictionary<string, Address>();
-
-        /// <summary>
         /// Public getter property for the "_instance" private member
         /// </summary>
         public static ChatupServer Instance => _instance ?? (_instance = new ChatupServer());
+
+        /// <summary>
+        ///
+        /// </summary>
+        private readonly Dictionary<string, Address> _connections = new Dictionary<string, Address>();
 
         /// <summary>
         /// Public getter property for the "_localHost" private member
@@ -210,6 +215,7 @@ namespace ChatupNET
         /// <param name="userProfile"></param>
         public void JoinRoom(Room roomInformation, UserProfile userProfile)
         {
+            NotifyUpdates(roomInformation);
             OnJoin?.Invoke(roomInformation, userProfile, Users[userProfile.Username].Name);
         }
 
@@ -220,6 +226,7 @@ namespace ChatupNET
         /// <param name="userName"></param>
         public void LeaveRoom(Room roomInformation, UserProfile userName)
         {
+            NotifyUpdates(roomInformation);
             OnLeave?.Invoke(roomInformation, userName, Users[userName.Username].Name);
         }
 
@@ -288,6 +295,24 @@ namespace ChatupNET
         public string LookupChatroom(int roomId)
         {
             return ChatupCommon.FormatAddress(LocalHost, ChatupCommon.FormatChatroom(roomId));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ss"></param>
+        public void InitializeUpdates(UpdateHandler ss)
+        {
+            _roomHandler = ss;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomInformation"></param>
+        public void NotifyUpdates(Room roomInformation)
+        {
+            _roomHandler?.Invoke(roomInformation.Id, roomInformation.Count, roomInformation.Capacity);
         }
 
         /// <summary>

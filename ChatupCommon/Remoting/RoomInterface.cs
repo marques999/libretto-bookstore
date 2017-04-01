@@ -70,6 +70,6 @@ namespace ChatupNET.Remoting
         /// <param name="userProfile"></param>
         /// <param name="roomPassword"></param>
         /// <returns></returns>
-        Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile, string roomPassword);
+        Tuple<RemoteResponse, MessageQueue> Join(UserProfile userProfile);
     }
 }

@@ -42,18 +42,16 @@ namespace ChatupNET.Remoting
         /// <summary>
         /// 
         /// </summary>
+        event UpdateHandler OnUpdate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         Dictionary<int, Room> Rooms
         {
             get;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="roomId"></param>
-        /// <returns></returns>
-        Tuple<bool, string> QueryRoom(int roomId);
 
         /// <summary>
         /// 
@@ -69,5 +67,13 @@ namespace ChatupNET.Remoting
         /// <param name="roomInformation"></param>
         /// <returns></returns>
         Tuple<RemoteResponse, Room> Insert(Room roomInformation);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="roomPassword"></param>
+        /// <returns></returns>
+        Tuple<RemoteResponse, string> Join(int roomId, string roomPassword);
     }
 }
