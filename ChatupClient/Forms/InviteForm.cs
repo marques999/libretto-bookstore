@@ -9,7 +9,7 @@ namespace ChatupNET.Forms
     /// <summary>
     /// 
     /// </summary>
-    public partial class InviteForm : Form
+    internal partial class InviteForm : Form
     {
         /// <summary>
         /// 

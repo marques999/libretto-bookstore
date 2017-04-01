@@ -117,7 +117,7 @@ namespace ChatupNET.Remoting
             {
                 _users.Add(userName);
             }
-   
+
             ChatupClient.Instance.Messaging.P2PConnect(userProfile, userHost);
 
             return new Tuple<RemoteResponse, UserProfile>(RemoteResponse.Success, ChatupClient.Instance.Profile);
