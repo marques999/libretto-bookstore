@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using ChatupNET.Model;
@@ -6,37 +6,37 @@ using ChatupNET.Model;
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="roomInvitation"></param>
     internal delegate void InviteHandler(RoomInvitation roomInvitation);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="userAction"></param>
     internal delegate void DisconnectHandler(string userName, bool userAction);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userProfile"></param>
     /// <param name="userHost"></param>
     internal delegate void ConnectHandler(UserProfile userProfile, string userHost);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class MessageInterface : MarshalByRefObject
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly HashSet<string> _users = new HashSet<string>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -58,7 +58,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteMessage"></param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInvitation"></param>
         /// <returns></returns>
@@ -99,7 +99,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
@@ -124,7 +124,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,19 +9,19 @@ using ChatupNET.Remoting;
 namespace ChatupNET.Rooms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userMessage"></param>
     /// <param name="clearInput"></param>
     internal delegate void AppendHandler(RemoteMessage userMessage, bool clearInput);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal abstract partial class AbstractRoom : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected AbstractRoom()
         {
@@ -30,7 +30,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<string, Color> Users
         {
@@ -38,12 +38,12 @@ namespace ChatupNET.Rooms
         } = new Dictionary<string, Color>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected ErrorHandler ErrorHandler;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="messageContent"></param>
         /// <param name="messageColor"></param>
@@ -58,7 +58,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         protected void OnJoin(UserProfile userProfile)
@@ -74,7 +74,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         protected void JoinRoom(UserProfile userProfile)
@@ -92,7 +92,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         protected void OnLeave(string userName)
@@ -108,7 +108,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         protected void LeaveRoom(string userName)
@@ -122,7 +122,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userMessage"></param>
         /// <param name="clearInput"></param>
@@ -146,7 +146,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="dateTime"></param>
         private void AppendTime(DateTime dateTime)
@@ -155,7 +155,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="messageInstance"></param>
         public void OnReceive(RemoteMessage messageInstance)
@@ -171,7 +171,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -181,7 +181,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -191,7 +191,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         protected RemoteMessage GenerateMessage()
@@ -200,22 +200,22 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected abstract void UpdateRoom();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         protected abstract void buttonValidate_Click(object sender, EventArgs args);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected abstract void AbstractRoom_FormClosing(object sender, FormClosingEventArgs e);
+        /// <param name="args"></param>
+        protected abstract void AbstractRoom_FormClosing(object sender, FormClosingEventArgs args);
     }
 }

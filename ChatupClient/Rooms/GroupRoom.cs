@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 using ChatupNET.Remoting;
@@ -7,18 +7,18 @@ using ChatupNET.Model;
 namespace ChatupNET.Rooms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="roomInformation"></param>
     internal delegate void ExitHandler(Room roomInformation);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    internal sealed class GroupRoom : AbstractRoom
+    internal class GroupRoom : AbstractRoom
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="roomInterface"></param>
@@ -59,27 +59,27 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event ExitHandler OnExit;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Room _instance;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly RoomInterface _roomInterface;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly RoomIntermediate _roomIntermediate;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected override void UpdateRoom()
         {
@@ -87,7 +87,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -114,7 +114,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void OnDisconnect()
         {
@@ -125,7 +125,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

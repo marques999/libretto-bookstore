@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,12 +7,12 @@ using ChatupNET.Model;
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class ErrorHandler
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly Dictionary<RemoteResponse, string> ResponseMessages = new Dictionary<RemoteResponse, string>()
         {
@@ -28,7 +28,7 @@ namespace ChatupNET
         };
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly Dictionary<RemoteResponse, string> ResponseTitles = new Dictionary<RemoteResponse, string>()
         {
@@ -46,7 +46,7 @@ namespace ChatupNET
         };
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="parentForm"></param>
         public ErrorHandler(Form parentForm)
@@ -55,21 +55,21 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Form _parent;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="ex"></param>
-        public void DisplayException(Exception ex)
+        /// <param name="programException"></param>
+        public void DisplayException(Exception programException)
         {
-            MessageBox.Show(_parent, ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(_parent, programException.Message, programException.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="operationResult"></param>
         public void DisplayError(RemoteResponse operationResult)

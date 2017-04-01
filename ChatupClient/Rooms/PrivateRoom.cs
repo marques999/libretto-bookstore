@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 
@@ -7,10 +7,13 @@ using ChatupNET.Remoting;
 
 namespace ChatupNET.Rooms
 {
-    internal sealed class PrivateRoom : AbstractRoom
+    /// <summary>
+    ///
+    /// </summary>
+    internal class PrivateRoom : AbstractRoom
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteHost"></param>
         public PrivateRoom(string remoteHost)
@@ -28,7 +31,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="remoteHost"></param>
@@ -47,22 +50,22 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private string _username;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private bool _connected;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly MessageInterface _server;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void InitializeRemote()
         {
@@ -91,7 +94,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         private void InitializeRoom(UserProfile userProfile)
@@ -103,7 +106,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -128,7 +131,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -148,7 +151,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Disconnect()
         {
@@ -156,7 +159,7 @@ namespace ChatupNET.Rooms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected override void UpdateRoom()
         {

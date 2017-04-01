@@ -1,30 +1,31 @@
-﻿namespace ChatupNET.Rooms
+namespace ChatupNET.Rooms
 {
+    /// <summary>
+    ///
+    /// </summary>
     abstract partial class AbstractRoom
     {
         /// <summary>
-        /// Required designer variable.
+        ///
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        ///
         /// </summary>
         private void InitializeComponent()
         {
@@ -36,9 +37,9 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // buttonValidate
-            // 
+            //
             this.buttonValidate.BackColor = System.Drawing.SystemColors.ControlLight;
             this.buttonValidate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonValidate.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -50,9 +51,9 @@
             this.buttonValidate.Text = "Send";
             this.buttonValidate.UseVisualStyleBackColor = false;
             this.buttonValidate.Click += new System.EventHandler(this.buttonValidate_Click);
-            // 
+            //
             // textBox2
-            // 
+            //
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox2.Location = new System.Drawing.Point(5, 352);
@@ -60,9 +61,9 @@
             this.textBox2.Size = new System.Drawing.Size(384, 23);
             this.textBox2.TabIndex = 19;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
+            //
             // richTextBox1
-            // 
+            //
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -72,9 +73,9 @@
             this.richTextBox1.Size = new System.Drawing.Size(384, 341);
             this.richTextBox1.TabIndex = 21;
             this.richTextBox1.Text = "";
-            // 
+            //
             // tableLayoutPanel1
-            // 
+            //
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.71663F));
@@ -92,9 +93,9 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.731959F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(534, 381);
             this.tableLayoutPanel1.TabIndex = 22;
-            // 
+            //
             // listBox1
-            // 
+            //
             this.listBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -106,9 +107,9 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(134, 341);
             this.listBox1.TabIndex = 18;
-            // 
+            //
             // AbstractRoom
-            // 
+            //
             this.AcceptButton = this.buttonValidate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -123,10 +124,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
 
         private System.Windows.Forms.Button buttonValidate;
         private System.Windows.Forms.TextBox textBox2;

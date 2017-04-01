@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Drawing;
 using System.Runtime.Remoting;
@@ -13,12 +13,12 @@ using ChatupNET.Remoting;
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class ChatupClient
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private ChatupClient()
         {
@@ -36,27 +36,27 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static ChatupClient _instance;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Random _randomGenerator = new Random();
 
         /// <summary>
-        /// Public getter property for the "_instance" private member
+        ///
         /// </summary>
         public static ChatupClient Instance => _instance ?? (_instance = new ChatupClient());
 
         /// <summary>
-        /// Public getter property for the "LocalAddress" private member
+        ///
         /// </summary>
         public string LocalAddress => ChatupCommon.FormatAddress(LocalHost, ChatupCommon.MessagingEndpoint);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sessionIntermediate"></param>
         public void InitializeSession(SessionIntermediate sessionIntermediate)
@@ -66,7 +66,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sessionIntermediate"></param>
         public void DestroySession(SessionIntermediate sessionIntermediate)
@@ -76,7 +76,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lobbyIntermediate"></param>
         public void InitializeLobby(LobbyIntermediate lobbyIntermediate)
@@ -87,7 +87,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lobbyIntermediate"></param>
         public void DestroyLobby(LobbyIntermediate lobbyIntermediate)
@@ -98,7 +98,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="joinHandler"></param>
         /// <param name="leaveHandler"></param>
@@ -113,7 +113,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="joinHandler"></param>
         /// <param name="leaveHandler"></param>
@@ -128,12 +128,12 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Username => Profile.Username;
 
         /// <summary>
-        /// Public getter property for the "LocalHost" private member
+        ///
         /// </summary>
         public Address LocalHost
         {
@@ -141,7 +141,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// Private getter property for the "RemoteHost" private member
+        ///
         /// </summary>
         private Address RemoteHost
         {
@@ -150,7 +150,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public UserProfile Profile
         {
@@ -159,7 +159,7 @@ namespace ChatupNET
         } = new UserProfile(null, Color.White);
 
         /// <summary>
-        /// Public getter property for the "Lobby" private member
+        ///
         /// </summary>
         public LobbyInterface Lobby
         {
@@ -168,7 +168,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// Public getter property for the "Session" private member
+        ///
         /// </summary>
         public SessionInterface Session
         {
@@ -177,7 +177,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// Public getter property for the "Messaging" private member
+        ///
         /// </summary>
         public MessageIntermediate Messaging
         {
@@ -186,8 +186,9 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
+        /// <param name="remoteHost"></param>
         public void InitializeRemoting(Address remoteHost)
         {
             RemoteHost = remoteHost;
@@ -209,7 +210,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
@@ -228,24 +229,15 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>
-        public RemoteResponse Logout()
-        {
-            return Session.Logout(Profile.Username);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Reset()
+        public void Logout()
         {
             Profile = null;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [STAThread]
         private static void Main()

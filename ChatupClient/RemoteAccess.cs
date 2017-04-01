@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Runtime.Remoting;
 
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class RemoteAccess
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="classType"></param>
         /// <returns></returns>
@@ -32,12 +32,12 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static IDictionary _wellKnownTypes;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static void InitTypeCache()
         {

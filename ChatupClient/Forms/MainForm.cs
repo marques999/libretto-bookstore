@@ -306,7 +306,7 @@ namespace ChatupNET.Forms
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                var operationResult = ChatupClient.Instance.Logout();
+                var operationResult = ChatupClient.Instance.Session.Logout(ChatupClient.Instance.Profile.Username);
 
                 if (operationResult == RemoteResponse.Success)
                 {
@@ -320,7 +320,7 @@ namespace ChatupNET.Forms
                         _context.Values.First()?.Close();
                     }
 
-                    ChatupClient.Instance.Reset();
+                    ChatupClient.Instance.Logout();
                 }
                 else
                 {

@@ -1,34 +1,34 @@
-﻿using ChatupNET.Model;
+using ChatupNET.Model;
 
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class MessageIntermediate
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        internal event InviteHandler OnInvite;
+        public event InviteHandler OnInvite;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        internal event MessageHandler OnReceive;
+        public event MessageHandler OnReceive;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        internal event ConnectHandler OnConnect;
+        public event ConnectHandler OnConnect;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        internal event DisconnectHandler OnDisconnect;
+        public event DisconnectHandler OnDisconnect;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="remoteInvocation"></param>
@@ -38,7 +38,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteMessage"></param>
         public void P2PReceive(RemoteMessage remoteMessage)
@@ -47,7 +47,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInvitation"></param>
         public void P2PInvite(RoomInvitation roomInvitation)
@@ -56,7 +56,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
