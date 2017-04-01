@@ -1,12 +1,12 @@
 namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class SqlLiteral
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="value"></param>
         public SqlLiteral(string value)
@@ -15,7 +15,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Value
         {

@@ -1,7 +1,7 @@
 namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal enum Comparison
     {
@@ -17,7 +17,7 @@ namespace ChatupNET.Database
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal enum LogicOperator
     {

@@ -5,17 +5,17 @@ using System.Collections.Generic;
 namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class WhereStatement : List<List<WhereClause>>
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int ClauseLevels => Count;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="level"></param>
         private void AssertLevelExistance(int level)
@@ -32,7 +32,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="clause"></param>
         /// <param name="level"></param>
@@ -42,7 +42,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="field"></param>
         /// <param name="operator"></param>
@@ -57,7 +57,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="clause"></param>
         /// <param name="level"></param>
@@ -68,7 +68,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public string BuildWhereStatement()
@@ -78,7 +78,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="useCommandObject"></param>
         /// <param name="usedDbCommand"></param>
@@ -159,7 +159,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="fieldName"></param>
         /// <param name="comparisonOperator"></param>
@@ -224,7 +224,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="someValue"></param>
         /// <returns></returns>
@@ -253,7 +253,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="statement1"></param>
         /// <param name="statement2"></param>
@@ -279,7 +279,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="statement"></param>
         /// <returns></returns>

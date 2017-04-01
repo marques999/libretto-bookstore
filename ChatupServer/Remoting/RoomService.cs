@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -7,12 +7,12 @@ using ChatupNET.Model;
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class RoomService : MarshalByRefObject, RoomInterface
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         public RoomService(Room roomInformation)
@@ -21,43 +21,43 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Room _instance;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event JoinHandler OnJoin;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event LeaveHandler OnLeave;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event MessageHandler OnSend;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, Color> List() => _users;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly MessageQueue _messages = new MessageQueue();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<string, Color> _users = new Dictionary<string, Color>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteMessage"></param>
         /// <returns></returns>
@@ -84,7 +84,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -119,7 +119,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <returns></returns>
@@ -144,7 +144,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

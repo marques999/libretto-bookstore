@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using ChatupNET.Model;
@@ -6,32 +6,32 @@ using ChatupNET.Model;
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class SessionService : MarshalByRefObject, SessionInterface
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnLogin;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnLogout;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UserHandler OnRegister;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<string, UserInformation> Users => ChatupServer.Instance.Users;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -57,7 +57,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userLogin"></param>
         /// <returns></returns>
@@ -92,7 +92,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userForm"></param>
         /// <returns></returns>
@@ -125,7 +125,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

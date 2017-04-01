@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using ChatupNET.Model;
@@ -6,7 +6,7 @@ using ChatupNET.Model;
 namespace ChatupNET.Remoting
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="roomInformation"></param>
     /// <param name="userProfile"></param>
@@ -14,32 +14,32 @@ namespace ChatupNET.Remoting
     internal delegate void RoomHandler(Room roomInformation, UserProfile userProfile, string fullName);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class LobbyService : MarshalByRefObject, LobbyInterface
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event InsertHandler OnInsert;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event DeleteHandler OnDelete;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public event UpdateHandler OnUpdate;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<int, Room> Rooms => ChatupServer.Instance.Rooms;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private LobbyService()
         {
@@ -47,7 +47,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomCount"></param>
@@ -58,7 +58,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="userName"></param>
@@ -104,7 +104,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
@@ -140,7 +140,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomPassword"></param>
@@ -175,7 +175,7 @@ namespace ChatupNET.Remoting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

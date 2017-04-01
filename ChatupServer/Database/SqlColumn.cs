@@ -1,12 +1,12 @@
-﻿namespace ChatupNET.Database
+namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal struct SqlColumn
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sqlName"></param>
         /// <param name="sqlAlias"></param>
@@ -17,7 +17,7 @@
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Name
         {
@@ -25,7 +25,7 @@
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Alias
         {

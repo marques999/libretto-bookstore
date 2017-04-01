@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class SqliteConstants
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string Id = "id";
         public static readonly string Name = "name";
@@ -18,14 +18,14 @@ namespace ChatupNET
         public static readonly string Username = "username";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string ROOMS = "rooms";
         public static readonly string USERS = "users";
         public static readonly string MASTER = "sqlite_master";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string rooms_DELETE = "DELETE FROM rooms WHERE id = :id AND owner = :owner";
         public static readonly string rooms_INSERT_Public = "INSERT INTO rooms(id, name, owner, capacity) VALUES(:id, :name, :owner, :capacity)";
@@ -35,7 +35,7 @@ namespace ChatupNET
         public static readonly string users_CREATE = "CREATE TABLE `users`(`username` TEXT NOT NULL UNIQUE, `name` TEXT NOT NULL, `password` TEXT NOT NULL)";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static readonly string DatabaseUrl = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}ChatupServer.db;Version=3;";
     }

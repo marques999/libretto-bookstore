@@ -14,12 +14,12 @@ using ChatupNET.Remoting;
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class ChatupServer
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private ChatupServer()
         {
@@ -61,52 +61,52 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private int _lastId;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int NextId => ++_lastId;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Active => _connections.Count;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private UpdateHandler _updateHandler;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private event RoomHandler OnJoin;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private event RoomHandler OnLeave;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static ChatupServer _instance;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static ChatupServer Instance => _instance ?? (_instance = new ChatupServer());
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<string, Address> _connections = new Dictionary<string, Address>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Address LocalHost
         {
@@ -115,7 +115,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public LobbyIntermediate Lobby
         {
@@ -123,7 +123,7 @@ namespace ChatupNET
         } = new LobbyIntermediate();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<int, Room> Rooms
         {
@@ -131,7 +131,7 @@ namespace ChatupNET
         } = SqliteDatabase.Instance.QueryRooms();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SessionIntermediate Session
         {
@@ -139,7 +139,7 @@ namespace ChatupNET
         } = new SessionIntermediate();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Dictionary<string, UserInformation> Users
         {
@@ -147,7 +147,7 @@ namespace ChatupNET
         } = SqliteDatabase.Instance.QueryUsers();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="loginHandler"></param>
         /// <param name="logoutHandler"></param>
@@ -160,7 +160,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="loginHandler"></param>
         /// <param name="logoutHandler"></param>
@@ -173,7 +173,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="insertHandler"></param>
         /// <param name="deleteHandler"></param>
@@ -184,7 +184,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="insertHandler"></param>
         /// <param name="deleteHandler"></param>
@@ -195,7 +195,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="joinHandler"></param>
         /// <param name="leaveHandler"></param>
@@ -217,7 +217,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userProfile"></param>
@@ -228,7 +228,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userName"></param>
@@ -239,7 +239,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userLogin"></param>
         /// <returns></returns>
@@ -260,7 +260,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -286,7 +286,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <returns></returns>
@@ -296,7 +296,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="updateHandler"></param>
         public void InitializeUpdates(UpdateHandler updateHandler)
@@ -305,7 +305,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         public void NotifyUpdates(Room roomInformation)
@@ -314,7 +314,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
@@ -333,7 +333,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
@@ -353,7 +353,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [STAThread]
         private static void Main()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -8,12 +8,12 @@ using ChatupNET.Remoting;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class MainForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public MainForm()
         {
@@ -25,7 +25,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private enum UserAction
         {
@@ -33,19 +33,19 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly ConsoleInterface _console;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         /// <param name="userAction"></param>
         private delegate void UpsertHandler(UserInformation userInformation, UserAction userAction);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnLogin(UserInformation userInformation)
@@ -61,7 +61,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnLogout(UserInformation userInformation)
@@ -77,7 +77,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnRegister(UserInformation userInformation)
@@ -93,7 +93,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void OnInsert(Room roomInformation)
@@ -109,7 +109,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void InsertRoom(Room roomInformation)
@@ -139,7 +139,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         private void OnDelete(int roomId)
@@ -155,7 +155,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         private void DeleteRoom(int roomId)
@@ -181,7 +181,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userName"></param>
@@ -199,7 +199,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userProfile"></param>
@@ -229,7 +229,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userProfile"></param>
@@ -247,7 +247,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="userProfile"></param>
@@ -277,7 +277,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="nodeItem"></param>
         /// <param name="userProfile"></param>
@@ -299,7 +299,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="nodeItem"></param>
         /// <param name="userName"></param>
@@ -319,7 +319,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         /// <param name="userAction"></param>
@@ -359,7 +359,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="activeUsers"></param>
         /// <param name="numberUsers"></param>
@@ -369,7 +369,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
@@ -381,7 +381,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

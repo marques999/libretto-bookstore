@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data.SQLite;
 
 using ChatupNET.Database;
@@ -7,12 +7,12 @@ using ChatupNET.Model;
 namespace ChatupNET
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class SqliteDatabase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private SqliteDatabase()
         {
@@ -22,22 +22,22 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static SqliteDatabase _instance;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static SqliteDatabase Instance => _instance ?? (_instance = new SqliteDatabase());
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly SQLiteConnection _sqliteConnection = new SQLiteConnection(SqliteConstants.DatabaseUrl);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sqlBuilder"></param>
         /// <returns></returns>
@@ -55,7 +55,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userForm"></param>
         /// <returns></returns>
@@ -75,7 +75,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -93,7 +93,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="groupChatroom"></param>
         /// <returns></returns>
@@ -126,7 +126,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomOwner"></param>
@@ -146,7 +146,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="tableSql"></param>
@@ -170,7 +170,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, UserInformation> QueryUsers()
@@ -199,7 +199,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sqliteReader"></param>
         /// <param name="dbColumn"></param>
@@ -210,7 +210,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sqliteReader"></param>
         /// <param name="dbColumn"></param>
@@ -221,7 +221,7 @@ namespace ChatupNET
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public Dictionary<int, Room> QueryRooms()

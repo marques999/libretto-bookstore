@@ -4,27 +4,27 @@ using System.Linq;
 namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class SqlBuilder
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly List<string> _selectedTables = new List<string>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly List<SqlColumn> _selectedColumns = new List<SqlColumn>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly WhereStatement _whereStatement = new WhereStatement();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="field"></param>
         /// <param name="operator"></param>
@@ -48,7 +48,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="column"></param>
         /// <returns></returns>
@@ -59,7 +59,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public string BuildQuery()

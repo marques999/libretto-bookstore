@@ -3,17 +3,17 @@ using System.Collections.Generic;
 namespace ChatupNET.Database
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class WhereClause
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         internal struct SubClause
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <param name="logic"></param>
             /// <param name="compareOperator"></param>
@@ -26,7 +26,7 @@ namespace ChatupNET.Database
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public object Value
             {
@@ -34,7 +34,7 @@ namespace ChatupNET.Database
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public LogicOperator LogicOperator
             {
@@ -42,7 +42,7 @@ namespace ChatupNET.Database
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public Comparison ComparisonOperator
             {
@@ -51,12 +51,12 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         internal List<SubClause> SubClauses;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public object Value
         {
@@ -64,7 +64,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string FieldName
         {
@@ -72,7 +72,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Comparison ComparisonOperator
         {
@@ -80,7 +80,7 @@ namespace ChatupNET.Database
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="field"></param>
         /// <param name="firstCompareOperator"></param>
