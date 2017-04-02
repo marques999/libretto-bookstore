@@ -7,6 +7,9 @@ using IPAddressControlLib;
 
 namespace ChatupNET.Forms
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal partial class AddressForm
     {
         /// <summary>
@@ -33,14 +36,14 @@ namespace ChatupNET.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayout = new FlowLayoutPanel();
+            labelName = new Label();
+            fieldPort = new TextBox();
+            labelPassword = new Label();
             buttonCancel = new Button();
             buttonConfirm = new Button();
+            flowLayout = new FlowLayoutPanel();
             tableLayout = new TableLayoutPanel();
             fieldAddress = new IPAddressControl();
-            fieldPort = new TextBox();
-            labelName = new Label();
-            labelPassword = new Label();
             flowLayout.SuspendLayout();
             tableLayout.SuspendLayout();
             SuspendLayout();
@@ -175,13 +178,13 @@ namespace ChatupNET.Forms
             ResumeLayout(false);
         }
 
-        private FlowLayoutPanel flowLayout;
+        private Label labelName;
+        private TextBox fieldPort;
+        private Label labelPassword;
         private Button buttonCancel;
         private Button buttonConfirm;
+        private FlowLayoutPanel flowLayout;
         private TableLayoutPanel tableLayout;
-        private TextBox fieldPort;
-        private Label labelName;
-        private Label labelPassword;
         private IPAddressControl fieldAddress;
     }
 }

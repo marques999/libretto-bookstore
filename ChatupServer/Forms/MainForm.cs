@@ -178,6 +178,7 @@ namespace ChatupNET.Forms
             _console.Print(roomInformation.Name, ConsoleInterface.Blue);
             _console.Print(" (id=" + roomId + ") ", ConsoleInterface.Yellow);
             _console.Print("was deleted by owner request.\n");
+            ChatupServer.Instance.Rooms.Remove(roomId);
         }
 
         /// <summary>

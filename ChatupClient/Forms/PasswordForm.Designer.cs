@@ -6,17 +6,17 @@ using System.Windows.Forms;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class PasswordForm
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private IContainer components = null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
@@ -30,22 +30,22 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayout = new FlowLayoutPanel();
+            labelPassword = new Label();
             buttonCancel = new Button();
             buttonConfirm = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            labelPrompt = new Label();
             fieldPassword = new TextBox();
+            flowLayout = new FlowLayoutPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             flowLayout.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // flowLayout
-            // 
+            //
             flowLayout.Controls.Add(buttonCancel);
             flowLayout.Controls.Add(buttonConfirm);
             flowLayout.Dock = DockStyle.Bottom;
@@ -56,9 +56,9 @@ namespace ChatupNET.Forms
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
             flowLayout.TabIndex = 3;
-            // 
+            //
             // buttonCancel
-            // 
+            //
             buttonCancel.BackColor = SystemColors.Control;
             buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonCancel.FlatStyle = FlatStyle.Flat;
@@ -69,9 +69,9 @@ namespace ChatupNET.Forms
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
-            // 
+            //
             // buttonConfirm
-            // 
+            //
             buttonConfirm.BackColor = SystemColors.Control;
             buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonConfirm.FlatStyle = FlatStyle.Flat;
@@ -82,12 +82,12 @@ namespace ChatupNET.Forms
             buttonConfirm.Text = "OK";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
-            // 
+            //
             // tableLayoutPanel1
-            // 
+            //
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(labelPrompt, 0, 0);
+            tableLayoutPanel1.Controls.Add(labelPassword, 0, 0);
             tableLayoutPanel1.Controls.Add(fieldPassword, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
@@ -97,20 +97,20 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 43.05556F));
             tableLayoutPanel1.Size = new Size(284, 72);
             tableLayoutPanel1.TabIndex = 4;
-            // 
+            //
             // labelPrompt
-            // 
-            labelPrompt.AutoSize = true;
-            labelPrompt.Dock = DockStyle.Fill;
-            labelPrompt.Location = new Point(3, 0);
-            labelPrompt.Name = "labelPrompt";
-            labelPrompt.Size = new Size(278, 40);
-            labelPrompt.TabIndex = 0;
-            labelPrompt.Text = "Sorry, but this room is password protected!\r\nPlease enter the password that was given to you.";
-            labelPrompt.TextAlign = ContentAlignment.MiddleCenter;
-            // 
+            //
+            labelPassword.AutoSize = true;
+            labelPassword.Dock = DockStyle.Fill;
+            labelPassword.Location = new Point(3, 0);
+            labelPassword.Name = "labelPassword";
+            labelPassword.Size = new Size(278, 40);
+            labelPassword.TabIndex = 0;
+            labelPassword.Text = "Sorry, but this room is password protected!\r\nPlease enter the password that was given to you.";
+            labelPassword.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // fieldPassword
-            // 
+            //
             fieldPassword.Dock = DockStyle.Fill;
             fieldPassword.Location = new Point(8, 48);
             fieldPassword.Margin = new Padding(8);
@@ -119,9 +119,10 @@ namespace ChatupNET.Forms
             fieldPassword.Size = new Size(268, 20);
             fieldPassword.TabIndex = 1;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
-            // 
+            fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
+            //
             // PasswordForm
-            // 
+            //
             AcceptButton = buttonConfirm;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -141,11 +142,11 @@ namespace ChatupNET.Forms
             ResumeLayout(false);
         }
 
-        private FlowLayoutPanel flowLayout;
+        private Label labelPassword;
         private Button buttonCancel;
         private Button buttonConfirm;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label labelPrompt;
         private TextBox fieldPassword;
+        private FlowLayoutPanel flowLayout;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

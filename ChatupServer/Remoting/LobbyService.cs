@@ -88,7 +88,6 @@ namespace ChatupNET.Remoting
                 {
                     OnDelete?.Invoke(roomId);
                     ChatupServer.Instance.Lobby.DeleteRoom(roomId);
-                    Rooms.Remove(roomId);
                 }
                 else
                 {

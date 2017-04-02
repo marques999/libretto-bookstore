@@ -6,17 +6,17 @@ using System.Windows.Forms;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class RegisterForm
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private IContainer components = null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
@@ -30,26 +30,26 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayout = new FlowLayoutPanel();
-            buttonCancel = new Button();
-            buttonConfirm = new Button();
-            tableLayout = new TableLayoutPanel();
             labelName = new Label();
             labelFullname = new Label();
             labelPassword = new Label();
-            fieldUsername = new TextBox();
-            fieldPassword = new TextBox();
             fieldName = new TextBox();
+            fieldPassword = new TextBox();
+            fieldUsername = new TextBox();
+            buttonCancel = new Button();
+            buttonConfirm = new Button();
+            flowLayout = new FlowLayoutPanel();
+            tableLayout = new TableLayoutPanel();
             flowLayout.SuspendLayout();
             tableLayout.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // flowLayout
-            // 
+            //
             flowLayout.Controls.Add(buttonCancel);
             flowLayout.Controls.Add(buttonConfirm);
             flowLayout.Dock = DockStyle.Bottom;
@@ -60,9 +60,9 @@ namespace ChatupNET.Forms
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
             flowLayout.TabIndex = 8;
-            // 
+            //
             // buttonCancel
-            // 
+            //
             buttonCancel.BackColor = SystemColors.Control;
             buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonCancel.FlatStyle = FlatStyle.Flat;
@@ -73,9 +73,9 @@ namespace ChatupNET.Forms
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
-            // 
+            //
             // buttonConfirm
-            // 
+            //
             buttonConfirm.BackColor = SystemColors.Control;
             buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             buttonConfirm.FlatStyle = FlatStyle.Flat;
@@ -86,9 +86,9 @@ namespace ChatupNET.Forms
             buttonConfirm.Text = "Validate";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
-            // 
+            //
             // tableLayout
-            // 
+            //
             tableLayout.ColumnCount = 2;
             tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
             tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
@@ -110,9 +110,9 @@ namespace ChatupNET.Forms
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout.Size = new Size(284, 92);
             tableLayout.TabIndex = 9;
-            // 
+            //
             // labelName
-            // 
+            //
             labelName.AutoSize = true;
             labelName.Dock = DockStyle.Fill;
             labelName.Location = new Point(7, 4);
@@ -121,9 +121,9 @@ namespace ChatupNET.Forms
             labelName.TabIndex = 0;
             labelName.Text = "Username";
             labelName.TextAlign = ContentAlignment.MiddleRight;
-            // 
+            //
             // labelFullname
-            // 
+            //
             labelFullname.AutoSize = true;
             labelFullname.Dock = DockStyle.Fill;
             labelFullname.Location = new Point(7, 32);
@@ -132,9 +132,9 @@ namespace ChatupNET.Forms
             labelFullname.TabIndex = 2;
             labelFullname.Text = "Full Name";
             labelFullname.TextAlign = ContentAlignment.MiddleRight;
-            // 
+            //
             // labelPassword
-            // 
+            //
             labelPassword.AutoSize = true;
             labelPassword.Dock = DockStyle.Fill;
             labelPassword.Location = new Point(7, 60);
@@ -143,9 +143,9 @@ namespace ChatupNET.Forms
             labelPassword.TabIndex = 4;
             labelPassword.Text = "Password";
             labelPassword.TextAlign = ContentAlignment.MiddleRight;
-            // 
+            //
             // fieldUsername
-            // 
+            //
             fieldUsername.Dock = DockStyle.Fill;
             fieldUsername.Location = new Point(90, 8);
             fieldUsername.Margin = new Padding(4);
@@ -153,9 +153,10 @@ namespace ChatupNET.Forms
             fieldUsername.Size = new Size(186, 20);
             fieldUsername.TabIndex = 1;
             fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
-            // 
+            fieldUsername.KeyPress += new KeyPressEventHandler(fieldUsername_KeyPress);
+            //
             // fieldPassword
-            // 
+            //
             fieldPassword.Dock = DockStyle.Fill;
             fieldPassword.Location = new Point(90, 64);
             fieldPassword.Margin = new Padding(4);
@@ -164,9 +165,10 @@ namespace ChatupNET.Forms
             fieldPassword.Size = new Size(186, 20);
             fieldPassword.TabIndex = 5;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
-            // 
+            fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
+            //
             // fieldName
-            // 
+            //
             fieldName.Dock = DockStyle.Fill;
             fieldName.Location = new Point(90, 36);
             fieldName.Margin = new Padding(4);
@@ -174,9 +176,10 @@ namespace ChatupNET.Forms
             fieldName.Size = new Size(186, 20);
             fieldName.TabIndex = 3;
             fieldName.TextChanged += new EventHandler(fieldName_TextChanged);
-            // 
+            fieldName.KeyPress += new KeyPressEventHandler(fieldName_KeyPress);
+            //
             // RegisterForm
-            // 
+            //
             AcceptButton = buttonConfirm;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -196,15 +199,15 @@ namespace ChatupNET.Forms
             ResumeLayout(false);
         }
 
-        private FlowLayoutPanel flowLayout;
-        private Button buttonCancel;
-        private Button buttonConfirm;
-        private TableLayoutPanel tableLayout;
-        private TextBox fieldPassword;
         private Label labelName;
         private Label labelFullname;
         private Label labelPassword;
-        private TextBox fieldUsername;
         private TextBox fieldName;
+        private TextBox fieldPassword;
+        private TextBox fieldUsername;
+        private Button buttonCancel;
+        private Button buttonConfirm;
+        private FlowLayoutPanel flowLayout;
+        private TableLayoutPanel tableLayout;
     }
 }

@@ -68,5 +68,18 @@ namespace ChatupNET.Forms
         {
             buttonConfirm.Enabled = ValidateForm();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void fieldPassword_KeyPress(object sender, KeyPressEventArgs args)
+        {
+            if (char.IsControl(args.KeyChar) == false && char.IsLetterOrDigit(args.KeyChar) == false)
+            {
+                args.Handled = true;
+            }
+        }
     }
 }

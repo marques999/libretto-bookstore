@@ -30,22 +30,15 @@ namespace ChatupNET.Forms
         /// <summary>
         /// 
         /// </summary>
+        private int _separatorCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         private bool ValidateForm()
         {
-            if (string.IsNullOrEmpty(fieldName.Text.Trim()))
-            {
-                return false;
-            }
-
-            var roomPassword = fieldPassword.Text.Trim();
-
-            if (string.IsNullOrEmpty(roomPassword))
-            {
-                return true;
-            }
-
-            return roomPassword.Length > 6;
+            return string.IsNullOrEmpty(fieldName.Text.Trim()) == false && fieldPassword.Text.Length > 6;
         }
 
         /// <summary>
@@ -55,7 +48,7 @@ namespace ChatupNET.Forms
         /// <param name="args"></param>
         private void buttonConfirm_Click(object sender, EventArgs args)
         {
-            RoomObject = new Room(-1, fieldName.Text, ChatupClient.Instance.Username, fieldPassword.Text, (int)fieldCapacity.Value);
+            RoomObject = new Room(-1, fieldName.Text.Trim(), ChatupClient.Instance.Username, fieldPassword.Text, (int)fieldCapacity.Value);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -99,6 +92,43 @@ namespace ChatupNET.Forms
         private void fieldPassword_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void fieldPassword_KeyPress(object sender, KeyPressEventArgs args)
+        {
+            if (char.IsControl(args.KeyChar) == false && char.IsLetterOrDigit(args.KeyChar) == false)
+            {
+                args.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void fieldName_KeyPress(object sender, KeyPressEventArgs args)
+        {
+            if (char.IsSeparator(args.KeyChar))
+            {
+                if (++_separatorCount > 1)
+                {
+                    args.Handled = true;
+                }
+            }
+            else if (char.IsControl(args.KeyChar) || char.IsLetterOrDigit(args.KeyChar))
+            {
+                _separatorCount = 0;
+            }
+            else
+            {
+                args.Handled = true;
+            }
         }
     }
 }

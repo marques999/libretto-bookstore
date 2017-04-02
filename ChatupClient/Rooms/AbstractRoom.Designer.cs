@@ -1,3 +1,8 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace ChatupNET.Rooms
 {
     /// <summary>
@@ -8,7 +13,7 @@ namespace ChatupNET.Rooms
         /// <summary>
         ///
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         ///
@@ -29,107 +34,107 @@ namespace ChatupNET.Rooms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AbstractRoom));
-            this.buttonValidate = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(AbstractRoom));
+            listBox1 = new ListBox();
+            textBox2 = new TextBox();
+            buttonValidate = new Button();
+            richTextBox1 = new RichTextBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
+            SuspendLayout();
             //
             // buttonValidate
             //
-            this.buttonValidate.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.buttonValidate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonValidate.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonValidate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonValidate.Location = new System.Drawing.Point(395, 352);
-            this.buttonValidate.Name = "buttonValidate";
-            this.buttonValidate.Size = new System.Drawing.Size(134, 24);
-            this.buttonValidate.TabIndex = 1;
-            this.buttonValidate.Text = "Send";
-            this.buttonValidate.UseVisualStyleBackColor = false;
-            this.buttonValidate.Click += new System.EventHandler(this.buttonValidate_Click);
+            buttonValidate.BackColor = SystemColors.ControlLight;
+            buttonValidate.Dock = DockStyle.Fill;
+            buttonValidate.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            buttonValidate.FlatStyle = FlatStyle.Flat;
+            buttonValidate.Location = new Point(395, 352);
+            buttonValidate.Name = "buttonValidate";
+            buttonValidate.Size = new Size(134, 24);
+            buttonValidate.TabIndex = 1;
+            buttonValidate.Text = "Send";
+            buttonValidate.UseVisualStyleBackColor = false;
+            buttonValidate.Click += new EventHandler(buttonValidate_Click);
             //
             // textBox2
             //
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(5, 352);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(384, 23);
-            this.textBox2.TabIndex = 19;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            textBox2.Dock = DockStyle.Fill;
+            textBox2.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox2.Location = new Point(5, 352);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(384, 23);
+            textBox2.TabIndex = 19;
+            textBox2.TextChanged += new EventHandler(textBox2_TextChanged);
             //
             // richTextBox1
             //
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(5, 5);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(384, 341);
-            this.richTextBox1.TabIndex = 21;
-            this.richTextBox1.Text = "";
+            richTextBox1.BorderStyle = BorderStyle.None;
+            richTextBox1.Dock = DockStyle.Fill;
+            richTextBox1.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            richTextBox1.Location = new Point(5, 5);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(384, 341);
+            richTextBox1.TabIndex = 21;
+            richTextBox1.Text = "";
             //
             // tableLayoutPanel1
             //
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.71663F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.28337F));
-            this.tableLayoutPanel1.Controls.Add(this.buttonValidate, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.listBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.richTextBox1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.26804F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.731959F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(534, 381);
-            this.tableLayoutPanel1.TabIndex = 22;
+            tableLayoutPanel1.BackColor = SystemColors.ControlDark;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 73.71663F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.28337F));
+            tableLayoutPanel1.Controls.Add(buttonValidate, 1, 1);
+            tableLayoutPanel1.Controls.Add(textBox2, 0, 1);
+            tableLayoutPanel1.Controls.Add(listBox1, 1, 0);
+            tableLayoutPanel1.Controls.Add(richTextBox1, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new Padding(2);
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 92.26804F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 7.731959F));
+            tableLayoutPanel1.Size = new Size(534, 381);
+            tableLayoutPanel1.TabIndex = 22;
             //
             // listBox1
             //
-            this.listBox1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox1.ForeColor = System.Drawing.Color.DimGray;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.IntegralHeight = false;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(395, 5);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(134, 341);
-            this.listBox1.TabIndex = 18;
+            listBox1.BackColor = SystemColors.ControlLight;
+            listBox1.Dock = DockStyle.Fill;
+            listBox1.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            listBox1.ForeColor = Color.DimGray;
+            listBox1.FormattingEnabled = true;
+            listBox1.IntegralHeight = false;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new Point(395, 5);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(134, 341);
+            listBox1.TabIndex = 18;
             //
             // AbstractRoom
             //
-            this.AcceptButton = this.buttonValidate;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 381);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "AbstractRoom";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Default [1/1]";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AbstractRoom_FormClosing);
-            this.Load += new System.EventHandler(this.RoomForm_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.ResumeLayout(false);
+            AcceptButton = buttonValidate;
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(534, 381);
+            Controls.Add(tableLayoutPanel1);
+            Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            Name = "AbstractRoom";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Default [1/1]";
+            FormClosing += new FormClosingEventHandler(AbstractRoom_FormClosing);
+            Load += new EventHandler(RoomForm_Load);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Button buttonValidate;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ListBox listBox1;
+        private ListBox listBox1;
+        private TextBox textBox2;
+        private Button buttonValidate;
+        private RichTextBox richTextBox1;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

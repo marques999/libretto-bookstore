@@ -8,6 +8,7 @@ namespace ChatupNET
         ///
         /// </summary>
         public static readonly int QueueLimit = 100;
+        public static readonly int PasswordLength = 6;
         public static readonly ushort DefaultPort = 12480;
 
         /// <summary>
