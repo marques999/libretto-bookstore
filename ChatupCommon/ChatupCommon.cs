@@ -1,4 +1,4 @@
-﻿using ChatupNET.Model;
+using ChatupNET.Model;
 
 namespace ChatupNET
 {
