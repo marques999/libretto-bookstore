@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 using ChatupNET.Model;
@@ -6,12 +6,12 @@ using ChatupNET.Model;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class RegisterForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RegisterForm()
         {
@@ -19,7 +19,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public UserForm RegistrationData
         {
@@ -28,12 +28,12 @@ namespace ChatupNET.Forms
         } = new UserForm("dummy", "dummy", "dummy");
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private int _separatorCount;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         private bool ValidateForm()
@@ -47,7 +47,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -57,7 +57,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -69,7 +69,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -80,7 +80,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -90,7 +90,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -100,7 +100,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -110,7 +110,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -134,7 +134,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -147,7 +147,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

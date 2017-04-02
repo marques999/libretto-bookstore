@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -6,17 +6,17 @@ using System.Windows.Forms;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class MainForm
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private IContainer components = null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
@@ -30,7 +30,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void InitializeComponent()
         {
@@ -68,28 +68,28 @@ namespace ChatupNET.Forms
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // splitContainer1
-            // 
+            //
             splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.IsSplitterFixed = true;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
-            // 
+            //
             // splitContainer1.Panel1
-            // 
+            //
             splitContainer1.Panel1.Controls.Add(tableLayoutPanel1);
-            // 
+            //
             // splitContainer1.Panel2
-            // 
+            //
             splitContainer1.Panel2.Controls.Add(tableLayoutPanel2);
             splitContainer1.Size = new Size(564, 381);
             splitContainer1.SplitterDistance = 326;
             splitContainer1.TabIndex = 0;
-            // 
+            //
             // tableLayoutPanel1
-            // 
+            //
             tableLayoutPanel1.BackColor = SystemColors.ControlDark;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -110,18 +110,18 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(564, 326);
             tableLayoutPanel1.TabIndex = 0;
-            // 
+            //
             // panel2
-            // 
+            //
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(285, 294);
             panel2.Name = "panel2";
             panel2.Size = new Size(276, 29);
             panel2.TabIndex = 6;
-            // 
+            //
             // panel3
-            // 
+            //
             panel3.Controls.Add(buttonMessage);
             panel3.Controls.Add(buttonInvite);
             panel3.Dock = DockStyle.Fill;
@@ -129,9 +129,9 @@ namespace ChatupNET.Forms
             panel3.Name = "panel3";
             panel3.Size = new Size(276, 29);
             panel3.TabIndex = 0;
-            // 
+            //
             // buttonMessage
-            // 
+            //
             buttonMessage.Dock = DockStyle.Fill;
             buttonMessage.Location = new Point(75, 0);
             buttonMessage.Name = "buttonMessage";
@@ -140,9 +140,9 @@ namespace ChatupNET.Forms
             buttonMessage.Text = "Private Message";
             buttonMessage.UseVisualStyleBackColor = true;
             buttonMessage.Click += new EventHandler(buttonMessage_Click);
-            // 
+            //
             // buttonInvite
-            // 
+            //
             buttonInvite.Dock = DockStyle.Left;
             buttonInvite.Location = new Point(0, 0);
             buttonInvite.Name = "buttonInvite";
@@ -151,9 +151,9 @@ namespace ChatupNET.Forms
             buttonInvite.Text = "Invite";
             buttonInvite.UseVisualStyleBackColor = true;
             buttonInvite.Click += new EventHandler(buttonInvite_Click);
-            // 
+            //
             // roomsList
-            // 
+            //
             roomsList.Columns.AddRange(new ColumnHeader[] { columnHeader3, columnHeader4 });
             roomsList.Dock = DockStyle.Fill;
             roomsList.FullRowSelect = true;
@@ -174,19 +174,19 @@ namespace ChatupNET.Forms
             roomsList.View = View.Details;
             roomsList.SelectedIndexChanged += new EventHandler(listView1_SelectedIndexChanged);
             roomsList.MouseDoubleClick += new MouseEventHandler(roomsList_MouseDoubleClick);
-            // 
+            //
             // columnHeader3
-            // 
+            //
             columnHeader3.Text = "Name";
             columnHeader3.Width = 194;
-            // 
+            //
             // columnHeader4
-            // 
+            //
             columnHeader4.Text = "Capacity";
             columnHeader4.Width = 78;
-            // 
+            //
             // usersList
-            // 
+            //
             usersList.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
             usersList.Dock = DockStyle.Fill;
             usersList.FullRowSelect = true;
@@ -203,19 +203,19 @@ namespace ChatupNET.Forms
             usersList.View = View.Details;
             usersList.SelectedIndexChanged += new EventHandler(listView2_SelectedIndexChanged);
             usersList.MouseDoubleClick += new MouseEventHandler(usersList_MouseDoubleClick);
-            // 
+            //
             // columnHeader1
-            // 
+            //
             columnHeader1.Text = "Username";
             columnHeader1.Width = 95;
-            // 
+            //
             // columnHeader2
-            // 
+            //
             columnHeader2.Text = "Status";
             columnHeader2.Width = 177;
-            // 
+            //
             // label1
-            // 
+            //
             label1.AutoSize = true;
             label1.BackColor = SystemColors.ControlDarkDark;
             label1.Dock = DockStyle.Fill;
@@ -228,9 +228,9 @@ namespace ChatupNET.Forms
             label1.TabIndex = 0;
             label1.Text = "Rooms";
             label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
+            //
             // label2
-            // 
+            //
             label2.AutoSize = true;
             label2.BackColor = SystemColors.ControlDarkDark;
             label2.Dock = DockStyle.Fill;
@@ -243,9 +243,9 @@ namespace ChatupNET.Forms
             label2.TabIndex = 1;
             label2.Text = "Peers";
             label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
+            //
             // panel1
-            // 
+            //
             panel1.Controls.Add(buttonJoin);
             panel1.Controls.Add(buttonDelete);
             panel1.Controls.Add(buttonNew);
@@ -254,9 +254,9 @@ namespace ChatupNET.Forms
             panel1.Name = "panel1";
             panel1.Size = new Size(276, 29);
             panel1.TabIndex = 5;
-            // 
+            //
             // buttonJoin
-            // 
+            //
             buttonJoin.Dock = DockStyle.Fill;
             buttonJoin.Location = new Point(75, 0);
             buttonJoin.Name = "buttonJoin";
@@ -265,9 +265,9 @@ namespace ChatupNET.Forms
             buttonJoin.Text = "Join";
             buttonJoin.UseVisualStyleBackColor = true;
             buttonJoin.Click += new EventHandler(buttonJoin_Click);
-            // 
+            //
             // buttonDelete
-            // 
+            //
             buttonDelete.Dock = DockStyle.Right;
             buttonDelete.Location = new Point(201, 0);
             buttonDelete.Name = "buttonDelete";
@@ -276,9 +276,9 @@ namespace ChatupNET.Forms
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = true;
             buttonDelete.Click += new EventHandler(buttonDelete_Click);
-            // 
+            //
             // buttonNew
-            // 
+            //
             buttonNew.Dock = DockStyle.Left;
             buttonNew.Location = new Point(0, 0);
             buttonNew.Name = "buttonNew";
@@ -287,9 +287,9 @@ namespace ChatupNET.Forms
             buttonNew.Text = "New";
             buttonNew.UseVisualStyleBackColor = true;
             buttonNew.Click += new EventHandler(buttonNew_Click);
-            // 
+            //
             // tableLayoutPanel2
-            // 
+            //
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -303,9 +303,9 @@ namespace ChatupNET.Forms
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 51F));
             tableLayoutPanel2.Size = new Size(564, 51);
             tableLayoutPanel2.TabIndex = 0;
-            // 
+            //
             // labelUser
-            // 
+            //
             labelUser.AutoSize = true;
             labelUser.BackColor = SystemColors.ControlDarkDark;
             labelUser.Dock = DockStyle.Fill;
@@ -318,9 +318,9 @@ namespace ChatupNET.Forms
             labelUser.TabIndex = 1;
             labelUser.Text = "User: guest";
             labelUser.TextAlign = ContentAlignment.MiddleCenter;
-            // 
+            //
             // buttonLogout
-            // 
+            //
             buttonLogout.Dock = DockStyle.Fill;
             buttonLogout.FlatStyle = FlatStyle.Flat;
             buttonLogout.Location = new Point(285, 3);
@@ -330,9 +330,9 @@ namespace ChatupNET.Forms
             buttonLogout.Text = "Log Out";
             buttonLogout.UseVisualStyleBackColor = true;
             buttonLogout.Click += new EventHandler(buttonLogout_Click);
-            // 
+            //
             // MainForm
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;

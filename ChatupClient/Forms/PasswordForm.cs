@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class PasswordForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public PasswordForm()
         {
@@ -17,18 +17,18 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Password => fieldPassword.Text;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         private bool ValidateForm() => !string.IsNullOrEmpty(fieldPassword.Text);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="argse"></param>
@@ -39,7 +39,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -50,7 +50,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -60,7 +60,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -70,7 +70,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

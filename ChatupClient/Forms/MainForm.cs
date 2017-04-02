@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +13,12 @@ using ChatupNET.Remoting;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class MainForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public MainForm()
         {
@@ -35,42 +35,42 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly ErrorHandler _errorHandler;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly LobbyIntermediate _lobbyIntermediate = new LobbyIntermediate();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<int, Room> _groupChatrooms = new Dictionary<int, Room>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly SessionIntermediate _sessionIntermediate = new SessionIntermediate();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<Room, GroupRoom> _context = new Dictionary<Room, GroupRoom>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<string, string> _connections = new Dictionary<string, string>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly Dictionary<string, PrivateRoom> _privateChatrooms = new Dictionary<string, PrivateRoom>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnLogin(UserInformation userInformation)
@@ -86,7 +86,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnLogout(UserInformation userInformation)
@@ -102,7 +102,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void OnCreate(Room roomInformation)
@@ -118,7 +118,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         private void OnDelete(int roomId)
@@ -134,7 +134,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
@@ -151,7 +151,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userProfile"></param>
         /// <param name="userHost"></param>
@@ -161,7 +161,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="privateRoom"></param>
         /// <param name="userName"></param>
@@ -179,7 +179,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="remoteInvocation"></param>
@@ -203,7 +203,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         private void OnDisconnectAux(string userName)
@@ -217,7 +217,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInvitation"></param>
         private void OnInvite(RoomInvitation roomInvitation)
@@ -233,7 +233,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInvitation"></param>
         private void HandleInvitation(RoomInvitation roomInvitation)
@@ -263,7 +263,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteMessage"></param>
         private void OnReceive(RemoteMessage remoteMessage)
@@ -279,7 +279,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="remoteMessage"></param>
         public void OnReceiveAux(RemoteMessage remoteMessage)
@@ -293,7 +293,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
         protected override void OnClosing(CancelEventArgs args)
@@ -332,7 +332,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void InsertRoom(Room roomInformation)
@@ -359,7 +359,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         private void DeleteRoom(int roomId)
@@ -374,7 +374,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomCount"></param>
@@ -392,7 +392,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="roomCount"></param>
@@ -415,7 +415,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userInformation"></param>
         private void UpsertUser(UserInformation userInformation)
@@ -447,7 +447,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void UpdatePrivateButtons()
         {
@@ -456,7 +456,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void UpdateRoomButtons()
         {
@@ -465,7 +465,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -475,7 +475,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -507,7 +507,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -517,7 +517,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <param name="grouproomInstance"></param>
@@ -530,7 +530,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         private void JoinRoom(int roomId)
@@ -556,7 +556,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="operationResult"></param>
@@ -573,7 +573,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="remoteHost"></param>
@@ -607,7 +607,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -627,7 +627,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -637,7 +637,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -647,7 +647,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void LeaveGroup(Room roomInformation)
@@ -660,7 +660,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -680,7 +680,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -690,7 +690,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         private void JoinPrivate(string userName)
@@ -723,7 +723,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -764,7 +764,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         /// <returns></returns>
@@ -774,7 +774,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomCount"></param>
         /// <param name="roomCapacity"></param>
@@ -785,7 +785,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -816,7 +816,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -836,7 +836,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userName"></param>
         private void InviteUser(string userName)
@@ -871,7 +871,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="userName"></param>

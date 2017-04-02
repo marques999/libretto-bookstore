@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,12 +7,12 @@ using ChatupNET.Model;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class InviteForm : Form
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="groupChatrooms"></param>
         public InviteForm(IEnumerable<Room> groupChatrooms)
@@ -34,7 +34,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int RoomId
         {
@@ -43,7 +43,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roomInformation"></param>
         private void InsertRoom(Room roomInformation)
@@ -60,7 +60,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -71,7 +71,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -95,7 +95,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

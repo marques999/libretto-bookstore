@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 using ChatupNET.Model;
@@ -6,7 +6,7 @@ using ChatupNET.Model;
 namespace ChatupNET.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class LoginForm : Form
     {
@@ -21,7 +21,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private readonly ErrorHandler _errorHandler;
 
@@ -31,7 +31,7 @@ namespace ChatupNET.Forms
         private Address _remoteHost = new Address(ChatupCommon.DefaultPort);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         private bool ValidateForm() => !string.IsNullOrWhiteSpace(fieldUsername.Text) && !string.IsNullOrWhiteSpace(fieldPassword.Text);
@@ -150,7 +150,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -163,7 +163,7 @@ namespace ChatupNET.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
