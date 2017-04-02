@@ -63,17 +63,10 @@ namespace ChatupNET.Forms
             splitContainer1.Margin = new Padding(4);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
-            //
-            // splitContainer1.Panel1
-            //
             splitContainer1.Panel1.Controls.Add(splitContainer2);
-            //
-            // splitContainer1.Panel2
-            //
             splitContainer1.Panel2.Controls.Add(richTextBox1);
             splitContainer1.Size = new Size(688, 585);
             splitContainer1.SplitterDistance = 351;
-            splitContainer1.TabIndex = 3;
             //
             // splitContainer2
             //
@@ -81,18 +74,11 @@ namespace ChatupNET.Forms
             splitContainer2.IsSplitterFixed = true;
             splitContainer2.Location = new Point(0, 0);
             splitContainer2.Name = "splitContainer2";
-            //
-            // splitContainer2.Panel1
-            //
             splitContainer2.Panel1.Controls.Add(groupBox1);
-            //
-            // splitContainer2.Panel2
-            //
             splitContainer2.Panel2.Controls.Add(groupBox2);
             splitContainer2.Size = new Size(688, 351);
             splitContainer2.SplitterDistance = 340;
             splitContainer2.SplitterWidth = 1;
-            splitContainer2.TabIndex = 1;
             //
             // groupBox1
             //
@@ -103,7 +89,6 @@ namespace ChatupNET.Forms
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 8, 4, 4);
             groupBox1.Size = new Size(340, 351);
-            groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Chatrooms";
             //
@@ -116,7 +101,7 @@ namespace ChatupNET.Forms
             treeView1.Margin = new Padding(0);
             treeView1.Name = "treeView1";
             treeView1.Size = new Size(332, 326);
-            treeView1.TabIndex = 5;
+            treeView1.TabIndex = 0;
             //
             // groupBox2
             //
@@ -126,7 +111,6 @@ namespace ChatupNET.Forms
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 8, 4, 4);
             groupBox2.Size = new Size(347, 351);
-            groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Peers";
             //
@@ -142,7 +126,7 @@ namespace ChatupNET.Forms
             listView1.MultiSelect = false;
             listView1.Name = "listView1";
             listView1.Size = new Size(339, 326);
-            listView1.TabIndex = 6;
+            listView1.TabIndex = 1;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
             //
@@ -169,7 +153,7 @@ namespace ChatupNET.Forms
             richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             richTextBox1.ShortcutsEnabled = false;
             richTextBox1.Size = new Size(688, 230);
-            richTextBox1.TabIndex = 5;
+            richTextBox1.TabIndex = 2;
             richTextBox1.Text = "";
             //
             // MainForm

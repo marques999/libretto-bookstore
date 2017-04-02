@@ -64,7 +64,7 @@ namespace ChatupNET.Rooms
             textBox2.Location = new Point(5, 352);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(384, 23);
-            textBox2.TabIndex = 19;
+            textBox2.TabIndex = 0;
             textBox2.TextChanged += new EventHandler(textBox2_TextChanged);
             //
             // richTextBox1
@@ -76,7 +76,7 @@ namespace ChatupNET.Rooms
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
             richTextBox1.Size = new Size(384, 341);
-            richTextBox1.TabIndex = 21;
+            richTextBox1.TabIndex = 2;
             richTextBox1.Text = "";
             //
             // tableLayoutPanel1
@@ -97,7 +97,6 @@ namespace ChatupNET.Rooms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 92.26804F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 7.731959F));
             tableLayoutPanel1.Size = new Size(534, 381);
-            tableLayoutPanel1.TabIndex = 22;
             //
             // listBox1
             //
@@ -111,7 +110,6 @@ namespace ChatupNET.Rooms
             listBox1.Location = new Point(395, 5);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(134, 341);
-            listBox1.TabIndex = 18;
             //
             // AbstractRoom
             //

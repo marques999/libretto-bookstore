@@ -59,7 +59,6 @@ namespace ChatupNET.Forms
             flowLayout.Name = "flowLayout";
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
-            flowLayout.TabIndex = 3;
             // 
             // buttonCancel
             // 
@@ -69,7 +68,7 @@ namespace ChatupNET.Forms
             buttonCancel.Location = new Point(145, 5);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(132, 24);
-            buttonCancel.TabIndex = 9;
+            buttonCancel.TabIndex = 3;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
@@ -82,7 +81,7 @@ namespace ChatupNET.Forms
             buttonConfirm.Location = new Point(7, 5);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(132, 24);
-            buttonConfirm.TabIndex = 10;
+            buttonConfirm.TabIndex = 2;
             buttonConfirm.Text = "Apply";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
@@ -105,7 +104,6 @@ namespace ChatupNET.Forms
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayout.Size = new Size(284, 71);
-            tableLayout.TabIndex = 12;
             // 
             // fieldAddress
             // 
@@ -121,7 +119,7 @@ namespace ChatupNET.Forms
             fieldAddress.Name = "fieldAddress";
             fieldAddress.ReadOnly = false;
             fieldAddress.Size = new Size(186, 20);
-            fieldAddress.TabIndex = 13;
+            fieldAddress.TabIndex = 0;
             fieldAddress.Text = "...";
             fieldAddress.TextChanged += new EventHandler(fieldName_TextChanged);
             // 
@@ -132,7 +130,7 @@ namespace ChatupNET.Forms
             fieldPort.Margin = new Padding(4);
             fieldPort.Name = "fieldPort";
             fieldPort.Size = new Size(186, 20);
-            fieldPort.TabIndex = 4;
+            fieldPort.TabIndex = 1;
             fieldPort.TextChanged += new EventHandler(fieldPassword_TextChanged);
             // 
             // labelName
@@ -142,7 +140,6 @@ namespace ChatupNET.Forms
             labelName.Location = new Point(7, 4);
             labelName.Name = "labelName";
             labelName.Size = new Size(76, 31);
-            labelName.TabIndex = 0;
             labelName.Text = "Address";
             labelName.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -153,7 +150,6 @@ namespace ChatupNET.Forms
             labelPassword.Location = new Point(7, 35);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(76, 32);
-            labelPassword.TabIndex = 1;
             labelPassword.Text = "Port";
             labelPassword.TextAlign = ContentAlignment.MiddleRight;
             // 

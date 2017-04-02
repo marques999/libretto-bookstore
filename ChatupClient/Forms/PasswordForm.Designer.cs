@@ -55,7 +55,6 @@ namespace ChatupNET.Forms
             flowLayout.Name = "flowLayout";
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
-            flowLayout.TabIndex = 3;
             //
             // buttonCancel
             //
@@ -65,7 +64,7 @@ namespace ChatupNET.Forms
             buttonCancel.Location = new Point(145, 5);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(132, 24);
-            buttonCancel.TabIndex = 9;
+            buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
@@ -78,7 +77,7 @@ namespace ChatupNET.Forms
             buttonConfirm.Location = new Point(7, 5);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(132, 24);
-            buttonConfirm.TabIndex = 10;
+            buttonConfirm.TabIndex = 1;
             buttonConfirm.Text = "OK";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
@@ -96,7 +95,6 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 56.94444F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 43.05556F));
             tableLayoutPanel1.Size = new Size(284, 72);
-            tableLayoutPanel1.TabIndex = 4;
             //
             // labelPrompt
             //
@@ -105,7 +103,6 @@ namespace ChatupNET.Forms
             labelPassword.Location = new Point(3, 0);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(278, 40);
-            labelPassword.TabIndex = 0;
             labelPassword.Text = "Sorry, but this room is password protected!\r\nPlease enter the password that was given to you.";
             labelPassword.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -117,7 +114,7 @@ namespace ChatupNET.Forms
             fieldPassword.Name = "fieldPassword";
             fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(268, 20);
-            fieldPassword.TabIndex = 1;
+            fieldPassword.TabIndex = 0;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
             fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
             //

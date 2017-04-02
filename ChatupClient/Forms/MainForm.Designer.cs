@@ -76,17 +76,10 @@ namespace ChatupNET.Forms
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
-            //
-            // splitContainer1.Panel1
-            //
             splitContainer1.Panel1.Controls.Add(tableLayoutPanel1);
-            //
-            // splitContainer1.Panel2
-            //
             splitContainer1.Panel2.Controls.Add(tableLayoutPanel2);
             splitContainer1.Size = new Size(564, 381);
             splitContainer1.SplitterDistance = 326;
-            splitContainer1.TabIndex = 0;
             //
             // tableLayoutPanel1
             //
@@ -109,7 +102,6 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(564, 326);
-            tableLayoutPanel1.TabIndex = 0;
             //
             // panel2
             //
@@ -118,7 +110,6 @@ namespace ChatupNET.Forms
             panel2.Location = new Point(285, 294);
             panel2.Name = "panel2";
             panel2.Size = new Size(276, 29);
-            panel2.TabIndex = 6;
             //
             // panel3
             //
@@ -128,7 +119,6 @@ namespace ChatupNET.Forms
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(276, 29);
-            panel3.TabIndex = 0;
             //
             // buttonMessage
             //
@@ -136,7 +126,7 @@ namespace ChatupNET.Forms
             buttonMessage.Location = new Point(75, 0);
             buttonMessage.Name = "buttonMessage";
             buttonMessage.Size = new Size(201, 29);
-            buttonMessage.TabIndex = 12;
+            buttonMessage.TabIndex = 5;
             buttonMessage.Text = "Private Message";
             buttonMessage.UseVisualStyleBackColor = true;
             buttonMessage.Click += new EventHandler(buttonMessage_Click);
@@ -147,7 +137,7 @@ namespace ChatupNET.Forms
             buttonInvite.Location = new Point(0, 0);
             buttonInvite.Name = "buttonInvite";
             buttonInvite.Size = new Size(75, 29);
-            buttonInvite.TabIndex = 11;
+            buttonInvite.TabIndex = 4;
             buttonInvite.Text = "Invite";
             buttonInvite.UseVisualStyleBackColor = true;
             buttonInvite.Click += new EventHandler(buttonInvite_Click);
@@ -169,7 +159,7 @@ namespace ChatupNET.Forms
             roomsList.MultiSelect = false;
             roomsList.Name = "roomsList";
             roomsList.Size = new Size(276, 244);
-            roomsList.TabIndex = 4;
+            roomsList.TabIndex = 0;
             roomsList.UseCompatibleStateImageBehavior = false;
             roomsList.View = View.Details;
             roomsList.SelectedIndexChanged += new EventHandler(listView1_SelectedIndexChanged);
@@ -225,7 +215,6 @@ namespace ChatupNET.Forms
             label1.Margin = new Padding(2);
             label1.Name = "label1";
             label1.Size = new Size(278, 37);
-            label1.TabIndex = 0;
             label1.Text = "Rooms";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -240,7 +229,6 @@ namespace ChatupNET.Forms
             label2.Margin = new Padding(2);
             label2.Name = "label2";
             label2.Size = new Size(278, 37);
-            label2.TabIndex = 1;
             label2.Text = "Peers";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -253,7 +241,6 @@ namespace ChatupNET.Forms
             panel1.Location = new Point(3, 294);
             panel1.Name = "panel1";
             panel1.Size = new Size(276, 29);
-            panel1.TabIndex = 5;
             //
             // buttonJoin
             //
@@ -261,7 +248,7 @@ namespace ChatupNET.Forms
             buttonJoin.Location = new Point(75, 0);
             buttonJoin.Name = "buttonJoin";
             buttonJoin.Size = new Size(126, 29);
-            buttonJoin.TabIndex = 3;
+            buttonJoin.TabIndex = 1;
             buttonJoin.Text = "Join";
             buttonJoin.UseVisualStyleBackColor = true;
             buttonJoin.Click += new EventHandler(buttonJoin_Click);
@@ -302,7 +289,6 @@ namespace ChatupNET.Forms
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 51F));
             tableLayoutPanel2.Size = new Size(564, 51);
-            tableLayoutPanel2.TabIndex = 0;
             //
             // labelUser
             //
@@ -315,7 +301,6 @@ namespace ChatupNET.Forms
             labelUser.Margin = new Padding(2);
             labelUser.Name = "labelUser";
             labelUser.Size = new Size(278, 47);
-            labelUser.TabIndex = 1;
             labelUser.Text = "User: guest";
             labelUser.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -326,7 +311,7 @@ namespace ChatupNET.Forms
             buttonLogout.Location = new Point(285, 3);
             buttonLogout.Name = "buttonLogout";
             buttonLogout.Size = new Size(276, 45);
-            buttonLogout.TabIndex = 2;
+            buttonLogout.TabIndex = 6;
             buttonLogout.Text = "Log Out";
             buttonLogout.UseVisualStyleBackColor = true;
             buttonLogout.Click += new EventHandler(buttonLogout_Click);

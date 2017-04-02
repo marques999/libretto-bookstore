@@ -59,7 +59,6 @@ namespace ChatupNET.Forms
             flowLayout.Name = "flowLayout";
             flowLayout.Padding = new Padding(2);
             flowLayout.Size = new Size(284, 34);
-            flowLayout.TabIndex = 8;
             //
             // buttonCancel
             //
@@ -69,7 +68,7 @@ namespace ChatupNET.Forms
             buttonCancel.Location = new Point(145, 5);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(132, 24);
-            buttonCancel.TabIndex = 7;
+            buttonCancel.TabIndex = 4;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
@@ -82,7 +81,7 @@ namespace ChatupNET.Forms
             buttonConfirm.Location = new Point(7, 5);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(132, 24);
-            buttonConfirm.TabIndex = 6;
+            buttonConfirm.TabIndex = 3;
             buttonConfirm.Text = "Validate";
             buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
@@ -109,7 +108,6 @@ namespace ChatupNET.Forms
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 27F));
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout.Size = new Size(284, 92);
-            tableLayout.TabIndex = 9;
             //
             // labelName
             //
@@ -118,7 +116,6 @@ namespace ChatupNET.Forms
             labelName.Location = new Point(7, 4);
             labelName.Name = "labelName";
             labelName.Size = new Size(76, 28);
-            labelName.TabIndex = 0;
             labelName.Text = "Username";
             labelName.TextAlign = ContentAlignment.MiddleRight;
             //
@@ -129,7 +126,6 @@ namespace ChatupNET.Forms
             labelFullname.Location = new Point(7, 32);
             labelFullname.Name = "labelFullname";
             labelFullname.Size = new Size(76, 28);
-            labelFullname.TabIndex = 2;
             labelFullname.Text = "Full Name";
             labelFullname.TextAlign = ContentAlignment.MiddleRight;
             //
@@ -140,7 +136,6 @@ namespace ChatupNET.Forms
             labelPassword.Location = new Point(7, 60);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(76, 28);
-            labelPassword.TabIndex = 4;
             labelPassword.Text = "Password";
             labelPassword.TextAlign = ContentAlignment.MiddleRight;
             //
@@ -151,7 +146,7 @@ namespace ChatupNET.Forms
             fieldUsername.Margin = new Padding(4);
             fieldUsername.Name = "fieldUsername";
             fieldUsername.Size = new Size(186, 20);
-            fieldUsername.TabIndex = 1;
+            fieldUsername.TabIndex = 0;
             fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
             fieldUsername.KeyPress += new KeyPressEventHandler(fieldUsername_KeyPress);
             //
@@ -163,7 +158,7 @@ namespace ChatupNET.Forms
             fieldPassword.Name = "fieldPassword";
             fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(186, 20);
-            fieldPassword.TabIndex = 5;
+            fieldPassword.TabIndex = 2;
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
             fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
             //
@@ -174,7 +169,7 @@ namespace ChatupNET.Forms
             fieldName.Margin = new Padding(4);
             fieldName.Name = "fieldName";
             fieldName.Size = new Size(186, 20);
-            fieldName.TabIndex = 3;
+            fieldName.TabIndex = 1;
             fieldName.TextChanged += new EventHandler(fieldName_TextChanged);
             fieldName.KeyPress += new KeyPressEventHandler(fieldName_KeyPress);
             //

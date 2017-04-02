@@ -59,7 +59,6 @@ namespace ChatupNET.Forms
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(285, 242);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             //
             // tableLayoutPanel2
@@ -77,7 +76,6 @@ namespace ChatupNET.Forms
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Size = new Size(285, 40);
-            tableLayoutPanel2.TabIndex = 8;
             //
             // buttonConfigure
             //
@@ -88,7 +86,7 @@ namespace ChatupNET.Forms
             buttonConfigure.Location = new Point(145, 7);
             buttonConfigure.Name = "buttonConfigure";
             buttonConfigure.Size = new Size(133, 26);
-            buttonConfigure.TabIndex = 9;
+            buttonConfigure.TabIndex = 4;
             buttonConfigure.Text = "Configure";
             buttonConfigure.UseVisualStyleBackColor = false;
             buttonConfigure.Click += new EventHandler(buttonConfigure_Click);
@@ -102,7 +100,7 @@ namespace ChatupNET.Forms
             buttonValidate.Location = new Point(7, 7);
             buttonValidate.Name = "buttonValidate";
             buttonValidate.Size = new Size(132, 26);
-            buttonValidate.TabIndex = 8;
+            buttonValidate.TabIndex = 2;
             buttonValidate.Text = "Validate";
             buttonValidate.UseVisualStyleBackColor = false;
             buttonValidate.Click += new EventHandler(buttonValidate_Click);
@@ -129,19 +127,17 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(285, 172);
-            tableLayoutPanel1.TabIndex = 9;
             //
             // labelUsername
             //
             labelUsername.AutoSize = true;
             labelUsername.BorderStyle = BorderStyle.FixedSingle;
             labelUsername.Dock = DockStyle.Fill;
-            labelUsername.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            labelUsername.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelUsername.Location = new Point(8, 0);
             labelUsername.Margin = new Padding(8, 0, 8, 0);
             labelUsername.Name = "labelUsername";
             labelUsername.Size = new Size(269, 26);
-            labelUsername.TabIndex = 0;
             labelUsername.Text = "Username";
             labelUsername.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -152,7 +148,7 @@ namespace ChatupNET.Forms
             fieldUsername.Margin = new Padding(8);
             fieldUsername.Name = "fieldUsername";
             fieldUsername.Size = new Size(269, 20);
-            fieldUsername.TabIndex = 2;
+            fieldUsername.TabIndex = 0;
             fieldUsername.Text = "marques999";
             fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
             fieldUsername.KeyPress += new KeyPressEventHandler(fieldUsername_KeyPress);
@@ -162,12 +158,11 @@ namespace ChatupNET.Forms
             labelPassword.AutoSize = true;
             labelPassword.BorderStyle = BorderStyle.FixedSingle;
             labelPassword.Dock = DockStyle.Fill;
-            labelPassword.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            labelPassword.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPassword.Location = new Point(8, 64);
             labelPassword.Margin = new Padding(8, 0, 8, 0);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(269, 26);
-            labelPassword.TabIndex = 1;
             labelPassword.Text = "Password";
             labelPassword.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -179,7 +174,7 @@ namespace ChatupNET.Forms
             fieldPassword.Name = "fieldPassword";
             fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(269, 20);
-            fieldPassword.TabIndex = 3;
+            fieldPassword.TabIndex = 1;
             fieldPassword.Text = "14191091";
             fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
             fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
@@ -194,7 +189,7 @@ namespace ChatupNET.Forms
             buttonRegister.Margin = new Padding(64, 8, 64, 16);
             buttonRegister.Name = "buttonRegister";
             buttonRegister.Size = new Size(157, 23);
-            buttonRegister.TabIndex = 4;
+            buttonRegister.TabIndex = 3;
             buttonRegister.Text = "Register";
             buttonRegister.UseVisualStyleBackColor = false;
             buttonRegister.Click += new EventHandler(buttonRegister_Click);

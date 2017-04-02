@@ -64,7 +64,6 @@ namespace ChatupNET.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(344, 264);
-            tableLayoutPanel1.TabIndex = 0;
             //
             // roomsList
             //
@@ -82,7 +81,7 @@ namespace ChatupNET.Forms
             roomsList.MultiSelect = false;
             roomsList.Name = "roomsList";
             roomsList.Size = new Size(338, 182);
-            roomsList.TabIndex = 1;
+            roomsList.TabIndex = 0;
             roomsList.UseCompatibleStateImageBehavior = false;
             roomsList.View = View.Details;
             roomsList.DoubleClick += new EventHandler(roomsList_DoubleClick);
@@ -108,7 +107,6 @@ namespace ChatupNET.Forms
             label1.Margin = new Padding(2);
             label1.Name = "label1";
             label1.Size = new Size(340, 37);
-            label1.TabIndex = 7;
             label1.Text = "Rooms";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             //
@@ -121,7 +119,6 @@ namespace ChatupNET.Forms
             panel1.Location = new Point(3, 232);
             panel1.Name = "panel1";
             panel1.Size = new Size(338, 29);
-            panel1.TabIndex = 6;
             //
             // buttonInvite
             //
@@ -129,7 +126,7 @@ namespace ChatupNET.Forms
             buttonInvite.Location = new Point(0, 0);
             buttonInvite.Name = "buttonInvite";
             buttonInvite.Size = new Size(242, 29);
-            buttonInvite.TabIndex = 2;
+            buttonInvite.TabIndex = 1;
             buttonInvite.Text = "Invite";
             buttonInvite.UseVisualStyleBackColor = true;
             buttonInvite.Click += new EventHandler(buttonInvite_Click);
@@ -140,7 +137,7 @@ namespace ChatupNET.Forms
             buttonCancel.Location = new Point(242, 0);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(96, 29);
-            buttonCancel.TabIndex = 3;
+            buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += new EventHandler(buttonCancel_Click);
