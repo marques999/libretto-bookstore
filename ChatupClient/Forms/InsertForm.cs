@@ -38,7 +38,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private bool ValidateForm()
         {
-            return string.IsNullOrEmpty(fieldName.Text.Trim()) == false && fieldPassword.Text.Length > 6;
+            return string.IsNullOrEmpty(fieldName.Text.Trim()) == false && fieldPassword.Text.Length >= ChatupCommon.PasswordLength;
         }
 
         /// <summary>

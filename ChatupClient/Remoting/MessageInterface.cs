@@ -15,8 +15,8 @@ namespace ChatupNET.Remoting
     ///
     /// </summary>
     /// <param name="userName"></param>
-    /// <param name="userAction"></param>
-    internal delegate void DisconnectHandler(string userName, bool userAction);
+    /// <param name="remoteInvocation"></param>
+    internal delegate void DisconnectHandler(string userName, bool remoteInvocation);
 
     /// <summary>
     ///

@@ -43,7 +43,7 @@ namespace ChatupNET.Forms
                 return false;
             }
 
-            return fieldName.Text.Trim().Split().Length > 1 && fieldPassword.Text.Length > ChatupCommon.PasswordLength;
+            return fieldName.Text.Trim().Split().Length > 1 && fieldPassword.Text.Length >= ChatupCommon.PasswordLength;
         }
 
         /// <summary>
