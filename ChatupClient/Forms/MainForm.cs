@@ -157,15 +157,25 @@ namespace ChatupNET.Forms
         /// <param name="userHost"></param>
         private void OnConnectAux(UserProfile userProfile, string userHost)
         {
-            LaunchPrivate(new PrivateRoom(userProfile, userHost), userProfile.Username);
+            var userName = userProfile.Username;
+
+            if (_privateChatrooms.ContainsKey(userName))
+            {
+                _errorHandler.DisplayError(RemoteResponse.ConversationExists);
+            }
+            else
+            {
+                var privateRoom = new PrivateRoom(userProfile, userHost);
+                _privateChatrooms.Add(userName, privateRoom);
+                privateRoom.Show();
+            }
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="privateRoom"></param>
         /// <param name="userName"></param>
-        private void LaunchPrivate(PrivateRoom privateRoom, string userName)
+        private void LaunchPrivate(string userName)
         {
             if (_privateChatrooms.ContainsKey(userName))
             {
@@ -173,6 +183,7 @@ namespace ChatupNET.Forms
             }
             else
             {
+                var privateRoom = new PrivateRoom(_connections[userName]);
                 _privateChatrooms.Add(userName, privateRoom);
                 privateRoom.Show();
             }
@@ -708,7 +719,7 @@ namespace ChatupNET.Forms
             {
                 if (_connections.ContainsKey(userName))
                 {
-                    LaunchPrivate(new PrivateRoom(_connections[userName]), userName);
+                    LaunchPrivate(userName);
                 }
                 else
                 {
@@ -902,8 +913,6 @@ namespace ChatupNET.Forms
             {
                 _errorHandler.DisplayError(operationResult);
             }
-
-            RemotingServices.Disconnect(remoteUser);
         }
     }
 }
