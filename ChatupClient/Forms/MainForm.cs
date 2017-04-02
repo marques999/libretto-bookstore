@@ -25,7 +25,8 @@ namespace ChatupNET.Forms
             InitializeComponent();
             _errorHandler = new ErrorHandler(this);
             _sessionIntermediate.OnLogin += OnLogin;
-            _sessionIntermediate.OnLogout += OnLogout;
+            _sessionIntermediate.OnLogout += OnLogin;
+            _sessionIntermediate.OnRegister += OnLogin;
             _lobbyIntermediate.OnInsert += OnCreate;
             _lobbyIntermediate.OnDelete += OnDelete;
             _lobbyIntermediate.OnUpdate += OnUpdate;
@@ -74,22 +75,6 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="userInformation"></param>
         private void OnLogin(UserInformation userInformation)
-        {
-            if (InvokeRequired)
-            {
-                BeginInvoke(new UserHandler(UpsertUser), userInformation);
-            }
-            else
-            {
-                UpsertUser(userInformation);
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="userInformation"></param>
-        private void OnLogout(UserInformation userInformation)
         {
             if (InvokeRequired)
             {

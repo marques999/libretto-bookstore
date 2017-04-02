@@ -63,6 +63,7 @@ namespace ChatupNET
         {
             Session.OnLogin += sessionIntermediate.Login;
             Session.OnLogout += sessionIntermediate.Logout;
+            Session.OnRegister += sessionIntermediate.Register;
         }
 
         /// <summary>
@@ -73,6 +74,7 @@ namespace ChatupNET
         {
             Session.OnLogin -= sessionIntermediate.Login;
             Session.OnLogout -= sessionIntermediate.Logout;
+            Session.OnRegister -= sessionIntermediate.Register;
         }
 
         /// <summary>
