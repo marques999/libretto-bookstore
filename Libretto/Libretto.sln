@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoServer", "LibrettoServer\LibrettoServer.csproj", "{589A4746-AA39-4E0E-8AAA-433724869A66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589A4746-AA39-4E0E-8AAA-433724869A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589A4746-AA39-4E0E-8AAA-433724869A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589A4746-AA39-4E0E-8AAA-433724869A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589A4746-AA39-4E0E-8AAA-433724869A66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
