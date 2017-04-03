@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ChatupNET.Properties;
+
 namespace ChatupNET.Rooms
 {
     /// <summary>
@@ -118,7 +120,7 @@ namespace ChatupNET.Rooms
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(534, 381);
             Controls.Add(tableLayoutPanel1);
-            Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            Icon = Resources.chatup;
             Name = "AbstractRoom";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Default [1/1]";

@@ -1,6 +1,9 @@
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
+using ChatupNET.Properties;
 
 namespace ChatupNET.Forms
 {
@@ -163,12 +166,12 @@ namespace ChatupNET.Forms
             BackColor = Color.Gainsboro;
             ClientSize = new Size(704, 601);
             Controls.Add(splitContainer1);
-            Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            Icon = Resources.chatup;
             Name = "MainForm";
             Padding = new Padding(8);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chatup.NET Server";
-            Load += new System.EventHandler(MainForm_Load);
+            Load += new EventHandler(MainForm_Load);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             ((ISupportInitialize)(splitContainer1)).EndInit();

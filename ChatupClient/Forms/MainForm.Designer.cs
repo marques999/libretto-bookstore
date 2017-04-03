@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ChatupNET.Properties;
+
 namespace ChatupNET.Forms
 {
     /// <summary>
@@ -324,7 +326,7 @@ namespace ChatupNET.Forms
             ClientSize = new Size(564, 381);
             Controls.Add(splitContainer1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            Icon = Resources.chatup;
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;

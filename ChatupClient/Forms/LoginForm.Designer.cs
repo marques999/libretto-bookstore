@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using ChatupNET.Properties;
+
 namespace ChatupNET.Forms
 {
     /// <summary>
@@ -206,6 +208,7 @@ namespace ChatupNET.Forms
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
+            Icon = Resources.chatup;
             Name = "LoginForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
