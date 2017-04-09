@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 using Libretto.Model;
 
-namespace Libretto
+namespace Libretto.Tools
 {
     /// <summary>
     /// 
@@ -31,15 +31,15 @@ namespace Libretto
 
                 if (emailData == null)
                 {
-                    Console.WriteLine("[Mailer] Received wrong format!");
+                    Console.WriteLine(@"[Mailer] Received wrong format!");
                 }
                 else if (args.Error == null)
                 {
-                    Console.WriteLine("[Mailer] Email successfully sended!");
+                    Console.WriteLine(@"[Mailer] Email successfully sended!");
                 }
                 else
                 {
-                    Console.WriteLine("[Mailer] Error while sending email...");
+                    Console.WriteLine(@"[Mailer] Error while sending email...");
                 }
             };
         }

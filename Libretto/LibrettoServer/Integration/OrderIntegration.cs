@@ -72,12 +72,12 @@ namespace Libretto.Integration
         {
             switch (ReadInteger(sqlReader, SqliteColumns.Status))
             {
-                case 0:
-                    return new WaitingExpedition();
-                case 1:
-                    return new DispatchCompleted(sqlReader.GetDateTime(5));
-                default:
-                    return new DispatchCompleted(sqlReader.GetDateTime(6));
+            case 0:
+                return new WaitingExpedition();
+            case 1:
+                return new DispatchCompleted(sqlReader.GetDateTime(5));
+            default:
+                return new DispatchCompleted(sqlReader.GetDateTime(6));
             }
         }
 

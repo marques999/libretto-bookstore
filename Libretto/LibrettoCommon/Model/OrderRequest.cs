@@ -12,24 +12,6 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        public OrderRequest() : this(null, 0)
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="requestedItem"></param>
-        /// <param name="requestedQuantity"></param>
-        public OrderRequest(Book requestedItem, int requestedQuantity)
-        {
-            Item = requestedItem;
-            Quantity = requestedQuantity + 10;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         [DataMember]
         public Book Item
         {

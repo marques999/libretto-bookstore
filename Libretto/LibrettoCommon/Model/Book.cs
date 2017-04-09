@@ -12,10 +12,11 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public Guid Identifier
         {
             get;
             set;
-        } = new Guid();
+        }
     }
 }

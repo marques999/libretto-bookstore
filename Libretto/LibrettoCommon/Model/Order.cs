@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Runtime.Serialization;
 using Libretto.Enums;
 
 namespace Libretto.Model
@@ -7,21 +7,23 @@ namespace Libretto.Model
     /// <summary>
     /// 
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class Order
     {
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public Guid Identifier
         {
             get;
             set;
-        } = new Guid();
+        }
 
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public OrderState State
         {
             get;
@@ -31,6 +33,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public Guid Customer
         {
             get;
@@ -40,6 +43,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public Book Book
         {
             get;
@@ -49,6 +53,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public DateTime Timestamp
         {
             get;
@@ -58,6 +63,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataMember]
         public int Quantity
         {
             get;
@@ -67,6 +73,7 @@ namespace Libretto.Model
         /// <summary>
         /// /
         /// </summary>
+        [DataMember]
         public double Total
         {
             get;

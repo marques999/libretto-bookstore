@@ -39,7 +39,7 @@
         public static readonly string InsertBook = @"
             INSERT INTO Books(id, title, price, stock)
             VALUES(@id, @title, @price, @stock";
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,7 +58,7 @@
         /// 
         /// </summary>
         public static readonly string ListBook = "SELECT * FROM Book";
-        
+
         /// <summary>
         /// 
         /// </summary>
