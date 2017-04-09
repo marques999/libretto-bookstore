@@ -207,7 +207,7 @@ namespace ChatupNET.Forms
         /// <param name="fullName"></param>
         private void JoinRoom(Room roomInformation, UserProfile userProfile, string fullName)
         {
-            int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
+            var nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
 
             if (nodeIndex < 0)
             {
@@ -255,7 +255,7 @@ namespace ChatupNET.Forms
         /// <param name="fullName"></param>
         private void LeaveRoom(Room roomInformation, UserProfile userProfile, string fullName)
         {
-            int nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
+            var nodeIndex = treeView1.Nodes.IndexOfKey(Convert.ToString(roomInformation.Id));
 
             if (nodeIndex < 0)
             {

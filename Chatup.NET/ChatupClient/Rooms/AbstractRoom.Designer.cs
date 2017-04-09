@@ -57,7 +57,7 @@ namespace ChatupNET.Rooms
             buttonValidate.TabIndex = 1;
             buttonValidate.Text = "Send";
             buttonValidate.UseVisualStyleBackColor = false;
-            buttonValidate.Click += new EventHandler(buttonValidate_Click);
+            buttonValidate.Click += new EventHandler(ButtonValidate_Click);
             //
             // textBox2
             //
@@ -67,7 +67,7 @@ namespace ChatupNET.Rooms
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(384, 23);
             textBox2.TabIndex = 0;
-            textBox2.TextChanged += new EventHandler(textBox2_TextChanged);
+            textBox2.TextChanged += new EventHandler(TextBox2_TextChanged);
             //
             // richTextBox1
             //

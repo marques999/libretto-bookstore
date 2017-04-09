@@ -71,7 +71,7 @@ namespace ChatupNET.Forms
             buttonCancel.TabIndex = 3;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
-            buttonCancel.Click += new EventHandler(buttonCancel_Click);
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             // 
             // buttonConfirm
             // 
@@ -84,7 +84,7 @@ namespace ChatupNET.Forms
             buttonConfirm.TabIndex = 2;
             buttonConfirm.Text = "Apply";
             buttonConfirm.UseVisualStyleBackColor = false;
-            buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
+            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             // 
             // tableLayout
             // 
@@ -121,7 +121,7 @@ namespace ChatupNET.Forms
             fieldAddress.Size = new Size(186, 20);
             fieldAddress.TabIndex = 0;
             fieldAddress.Text = "...";
-            fieldAddress.TextChanged += new EventHandler(fieldName_TextChanged);
+            fieldAddress.TextChanged += new EventHandler(FieldName_TextChanged);
             // 
             // fieldPort
             // 
@@ -131,7 +131,7 @@ namespace ChatupNET.Forms
             fieldPort.Name = "fieldPort";
             fieldPort.Size = new Size(186, 20);
             fieldPort.TabIndex = 1;
-            fieldPort.TextChanged += new EventHandler(fieldPassword_TextChanged);
+            fieldPort.TextChanged += new EventHandler(FieldPassword_TextChanged);
             // 
             // labelName
             // 

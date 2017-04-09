@@ -71,7 +71,7 @@ namespace ChatupNET.Forms
             buttonCancel.TabIndex = 4;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
-            buttonCancel.Click += new EventHandler(buttonCancel_Click);
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // buttonConfirm
             //
@@ -84,7 +84,7 @@ namespace ChatupNET.Forms
             buttonConfirm.TabIndex = 3;
             buttonConfirm.Text = "Validate";
             buttonConfirm.UseVisualStyleBackColor = false;
-            buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
+            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // tableLayout
             //
@@ -147,8 +147,8 @@ namespace ChatupNET.Forms
             fieldUsername.Name = "fieldUsername";
             fieldUsername.Size = new Size(186, 20);
             fieldUsername.TabIndex = 0;
-            fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
-            fieldUsername.KeyPress += new KeyPressEventHandler(fieldUsername_KeyPress);
+            fieldUsername.TextChanged += new EventHandler(FieldUsername_TextChanged);
+            fieldUsername.KeyPress += new KeyPressEventHandler(FieldUsername_KeyPress);
             //
             // fieldPassword
             //
@@ -159,8 +159,8 @@ namespace ChatupNET.Forms
             fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(186, 20);
             fieldPassword.TabIndex = 2;
-            fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
-            fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
+            fieldPassword.TextChanged += new EventHandler(FieldPassword_TextChanged);
+            fieldPassword.KeyPress += new KeyPressEventHandler(FieldPassword_KeyPress);
             //
             // fieldName
             //
@@ -170,8 +170,8 @@ namespace ChatupNET.Forms
             fieldName.Name = "fieldName";
             fieldName.Size = new Size(186, 20);
             fieldName.TabIndex = 1;
-            fieldName.TextChanged += new EventHandler(fieldName_TextChanged);
-            fieldName.KeyPress += new KeyPressEventHandler(fieldName_KeyPress);
+            fieldName.TextChanged += new EventHandler(FieldName_TextChanged);
+            fieldName.KeyPress += new KeyPressEventHandler(FieldName_KeyPress);
             //
             // RegisterForm
             //

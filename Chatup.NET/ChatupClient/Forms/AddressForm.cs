@@ -69,19 +69,7 @@ namespace ChatupNET.Forms
         /// <returns></returns>
         private bool ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(fieldAddress.Text))
-            {
-                return false;
-            }
-
-            ushort inputPort;
-
-            if (string.IsNullOrEmpty(fieldPort.Text))
-            {
-                return false;
-            }
-
-            return ushort.TryParse(fieldPort.Text, out inputPort);
+            return string.IsNullOrWhiteSpace(fieldAddress.Text) == false && string.IsNullOrEmpty(fieldPort.Text) == false && ushort.TryParse(fieldPort.Text, out ushort inputPort);
         }
 
         /// <summary>
@@ -111,7 +99,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonConfirm_Click(object sender, EventArgs args)
+        private void ButtonConfirm_Click(object sender, EventArgs args)
         {
             ModalData = new Address(ParseAddress(), ParsePort());
             DialogResult = DialogResult.OK;
@@ -123,7 +111,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonCancel_Click(object sender, EventArgs args)
+        private void ButtonCancel_Click(object sender, EventArgs args)
         {
             DialogResult = DialogResult.Cancel;
             Close();
@@ -134,7 +122,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldName_TextChanged(object sender, EventArgs args)
+        private void FieldName_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }
@@ -144,7 +132,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldPassword_TextChanged(object sender, EventArgs args)
+        private void FieldPassword_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }

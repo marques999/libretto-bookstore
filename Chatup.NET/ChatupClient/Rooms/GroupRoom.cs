@@ -129,7 +129,7 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected override void buttonValidate_Click(object sender, EventArgs args)
+        protected override void ButtonValidate_Click(object sender, EventArgs args)
         {
             var operationResult = _roomInterface.Send(GenerateMessage());
 

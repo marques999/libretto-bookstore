@@ -110,7 +110,7 @@ namespace ChatupNET.Database
                         whereClause = CreateComparisonClause(clause.FieldName, clause.ComparisonOperator, clause.Value);
                     }
 
-                    foreach (WhereClause.SubClause subWhereClause in clause.SubClauses)
+                    foreach (var subWhereClause in clause.SubClauses)
                     {
                         switch (subWhereClause.LogicOperator)
                         {
@@ -262,13 +262,13 @@ namespace ChatupNET.Database
         {
             var result = Copy(statement1);
 
-            for (int i = 0; i < statement2.ClauseLevels; i++)
+            for (var i = 0; i < statement2.ClauseLevels; i++)
             {
                 var level = statement2[i];
 
                 foreach (var clause in level)
                 {
-                    for (int j = 0; j < result.ClauseLevels; j++)
+                    for (var j = 0; j < result.ClauseLevels; j++)
                     {
                         result.AddWhereClauseToLevel(clause, j);
                     }
@@ -285,7 +285,7 @@ namespace ChatupNET.Database
         /// <returns></returns>
         public static WhereStatement Copy(WhereStatement statement)
         {
-            int currentLevel = 0;
+            var currentLevel = 0;
             var result = new WhereStatement();
 
             foreach (var level in statement)

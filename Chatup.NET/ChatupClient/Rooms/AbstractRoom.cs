@@ -185,7 +185,7 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected void textBox2_TextChanged(object sender, EventArgs args)
+        protected void TextBox2_TextChanged(object sender, EventArgs args)
         {
             buttonValidate.Enabled = !string.IsNullOrWhiteSpace(textBox2.Text);
         }
@@ -209,7 +209,7 @@ namespace ChatupNET.Rooms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected abstract void buttonValidate_Click(object sender, EventArgs args);
+        protected abstract void ButtonValidate_Click(object sender, EventArgs args);
 
         /// <summary>
         ///

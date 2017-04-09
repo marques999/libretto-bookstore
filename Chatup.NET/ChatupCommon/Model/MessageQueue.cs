@@ -31,8 +31,7 @@ namespace ChatupNET.Model
             {
                 while (Count > _limit)
                 {
-                    RemoteMessage remoteMessage;
-                    TryDequeue(out remoteMessage);
+                    TryDequeue(out RemoteMessage remoteMessage);
                 }
             }
         }

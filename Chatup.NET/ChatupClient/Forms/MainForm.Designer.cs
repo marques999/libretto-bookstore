@@ -131,7 +131,7 @@ namespace ChatupNET.Forms
             buttonMessage.TabIndex = 5;
             buttonMessage.Text = "Private Message";
             buttonMessage.UseVisualStyleBackColor = true;
-            buttonMessage.Click += new EventHandler(buttonMessage_Click);
+            buttonMessage.Click += new EventHandler(ButtonMessage_Click);
             //
             // buttonInvite
             //
@@ -142,7 +142,7 @@ namespace ChatupNET.Forms
             buttonInvite.TabIndex = 4;
             buttonInvite.Text = "Invite";
             buttonInvite.UseVisualStyleBackColor = true;
-            buttonInvite.Click += new EventHandler(buttonInvite_Click);
+            buttonInvite.Click += new EventHandler(ButtonInvite_Click);
             //
             // roomsList
             //
@@ -164,8 +164,8 @@ namespace ChatupNET.Forms
             roomsList.TabIndex = 0;
             roomsList.UseCompatibleStateImageBehavior = false;
             roomsList.View = View.Details;
-            roomsList.SelectedIndexChanged += new EventHandler(listView1_SelectedIndexChanged);
-            roomsList.MouseDoubleClick += new MouseEventHandler(roomsList_MouseDoubleClick);
+            roomsList.SelectedIndexChanged += new EventHandler(ListView1_SelectedIndexChanged);
+            roomsList.MouseDoubleClick += new MouseEventHandler(RoomsList_MouseDoubleClick);
             //
             // columnHeader3
             //
@@ -193,8 +193,8 @@ namespace ChatupNET.Forms
             usersList.TabIndex = 3;
             usersList.UseCompatibleStateImageBehavior = false;
             usersList.View = View.Details;
-            usersList.SelectedIndexChanged += new EventHandler(listView2_SelectedIndexChanged);
-            usersList.MouseDoubleClick += new MouseEventHandler(usersList_MouseDoubleClick);
+            usersList.SelectedIndexChanged += new EventHandler(ListView2_SelectedIndexChanged);
+            usersList.MouseDoubleClick += new MouseEventHandler(UsersList_MouseDoubleClick);
             //
             // columnHeader1
             //
@@ -253,7 +253,7 @@ namespace ChatupNET.Forms
             buttonJoin.TabIndex = 1;
             buttonJoin.Text = "Join";
             buttonJoin.UseVisualStyleBackColor = true;
-            buttonJoin.Click += new EventHandler(buttonJoin_Click);
+            buttonJoin.Click += new EventHandler(ButtonJoin_Click);
             //
             // buttonDelete
             //
@@ -264,7 +264,7 @@ namespace ChatupNET.Forms
             buttonDelete.TabIndex = 2;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = true;
-            buttonDelete.Click += new EventHandler(buttonDelete_Click);
+            buttonDelete.Click += new EventHandler(ButtonDelete_Click);
             //
             // buttonNew
             //
@@ -275,7 +275,7 @@ namespace ChatupNET.Forms
             buttonNew.TabIndex = 0;
             buttonNew.Text = "New";
             buttonNew.UseVisualStyleBackColor = true;
-            buttonNew.Click += new EventHandler(buttonNew_Click);
+            buttonNew.Click += new EventHandler(ButtonNew_Click);
             //
             // tableLayoutPanel2
             //
@@ -316,7 +316,7 @@ namespace ChatupNET.Forms
             buttonLogout.TabIndex = 6;
             buttonLogout.Text = "Log Out";
             buttonLogout.UseVisualStyleBackColor = true;
-            buttonLogout.Click += new EventHandler(buttonLogout_Click);
+            buttonLogout.Click += new EventHandler(ButtonLogout_Click);
             //
             // MainForm
             //

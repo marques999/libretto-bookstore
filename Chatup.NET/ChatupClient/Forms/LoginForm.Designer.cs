@@ -91,7 +91,7 @@ namespace ChatupNET.Forms
             buttonConfigure.TabIndex = 4;
             buttonConfigure.Text = "Configure";
             buttonConfigure.UseVisualStyleBackColor = false;
-            buttonConfigure.Click += new EventHandler(buttonConfigure_Click);
+            buttonConfigure.Click += new EventHandler(ButtonConfigure_Click);
             //
             // buttonValidate
             //
@@ -105,7 +105,7 @@ namespace ChatupNET.Forms
             buttonValidate.TabIndex = 2;
             buttonValidate.Text = "Validate";
             buttonValidate.UseVisualStyleBackColor = false;
-            buttonValidate.Click += new EventHandler(buttonValidate_Click);
+            buttonValidate.Click += new EventHandler(ButtonValidate_Click);
             //
             // tableLayoutPanel1
             //
@@ -152,8 +152,8 @@ namespace ChatupNET.Forms
             fieldUsername.Size = new Size(269, 20);
             fieldUsername.TabIndex = 0;
             fieldUsername.Text = "marques999";
-            fieldUsername.TextChanged += new EventHandler(fieldUsername_TextChanged);
-            fieldUsername.KeyPress += new KeyPressEventHandler(fieldUsername_KeyPress);
+            fieldUsername.TextChanged += new EventHandler(FieldUsername_TextChanged);
+            fieldUsername.KeyPress += new KeyPressEventHandler(FieldUsername_KeyPress);
             //
             // label2
             //
@@ -178,8 +178,8 @@ namespace ChatupNET.Forms
             fieldPassword.Size = new Size(269, 20);
             fieldPassword.TabIndex = 1;
             fieldPassword.Text = "14191091";
-            fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
-            fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
+            fieldPassword.TextChanged += new EventHandler(FieldPassword_TextChanged);
+            fieldPassword.KeyPress += new KeyPressEventHandler(FieldPassword_KeyPress);
             //
             // buttonRegister
             //
@@ -194,7 +194,7 @@ namespace ChatupNET.Forms
             buttonRegister.TabIndex = 3;
             buttonRegister.Text = "Register";
             buttonRegister.UseVisualStyleBackColor = false;
-            buttonRegister.Click += new EventHandler(buttonRegister_Click);
+            buttonRegister.Click += new EventHandler(ButtonRegister_Click);
             //
             // LoginForm
             //

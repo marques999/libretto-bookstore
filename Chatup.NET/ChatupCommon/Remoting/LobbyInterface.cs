@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using ChatupNET.Model;
 
 namespace ChatupNET.Remoting

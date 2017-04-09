@@ -465,7 +465,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void listView2_SelectedIndexChanged(object sender, EventArgs args)
+        private void ListView2_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdatePrivateButtons();
         }
@@ -507,7 +507,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void listView1_SelectedIndexChanged(object sender, EventArgs args)
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateRoomButtons();
         }
@@ -607,7 +607,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonJoin_Click(object sender, EventArgs args)
+        private void ButtonJoin_Click(object sender, EventArgs args)
         {
             if (roomsList.SelectedItems.Count <= 0)
             {
@@ -627,9 +627,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void roomsList_MouseDoubleClick(object sender, MouseEventArgs args)
+        private void RoomsList_MouseDoubleClick(object sender, MouseEventArgs args)
         {
-            buttonJoin_Click(sender, args);
+            ButtonJoin_Click(sender, args);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonLogout_Click(object sender, EventArgs args)
+        private void ButtonLogout_Click(object sender, EventArgs args)
         {
             Close();
         }
@@ -660,7 +660,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonMessage_Click(object sender, EventArgs args)
+        private void ButtonMessage_Click(object sender, EventArgs args)
         {
             if (usersList.SelectedItems.Count <= 0)
             {
@@ -680,9 +680,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void usersList_MouseDoubleClick(object sender, MouseEventArgs args)
+        private void UsersList_MouseDoubleClick(object sender, MouseEventArgs args)
         {
-            buttonMessage_Click(sender, args);
+            ButtonMessage_Click(sender, args);
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonDelete_Click(object sender, EventArgs args)
+        private void ButtonDelete_Click(object sender, EventArgs args)
         {
             if (roomsList.SelectedItems.Count <= 0)
             {
@@ -785,7 +785,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonNew_Click(object sender, EventArgs args)
+        private void ButtonNew_Click(object sender, EventArgs args)
         {
             var modalDialog = new InsertForm();
 
@@ -816,7 +816,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonInvite_Click(object sender, EventArgs args)
+        private void ButtonInvite_Click(object sender, EventArgs args)
         {
             if (usersList.SelectedItems.Count <= 0)
             {

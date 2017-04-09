@@ -70,7 +70,7 @@ namespace ChatupNET.Remoting
                 return RemoteResponse.BadRequest;
             }
 
-            if (!Rooms.ContainsKey(roomId))
+            if (Rooms.ContainsKey(roomId) == false)
             {
                 return RemoteResponse.NotFound;
             }

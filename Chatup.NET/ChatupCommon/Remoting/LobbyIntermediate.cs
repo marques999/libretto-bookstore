@@ -1,5 +1,4 @@
 using System;
-
 using ChatupNET.Model;
 
 namespace ChatupNET.Remoting

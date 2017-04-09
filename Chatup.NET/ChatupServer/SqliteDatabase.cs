@@ -161,11 +161,13 @@ namespace ChatupNET
 
                 var dbResult = sqlQuery.ExecuteScalar();
 
-                if (dbResult == null || !dbResult.ToString().Equals(tableName))
+                if (dbResult != null && dbResult.ToString().Equals(tableName))
                 {
-                    sqlQuery.CommandText = tableSql;
-                    sqlQuery.ExecuteNonQuery();
+                    return;
                 }
+
+                sqlQuery.CommandText = tableSql;
+                sqlQuery.ExecuteNonQuery();
             }
         }
 

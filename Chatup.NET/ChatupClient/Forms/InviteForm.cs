@@ -64,7 +64,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
@@ -75,7 +75,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonInvite_Click(object sender, EventArgs args)
+        private void ButtonInvite_Click(object sender, EventArgs args)
         {
             if (roomsList.SelectedItems.Count <= 0)
             {
@@ -99,9 +99,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void roomsList_DoubleClick(object sender, EventArgs args)
+        private void RoomsList_DoubleClick(object sender, EventArgs args)
         {
-            buttonInvite_Click(sender, args);
+            ButtonInvite_Click(sender, args);
         }
     }
 }

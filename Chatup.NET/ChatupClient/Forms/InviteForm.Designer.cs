@@ -84,7 +84,7 @@ namespace ChatupNET.Forms
             roomsList.TabIndex = 0;
             roomsList.UseCompatibleStateImageBehavior = false;
             roomsList.View = View.Details;
-            roomsList.DoubleClick += new EventHandler(roomsList_DoubleClick);
+            roomsList.DoubleClick += new EventHandler(RoomsList_DoubleClick);
             //
             // columnHeader3
             //
@@ -129,7 +129,7 @@ namespace ChatupNET.Forms
             buttonInvite.TabIndex = 1;
             buttonInvite.Text = "Invite";
             buttonInvite.UseVisualStyleBackColor = true;
-            buttonInvite.Click += new EventHandler(buttonInvite_Click);
+            buttonInvite.Click += new EventHandler(ButtonInvite_Click);
             //
             // buttonCancel
             //
@@ -140,7 +140,7 @@ namespace ChatupNET.Forms
             buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
-            buttonCancel.Click += new EventHandler(buttonCancel_Click);
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // InviteForm
             //

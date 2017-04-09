@@ -67,7 +67,7 @@ namespace ChatupNET.Forms
             buttonCancel.TabIndex = 2;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = false;
-            buttonCancel.Click += new EventHandler(buttonCancel_Click);
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // buttonConfirm
             //
@@ -80,7 +80,7 @@ namespace ChatupNET.Forms
             buttonConfirm.TabIndex = 1;
             buttonConfirm.Text = "OK";
             buttonConfirm.UseVisualStyleBackColor = false;
-            buttonConfirm.Click += new EventHandler(buttonConfirm_Click);
+            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // tableLayoutPanel1
             //
@@ -115,8 +115,8 @@ namespace ChatupNET.Forms
             fieldPassword.PasswordChar = '*';
             fieldPassword.Size = new Size(268, 20);
             fieldPassword.TabIndex = 0;
-            fieldPassword.TextChanged += new EventHandler(fieldPassword_TextChanged);
-            fieldPassword.KeyPress += new KeyPressEventHandler(fieldPassword_KeyPress);
+            fieldPassword.TextChanged += new EventHandler(FieldPassword_TextChanged);
+            fieldPassword.KeyPress += new KeyPressEventHandler(FieldPassword_KeyPress);
             //
             // PasswordForm
             //

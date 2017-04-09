@@ -46,9 +46,9 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonConfirm_Click(object sender, EventArgs args)
+        private void ButtonConfirm_Click(object sender, EventArgs args)
         {
-            RoomObject = new Room(-1, fieldName.Text.Trim(), ChatupClient.Instance.Username, fieldPassword.Text, (int)fieldCapacity.Value);
+            RoomObject = new Room(-1, fieldName.Text.Trim(), ChatupClient.Instance.Username, fieldPassword.Text, (int) fieldCapacity.Value);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -58,7 +58,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void buttonCancel_Click(object sender, EventArgs args)
+        private void ButtonCancel_Click(object sender, EventArgs args)
         {
             DialogResult = DialogResult.Cancel;
             Close();
@@ -79,7 +79,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldName_TextChanged(object sender, EventArgs args)
+        private void FieldName_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }
@@ -89,7 +89,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldPassword_TextChanged(object sender, EventArgs args)
+        private void FieldPassword_TextChanged(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
         }
@@ -99,7 +99,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldPassword_KeyPress(object sender, KeyPressEventArgs args)
+        private void FieldPassword_KeyPress(object sender, KeyPressEventArgs args)
         {
             if (char.IsControl(args.KeyChar) == false && char.IsLetterOrDigit(args.KeyChar) == false)
             {
@@ -112,7 +112,7 @@ namespace ChatupNET.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void fieldName_KeyPress(object sender, KeyPressEventArgs args)
+        private void FieldName_KeyPress(object sender, KeyPressEventArgs args)
         {
             if (char.IsSeparator(args.KeyChar))
             {
