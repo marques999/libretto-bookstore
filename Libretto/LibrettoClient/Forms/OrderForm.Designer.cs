@@ -1,6 +1,9 @@
 ﻿namespace Libretto.Forms
 {
-    partial class OrderForm
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class OrderForm
     {
         /// <summary>
         /// Required designer variable.
@@ -43,12 +46,14 @@
             this.unitLabel1 = new System.Windows.Forms.Label();
             this.itemStock = new System.Windows.Forms.Label();
             this.customerLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.customerNamePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.customerName = new System.Windows.Forms.ComboBox();
+            this.customerNameButton = new System.Windows.Forms.Button();
             this.customerLocationLabel = new System.Windows.Forms.Label();
             this.customerGuidLabel = new System.Windows.Forms.Label();
             this.customerNameLabel = new System.Windows.Forms.Label();
             this.customerEmailLabel = new System.Windows.Forms.Label();
             this.customerGuid = new System.Windows.Forms.TextBox();
-            this.customerName = new System.Windows.Forms.ComboBox();
             this.customerEmail = new System.Windows.Forms.Label();
             this.customerLocation = new System.Windows.Forms.Label();
             this.customerLabel = new System.Windows.Forms.Label();
@@ -78,6 +83,7 @@
             this.itemPriceLayout.SuspendLayout();
             this.itemStockLayout.SuspendLayout();
             this.customerLayout.SuspendLayout();
+            this.customerNamePanel.SuspendLayout();
             this.tableLayout2.SuspendLayout();
             this.orderLayout.SuspendLayout();
             this.orderTotalLayout.SuspendLayout();
@@ -292,12 +298,12 @@
             this.customerLayout.ColumnCount = 2;
             this.customerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.customerLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.customerLayout.Controls.Add(this.customerNamePanel, 1, 1);
             this.customerLayout.Controls.Add(this.customerLocationLabel, 0, 3);
             this.customerLayout.Controls.Add(this.customerGuidLabel, 0, 0);
             this.customerLayout.Controls.Add(this.customerNameLabel, 0, 1);
             this.customerLayout.Controls.Add(this.customerEmailLabel, 0, 2);
             this.customerLayout.Controls.Add(this.customerGuid, 1, 0);
-            this.customerLayout.Controls.Add(this.customerName, 1, 1);
             this.customerLayout.Controls.Add(this.customerEmail, 1, 2);
             this.customerLayout.Controls.Add(this.customerLocation, 1, 3);
             this.customerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -310,8 +316,40 @@
             this.customerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.customerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.customerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.customerLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.customerLayout.Size = new System.Drawing.Size(312, 133);
             this.customerLayout.TabIndex = 6;
+            // 
+            // customerNamePanel
+            // 
+            this.customerNamePanel.Controls.Add(this.customerName);
+            this.customerNamePanel.Controls.Add(this.customerNameButton);
+            this.customerNamePanel.Location = new System.Drawing.Point(69, 39);
+            this.customerNamePanel.Name = "customerNamePanel";
+            this.customerNamePanel.Size = new System.Drawing.Size(237, 24);
+            this.customerNamePanel.TabIndex = 13;
+            // 
+            // customerName
+            // 
+            this.customerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.customerName.FormattingEnabled = true;
+            this.customerName.Location = new System.Drawing.Point(0, 1);
+            this.customerName.Margin = new System.Windows.Forms.Padding(0);
+            this.customerName.Name = "customerName";
+            this.customerName.Size = new System.Drawing.Size(205, 21);
+            this.customerName.TabIndex = 11;
+            this.customerName.SelectedIndexChanged += new System.EventHandler(this.CustomerName_SelectedIndexChanged);
+            // 
+            // customerNameButton
+            // 
+            this.customerNameButton.Location = new System.Drawing.Point(205, 0);
+            this.customerNameButton.Margin = new System.Windows.Forms.Padding(0);
+            this.customerNameButton.Name = "customerNameButton";
+            this.customerNameButton.Size = new System.Drawing.Size(32, 23);
+            this.customerNameButton.TabIndex = 12;
+            this.customerNameButton.Text = "...";
+            this.customerNameButton.UseVisualStyleBackColor = true;
+            this.customerNameButton.Click += new System.EventHandler(this.CustomerNameButton_Click);
             // 
             // customerLocationLabel
             // 
@@ -377,17 +415,6 @@
             this.customerGuid.ShortcutsEnabled = false;
             this.customerGuid.Size = new System.Drawing.Size(235, 20);
             this.customerGuid.TabIndex = 1;
-            // 
-            // customerName
-            // 
-            this.customerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.customerName.FormattingEnabled = true;
-            this.customerName.Location = new System.Drawing.Point(70, 40);
-            this.customerName.Margin = new System.Windows.Forms.Padding(4);
-            this.customerName.Name = "customerName";
-            this.customerName.Size = new System.Drawing.Size(235, 21);
-            this.customerName.TabIndex = 9;
-            this.customerName.SelectedIndexChanged += new System.EventHandler(this.ComboCustomers_SelectedIndexChanged);
             // 
             // customerEmail
             // 
@@ -681,7 +708,8 @@
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(489, 5);
+            this.buttonCancel.Location = new System.Drawing.Point(492, 5);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 3, 0, 3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(128, 24);
             this.buttonCancel.TabIndex = 4;
@@ -696,7 +724,8 @@
             this.buttonConfirm.Enabled = false;
             this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(355, 5);
+            this.buttonConfirm.Location = new System.Drawing.Point(360, 5);
+            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(0, 3, 2, 3);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(128, 24);
             this.buttonConfirm.TabIndex = 4;
@@ -747,6 +776,7 @@
             this.itemStockLayout.PerformLayout();
             this.customerLayout.ResumeLayout(false);
             this.customerLayout.PerformLayout();
+            this.customerNamePanel.ResumeLayout(false);
             this.tableLayout2.ResumeLayout(false);
             this.tableLayout2.PerformLayout();
             this.orderLayout.ResumeLayout(false);
@@ -773,7 +803,6 @@
         private System.Windows.Forms.Label customerNameLabel;
         private System.Windows.Forms.Label customerEmailLabel;
         private System.Windows.Forms.TextBox customerGuid;
-        private System.Windows.Forms.ComboBox customerName;
         private System.Windows.Forms.TableLayoutPanel itemLayout;
         private System.Windows.Forms.Label itemGuidLabel;
         private System.Windows.Forms.Label itemDescriptionLabel;
@@ -809,5 +838,8 @@
         private System.Windows.Forms.FlowLayoutPanel buttonLayout;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonConfirm;
+        private System.Windows.Forms.FlowLayoutPanel customerNamePanel;
+        private System.Windows.Forms.ComboBox customerName;
+        private System.Windows.Forms.Button customerNameButton;
     }
 }

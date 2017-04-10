@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -39,7 +40,8 @@ namespace Libretto.Forms
             return string.IsNullOrEmpty(nameField.Text) == false
                 && string.IsNullOrEmpty(emailField.Text) == false
                 && string.IsNullOrEmpty(locationField.Text) == false
-                && nameField.Text.Trim().Split().Length > 1;
+                && nameField.Text.Trim().Split().Length > 1
+                && LibrettoCommon.VerifyEmail(emailField.Text);
         }
 
         /// <summary>
@@ -65,6 +67,19 @@ namespace Libretto.Forms
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void EmailField_KeyPress(object sender, KeyPressEventArgs args)
+        {
+            if (char.IsSeparator(args.KeyChar))
+            {
+                args.Handled = true;
+            }
         }
 
         /// <summary>

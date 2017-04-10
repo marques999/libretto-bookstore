@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace Libretto
 {
@@ -25,6 +26,11 @@ namespace Libretto
         /// 
         /// </summary>
         public static MailAddress EmailAccount => new MailAddress(EmailAddress, DisplayName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Regex EmailRegex = new Regex(@"^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
 
         /// <summary>
         /// 
@@ -54,6 +60,33 @@ namespace Libretto
         public static string FormatCurrency(double currencyValue)
         {
             return $"{currencyValue:C2}";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="decimalValue"></param>
+        /// <returns></returns>
+        public static string FormatDecimal(double decimalValue)
+        {
+            return decimalValue.ToString("#,##0.00");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        public static bool VerifyEmail(string userEmail)
+        {
+            try
+            {
+                return EmailRegex.IsMatch(userEmail);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

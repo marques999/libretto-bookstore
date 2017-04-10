@@ -35,7 +35,7 @@
     <StartupObject>Libretto.LibrettoClient</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>librettoIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\librettoIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,7 +139,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="librettoIcon.ico" />
+    <None Include="Resources\librettoIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

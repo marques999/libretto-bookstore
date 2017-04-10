@@ -15,14 +15,37 @@ namespace Libretto.Forms
         public LoginForm()
         {
             InitializeComponent();
-            buttonConfigure.Enabled = true;
+            buttonCancel.Enabled = true;
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        private bool ValidateForm() => !string.IsNullOrWhiteSpace(fieldEmail.Text) && !string.IsNullOrWhiteSpace(fieldPassword.Text);
+        private bool ValidateForm()
+        {
+            return string.IsNullOrWhiteSpace(fieldEmail.Text) == false && string.IsNullOrWhiteSpace(fieldPassword.Text) == false;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void LoginForm_Load(object sender, EventArgs args)
+        {
+            buttonValidate.Enabled = ValidateForm();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void ButtonCancel_Click(object sender, EventArgs args)
+        {
+            Application.Exit();
+        }
 
         /// <summary>
         ///
@@ -41,35 +64,6 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ButtonConfigure_Click(object sender, EventArgs args)
-        {
-            /*var addressForm = new SettingsForm(_remoteHost);
-
-            if (addressForm.ShowDialog() == DialogResult.OK)
-            {
-                _remoteHost = addressForm.ModalData;
-            }*/
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonRegister_Click(object sender, EventArgs args)
-        {
-            /*var registrationForm = new RegisterForm();
-
-            if (registrationForm.ShowDialog() != DialogResult.OK)
-            {
-            }*/
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void FieldEmail_TextChanged(object sender, EventArgs args)
         {
             buttonValidate.Enabled = ValidateForm();
@@ -81,16 +75,6 @@ namespace Libretto.Forms
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void FieldPassword_TextChanged(object sender, EventArgs args)
-        {
-            buttonValidate.Enabled = ValidateForm();
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void LoginForm_Load(object sender, EventArgs args)
         {
             buttonValidate.Enabled = ValidateForm();
         }

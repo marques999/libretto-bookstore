@@ -61,7 +61,7 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please confirm that you want to remove the selected customer order from the system..
+        ///   Looks up a localized string similar to Please confirm that you want to remove the selected customer order(s) from the system..
         /// </summary>
         internal static string DeleteOrder {
             get {
@@ -70,11 +70,21 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Order.
+        ///   Looks up a localized string similar to Delete Order(s).
         /// </summary>
-        internal static string DeleteOrder_Title {
+        internal static string DeleteOrderTitle {
             get {
                 return ResourceManager.GetString("DeleteOrderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon librettoIcon {
+            get {
+                object obj = ResourceManager.GetObject("librettoIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

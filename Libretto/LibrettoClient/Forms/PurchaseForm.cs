@@ -77,7 +77,7 @@ namespace Libretto.Forms
             Information.BookName = bookInformation.Title;
             Information.BookId = bookInformation.Identifier;
             itemStock.Text = Convert.ToString(bookInformation.Stock);
-            itemPrice.Text = LibrettoCommon.FormatCurrency(bookInformation.Price);
+            itemPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
             itemGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
             UpdateQuantity(purchaseQuantity.Value);
         }
@@ -104,9 +104,9 @@ namespace Libretto.Forms
         {
             Information.Quantity = stockQuantity;
             Information.Total = _bookInformation.Price * stockQuantity;
-            purchaseQuantityInfo.Text = Convert.ToString(purchaseQuantity);
+            purchaseQuantityInfo.Text = Convert.ToString(stockQuantity);
             itemStock.Text = Convert.ToString(_bookInformation.Stock - stockQuantity);
-            purchaseTotal.Text = LibrettoCommon.FormatCurrency(_bookInformation.Price * stockQuantity);
+            purchaseTotal.Text = LibrettoCommon.FormatDecimal(_bookInformation.Price * stockQuantity);
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Libretto.Forms
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CustomerNameButton_Click(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void CustomerNameButton_Click(object sender, EventArgs args)
         {
             var customerForm = new CustomerForm();
 
@@ -191,6 +191,7 @@ namespace Libretto.Forms
 
             LibrettoClient.Instance.Customers.Add(customerInformation);
             customerName.Items.Add(customerInformation.Name);
+            customerName.SelectedIndex = customerName.Items.Count - 1;
         }
     }
 }

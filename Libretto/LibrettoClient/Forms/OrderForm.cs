@@ -123,7 +123,7 @@ namespace Libretto.Forms
             statusWaiting.Enabled = remainingUnits < 0;
             statusProcessing.Enabled = statusDispatched.Enabled = !statusWaiting.Enabled;
             itemStock.Text = Convert.ToString(remainingUnits);
-            orderTotal.Text = LibrettoCommon.FormatCurrency(purchaseTotal);
+            orderTotal.Text = LibrettoCommon.FormatDecimal(purchaseTotal);
             Information.Quantity = numberUnits;
             Information.Total = purchaseTotal;
         }
@@ -143,7 +143,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ComboCustomers_SelectedIndexChanged(object sender, EventArgs args)
+        private void CustomerName_SelectedIndexChanged(object sender, EventArgs args)
         {
             var customerIndex = customerName.SelectedIndex;
 
@@ -176,7 +176,7 @@ namespace Libretto.Forms
             _bookInformation = bookInformation;
             itemGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
             itemStock.Text = Convert.ToString(bookInformation.Stock);
-            itemPrice.Text = LibrettoCommon.FormatCurrency(bookInformation.Price);
+            itemPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
             Information.BookName = _bookInformation.Title;
             Information.BookId = _bookInformation.Identifier;
             UpdateStock(orderQuantity.Value);
@@ -225,6 +225,32 @@ namespace Libretto.Forms
         private void RadioDispatched_CheckedChanged(object sender, EventArgs e)
         {
             Information.Status = Status.DispatchComplete;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CustomerNameButton_Click(object sender, EventArgs args)
+        {
+            var customerForm = new CustomerForm();
+
+            if (customerForm.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            var customerInformation = customerForm.CustomerInformation;
+
+            if (customerInformation == null)
+            {
+                return;
+            }
+
+            LibrettoClient.Instance.Customers.Add(customerInformation);
+            customerName.Items.Add(customerInformation.Name);
+            customerName.SelectedIndex = customerName.Items.Count - 1;
         }
     }
 }

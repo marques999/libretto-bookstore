@@ -1,339 +1,320 @@
-﻿namespace Libretto.Forms
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Libretto.Forms
 {
-    partial class BookForm
+    /// <summary>
+    ///
+    /// </summary>
+    internal partial class BookForm
     {
         /// <summary>
-        /// Required designer variable.
+        ///
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        ///
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonPanel = new System.Windows.Forms.Panel();
-            this.buttonConfirm = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.formPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.stockLabel = new System.Windows.Forms.Label();
-            this.titleField = new System.Windows.Forms.TextBox();
-            this.guidLabel = new System.Windows.Forms.Label();
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.priceLabel = new System.Windows.Forms.Label();
-            this.guidField = new System.Windows.Forms.TextBox();
-            this.stockPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.stockField = new System.Windows.Forms.NumericUpDown();
-            this.unitsLabel = new System.Windows.Forms.Label();
-            this.pricePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.currencyLabel = new System.Windows.Forms.Label();
-            this.priceField = new System.Windows.Forms.NumericUpDown();
-            this.buttonPanel.SuspendLayout();
-            this.formPanel.SuspendLayout();
-            this.stockPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stockField)).BeginInit();
-            this.pricePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priceField)).BeginInit();
-            this.SuspendLayout();
-            // 
+            buttonPanel = new Panel();
+            buttonConfirm = new Button();
+            buttonCancel = new Button();
+            formPanel = new TableLayoutPanel();
+            stockLabel = new Label();
+            titleField = new TextBox();
+            guidLabel = new Label();
+            titleLabel = new Label();
+            priceLabel = new Label();
+            guidField = new TextBox();
+            stockPanel = new TableLayoutPanel();
+            stockField = new NumericUpDown();
+            unitsLabel = new Label();
+            pricePanel = new TableLayoutPanel();
+            currencyLabel = new Label();
+            priceField = new NumericUpDown();
+            buttonPanel.SuspendLayout();
+            formPanel.SuspendLayout();
+            stockPanel.SuspendLayout();
+            ((ISupportInitialize)(stockField)).BeginInit();
+            pricePanel.SuspendLayout();
+            ((ISupportInitialize)(priceField)).BeginInit();
+            SuspendLayout();
+            //
             // buttonPanel
-            // 
-            this.buttonPanel.BackColor = System.Drawing.Color.DarkGray;
-            this.buttonPanel.Controls.Add(this.buttonConfirm);
-            this.buttonPanel.Controls.Add(this.buttonCancel);
-            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 133);
-            this.buttonPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Padding = new System.Windows.Forms.Padding(6);
-            this.buttonPanel.Size = new System.Drawing.Size(284, 36);
-            this.buttonPanel.TabIndex = 5;
-            // 
+            //
+            buttonPanel.BackColor = Color.DarkGray;
+            buttonPanel.Controls.Add(buttonConfirm);
+            buttonPanel.Controls.Add(buttonCancel);
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Location = new Point(0, 133);
+            buttonPanel.Margin = new Padding(0);
+            buttonPanel.Name = "buttonPanel";
+            buttonPanel.Padding = new Padding(6);
+            buttonPanel.Size = new Size(284, 36);
+            //
             // buttonConfirm
-            // 
-            this.buttonConfirm.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonConfirm.Dock = System.Windows.Forms.DockStyle.Left;
-            this.buttonConfirm.Enabled = false;
-            this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(6, 6);
-            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(134, 24);
-            this.buttonConfirm.TabIndex = 7;
-            this.buttonConfirm.Text = "Confirm";
-            this.buttonConfirm.UseVisualStyleBackColor = false;
-            this.buttonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
-            // 
+            //
+            buttonConfirm.BackColor = SystemColors.Control;
+            buttonConfirm.Dock = DockStyle.Left;
+            buttonConfirm.Enabled = false;
+            buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            buttonConfirm.FlatStyle = FlatStyle.Flat;
+            buttonConfirm.Location = new Point(6, 6);
+            buttonConfirm.Margin = new Padding(0);
+            buttonConfirm.Name = "buttonConfirm";
+            buttonConfirm.Size = new Size(134, 24);
+            buttonConfirm.TabIndex = 0;
+            buttonConfirm.Text = "Confirm";
+            buttonConfirm.UseVisualStyleBackColor = false;
+            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
+            //
             // buttonCancel
-            // 
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(144, 6);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(134, 24);
-            this.buttonCancel.TabIndex = 5;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
-            // 
+            //
+            buttonCancel.BackColor = SystemColors.Control;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+            buttonCancel.Dock = DockStyle.Right;
+            buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            buttonCancel.FlatStyle = FlatStyle.Flat;
+            buttonCancel.Location = new Point(144, 6);
+            buttonCancel.Margin = new Padding(0);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(134, 24);
+            buttonCancel.TabIndex = 1;
+            buttonCancel.Text = "Cancel";
+            buttonCancel.UseVisualStyleBackColor = false;
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
+            //
             // formPanel
-            // 
-            this.formPanel.BackColor = System.Drawing.Color.Gainsboro;
-            this.formPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.formPanel.ColumnCount = 2;
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.45455F));
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.54546F));
-            this.formPanel.Controls.Add(this.stockLabel, 0, 3);
-            this.formPanel.Controls.Add(this.titleField, 1, 1);
-            this.formPanel.Controls.Add(this.guidLabel, 0, 0);
-            this.formPanel.Controls.Add(this.titleLabel, 0, 1);
-            this.formPanel.Controls.Add(this.priceLabel, 0, 2);
-            this.formPanel.Controls.Add(this.guidField, 1, 0);
-            this.formPanel.Controls.Add(this.stockPanel, 1, 3);
-            this.formPanel.Controls.Add(this.pricePanel, 1, 2);
-            this.formPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formPanel.Location = new System.Drawing.Point(0, 0);
-            this.formPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.formPanel.Name = "formPanel";
-            this.formPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.formPanel.RowCount = 4;
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.formPanel.Size = new System.Drawing.Size(284, 133);
-            this.formPanel.TabIndex = 6;
-            // 
+            //
+            formPanel.BackColor = Color.Gainsboro;
+            formPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            formPanel.ColumnCount = 2;
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            formPanel.Controls.Add(guidLabel, 0, 0);
+            formPanel.Controls.Add(guidField, 1, 0);
+            formPanel.Controls.Add(titleLabel, 0, 1);
+            formPanel.Controls.Add(titleField, 1, 1);
+            formPanel.Controls.Add(priceLabel, 0, 2);
+            formPanel.Controls.Add(pricePanel, 1, 2);
+            formPanel.Controls.Add(stockLabel, 0, 3);
+            formPanel.Controls.Add(stockPanel, 1, 3);
+            formPanel.Dock = DockStyle.Fill;
+            formPanel.Location = new Point(0, 0);
+            formPanel.Margin = new Padding(0);
+            formPanel.Name = "formPanel";
+            formPanel.Padding = new Padding(4);
+            formPanel.RowCount = 4;
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            formPanel.Size = new Size(284, 133);
+            //
             // stockLabel
-            // 
-            this.stockLabel.AutoSize = true;
-            this.stockLabel.BackColor = System.Drawing.Color.Silver;
-            this.stockLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stockLabel.Location = new System.Drawing.Point(5, 98);
-            this.stockLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.stockLabel.Name = "stockLabel";
-            this.stockLabel.Size = new System.Drawing.Size(47, 30);
-            this.stockLabel.TabIndex = 5;
-            this.stockLabel.Text = "Stock";
-            this.stockLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            stockLabel.AutoSize = true;
+            stockLabel.BackColor = Color.Silver;
+            stockLabel.Dock = DockStyle.Fill;
+            stockLabel.Location = new Point(5, 98);
+            stockLabel.Margin = new Padding(0);
+            stockLabel.Name = "stockLabel";
+            stockLabel.Size = new Size(50, 30);
+            stockLabel.Text = "Stock";
+            stockLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // titleField
-            // 
-            this.titleField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.titleField.Location = new System.Drawing.Point(57, 41);
-            this.titleField.Margin = new System.Windows.Forms.Padding(4);
-            this.titleField.Name = "titleField";
-            this.titleField.Size = new System.Drawing.Size(218, 20);
-            this.titleField.TabIndex = 0;
-            this.titleField.TextChanged += new System.EventHandler(this.TitleField_TextChanged);
-            // 
+            //
+            titleField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            titleField.Location = new Point(60, 41);
+            titleField.Margin = new Padding(4);
+            titleField.Name = "titleField";
+            titleField.Size = new Size(215, 20);
+            titleField.TabIndex = 2;
+            titleField.TextChanged += new EventHandler(TitleField_TextChanged);
+            //
             // guidLabel
-            // 
-            this.guidLabel.AutoSize = true;
-            this.guidLabel.BackColor = System.Drawing.Color.Silver;
-            this.guidLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.guidLabel.Location = new System.Drawing.Point(5, 5);
-            this.guidLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.guidLabel.Name = "guidLabel";
-            this.guidLabel.Size = new System.Drawing.Size(47, 30);
-            this.guidLabel.TabIndex = 2;
-            this.guidLabel.Text = "GUID";
-            this.guidLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            guidLabel.AutoSize = true;
+            guidLabel.BackColor = Color.Silver;
+            guidLabel.Dock = DockStyle.Fill;
+            guidLabel.Location = new Point(5, 5);
+            guidLabel.Margin = new Padding(0);
+            guidLabel.Name = "guidLabel";
+            guidLabel.Size = new Size(50, 30);
+            guidLabel.Text = "GUID";
+            guidLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // titleLabel
-            // 
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.BackColor = System.Drawing.Color.Silver;
-            this.titleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.titleLabel.Location = new System.Drawing.Point(5, 36);
-            this.titleLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(47, 30);
-            this.titleLabel.TabIndex = 3;
-            this.titleLabel.Text = "Title";
-            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            titleLabel.AutoSize = true;
+            titleLabel.BackColor = Color.Silver;
+            titleLabel.Dock = DockStyle.Fill;
+            titleLabel.Location = new Point(5, 36);
+            titleLabel.Margin = new Padding(0);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(50, 30);
+            titleLabel.Text = "Title";
+            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // priceLabel
-            // 
-            this.priceLabel.AutoSize = true;
-            this.priceLabel.BackColor = System.Drawing.Color.Silver;
-            this.priceLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.priceLabel.Location = new System.Drawing.Point(5, 67);
-            this.priceLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(47, 30);
-            this.priceLabel.TabIndex = 4;
-            this.priceLabel.Text = "Price";
-            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            priceLabel.AutoSize = true;
+            priceLabel.BackColor = Color.Silver;
+            priceLabel.Dock = DockStyle.Fill;
+            priceLabel.Location = new Point(5, 67);
+            priceLabel.Margin = new Padding(0);
+            priceLabel.Name = "priceLabel";
+            priceLabel.Size = new Size(50, 30);
+            priceLabel.Text = "Price";
+            priceLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // guidField
-            // 
-            this.guidField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.guidField.Enabled = false;
-            this.guidField.Location = new System.Drawing.Point(57, 10);
-            this.guidField.Margin = new System.Windows.Forms.Padding(4);
-            this.guidField.Name = "guidField";
-            this.guidField.ReadOnly = true;
-            this.guidField.Size = new System.Drawing.Size(218, 20);
-            this.guidField.TabIndex = 1;
-            // 
+            //
+            guidField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            guidField.Enabled = false;
+            guidField.Location = new Point(60, 10);
+            guidField.Margin = new Padding(4);
+            guidField.Name = "guidField";
+            guidField.ReadOnly = true;
+            guidField.Size = new Size(215, 20);
+            //
             // stockPanel
-            // 
-            this.stockPanel.ColumnCount = 2;
-            this.stockPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
-            this.stockPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
-            this.stockPanel.Controls.Add(this.stockField, 0, 0);
-            this.stockPanel.Controls.Add(this.unitsLabel, 1, 0);
-            this.stockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stockPanel.Location = new System.Drawing.Point(56, 101);
-            this.stockPanel.Name = "stockPanel";
-            this.stockPanel.RowCount = 1;
-            this.stockPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.stockPanel.Size = new System.Drawing.Size(220, 24);
-            this.stockPanel.TabIndex = 7;
-            // 
+            //
+            stockPanel.ColumnCount = 2;
+            stockPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            stockPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
+            stockPanel.Controls.Add(stockField, 0, 0);
+            stockPanel.Controls.Add(unitsLabel, 1, 0);
+            stockPanel.Dock = DockStyle.Fill;
+            stockPanel.Location = new Point(59, 101);
+            stockPanel.Name = "stockPanel";
+            stockPanel.RowCount = 1;
+            stockPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            stockPanel.Size = new Size(217, 24);
+            //
             // stockField
-            // 
-            this.stockField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stockField.Location = new System.Drawing.Point(2, 2);
-            this.stockField.Margin = new System.Windows.Forms.Padding(2);
-            this.stockField.Name = "stockField";
-            this.stockField.Size = new System.Drawing.Size(181, 20);
-            this.stockField.TabIndex = 6;
-            // 
+            //
+            stockField.Dock = DockStyle.Fill;
+            stockField.Location = new Point(2, 2);
+            stockField.Margin = new Padding(2);
+            stockField.Name = "stockField";
+            stockField.Size = new Size(181, 20);
+            stockField.TabIndex = 4;
+            //
             // unitsLabel
-            // 
-            this.unitsLabel.AutoSize = true;
-            this.unitsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.unitsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.unitsLabel.Location = new System.Drawing.Point(188, 0);
-            this.unitsLabel.Name = "unitsLabel";
-            this.unitsLabel.Size = new System.Drawing.Size(29, 24);
-            this.unitsLabel.TabIndex = 5;
-            this.unitsLabel.Text = "Un";
-            this.unitsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            unitsLabel.AutoSize = true;
+            unitsLabel.Dock = DockStyle.Fill;
+            unitsLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            unitsLabel.Location = new Point(188, 0);
+            unitsLabel.Name = "unitsLabel";
+            unitsLabel.Size = new Size(26, 24);
+            unitsLabel.Text = "Un";
+            unitsLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // pricePanel
-            // 
-            this.pricePanel.ColumnCount = 2;
-            this.pricePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
-            this.pricePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
-            this.pricePanel.Controls.Add(this.currencyLabel, 0, 0);
-            this.pricePanel.Controls.Add(this.priceField, 0, 0);
-            this.pricePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pricePanel.Location = new System.Drawing.Point(56, 70);
-            this.pricePanel.Name = "pricePanel";
-            this.pricePanel.RowCount = 1;
-            this.pricePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pricePanel.Size = new System.Drawing.Size(220, 24);
-            this.pricePanel.TabIndex = 8;
-            // 
+            //
+            pricePanel.ColumnCount = 2;
+            pricePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            pricePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
+            pricePanel.Controls.Add(currencyLabel, 0, 0);
+            pricePanel.Controls.Add(priceField, 0, 0);
+            pricePanel.Dock = DockStyle.Fill;
+            pricePanel.Location = new Point(59, 70);
+            pricePanel.Name = "pricePanel";
+            pricePanel.RowCount = 1;
+            pricePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            pricePanel.Size = new Size(217, 24);
+            //
             // currencyLabel
-            // 
-            this.currencyLabel.AutoSize = true;
-            this.currencyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.currencyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currencyLabel.Location = new System.Drawing.Point(188, 0);
-            this.currencyLabel.Name = "currencyLabel";
-            this.currencyLabel.Size = new System.Drawing.Size(29, 24);
-            this.currencyLabel.TabIndex = 10;
-            this.currencyLabel.Text = "€";
-            this.currencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            currencyLabel.AutoSize = true;
+            currencyLabel.Dock = DockStyle.Fill;
+            currencyLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            currencyLabel.Location = new Point(188, 0);
+            currencyLabel.Name = "currencyLabel";
+            currencyLabel.Size = new Size(26, 24);
+            currencyLabel.Text = "€";
+            currencyLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // priceField
-            // 
-            this.priceField.DecimalPlaces = 2;
-            this.priceField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.priceField.Location = new System.Drawing.Point(2, 2);
-            this.priceField.Margin = new System.Windows.Forms.Padding(2);
-            this.priceField.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.priceField.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.priceField.Name = "priceField";
-            this.priceField.Size = new System.Drawing.Size(181, 20);
-            this.priceField.TabIndex = 9;
-            this.priceField.ThousandsSeparator = true;
-            this.priceField.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            // 
+            //
+            priceField.DecimalPlaces = 2;
+            priceField.Dock = DockStyle.Fill;
+            priceField.Location = new Point(2, 2);
+            priceField.Margin = new Padding(2);
+            priceField.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            priceField.Minimum = new decimal(new int[] { 1, 0, 0, 131072 });
+            priceField.Name = "priceField";
+            priceField.Size = new Size(181, 20);
+            priceField.TabIndex = 3;
+            priceField.ThousandsSeparator = true;
+            priceField.Value = new decimal(new int[] { 1, 0, 0, 131072 });
+            //
             // BookForm
-            // 
-            this.AcceptButton = this.buttonConfirm;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(284, 169);
-            this.Controls.Add(this.formPanel);
-            this.Controls.Add(this.buttonPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "BookForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Publish Book";
-            this.Load += new System.EventHandler(this.BookForm_Load);
-            this.buttonPanel.ResumeLayout(false);
-            this.formPanel.ResumeLayout(false);
-            this.formPanel.PerformLayout();
-            this.stockPanel.ResumeLayout(false);
-            this.stockPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stockField)).EndInit();
-            this.pricePanel.ResumeLayout(false);
-            this.pricePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priceField)).EndInit();
-            this.ResumeLayout(false);
-
+            //
+            AcceptButton = buttonConfirm;
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = buttonCancel;
+            ClientSize = new Size(284, 169);
+            Controls.Add(formPanel);
+            Controls.Add(buttonPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "BookForm";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Publish Book";
+            Load += new EventHandler(BookForm_Load);
+            buttonPanel.ResumeLayout(false);
+            formPanel.ResumeLayout(false);
+            formPanel.PerformLayout();
+            stockPanel.ResumeLayout(false);
+            stockPanel.PerformLayout();
+            ((ISupportInitialize)(stockField)).EndInit();
+            pricePanel.ResumeLayout(false);
+            pricePanel.PerformLayout();
+            ((ISupportInitialize)(priceField)).EndInit();
+            ResumeLayout(false);
         }
 
-        #endregion
-        private System.Windows.Forms.Panel buttonPanel;
-        private System.Windows.Forms.Button buttonConfirm;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TableLayoutPanel formPanel;
-        private System.Windows.Forms.Label stockLabel;
-        private System.Windows.Forms.TextBox titleField;
-        private System.Windows.Forms.Label guidLabel;
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label priceLabel;
-        private System.Windows.Forms.TextBox guidField;
-        private System.Windows.Forms.TableLayoutPanel stockPanel;
-        private System.Windows.Forms.NumericUpDown stockField;
-        private System.Windows.Forms.Label unitsLabel;
-        private System.Windows.Forms.TableLayoutPanel pricePanel;
-        private System.Windows.Forms.Label currencyLabel;
-        private System.Windows.Forms.NumericUpDown priceField;
+        private Panel buttonPanel;
+        private Button buttonConfirm;
+        private Button buttonCancel;
+        private Label guidLabel;
+        private Label priceLabel;
+        private Label stockLabel;
+        private Label titleLabel;
+        private Label unitsLabel;
+        private Label currencyLabel;
+        private TextBox guidField;
+        private TextBox titleField;
+        private NumericUpDown priceField;
+        private NumericUpDown stockField;
+        private TableLayoutPanel formPanel;
+        private TableLayoutPanel pricePanel;
+        private TableLayoutPanel stockPanel;
     }
 }
