@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Data.SqlClient;
 using Libretto.Database;
 using Libretto.Model;
 
@@ -14,34 +14,42 @@ namespace Libretto.Integration
         /// <summary>
         ///
         /// </summary>
-        public CustomerIntegration()
+        public CustomerIntegration(SqlConnection sqlConnection) : base(sqlConnection)
         {
-            _customers = ListCustomers();
+            Customers = ListCustomers();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly Dictionary<Guid, Customer> _customers;
+        public Dictionary<Guid, Customer> Customers
+        {
+            get;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Guid, Customer> ListCustomers()
+        private Dictionary<Guid, Customer> ListCustomers()
         {
             var customerList = new Dictionary<Guid, Customer>();
 
             using (var sqlReader = Query(SqliteCommands.ListCustomer).ExecuteReader())
             {
-                var customerIdentifier = ReadGuid(sqlReader, SqliteColumns.Identifier);
+                if (sqlReader.HasRows == false)
+                {
+                    return customerList;
+                }
 
                 while (sqlReader.Read())
                 {
+                    var customerIdentifier = ReadGuid(sqlReader, SqliteColumns.Identifier);
+
                     customerList.Add(customerIdentifier, new Customer
                     {
                         Identifier = customerIdentifier,
-                        Name = ReadString(sqlReader, SqliteColumns.Username),
+                        Name = ReadString(sqlReader, SqliteColumns.Name),
                         Email = ReadString(sqlReader, SqliteColumns.Email),
                         Location = ReadString(sqlReader, SqliteColumns.Location)
                     });
@@ -58,7 +66,7 @@ namespace Libretto.Integration
         /// <returns></returns>
         public Customer LookupCustomer(Guid customerIdentifier)
         {
-            return _customers.ContainsKey(customerIdentifier) == false ? null : _customers[customerIdentifier];
+            return Customers.TryGetValue(customerIdentifier, out Customer customerInformation) ? customerInformation : null;
         }
 
         /// <summary>
@@ -70,17 +78,17 @@ namespace Libretto.Integration
         {
             using (var sqlCommand = Query(SqliteCommands.InsertCustomer))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, customerInformation.Identifier);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Name, customerInformation.Name);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Email, customerInformation.Email);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Location, customerInformation.Location);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, customerInformation.Identifier);
 
                 if (sqlCommand.ExecuteNonQuery() <= 0)
                 {
                     return false;
                 }
 
-                _customers.Add(customerInformation.Identifier, new Customer
+                Customers.Add(customerInformation.Identifier, new Customer
                 {
                     Identifier = customerInformation.Identifier,
                     Name = customerInformation.Name,
@@ -112,7 +120,7 @@ namespace Libretto.Integration
 
                 if (sqlCommand.ExecuteNonQuery() > 0)
                 {
-                    _customers.Remove(customerIdentifier);
+                    Customers.Remove(customerIdentifier);
                 }
                 else
                 {

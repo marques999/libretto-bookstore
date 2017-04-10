@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 using Libretto.Database;
 using Libretto.Model;
@@ -14,31 +15,41 @@ namespace Libretto.Integration
         /// <summary>
         ///
         /// </summary>
-        public BookIntegration()
+        public BookIntegration(SqlConnection sqlConnection) : base(sqlConnection)
         {
-            _books = ListBooks();
+            Books = ListBooks();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly Dictionary<Guid, Book> _books;
+        public Dictionary<Guid, Book> Books
+        {
+            get;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Guid, Book> ListBooks()
+        private Dictionary<Guid, Book> ListBooks()
         {
-            var customerList = new Dictionary<Guid, Book>();
+            var bookList = new Dictionary<Guid, Book>();
 
-            using (var sqlReader = Query(SqliteCommands.ListCustomer).ExecuteReader())
+            using (var sqlReader = Query(SqliteCommands.ListBook).ExecuteReader())
             {
+                if (sqlReader.HasRows == false)
+                {
+                    return bookList;
+                }
+
                 while (sqlReader.Read())
                 {
-                    customerList.Add(sqlReader.GetGuid(0), new Book
+                    var customerIdentifier = ReadGuid(sqlReader, SqliteColumns.Identifier);
+
+                    bookList.Add(customerIdentifier, new Book
                     {
-                        Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
+                        Identifier = customerIdentifier,
                         Title = ReadString(sqlReader, SqliteColumns.Title),
                         Price = ReadFloat(sqlReader, SqliteColumns.Price),
                         Stock = ReadInteger(sqlReader, SqliteColumns.Stock)
@@ -46,7 +57,7 @@ namespace Libretto.Integration
                 }
             }
 
-            return customerList;
+            return bookList;
         }
 
         /// <summary>
@@ -56,7 +67,7 @@ namespace Libretto.Integration
         /// <returns></returns>
         public Book LookupBook(Guid bookIdentifier)
         {
-            return _books.ContainsKey(bookIdentifier) == false ? null : _books[bookIdentifier];
+            return Books.TryGetValue(bookIdentifier, out Book bookInformation) ? bookInformation : null;
         }
 
         /// <summary>
@@ -78,7 +89,7 @@ namespace Libretto.Integration
                     return false;
                 }
 
-                _books.Add(bookInformation.Identifier, new Book
+                Books.Add(bookInformation.Identifier, new Book
                 {
                     Identifier = bookInformation.Identifier,
                     Title = bookInformation.Title,
@@ -106,8 +117,8 @@ namespace Libretto.Integration
 
                 if (sqlCommand.ExecuteNonQuery() > 0)
                 {
-                    _books.Remove(bookInformation.Identifier);
-                    _books.Add(bookInformation.Identifier, bookInformation);
+                    Books.Remove(bookInformation.Identifier);
+                    Books.Add(bookInformation.Identifier, bookInformation);
                 }
                 else
                 {
@@ -138,7 +149,7 @@ namespace Libretto.Integration
 
                 if (sqlCommand.ExecuteNonQuery() > 0)
                 {
-                    _books.Remove(bookIdentifier);
+                    Books.Remove(bookIdentifier);
                 }
                 else
                 {

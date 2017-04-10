@@ -9,19 +9,29 @@
         /// 
         /// </summary>
         public static readonly string ExecuteOrder = @"
-            UPDATE Order SET
-            status=@status,
-            execution_date=@execution_date
-            WHERE id=@id";
+            UPDATE Transactions SET
+            status = @status,
+            execution_date = @execution_date
+            WHERE id = @id";
 
         /// <summary>
         /// 
         /// </summary>
         public static readonly string DispatchOrder = @"
-            UPDATE Order SET
-            status=@status,
-            dispatch_date=@dispatch_date
-            WHERE id=@id";
+            UPDATE Transactions SET
+            status = @status,
+            dispatch_date = @dispatch_date
+            WHERE id = @id";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string UpdateBoook = @"
+            UPDATE Books SET
+            title = @title
+            price = @price
+            stock = @stock
+            WHERE id = @id";
 
         /// <summary>
         /// 
@@ -44,44 +54,44 @@
         /// 
         /// </summary>
         public static readonly string InsertCustomer = @"
-            INSERT INTO Customers(id, username, email, address)
-            VALUES(@id, @username, @email, @address)";
+            INSERT INTO Customers(id, name, email, location)
+            VALUES(@id, @name, @email, @location)";
 
         /// <summary>
         /// 
         /// </summary>
         public static readonly string InsertOrder = @"
-            INSERT INTO Books(id, customer, quantity, timestamp, total, status)
-            VALUES(@id, @customer, @quantity, @timestamp, @total, @status)";
+            INSERT INTO Transactions(id, type, book_id, customer_id, quantity, timestamp, total, status)
+            VALUES(@id, @type, @book_id, @customer_id, @quantity, @timestamp, @total, @status)";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ListBook = "SELECT * FROM Book";
+        public static readonly string ListBook = "SELECT * FROM Books ORDER BY Title";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ListCustomer = "SELECT * FROM Customer";
+        public static readonly string ListCustomer = "SELECT * FROM Customers ORDER BY Name";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ListOrder = "SELECT * FROM Order WHERE id=@id";
+        public static readonly string ListOrder = "SELECT * FROM Transactions";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DeleteBook = "DELETE FROM Book WHERE id = @id";
+        public static readonly string DeleteBook = "DELETE FROM Books WHERE id = @id";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DeleteCustomer = "DELETE From Customer WHERE id = @id";
+        public static readonly string DeleteCustomer = "DELETE From Customers WHERE id = @id";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DeleteTransaction = "DELETE FROM Order WHERE id = @id";
+        public static readonly string DeleteTransaction = "DELETE FROM Transactions WHERE id = @id";
     }
 }

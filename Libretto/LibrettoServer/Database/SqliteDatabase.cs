@@ -14,6 +14,19 @@ namespace Libretto.Database
         /// <summary>
         /// 
         /// </summary>
+        public SqliteDatabase(SqlConnection sqlConnection)
+        {
+            Connection = sqlConnection;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected SqlConnection Connection;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="sqlReader"></param>
         /// <param name="sqlColumn"></param>
         /// <returns></returns>
@@ -30,7 +43,7 @@ namespace Libretto.Database
         /// <returns></returns>
         protected static double ReadFloat(IDataRecord sqlReader, string sqlColumn)
         {
-            return NullCheck(sqlReader, sqlColumn) ? 0 : sqlReader.GetDouble(sqlReader.GetOrdinal(sqlColumn));
+            return NullCheck(sqlReader, sqlColumn) ? 0.0 : sqlReader.GetDouble(sqlReader.GetOrdinal(sqlColumn));
         }
 
         /// <summary>
@@ -115,9 +128,9 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="sqlQuery"></param>
         /// <returns></returns>
-        protected static SqlCommand Query(string sqlQuery)
+        protected SqlCommand Query(string sqlQuery)
         {
-            return new SqlCommand(sqlQuery, LibrettoServer.Instance.Database);
+            return new SqlCommand(sqlQuery, Connection);
         }
     }
 }

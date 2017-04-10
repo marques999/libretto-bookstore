@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 using Libretto.Database;
 using Libretto.Model;
@@ -9,20 +10,20 @@ namespace Libretto.Integration
     /// <summary>
     /// 
     /// </summary>
-    internal class OrderIntegration : SqliteDatabase
+    internal class TransactionIntegration : SqliteDatabase
     {
         /// <summary>
         /// 
         /// </summary>
-        public OrderIntegration()
+        public TransactionIntegration(SqlConnection sqlConnection) : base(sqlConnection)
         {
-            _transactions = ListOrders();
+            //_transactions = ListOrders();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly Dictionary<Guid, Transaction> _transactions;
+        private readonly Dictionary<Guid, Transaction> _transactions = new Dictionary<Guid, Transaction>();
 
         /// <summary>
         /// 
@@ -78,11 +79,11 @@ namespace Libretto.Integration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
+        /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        public Transaction LookupTransaction(Guid customerIdentifier)
+        public Transaction LookupTransaction(Guid transactionIdentifier)
         {
-            return _transactions.ContainsKey(customerIdentifier) == false ? null : _transactions[customerIdentifier];
+            return _transactions.TryGetValue(transactionIdentifier, out Transaction transactionInformation) ? transactionInformation : null;
         }
 
         /// <summary>
