@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LibrettoInvoice
+namespace Libretto.Model
 {
     /// <summary>
     /// 

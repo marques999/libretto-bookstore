@@ -1,4 +1,4 @@
-﻿namespace LibrettoInvoice
+namespace Libretto.Forms
 {
     partial class InvoiceForm
     {

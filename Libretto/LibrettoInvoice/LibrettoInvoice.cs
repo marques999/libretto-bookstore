@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Messaging;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
-namespace LibrettoInvoice
+using Libretto.Forms;
+using Libretto.Model;
+
+namespace Libretto
 {
     /// <summary>
     /// 
     /// </summary>
-    internal static class Program
+    internal static class LibrettoInvoice
     {
         /// <summary>
         /// 
