@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 
 using Libretto.Database;
 using Libretto.Model;
@@ -17,39 +16,63 @@ namespace Libretto.Integration
         /// </summary>
         public OrderIntegration()
         {
-            _orders = ListOrders();
+            _transactions = ListOrders();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly Dictionary<Guid, Order> _orders;
+        private readonly Dictionary<Guid, Transaction> _transactions;
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Guid, Order> ListOrders()
+        public Dictionary<Guid, Transaction> ListOrders()
         {
-            var ordersList = new Dictionary<Guid, Order>();
+            var transactionsList = new Dictionary<Guid, Transaction>();
 
             using (var sqlReader = Query(SqliteCommands.ListOrder).ExecuteReader())
             {
                 while (sqlReader.Read())
                 {
-                    ordersList.Add(sqlReader.GetGuid(0), new Order
+                    var transactionType = ReadType(sqlReader, SqliteColumns.Type);
+
+                    if (transactionType == TransactionType.Order)
                     {
-                        Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
-                        CustomerId = ReadGuid(sqlReader, SqliteColumns.Customer),
-                        Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
-                        Timestamp = ReadTimestamp(sqlReader, SqliteColumns.Timestamp),
-                        Total = ReadFloat(sqlReader, SqliteColumns.Total),
-                        Status = ReadOrderState(sqlReader)
-                    });
+                        transactionsList.Add(sqlReader.GetGuid(0), new Order
+                        {
+                            Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
+                            BookId = ReadGuid(sqlReader, SqliteColumns.BookId),
+                            BookName = ReadString(sqlReader, SqliteColumns.BookName),
+                            CustomerId = ReadGuid(sqlReader, SqliteColumns.CustomerId),
+                            CustomerName = ReadString(sqlReader, SqliteColumns.CustomerName),
+                            Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
+                            Timestamp = ReadTimestamp(sqlReader, SqliteColumns.Timestamp),
+                            Total = ReadFloat(sqlReader, SqliteColumns.Total),
+                            Status = ReadStatus(sqlReader, SqliteColumns.Status),
+                            StatusDate = ReadTimestamp(sqlReader, SqliteColumns.StatusDate)
+                        });
+                    }
+                    else
+                    {
+                        transactionsList.Add(sqlReader.GetGuid(0), new Purchase
+                        {
+                            Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
+                            BookId = ReadGuid(sqlReader, SqliteColumns.BookId),
+                            BookName = ReadString(sqlReader, SqliteColumns.BookName),
+                            CustomerId = ReadGuid(sqlReader, SqliteColumns.CustomerId),
+                            CustomerName = ReadString(sqlReader, SqliteColumns.CustomerName),
+                            Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
+                            Timestamp = ReadTimestamp(sqlReader, SqliteColumns.Timestamp),
+                            Total = ReadFloat(sqlReader, SqliteColumns.Total),
+                            Status = ReadStatus(sqlReader, SqliteColumns.Status)
+                        });
+                    }
                 }
             }
 
-            return ordersList;
+            return transactionsList;
         }
 
         /// <summary>
@@ -57,67 +80,57 @@ namespace Libretto.Integration
         /// </summary>
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
-        public Order LookupOrder(Guid customerIdentifier)
+        public Transaction LookupTransaction(Guid customerIdentifier)
         {
-            return _orders.ContainsKey(customerIdentifier) == false ? null : _orders[customerIdentifier];
+            return _transactions.ContainsKey(customerIdentifier) == false ? null : _transactions[customerIdentifier];
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sqlReader"></param>
+        /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        private static OrderState ReadOrderState(IDataRecord sqlReader)
+        public bool RegisterTransaction(Transaction transactionInformation)
         {
-            switch (ReadInteger(sqlReader, SqliteColumns.Status))
-            {
-                case 0:
-                    return new WaitingExpedition();
-                case 1:
-                    return new DispatchCompleted(sqlReader.GetDateTime(5));
-                default:
-                    return new DispatchCompleted(sqlReader.GetDateTime(6));
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderInformation"></param>
-        /// <returns></returns>
-        public bool InsertOrder(Guid orderIdentifier, Order orderInformation)
-        {
-            bool operationResult;
-
             using (var sqlCommand = Query(SqliteCommands.InsertOrder))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderIdentifier);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Customer, orderInformation.CustomerId);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Quantity, orderInformation.Quantity);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Timestamp, orderInformation.Timestamp);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Total, orderInformation.Total);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.WaitingExpedition);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Type, transactionInformation.Type);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Total, transactionInformation.Total);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.BookId, transactionInformation.BookId);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, transactionInformation.Status);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Quantity, transactionInformation.Quantity);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Timestamp, transactionInformation.Timestamp);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.CustomerId, transactionInformation.CustomerId);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, transactionInformation.Identifier);
+
+                var orderInformation = transactionInformation as Order;
+
+                if (orderInformation != null)
+                {
+                    sqlCommand.Parameters.AddWithValue(SqliteParameters.StatusDate, orderInformation.StatusDate);
+                }
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    _transactions.Add(transactionInformation.Identifier, transactionInformation);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                _orders.Add(orderIdentifier, orderInformation);
-            }
-
-            return operationResult;
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderGuid"></param>
-        /// <param name="orderTimestamp"></param>
-        public bool DispatchOrder(Guid orderGuid, DateTime orderTimestamp)
+        /// <param name="transactionGuid"></param>
+        /// <param name="transactionTimestamp"></param>
+        public bool DispatchOrder(Guid transactionGuid, DateTime transactionTimestamp)
         {
-            bool operationResult;
-            var orderInformation = LookupOrder(orderGuid);
+            var orderInformation = LookupTransaction(transactionGuid) as Order;
 
             if (orderInformation == null)
             {
@@ -126,78 +139,87 @@ namespace Libretto.Integration
 
             using (var sqlCommand = Query(SqliteCommands.DispatchOrder))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderGuid);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, transactionGuid);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.WaitingDispatch);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.DispatchDate, orderTimestamp);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.StatusDate, transactionTimestamp);
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    orderInformation.Status = Status.WaitingDispatch;
+                    orderInformation.StatusDate = DateTime.Now;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                orderInformation.Status = new WaitingDispatch(orderTimestamp);
-            }
-
-            return operationResult;
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderGuid"></param>
-        /// <param name="orderTimestamp"></param>
-        public bool ExecuteOrder(Guid orderGuid, DateTime orderTimestamp)
+        /// <param name="transactionGuid"></param>
+        /// <param name="transactionTimestamp"></param>
+        public bool ExecuteOrder(Guid transactionGuid, DateTime transactionTimestamp)
         {
-            bool operationResult;
-            var orderInformation = LookupOrder(orderGuid);
+            var transactionInformation = LookupTransaction(transactionGuid) as Order;
 
-            if (orderInformation == null)
+            if (transactionInformation == null)
             {
                 return false;
             }
 
             using (var sqlCommand = Query(SqliteCommands.ExecuteOrder))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderGuid);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, transactionGuid);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.DispatchComplete);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.ExecutionDate, orderTimestamp);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.ExecutionDate, transactionTimestamp);
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    transactionInformation.Status = Status.DispatchComplete;
+                    transactionInformation.StatusDate = DateTime.Now;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                orderInformation.Status = new DispatchCompleted(orderTimestamp);
-            }
-
-            return operationResult;
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderIdentifier"></param>
+        /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        public bool DeleteOrder(Guid orderIdentifier)
+        public bool DeleteTransaction(Guid transactionIdentifier)
         {
-            bool operationResult;
-            var orderInformation = LookupOrder(orderIdentifier);
+            var transactionInformation = LookupTransaction(transactionIdentifier);
 
-            if (orderInformation == null)
+            if (transactionInformation == null)
             {
                 return false;
             }
 
-            using (var sqlCommand = Query(SqliteCommands.DeleteOrder))
+            using (var sqlCommand = Query(SqliteCommands.DeleteTransaction))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteColumns.Identifier, orderInformation.Identifier);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+                sqlCommand.Parameters.AddWithValue(SqliteColumns.Identifier, transactionInformation.Identifier);
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    _transactions.Remove(transactionIdentifier);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                _orders.Remove(orderIdentifier);
-            }
-
-            return operationResult;
+            return true;
         }
     }
 }

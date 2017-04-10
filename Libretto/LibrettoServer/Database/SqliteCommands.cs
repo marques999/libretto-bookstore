@@ -82,6 +82,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DeleteOrder = "DELETE FROM Order WHERE id = @id";
+        public static readonly string DeleteTransaction = "DELETE FROM Order WHERE id = @id";
     }
 }

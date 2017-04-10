@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using Libretto.Database;
 using Libretto.Model;
-using Libretto.Tools;
 
 namespace Libretto.Integration
 {
@@ -35,11 +34,13 @@ namespace Libretto.Integration
 
             using (var sqlReader = Query(SqliteCommands.ListCustomer).ExecuteReader())
             {
+                var customerIdentifier = ReadGuid(sqlReader, SqliteColumns.Identifier);
+
                 while (sqlReader.Read())
                 {
-                    customerList.Add(sqlReader.GetGuid(0), new Customer
+                    customerList.Add(customerIdentifier, new Customer
                     {
-                        Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
+                        Identifier = customerIdentifier,
                         Name = ReadString(sqlReader, SqliteColumns.Username),
                         Email = ReadString(sqlReader, SqliteColumns.Email),
                         Location = ReadString(sqlReader, SqliteColumns.Location)
@@ -63,34 +64,32 @@ namespace Libretto.Integration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <param name="customerForm"></param>
+        /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public bool InsertCustomer(Guid customerIdentifier, Customer customerForm)
+        public bool InsertCustomer(Customer customerInformation)
         {
-            bool operationResult;
-
-            using (var myCommand = Query(SqliteCommands.InsertCustomer))
+            using (var sqlCommand = Query(SqliteCommands.InsertCustomer))
             {
-                myCommand.Parameters.AddWithValue(SqliteParameters.Identifier, customerIdentifier);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Username, customerForm.Name);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Email, customerForm.Email);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Location, customerForm.Location);
-                operationResult = myCommand.ExecuteNonQuery() > 0;
-            }
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, customerInformation.Identifier);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Name, customerInformation.Name);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Email, customerInformation.Email);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Location, customerInformation.Location);
 
-            if (operationResult)
-            {
-                _customers.Add(customerIdentifier, new Customer
+                if (sqlCommand.ExecuteNonQuery() <= 0)
                 {
-                    Identifier = customerIdentifier,
-                    Name = customerForm.Name,
-                    Email = customerForm.Email,
-                    Location = customerForm.Location
+                    return false;
+                }
+
+                _customers.Add(customerInformation.Identifier, new Customer
+                {
+                    Identifier = customerInformation.Identifier,
+                    Name = customerInformation.Name,
+                    Email = customerInformation.Email,
+                    Location = customerInformation.Location
                 });
             }
 
-            return operationResult;
+            return true;
         }
 
         /// <summary>
@@ -100,7 +99,6 @@ namespace Libretto.Integration
         /// <returns></returns>
         public bool DeleteCustomer(Guid customerIdentifier)
         {
-            bool operationResult;
             var customerInformation = LookupCustomer(customerIdentifier);
 
             if (customerInformation == null)
@@ -111,15 +109,18 @@ namespace Libretto.Integration
             using (var sqlCommand = Query(SqliteCommands.DeleteCustomer))
             {
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, customerInformation.Identifier);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    _customers.Remove(customerIdentifier);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                _customers.Remove(customerIdentifier);
-            }
-
-            return operationResult;
+            return true;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace Libretto
 {
@@ -31,7 +30,6 @@ namespace Libretto
         /// </summary>
         private static void Main(string[] args)
         {
-            Console.WriteLine(@"Test");
         }
     }
 }

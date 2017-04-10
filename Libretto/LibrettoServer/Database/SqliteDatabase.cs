@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 
+using Libretto.Model;
+
 namespace Libretto.Database
 {
     /// <summary>
@@ -73,6 +75,28 @@ namespace Libretto.Database
         protected static DateTime ReadTimestamp(IDataRecord sqlReader, string sqlColumn)
         {
             return NullCheck(sqlReader, sqlColumn) ? DateTime.Now : sqlReader.GetDateTime(sqlReader.GetOrdinal(sqlColumn));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlReader"></param>
+        /// <param name="sqlColumn"></param>
+        /// <returns></returns>
+        protected static Status ReadStatus(IDataRecord sqlReader, string sqlColumn)
+        {
+            return NullCheck(sqlReader, sqlColumn) ? Status.StorePurchased : (Status)ReadInteger(sqlReader, sqlColumn);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlReader"></param>
+        /// <param name="sqlColumn"></param>
+        /// <returns></returns>
+        protected static TransactionType ReadType(IDataRecord sqlReader, string sqlColumn)
+        {
+            return NullCheck(sqlReader, sqlColumn) ? TransactionType.Purchase : (TransactionType)ReadInteger(sqlReader, sqlColumn);
         }
 
         /// <summary>

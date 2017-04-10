@@ -62,96 +62,60 @@ namespace Libretto.Integration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookIdentifier"></param>
-        /// <param name="bookRegistration"></param>
+        /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public bool InsertCustomer(Guid bookIdentifier, Book bookRegistration)
+        public bool InsertBook(Book bookInformation)
         {
-            bool operationResult;
-
-            using (var myCommand = Query(SqliteCommands.InsertBook))
+            using (var sqlCommand = Query(SqliteCommands.InsertBook))
             {
-                myCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookIdentifier);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Title, bookRegistration.Title);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Price, bookRegistration.Price);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Stock, bookRegistration.Stock);
-                operationResult = myCommand.ExecuteNonQuery() > 0;
-            }
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookInformation.Identifier);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Title, bookInformation.Title);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Price, bookInformation.Price);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Stock, bookInformation.Stock);
 
-            if (operationResult)
-            {
-                _books.Add(bookIdentifier, new Book
+                if (sqlCommand.ExecuteNonQuery() <= 0)
                 {
-                    Identifier = bookIdentifier,
-                    Title = bookRegistration.Title,
-                    Price = bookRegistration.Price,
-                    Stock = bookRegistration.Stock
+                    return false;
+                }
+
+                _books.Add(bookInformation.Identifier, new Book
+                {
+                    Identifier = bookInformation.Identifier,
+                    Title = bookInformation.Title,
+                    Price = bookInformation.Price,
+                    Stock = bookInformation.Stock
                 });
             }
 
-            return operationResult;
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookIdentifier"></param>
-        /// <param name="bookPrice"></param>
+        /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public bool UpdatePrice(Guid bookIdentifier, double bookPrice)
+        public bool UpdateBook(Book bookInformation)
         {
-            bool operationResult;
-            var bookInformation = LookupBook(bookIdentifier);
-
-            if (bookInformation == null)
-            {
-                return false;
-            }
-
             using (var sqlCommand = Query(SqliteCommands.UpdatePrice))
             {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookIdentifier);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Price, bookPrice);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookInformation.Identifier);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Title, bookInformation.Title);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Price, bookInformation.Price);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Stock, bookInformation.Stock);
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    _books.Remove(bookInformation.Identifier);
+                    _books.Add(bookInformation.Identifier, bookInformation);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                bookInformation.Price = bookPrice;
-            }
-
-            return operationResult;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookIdentifier"></param>
-        /// <param name="bookQuantity"></param>
-        /// <returns></returns>
-        public bool UpdateStock(Guid bookIdentifier, int bookQuantity)
-        {
-            bool operationResult;
-            var bookInformation = LookupBook(bookIdentifier);
-
-            if (bookInformation == null)
-            {
-                return false;
-            }
-
-            using (var sqlCommand = Query(SqliteCommands.UpdateStock))
-            {
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookIdentifier);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Stock, bookQuantity);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
-            }
-
-            if (operationResult)
-            {
-                bookInformation.Stock = bookQuantity;
-            }
-
-            return operationResult;
+            return true;
         }
 
         /// <summary>
@@ -161,7 +125,6 @@ namespace Libretto.Integration
         /// <returns></returns>
         public bool DeleteBook(Guid bookIdentifier)
         {
-            bool operationResult;
             var bookInformation = LookupBook(bookIdentifier);
 
             if (bookInformation == null)
@@ -172,15 +135,18 @@ namespace Libretto.Integration
             using (var sqlCommand = Query(SqliteCommands.DeleteBook))
             {
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, bookInformation.Identifier);
-                operationResult = sqlCommand.ExecuteNonQuery() > 0;
+
+                if (sqlCommand.ExecuteNonQuery() > 0)
+                {
+                    _books.Remove(bookIdentifier);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (operationResult)
-            {
-                _books.Remove(bookIdentifier);
-            }
-
-            return operationResult;
+            return true;
         }
     }
 }
