@@ -25,8 +25,8 @@ namespace Libretto.Forms
         /// </summary>
         private void RefreshBooks()
         {
-            booksList.Items.Clear();
-            booksList.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
+            listView.Items.Clear();
+            listView.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
         }
 
         /// <summary>
@@ -54,12 +54,12 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
-            if (booksList.SelectedItems.Count <= 0)
+            if (listView.SelectedItems.Count <= 0)
             {
                 return;
             }
 
-            var listItem = booksList.SelectedItems[0];
+            var listItem = listView.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
             {
@@ -81,12 +81,12 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonDelete_Click(object sender, EventArgs args)
         {
-            if (booksList.SelectedItems.Count <= 0)
+            if (listView.SelectedItems.Count <= 0)
             {
                 return;
             }
 
-            var listItem = booksList.SelectedItems[0];
+            var listItem = listView.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
             {
@@ -102,7 +102,7 @@ namespace Libretto.Forms
             }
 
             LibrettoClient.Instance.Books.RemoveAt(bookIndex);
-            booksList.Items.Remove(listItem);
+            listView.Items.Remove(listItem);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Libretto.Forms
         private void InsertBook(Book bookInfomation)
         {
             LibrettoClient.Instance.Books.Add(bookInfomation);
-            booksList.Items.Add(ParseBook(bookInfomation));
+            listView.Items.Add(ParseBook(bookInfomation));
         }
 
         /// <summary>
@@ -170,11 +170,11 @@ namespace Libretto.Forms
         {
             var previousIndex = listItem.Index;
 
-            booksList.Items.Remove(listItem);
+            listView.Items.Remove(listItem);
 
             if (previousIndex >= 0)
             {
-                booksList.Items.Insert(previousIndex, ParseBook(bookInformation));
+                listView.Items.Insert(previousIndex, ParseBook(bookInformation));
             }
         }
 
@@ -183,7 +183,7 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = buttonDelete.Enabled = booksList.SelectedItems.Count > 0;
+            buttonUpdate.Enabled = buttonDelete.Enabled = listView.SelectedItems.Count > 0;
         }
 
         /// <summary>

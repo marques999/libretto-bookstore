@@ -155,8 +155,8 @@ namespace Libretto.Forms
                 || orderInformation.Status == OrderStatus.WaitingDispatch && checkProcessing.Checked
                 || orderInformation.Status == OrderStatus.DispatchComplete && checkDispatched.Checked)
                 && (string.IsNullOrEmpty(customerName) || customerName == orderInformation.CustomerName)
-                && (dateFromPicker.Checked == false || orderTimestamp > dateFromPicker.Value)
-                && (dateUntilPicker.Checked == false || orderTimestamp < dateUntilPicker.Value);
+                && (pickerFrom.Checked == false || orderTimestamp > pickerFrom.Value)
+                && (pickerUntil.Checked == false || orderTimestamp < pickerUntil.Value);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace Libretto.Forms
         {
             comboCustomer.Items.Add("");
             comboCustomer.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
-            dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            dateUntilPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            pickerFrom.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            pickerUntil.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();
             UpdateFilter();
         }
