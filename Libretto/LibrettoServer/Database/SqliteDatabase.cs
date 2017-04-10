@@ -93,7 +93,7 @@ namespace Libretto.Database
         /// <returns></returns>
         protected static SqlCommand Query(string sqlQuery)
         {
-            return new SqlCommand(sqlQuery, LibrettoServer.Database);
+            return new SqlCommand(sqlQuery, LibrettoServer.Instance.Database);
         }
     }
 }

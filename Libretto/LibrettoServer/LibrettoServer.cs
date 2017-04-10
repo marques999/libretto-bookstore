@@ -11,10 +11,20 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public static SqlConnection Database
+        public SqlConnection Database
         {
             get;
         } = new SqlConnection();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static LibrettoServer _instance;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static LibrettoServer Instance => _instance ?? (_instance = new LibrettoServer());
 
         /// <summary>
         /// 

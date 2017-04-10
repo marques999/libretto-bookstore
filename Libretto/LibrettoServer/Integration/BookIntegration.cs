@@ -65,7 +65,7 @@ namespace Libretto.Integration
         /// <param name="bookIdentifier"></param>
         /// <param name="bookRegistration"></param>
         /// <returns></returns>
-        public bool InsertCustomer(Guid bookIdentifier, BookForm bookRegistration)
+        public bool InsertCustomer(Guid bookIdentifier, BookInfo bookRegistration)
         {
             bool operationResult;
 

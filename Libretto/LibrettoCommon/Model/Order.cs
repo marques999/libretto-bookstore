@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Libretto.Enums;
 
 namespace Libretto.Model
 {
@@ -18,23 +17,33 @@ namespace Libretto.Model
         {
             get;
             set;
+        } = Guid.NewGuid();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public OrderStatus Status
+        {
+            get;
+            set;
+        } = OrderStatus.WaitingDispatch;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public Guid CustomerId
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        public OrderState State
-        {
-            get;
-            set;
-        } = new WaitingExpedition();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public Guid Customer
+        public string CustomerName
         {
             get;
             set;
@@ -44,7 +53,17 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
-        public Book Book
+        public Guid BookId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public string BookName
         {
             get;
             set;

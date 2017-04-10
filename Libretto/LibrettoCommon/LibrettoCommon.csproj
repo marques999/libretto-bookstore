@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Libretto</RootNamespace>
     <AssemblyName>LibrettoCommon</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -44,20 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExtension.cs" />
     <Compile Include="LibrettoCommon.cs" />
     <Compile Include="Model\Book.cs" />
-    <Compile Include="Model\BookForm.cs" />
+    <Compile Include="Model\BookInfo.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\CustomerBase.cs" />
     <Compile Include="Model\OrderRequest.cs" />
     <Compile Include="Model\CustomerForm.cs" />
     <Compile Include="Model\Session.cs" />
-    <Compile Include="Enums\DispatchCompleted.cs" />
     <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\OrderState.cs" />
+    <Compile Include="Model\OrderStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Enums\WaitingDispatch.cs" />
-    <Compile Include="Enums\WaitingExpedition.cs" />
+    <Compile Include="TupleComboBox.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

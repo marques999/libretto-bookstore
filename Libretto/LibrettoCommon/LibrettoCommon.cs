@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 
 namespace Libretto
@@ -24,5 +25,35 @@ namespace Libretto
         /// 
         /// </summary>
         public static MailAddress EmailAccount => new MailAddress(EmailAddress, DisplayName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dummyIdentifier"></param>
+        /// <returns></returns>
+        public static string FormatGuid(Guid dummyIdentifier)
+        {
+            return dummyIdentifier.ToString("N").ToUpper();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string FormatDate(DateTime dateTime)
+        {
+            return $"{dateTime.ToShortDateString()} {dateTime.ToShortTimeString()}";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currencyValue"></param>
+        /// <returns></returns>
+        public static string FormatCurrency(double currencyValue)
+        {
+            return $"{currencyValue:C2}";
+        }
     }
 }

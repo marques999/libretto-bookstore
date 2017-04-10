@@ -1,15 +1,15 @@
-﻿using System.Runtime.Serialization;
-
-namespace Libretto.Model
+﻿namespace Libretto
 {
-    [DataContract]
-    public class BookForm
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    internal class TupleComboBox<T>
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public string Title
+        public string Name
         {
             get;
             set;
@@ -18,8 +18,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public double Price
+        public T Identifier
         {
             get;
             set;
@@ -28,11 +27,10 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public int Stock
+        /// <returns></returns>
+        public override string ToString()
         {
-            get;
-            set;
+            return Name;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Libretto.Model
     /// 
     /// </summary>
     [DataContract]
-    public class Book : BookForm
+    public class Book : BookInfo
     {
         /// <summary>
         /// 
@@ -17,6 +17,6 @@ namespace Libretto.Model
         {
             get;
             set;
-        }
+        } = Guid.NewGuid();
     }
 }

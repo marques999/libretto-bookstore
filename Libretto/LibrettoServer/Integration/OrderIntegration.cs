@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 
 using Libretto.Database;
-using Libretto.Enums;
 using Libretto.Model;
 
 namespace Libretto.Integration
@@ -45,7 +44,7 @@ namespace Libretto.Integration
                         Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
                         Timestamp = ReadTimestamp(sqlReader, SqliteColumns.Timestamp),
                         Total = ReadFloat(sqlReader, SqliteColumns.Total),
-                        State = ReadOrderState(sqlReader)
+                        Status = ReadOrderState(sqlReader)
                     });
                 }
             }
@@ -84,6 +83,7 @@ namespace Libretto.Integration
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="orderIdentifier"></param>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         public bool InsertOrder(Guid orderIdentifier, Order orderInformation)
@@ -134,7 +134,7 @@ namespace Libretto.Integration
 
             if (operationResult)
             {
-                orderInformation.State = new WaitingDispatch(orderTimestamp);
+                orderInformation.Status = new WaitingDispatch(orderTimestamp);
             }
 
             return operationResult;
@@ -165,7 +165,7 @@ namespace Libretto.Integration
 
             if (operationResult)
             {
-                orderInformation.State = new DispatchCompleted(orderTimestamp);
+                orderInformation.Status = new DispatchCompleted(orderTimestamp);
             }
 
             return operationResult;
