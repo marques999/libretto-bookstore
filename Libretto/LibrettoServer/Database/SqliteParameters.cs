@@ -13,7 +13,6 @@
         public static readonly string Status = "@status";
         public static readonly string Location = "@address";
         public static readonly string Username = "@username";
-        public static readonly string Password = "@password";
         public static readonly string ExecutionDate = "@execution_date";
         public static readonly string DispatchDate = "@dispatch_date";
         public static readonly string Quantity = "@quantity";

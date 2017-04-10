@@ -66,7 +66,7 @@ namespace Libretto.Integration
         /// <param name="customerIdentifier"></param>
         /// <param name="customerForm"></param>
         /// <returns></returns>
-        public bool InsertCustomer(Guid customerIdentifier, CustomerForm customerForm)
+        public bool InsertCustomer(Guid customerIdentifier, Customer customerForm)
         {
             bool operationResult;
 
@@ -76,7 +76,6 @@ namespace Libretto.Integration
                 myCommand.Parameters.AddWithValue(SqliteParameters.Username, customerForm.Name);
                 myCommand.Parameters.AddWithValue(SqliteParameters.Email, customerForm.Email);
                 myCommand.Parameters.AddWithValue(SqliteParameters.Location, customerForm.Location);
-                myCommand.Parameters.AddWithValue(SqliteParameters.Password, PasswordUtilities.Hash(customerForm.Password));
                 operationResult = myCommand.ExecuteNonQuery() > 0;
             }
 

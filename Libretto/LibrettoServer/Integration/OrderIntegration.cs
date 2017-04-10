@@ -40,7 +40,7 @@ namespace Libretto.Integration
                     ordersList.Add(sqlReader.GetGuid(0), new Order
                     {
                         Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
-                        Customer = ReadGuid(sqlReader, SqliteColumns.Customer),
+                        CustomerId = ReadGuid(sqlReader, SqliteColumns.Customer),
                         Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
                         Timestamp = ReadTimestamp(sqlReader, SqliteColumns.Timestamp),
                         Total = ReadFloat(sqlReader, SqliteColumns.Total),
@@ -71,12 +71,12 @@ namespace Libretto.Integration
         {
             switch (ReadInteger(sqlReader, SqliteColumns.Status))
             {
-            case 0:
-                return new WaitingExpedition();
-            case 1:
-                return new DispatchCompleted(sqlReader.GetDateTime(5));
-            default:
-                return new DispatchCompleted(sqlReader.GetDateTime(6));
+                case 0:
+                    return new WaitingExpedition();
+                case 1:
+                    return new DispatchCompleted(sqlReader.GetDateTime(5));
+                default:
+                    return new DispatchCompleted(sqlReader.GetDateTime(6));
             }
         }
 
@@ -93,11 +93,11 @@ namespace Libretto.Integration
             using (var sqlCommand = Query(SqliteCommands.InsertOrder))
             {
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderIdentifier);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Customer, orderInformation.Customer);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Customer, orderInformation.CustomerId);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Quantity, orderInformation.Quantity);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Timestamp, orderInformation.Timestamp);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Total, orderInformation.Total);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, OrderStateEnum.WaitingExpedition);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.WaitingExpedition);
                 operationResult = sqlCommand.ExecuteNonQuery() > 0;
             }
 
@@ -127,7 +127,7 @@ namespace Libretto.Integration
             using (var sqlCommand = Query(SqliteCommands.DispatchOrder))
             {
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderGuid);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, OrderStateEnum.WaitingDispatch);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.WaitingDispatch);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.DispatchDate, orderTimestamp);
                 operationResult = sqlCommand.ExecuteNonQuery() > 0;
             }
@@ -158,7 +158,7 @@ namespace Libretto.Integration
             using (var sqlCommand = Query(SqliteCommands.ExecuteOrder))
             {
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.Identifier, orderGuid);
-                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, OrderStateEnum.DispatchComplete);
+                sqlCommand.Parameters.AddWithValue(SqliteParameters.Status, Status.DispatchComplete);
                 sqlCommand.Parameters.AddWithValue(SqliteParameters.ExecutionDate, orderTimestamp);
                 operationResult = sqlCommand.ExecuteNonQuery() > 0;
             }

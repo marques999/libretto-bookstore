@@ -44,8 +44,8 @@
         /// 
         /// </summary>
         public static readonly string InsertCustomer = @"
-            INSERT INTO Customers(id, username, password, email, address)
-            VALUES(@id, @username, @password, @email, @address)";
+            INSERT INTO Customers(id, username, email, address)
+            VALUES(@id, @username, @email, @address)";
 
         /// <summary>
         /// 
