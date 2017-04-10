@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Libretto.Model
 {
@@ -6,16 +7,16 @@ namespace Libretto.Model
     /// 
     /// </summary>
     [DataContract]
-    public class CustomerForm : CustomerBase
+    public class Purchase : Transaction
     {
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        public string Password
+        public override Status Status
         {
             get;
             set;
-        }
+        } = Status.StorePurchased;
     }
 }

@@ -7,7 +7,7 @@ namespace Libretto.Model
     /// 
     /// </summary>
     [DataContract]
-    public enum OrderStatus
+    public enum Status
     {
         [EnumMember]
         [Description("Waiting")]
@@ -17,6 +17,9 @@ namespace Libretto.Model
         WaitingDispatch,
         [EnumMember]
         [Description("Dispatched")]
-        DispatchComplete
+        DispatchComplete,
+        [EnumMember]
+        [Description("Purchased")]
+        StorePurchased
     }
 }
