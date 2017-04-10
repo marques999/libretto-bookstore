@@ -1,6 +1,6 @@
 ﻿namespace Libretto.Forms
 {
-    partial class OrderForm
+    partial class PurchaseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayout1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.itemLayout = new System.Windows.Forms.TableLayoutPanel();
             this.itemStockLabel = new System.Windows.Forms.Label();
             this.itemGuidLabel = new System.Windows.Forms.Label();
@@ -36,10 +36,10 @@
             this.itemPriceLabel = new System.Windows.Forms.Label();
             this.itemGuid = new System.Windows.Forms.TextBox();
             this.itemDescription = new System.Windows.Forms.ComboBox();
-            this.itemPriceLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.currencyLabel1 = new System.Windows.Forms.Label();
             this.itemPrice = new System.Windows.Forms.Label();
-            this.itemStockLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.unitLabel1 = new System.Windows.Forms.Label();
             this.itemStock = new System.Windows.Forms.Label();
             this.customerLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -48,63 +48,60 @@
             this.customerNameLabel = new System.Windows.Forms.Label();
             this.customerEmailLabel = new System.Windows.Forms.Label();
             this.customerGuid = new System.Windows.Forms.TextBox();
-            this.customerName = new System.Windows.Forms.ComboBox();
             this.customerEmail = new System.Windows.Forms.Label();
             this.customerLocation = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.customerName = new System.Windows.Forms.ComboBox();
+            this.customerNameButton = new System.Windows.Forms.Button();
             this.customerLabel = new System.Windows.Forms.Label();
             this.itemLabel = new System.Windows.Forms.Label();
-            this.tableLayout2 = new System.Windows.Forms.TableLayoutPanel();
-            this.orderLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.orderQuantityLabel = new System.Windows.Forms.Label();
-            this.orderTotalLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.purchaseLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.purchaseQuantityLabel = new System.Windows.Forms.Label();
+            this.purchaseTotalLayout = new System.Windows.Forms.TableLayoutPanel();
             this.currencyLabel2 = new System.Windows.Forms.Label();
-            this.orderTotal = new System.Windows.Forms.Label();
-            this.orderTotalLabel = new System.Windows.Forms.Label();
-            this.orderQuantityLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.purchaseTotal = new System.Windows.Forms.Label();
+            this.purchaseTotalLabel = new System.Windows.Forms.Label();
+            this.purchaseQuantityLayout = new System.Windows.Forms.TableLayoutPanel();
             this.unitLabel2 = new System.Windows.Forms.Label();
-            this.orderQuantityInfo = new System.Windows.Forms.Label();
-            this.orderQuantity = new System.Windows.Forms.TrackBar();
-            this.statusLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.statusWaiting = new System.Windows.Forms.RadioButton();
-            this.statusProcessing = new System.Windows.Forms.RadioButton();
-            this.statusDispatched = new System.Windows.Forms.RadioButton();
+            this.purchaseQuantityInfo = new System.Windows.Forms.Label();
+            this.purchaseQuantity = new System.Windows.Forms.TrackBar();
             this.buttonLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonConfirm = new System.Windows.Forms.Button();
-            this.orderLabel = new System.Windows.Forms.Label();
-            this.tableLayout1.SuspendLayout();
+            this.purchaseLabel = new System.Windows.Forms.Label();
+            this.tableLayout.SuspendLayout();
             this.itemLayout.SuspendLayout();
-            this.itemPriceLayout.SuspendLayout();
-            this.itemStockLayout.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.customerLayout.SuspendLayout();
-            this.tableLayout2.SuspendLayout();
-            this.orderLayout.SuspendLayout();
-            this.orderTotalLayout.SuspendLayout();
-            this.orderQuantityLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.orderQuantity)).BeginInit();
-            this.statusLayout.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.purchaseLayout.SuspendLayout();
+            this.purchaseTotalLayout.SuspendLayout();
+            this.purchaseQuantityLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.purchaseQuantity)).BeginInit();
             this.buttonLayout.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayout1
+            // tableLayout
             // 
-            this.tableLayout1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.tableLayout1.ColumnCount = 2;
-            this.tableLayout1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayout1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayout1.Controls.Add(this.itemLayout, 1, 1);
-            this.tableLayout1.Controls.Add(this.customerLayout, 0, 1);
-            this.tableLayout1.Controls.Add(this.customerLabel, 0, 0);
-            this.tableLayout1.Controls.Add(this.itemLabel, 1, 0);
-            this.tableLayout1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayout1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayout1.Name = "tableLayout1";
-            this.tableLayout1.RowCount = 2;
-            this.tableLayout1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayout1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout1.Size = new System.Drawing.Size(624, 160);
-            this.tableLayout1.TabIndex = 10;
+            this.tableLayout.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tableLayout.ColumnCount = 2;
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayout.Controls.Add(this.itemLayout, 1, 1);
+            this.tableLayout.Controls.Add(this.customerLayout, 0, 1);
+            this.tableLayout.Controls.Add(this.customerLabel, 0, 0);
+            this.tableLayout.Controls.Add(this.itemLabel, 1, 0);
+            this.tableLayout.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayout.Location = new System.Drawing.Point(0, 0);
+            this.tableLayout.Name = "tableLayout";
+            this.tableLayout.RowCount = 2;
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayout.Size = new System.Drawing.Size(624, 160);
+            this.tableLayout.TabIndex = 10;
             // 
             // itemLayout
             // 
@@ -119,8 +116,8 @@
             this.itemLayout.Controls.Add(this.itemPriceLabel, 0, 2);
             this.itemLayout.Controls.Add(this.itemGuid, 1, 0);
             this.itemLayout.Controls.Add(this.itemDescription, 1, 1);
-            this.itemLayout.Controls.Add(this.itemPriceLayout, 1, 2);
-            this.itemLayout.Controls.Add(this.itemStockLayout, 1, 3);
+            this.itemLayout.Controls.Add(this.tableLayoutPanel5, 1, 2);
+            this.itemLayout.Controls.Add(this.tableLayoutPanel4, 1, 3);
             this.itemLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.itemLayout.Location = new System.Drawing.Point(312, 27);
             this.itemLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -209,20 +206,20 @@
             this.itemDescription.TabIndex = 9;
             this.itemDescription.SelectedIndexChanged += new System.EventHandler(this.ComboBooks_SelectedIndexChanged);
             // 
-            // itemPriceLayout
+            // tableLayoutPanel5
             // 
-            this.itemPriceLayout.ColumnCount = 2;
-            this.itemPriceLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.itemPriceLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.itemPriceLayout.Controls.Add(this.currencyLabel1, 1, 0);
-            this.itemPriceLayout.Controls.Add(this.itemPrice, 0, 0);
-            this.itemPriceLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemPriceLayout.Location = new System.Drawing.Point(67, 70);
-            this.itemPriceLayout.Name = "itemPriceLayout";
-            this.itemPriceLayout.RowCount = 1;
-            this.itemPriceLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.itemPriceLayout.Size = new System.Drawing.Size(237, 24);
-            this.itemPriceLayout.TabIndex = 8;
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel5.Controls.Add(this.currencyLabel1, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.itemPrice, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(67, 70);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(237, 24);
+            this.tableLayoutPanel5.TabIndex = 8;
             // 
             // currencyLabel1
             // 
@@ -247,20 +244,20 @@
             this.itemPrice.Text = "0,00";
             this.itemPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // itemStockLayout
+            // tableLayoutPanel4
             // 
-            this.itemStockLayout.ColumnCount = 2;
-            this.itemStockLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.itemStockLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.itemStockLayout.Controls.Add(this.unitLabel1, 1, 0);
-            this.itemStockLayout.Controls.Add(this.itemStock, 0, 0);
-            this.itemStockLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemStockLayout.Location = new System.Drawing.Point(67, 101);
-            this.itemStockLayout.Name = "itemStockLayout";
-            this.itemStockLayout.RowCount = 1;
-            this.itemStockLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.itemStockLayout.Size = new System.Drawing.Size(237, 24);
-            this.itemStockLayout.TabIndex = 7;
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel4.Controls.Add(this.unitLabel1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.itemStock, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(67, 101);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(237, 24);
+            this.tableLayoutPanel4.TabIndex = 7;
             // 
             // unitLabel1
             // 
@@ -297,9 +294,9 @@
             this.customerLayout.Controls.Add(this.customerNameLabel, 0, 1);
             this.customerLayout.Controls.Add(this.customerEmailLabel, 0, 2);
             this.customerLayout.Controls.Add(this.customerGuid, 1, 0);
-            this.customerLayout.Controls.Add(this.customerName, 1, 1);
             this.customerLayout.Controls.Add(this.customerEmail, 1, 2);
             this.customerLayout.Controls.Add(this.customerLocation, 1, 3);
+            this.customerLayout.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.customerLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.customerLayout.Location = new System.Drawing.Point(0, 27);
             this.customerLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -378,17 +375,6 @@
             this.customerGuid.Size = new System.Drawing.Size(235, 20);
             this.customerGuid.TabIndex = 1;
             // 
-            // customerName
-            // 
-            this.customerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.customerName.FormattingEnabled = true;
-            this.customerName.Location = new System.Drawing.Point(70, 40);
-            this.customerName.Margin = new System.Windows.Forms.Padding(4);
-            this.customerName.Name = "customerName";
-            this.customerName.Size = new System.Drawing.Size(235, 21);
-            this.customerName.TabIndex = 9;
-            this.customerName.SelectedIndexChanged += new System.EventHandler(this.ComboCustomers_SelectedIndexChanged);
-            // 
             // customerEmail
             // 
             this.customerEmail.AutoSize = true;
@@ -410,6 +396,38 @@
             this.customerLocation.Size = new System.Drawing.Size(235, 22);
             this.customerLocation.TabIndex = 11;
             this.customerLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.customerName);
+            this.flowLayoutPanel1.Controls.Add(this.customerNameButton);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(69, 39);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(237, 24);
+            this.flowLayoutPanel1.TabIndex = 12;
+            // 
+            // customerName
+            // 
+            this.customerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.customerName.FormattingEnabled = true;
+            this.customerName.Location = new System.Drawing.Point(0, 1);
+            this.customerName.Margin = new System.Windows.Forms.Padding(0);
+            this.customerName.Name = "customerName";
+            this.customerName.Size = new System.Drawing.Size(205, 21);
+            this.customerName.TabIndex = 11;
+            this.customerName.SelectedIndexChanged += new System.EventHandler(this.CustomerName_SelectedIndexChanged);
+            // 
+            // customerNameButton
+            // 
+            this.customerNameButton.Location = new System.Drawing.Point(205, 0);
+            this.customerNameButton.Margin = new System.Windows.Forms.Padding(0);
+            this.customerNameButton.Name = "customerNameButton";
+            this.customerNameButton.Size = new System.Drawing.Size(32, 23);
+            this.customerNameButton.TabIndex = 12;
+            this.customerNameButton.Text = "...";
+            this.customerNameButton.UseVisualStyleBackColor = true;
+            this.customerNameButton.Click += new System.EventHandler(this.CustomerNameButton_Click);
             // 
             // customerLabel
             // 
@@ -441,89 +459,73 @@
             this.itemLabel.Text = "Book";
             this.itemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayout2
+            // tableLayoutPanel2
             // 
-            this.tableLayout2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.tableLayout2.ColumnCount = 1;
-            this.tableLayout2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout2.Controls.Add(this.orderLayout, 0, 1);
-            this.tableLayout2.Controls.Add(this.buttonLayout, 0, 1);
-            this.tableLayout2.Controls.Add(this.orderLabel, 0, 0);
-            this.tableLayout2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayout2.Location = new System.Drawing.Point(0, 160);
-            this.tableLayout2.Name = "tableLayout2";
-            this.tableLayout2.RowCount = 2;
-            this.tableLayout2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayout2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayout2.Size = new System.Drawing.Size(624, 221);
-            this.tableLayout2.TabIndex = 11;
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.purchaseLayout, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonLayout, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.purchaseLabel, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 160);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(624, 143);
+            this.tableLayoutPanel2.TabIndex = 11;
             // 
-            // orderLayout
+            // purchaseLayout
             // 
-            this.orderLayout.BackColor = System.Drawing.Color.Gainsboro;
-            this.orderLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.orderLayout.ColumnCount = 2;
-            this.orderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.orderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderLayout.Controls.Add(this.statusLabel, 0, 2);
-            this.orderLayout.Controls.Add(this.orderQuantityLabel, 0, 0);
-            this.orderLayout.Controls.Add(this.orderTotalLayout, 1, 1);
-            this.orderLayout.Controls.Add(this.orderTotalLabel, 0, 1);
-            this.orderLayout.Controls.Add(this.orderQuantityLayout, 1, 0);
-            this.orderLayout.Controls.Add(this.statusLayout, 1, 2);
-            this.orderLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderLayout.Location = new System.Drawing.Point(0, 27);
-            this.orderLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.orderLayout.Name = "orderLayout";
-            this.orderLayout.Padding = new System.Windows.Forms.Padding(4);
-            this.orderLayout.RowCount = 3;
-            this.orderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.orderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.orderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderLayout.Size = new System.Drawing.Size(624, 160);
-            this.orderLayout.TabIndex = 9;
+            this.purchaseLayout.BackColor = System.Drawing.Color.Gainsboro;
+            this.purchaseLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.purchaseLayout.ColumnCount = 2;
+            this.purchaseLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.purchaseLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.purchaseLayout.Controls.Add(this.purchaseQuantityLabel, 0, 0);
+            this.purchaseLayout.Controls.Add(this.purchaseTotalLayout, 1, 1);
+            this.purchaseLayout.Controls.Add(this.purchaseTotalLabel, 0, 1);
+            this.purchaseLayout.Controls.Add(this.purchaseQuantityLayout, 1, 0);
+            this.purchaseLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseLayout.Location = new System.Drawing.Point(0, 27);
+            this.purchaseLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.purchaseLayout.Name = "purchaseLayout";
+            this.purchaseLayout.Padding = new System.Windows.Forms.Padding(4);
+            this.purchaseLayout.RowCount = 2;
+            this.purchaseLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.purchaseLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.purchaseLayout.Size = new System.Drawing.Size(624, 82);
+            this.purchaseLayout.TabIndex = 9;
             // 
-            // statusLabel
+            // purchaseQuantityLabel
             // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.statusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel.Location = new System.Drawing.Point(5, 79);
-            this.statusLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(60, 76);
-            this.statusLabel.TabIndex = 23;
-            this.statusLabel.Text = "Status";
-            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.purchaseQuantityLabel.AutoSize = true;
+            this.purchaseQuantityLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.purchaseQuantityLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseQuantityLabel.Location = new System.Drawing.Point(5, 5);
+            this.purchaseQuantityLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.purchaseQuantityLabel.Name = "purchaseQuantityLabel";
+            this.purchaseQuantityLabel.Size = new System.Drawing.Size(60, 35);
+            this.purchaseQuantityLabel.TabIndex = 22;
+            this.purchaseQuantityLabel.Text = "Quantity";
+            this.purchaseQuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // orderQuantityLabel
+            // purchaseTotalLayout
             // 
-            this.orderQuantityLabel.AutoSize = true;
-            this.orderQuantityLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.orderQuantityLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderQuantityLabel.Location = new System.Drawing.Point(5, 5);
-            this.orderQuantityLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.orderQuantityLabel.Name = "orderQuantityLabel";
-            this.orderQuantityLabel.Size = new System.Drawing.Size(60, 36);
-            this.orderQuantityLabel.TabIndex = 22;
-            this.orderQuantityLabel.Text = "Quantity";
-            this.orderQuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // orderTotalLayout
-            // 
-            this.orderTotalLayout.ColumnCount = 2;
-            this.orderTotalLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderTotalLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.orderTotalLayout.Controls.Add(this.currencyLabel2, 1, 0);
-            this.orderTotalLayout.Controls.Add(this.orderTotal, 0, 0);
-            this.orderTotalLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderTotalLayout.Location = new System.Drawing.Point(69, 45);
-            this.orderTotalLayout.Name = "orderTotalLayout";
-            this.orderTotalLayout.RowCount = 1;
-            this.orderTotalLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderTotalLayout.Size = new System.Drawing.Size(547, 30);
-            this.orderTotalLayout.TabIndex = 21;
+            this.purchaseTotalLayout.ColumnCount = 2;
+            this.purchaseTotalLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.purchaseTotalLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.purchaseTotalLayout.Controls.Add(this.currencyLabel2, 1, 0);
+            this.purchaseTotalLayout.Controls.Add(this.purchaseTotal, 0, 0);
+            this.purchaseTotalLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseTotalLayout.Location = new System.Drawing.Point(69, 44);
+            this.purchaseTotalLayout.Name = "purchaseTotalLayout";
+            this.purchaseTotalLayout.RowCount = 1;
+            this.purchaseTotalLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.purchaseTotalLayout.Size = new System.Drawing.Size(547, 30);
+            this.purchaseTotalLayout.TabIndex = 21;
             // 
             // currencyLabel2
             // 
@@ -537,46 +539,46 @@
             this.currencyLabel2.Text = "€";
             this.currencyLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // orderTotal
+            // purchaseTotal
             // 
-            this.orderTotal.AutoSize = true;
-            this.orderTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderTotal.Location = new System.Drawing.Point(3, 0);
-            this.orderTotal.Name = "orderTotal";
-            this.orderTotal.Size = new System.Drawing.Size(509, 30);
-            this.orderTotal.TabIndex = 12;
-            this.orderTotal.Text = "0,00";
-            this.orderTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.purchaseTotal.AutoSize = true;
+            this.purchaseTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseTotal.Location = new System.Drawing.Point(3, 0);
+            this.purchaseTotal.Name = "purchaseTotal";
+            this.purchaseTotal.Size = new System.Drawing.Size(509, 30);
+            this.purchaseTotal.TabIndex = 12;
+            this.purchaseTotal.Text = "0,00";
+            this.purchaseTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // orderTotalLabel
+            // purchaseTotalLabel
             // 
-            this.orderTotalLabel.AutoSize = true;
-            this.orderTotalLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.orderTotalLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderTotalLabel.Location = new System.Drawing.Point(5, 42);
-            this.orderTotalLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.orderTotalLabel.Name = "orderTotalLabel";
-            this.orderTotalLabel.Size = new System.Drawing.Size(60, 36);
-            this.orderTotalLabel.TabIndex = 19;
-            this.orderTotalLabel.Text = "Total";
-            this.orderTotalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.purchaseTotalLabel.AutoSize = true;
+            this.purchaseTotalLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.purchaseTotalLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseTotalLabel.Location = new System.Drawing.Point(5, 41);
+            this.purchaseTotalLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.purchaseTotalLabel.Name = "purchaseTotalLabel";
+            this.purchaseTotalLabel.Size = new System.Drawing.Size(60, 36);
+            this.purchaseTotalLabel.TabIndex = 19;
+            this.purchaseTotalLabel.Text = "Total";
+            this.purchaseTotalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // orderQuantityLayout
+            // purchaseQuantityLayout
             // 
-            this.orderQuantityLayout.ColumnCount = 3;
-            this.orderQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.orderQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.orderQuantityLayout.Controls.Add(this.unitLabel2, 0, 0);
-            this.orderQuantityLayout.Controls.Add(this.orderQuantityInfo, 0, 0);
-            this.orderQuantityLayout.Controls.Add(this.orderQuantity, 0, 0);
-            this.orderQuantityLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderQuantityLayout.Location = new System.Drawing.Point(69, 8);
-            this.orderQuantityLayout.Name = "orderQuantityLayout";
-            this.orderQuantityLayout.RowCount = 1;
-            this.orderQuantityLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.orderQuantityLayout.Size = new System.Drawing.Size(547, 30);
-            this.orderQuantityLayout.TabIndex = 7;
+            this.purchaseQuantityLayout.ColumnCount = 3;
+            this.purchaseQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.purchaseQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.purchaseQuantityLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.purchaseQuantityLayout.Controls.Add(this.unitLabel2, 0, 0);
+            this.purchaseQuantityLayout.Controls.Add(this.purchaseQuantityInfo, 0, 0);
+            this.purchaseQuantityLayout.Controls.Add(this.purchaseQuantity, 0, 0);
+            this.purchaseQuantityLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseQuantityLayout.Location = new System.Drawing.Point(69, 8);
+            this.purchaseQuantityLayout.Name = "purchaseQuantityLayout";
+            this.purchaseQuantityLayout.RowCount = 1;
+            this.purchaseQuantityLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.purchaseQuantityLayout.Size = new System.Drawing.Size(547, 29);
+            this.purchaseQuantityLayout.TabIndex = 7;
             // 
             // unitLabel2
             // 
@@ -585,81 +587,33 @@
             this.unitLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unitLabel2.Location = new System.Drawing.Point(518, 0);
             this.unitLabel2.Name = "unitLabel2";
-            this.unitLabel2.Size = new System.Drawing.Size(26, 30);
+            this.unitLabel2.Size = new System.Drawing.Size(26, 29);
             this.unitLabel2.TabIndex = 18;
             this.unitLabel2.Text = "Un";
             this.unitLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // orderQuantityInfo
+            // purchaseQuantityInfo
             // 
-            this.orderQuantityInfo.AutoSize = true;
-            this.orderQuantityInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderQuantityInfo.Location = new System.Drawing.Point(470, 0);
-            this.orderQuantityInfo.Name = "orderQuantityInfo";
-            this.orderQuantityInfo.Size = new System.Drawing.Size(42, 30);
-            this.orderQuantityInfo.TabIndex = 17;
-            this.orderQuantityInfo.Text = "1";
-            this.orderQuantityInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.purchaseQuantityInfo.AutoSize = true;
+            this.purchaseQuantityInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseQuantityInfo.Location = new System.Drawing.Point(470, 0);
+            this.purchaseQuantityInfo.Name = "purchaseQuantityInfo";
+            this.purchaseQuantityInfo.Size = new System.Drawing.Size(42, 29);
+            this.purchaseQuantityInfo.TabIndex = 17;
+            this.purchaseQuantityInfo.Text = "1";
+            this.purchaseQuantityInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // orderQuantity
+            // purchaseQuantity
             // 
-            this.orderQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderQuantity.Location = new System.Drawing.Point(3, 3);
-            this.orderQuantity.Maximum = 100;
-            this.orderQuantity.Minimum = 1;
-            this.orderQuantity.Name = "orderQuantity";
-            this.orderQuantity.Size = new System.Drawing.Size(461, 24);
-            this.orderQuantity.TabIndex = 16;
-            this.orderQuantity.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.orderQuantity.Value = 1;
-            this.orderQuantity.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
-            // 
-            // statusLayout
-            // 
-            this.statusLayout.Controls.Add(this.statusWaiting);
-            this.statusLayout.Controls.Add(this.statusProcessing);
-            this.statusLayout.Controls.Add(this.statusDispatched);
-            this.statusLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.statusLayout.Location = new System.Drawing.Point(69, 82);
-            this.statusLayout.Name = "statusLayout";
-            this.statusLayout.Size = new System.Drawing.Size(547, 70);
-            this.statusLayout.TabIndex = 24;
-            // 
-            // statusWaiting
-            // 
-            this.statusWaiting.AutoSize = true;
-            this.statusWaiting.Location = new System.Drawing.Point(3, 3);
-            this.statusWaiting.Name = "statusWaiting";
-            this.statusWaiting.Size = new System.Drawing.Size(113, 17);
-            this.statusWaiting.TabIndex = 25;
-            this.statusWaiting.Text = "Waiting Expedition";
-            this.statusWaiting.UseVisualStyleBackColor = true;
-            this.statusWaiting.CheckedChanged += new System.EventHandler(this.RadioWaiting_CheckedChanged);
-            // 
-            // statusProcessing
-            // 
-            this.statusProcessing.AutoSize = true;
-            this.statusProcessing.Checked = true;
-            this.statusProcessing.Location = new System.Drawing.Point(3, 26);
-            this.statusProcessing.Name = "statusProcessing";
-            this.statusProcessing.Size = new System.Drawing.Size(106, 17);
-            this.statusProcessing.TabIndex = 26;
-            this.statusProcessing.TabStop = true;
-            this.statusProcessing.Text = "Waiting Dispatch";
-            this.statusProcessing.UseVisualStyleBackColor = true;
-            this.statusProcessing.CheckedChanged += new System.EventHandler(this.RadioProcessing_CheckedChanged);
-            // 
-            // statusDispatched
-            // 
-            this.statusDispatched.AutoSize = true;
-            this.statusDispatched.Location = new System.Drawing.Point(3, 49);
-            this.statusDispatched.Name = "statusDispatched";
-            this.statusDispatched.Size = new System.Drawing.Size(114, 17);
-            this.statusDispatched.TabIndex = 27;
-            this.statusDispatched.Text = "Dispatch Complete";
-            this.statusDispatched.UseVisualStyleBackColor = true;
-            this.statusDispatched.CheckedChanged += new System.EventHandler(this.RadioDispatched_CheckedChanged);
+            this.purchaseQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseQuantity.Location = new System.Drawing.Point(3, 3);
+            this.purchaseQuantity.Minimum = 1;
+            this.purchaseQuantity.Name = "purchaseQuantity";
+            this.purchaseQuantity.Size = new System.Drawing.Size(461, 23);
+            this.purchaseQuantity.TabIndex = 16;
+            this.purchaseQuantity.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.purchaseQuantity.Value = 1;
+            this.purchaseQuantity.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
             // 
             // buttonLayout
             // 
@@ -668,7 +622,7 @@
             this.buttonLayout.Controls.Add(this.buttonConfirm);
             this.buttonLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonLayout.Location = new System.Drawing.Point(0, 187);
+            this.buttonLayout.Location = new System.Drawing.Point(0, 109);
             this.buttonLayout.Margin = new System.Windows.Forms.Padding(0);
             this.buttonLayout.Name = "buttonLayout";
             this.buttonLayout.Padding = new System.Windows.Forms.Padding(2);
@@ -681,7 +635,8 @@
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(489, 5);
+            this.buttonCancel.Location = new System.Drawing.Point(492, 5);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 3, 0, 3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(128, 24);
             this.buttonCancel.TabIndex = 4;
@@ -692,11 +647,11 @@
             // buttonConfirm
             // 
             this.buttonConfirm.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonConfirm.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonConfirm.Enabled = false;
             this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(355, 5);
+            this.buttonConfirm.Location = new System.Drawing.Point(360, 5);
+            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(128, 24);
             this.buttonConfirm.TabIndex = 4;
@@ -704,67 +659,66 @@
             this.buttonConfirm.UseVisualStyleBackColor = false;
             this.buttonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
             // 
-            // orderLabel
+            // purchaseLabel
             // 
-            this.orderLabel.AutoSize = true;
-            this.orderLabel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.orderLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.orderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.orderLabel.ForeColor = System.Drawing.Color.Silver;
-            this.orderLabel.Location = new System.Drawing.Point(2, 2);
-            this.orderLabel.Margin = new System.Windows.Forms.Padding(2);
-            this.orderLabel.Name = "orderLabel";
-            this.orderLabel.Size = new System.Drawing.Size(620, 23);
-            this.orderLabel.TabIndex = 5;
-            this.orderLabel.Text = "Order";
-            this.orderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.purchaseLabel.AutoSize = true;
+            this.purchaseLabel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.purchaseLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.purchaseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.purchaseLabel.ForeColor = System.Drawing.Color.Silver;
+            this.purchaseLabel.Location = new System.Drawing.Point(2, 2);
+            this.purchaseLabel.Margin = new System.Windows.Forms.Padding(2);
+            this.purchaseLabel.Name = "purchaseLabel";
+            this.purchaseLabel.Size = new System.Drawing.Size(620, 23);
+            this.purchaseLabel.TabIndex = 5;
+            this.purchaseLabel.Text = "Purchase";
+            this.purchaseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // OrderForm
+            // PurchaseForm
             // 
             this.AcceptButton = this.buttonConfirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(624, 381);
-            this.Controls.Add(this.tableLayout2);
-            this.Controls.Add(this.tableLayout1);
+            this.ClientSize = new System.Drawing.Size(624, 303);
+            this.Controls.Add(this.tableLayoutPanel2);
+            this.Controls.Add(this.tableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "OrderForm";
+            this.Name = "PurchaseForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Place Order";
+            this.Text = "Register Purchase";
             this.Load += new System.EventHandler(this.OrderForm_Load);
-            this.tableLayout1.ResumeLayout(false);
-            this.tableLayout1.PerformLayout();
+            this.tableLayout.ResumeLayout(false);
+            this.tableLayout.PerformLayout();
             this.itemLayout.ResumeLayout(false);
             this.itemLayout.PerformLayout();
-            this.itemPriceLayout.ResumeLayout(false);
-            this.itemPriceLayout.PerformLayout();
-            this.itemStockLayout.ResumeLayout(false);
-            this.itemStockLayout.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.customerLayout.ResumeLayout(false);
             this.customerLayout.PerformLayout();
-            this.tableLayout2.ResumeLayout(false);
-            this.tableLayout2.PerformLayout();
-            this.orderLayout.ResumeLayout(false);
-            this.orderLayout.PerformLayout();
-            this.orderTotalLayout.ResumeLayout(false);
-            this.orderTotalLayout.PerformLayout();
-            this.orderQuantityLayout.ResumeLayout(false);
-            this.orderQuantityLayout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.orderQuantity)).EndInit();
-            this.statusLayout.ResumeLayout(false);
-            this.statusLayout.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.purchaseLayout.ResumeLayout(false);
+            this.purchaseLayout.PerformLayout();
+            this.purchaseTotalLayout.ResumeLayout(false);
+            this.purchaseTotalLayout.PerformLayout();
+            this.purchaseQuantityLayout.ResumeLayout(false);
+            this.purchaseQuantityLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.purchaseQuantity)).EndInit();
             this.buttonLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.TableLayoutPanel tableLayout1;
+        private System.Windows.Forms.TableLayoutPanel tableLayout;
         private System.Windows.Forms.Label customerLabel;
         private System.Windows.Forms.Label itemLabel;
         private System.Windows.Forms.TableLayoutPanel customerLayout;
@@ -773,41 +727,38 @@
         private System.Windows.Forms.Label customerNameLabel;
         private System.Windows.Forms.Label customerEmailLabel;
         private System.Windows.Forms.TextBox customerGuid;
-        private System.Windows.Forms.ComboBox customerName;
         private System.Windows.Forms.TableLayoutPanel itemLayout;
         private System.Windows.Forms.Label itemGuidLabel;
         private System.Windows.Forms.Label itemDescriptionLabel;
         private System.Windows.Forms.TextBox itemGuid;
         private System.Windows.Forms.Label itemStockLabel;
         private System.Windows.Forms.Label itemPriceLabel;
-        private System.Windows.Forms.TableLayoutPanel itemStockLayout;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label unitLabel1;
-        private System.Windows.Forms.TableLayoutPanel itemPriceLayout;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label currencyLabel1;
         private System.Windows.Forms.Label itemStock;
         private System.Windows.Forms.Label itemPrice;
         private System.Windows.Forms.ComboBox itemDescription;
         private System.Windows.Forms.Label customerEmail;
         private System.Windows.Forms.Label customerLocation;
-        private System.Windows.Forms.TableLayoutPanel tableLayout2;
-        private System.Windows.Forms.Label orderLabel;
-        private System.Windows.Forms.TableLayoutPanel orderLayout;
-        private System.Windows.Forms.TableLayoutPanel orderTotalLayout;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label purchaseLabel;
+        private System.Windows.Forms.TableLayoutPanel purchaseLayout;
+        private System.Windows.Forms.TableLayoutPanel purchaseTotalLayout;
         private System.Windows.Forms.Label currencyLabel2;
-        private System.Windows.Forms.Label orderTotal;
-        private System.Windows.Forms.Label orderTotalLabel;
-        private System.Windows.Forms.Label orderQuantityLabel;
-        private System.Windows.Forms.TableLayoutPanel orderQuantityLayout;
+        private System.Windows.Forms.Label purchaseTotal;
+        private System.Windows.Forms.Label purchaseTotalLabel;
+        private System.Windows.Forms.Label purchaseQuantityLabel;
+        private System.Windows.Forms.TableLayoutPanel purchaseQuantityLayout;
         private System.Windows.Forms.Label unitLabel2;
-        private System.Windows.Forms.Label orderQuantityInfo;
-        private System.Windows.Forms.TrackBar orderQuantity;
-        private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.FlowLayoutPanel statusLayout;
-        private System.Windows.Forms.RadioButton statusWaiting;
-        private System.Windows.Forms.RadioButton statusProcessing;
-        private System.Windows.Forms.RadioButton statusDispatched;
+        private System.Windows.Forms.Label purchaseQuantityInfo;
+        private System.Windows.Forms.TrackBar purchaseQuantity;
         private System.Windows.Forms.FlowLayoutPanel buttonLayout;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonConfirm;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.ComboBox customerName;
+        private System.Windows.Forms.Button customerNameButton;
     }
 }

@@ -38,12 +38,12 @@ namespace Libretto.Forms
 
         private void ButtonDelete_Click(object sender, EventArgs args)
         {
-            if (ordersList.SelectedItems.Count <= 0)
+            if (transactionList.SelectedItems.Count <= 0)
             {
                 return;
             }
 
-            var listItem = ordersList.SelectedItems[0];
+            var listItem = transactionList.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
             {
@@ -55,8 +55,8 @@ namespace Libretto.Forms
                 return;
             }
 
-            LibrettoClient.Instance.Orders.RemoveAt(listItem.Index);
-            ordersList.Items.Remove(listItem);
+            LibrettoClient.Instance.Transactions.RemoveAt(listItem.Index);
+            transactionList.Items.Remove(listItem);
         }
 
         /// <summary>
@@ -66,19 +66,26 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
-            if (ordersList.SelectedItems.Count <= 0)
+            if (transactionList.SelectedItems.Count <= 0)
             {
                 return;
             }
 
-            var listItem = ordersList.SelectedItems[0];
+            var listItem = transactionList.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
             {
                 return;
             }
 
-            var orderForm = new OrderForm(LibrettoClient.Instance.Orders[listItem.Index]);
+            var orderInformation = LibrettoClient.Instance.Transactions[listItem.Index] as Order;
+
+            if (orderInformation == null)
+            {
+                return;
+            }
+
+            var orderForm = new OrderForm(orderInformation);
 
             if (orderForm.ShowDialog(this) == DialogResult.OK)
             {
@@ -95,30 +102,30 @@ namespace Libretto.Forms
         {
             var previousIndex = listItem.Index;
 
-            ordersList.Items.Remove(listItem);
+            transactionList.Items.Remove(listItem);
 
             if (previousIndex >= 0)
             {
-                ordersList.Items.Insert(previousIndex, ParseOrder(orderInformation));
+                transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        private static ListViewItem ParseOrder(Order orderInformation)
+        private static ListViewItem ParseTransaction(Transaction transactionInformation)
         {
-            return new ListViewItem(LibrettoCommon.FormatDate(orderInformation.Timestamp))
+            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
             {
                 SubItems =
                 {
-                    orderInformation.BookName,
-                    orderInformation.CustomerName,
-                    Convert.ToString(orderInformation.Quantity),
-                    LibrettoCommon.FormatCurrency(orderInformation.Total),
-                    orderInformation.Status.GetDescription()
+                    transactionInformation.BookName,
+                    transactionInformation.CustomerName,
+                    Convert.ToString(transactionInformation.Quantity),
+                    LibrettoCommon.FormatCurrency(transactionInformation.Total),
+                    transactionInformation.Status.GetDescription()
                 }
             };
         }
@@ -128,18 +135,18 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateFilter()
         {
-            ordersList.Items.Clear();
-            ordersList.Items.AddRange(LibrettoClient.Instance.Orders.Where(FilterOrder).Select(ParseOrder).ToArray());
+            transactionList.Items.Clear();
+            transactionList.Items.AddRange(LibrettoClient.Instance.Transactions.Where(FilterOrder).Select(ParseTransaction).ToArray());
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
-        private void InsertOrder(Order orderInformation)
+        /// <param name="transactionInformation"></param>
+        private void InsertOrder(Transaction transactionInformation)
         {
-            LibrettoClient.Instance.Orders.Add(orderInformation);
-            ordersList.Items.Add(ParseOrder(orderInformation));
+            LibrettoClient.Instance.Transactions.Add(transactionInformation);
+            transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 
         /// <summary>
@@ -147,13 +154,14 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        private bool FilterOrder(Order orderInformation)
+        private bool FilterOrder(Transaction orderInformation)
         {
             var customerName = comboCustomer.Text;
             var orderTimestamp = orderInformation.Timestamp;
-            return (orderInformation.Status == OrderStatus.WaitingExpedition && checkWaiting.Checked
-                || orderInformation.Status == OrderStatus.WaitingDispatch && checkProcessing.Checked
-                || orderInformation.Status == OrderStatus.DispatchComplete && checkDispatched.Checked)
+            return orderInformation.Status == Status.StorePurchased
+                || (orderInformation.Status == Status.WaitingExpedition && checkWaiting.Checked
+                || orderInformation.Status == Status.WaitingDispatch && checkProcessing.Checked
+                || orderInformation.Status == Status.DispatchComplete && checkDispatched.Checked)
                 && (string.IsNullOrEmpty(customerName) || customerName == orderInformation.CustomerName)
                 && (pickerFrom.Checked == false || orderTimestamp > pickerFrom.Value)
                 && (pickerUntil.Checked == false || orderTimestamp < pickerUntil.Value);
@@ -164,7 +172,7 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = buttonDelete.Enabled = ordersList.SelectedItems.Count > 0;
+            buttonUpdate.Enabled = buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -285,6 +293,16 @@ namespace Libretto.Forms
         private void ComboCustomer_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateFilter();
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            var purchaseForm = new PurchaseForm();
+
+            if (purchaseForm.ShowDialog(this) == DialogResult.OK)
+            {
+                InsertOrder(purchaseForm.Information);
+            }
         }
     }
 }

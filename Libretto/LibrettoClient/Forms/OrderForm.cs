@@ -61,8 +61,8 @@ namespace Libretto.Forms
             if (customersList.Length > 0)
             {
                 customersEmpty = false;
-                customerCombo.Items.AddRange(customersList);
-                customerCombo.SelectedIndex = 0;
+                customerName.Items.AddRange(customersList);
+                customerName.SelectedIndex = 0;
             }
 
             var booksList = LibrettoClient.Instance.Books.Select(b => b.Title).ToArray<object>();
@@ -72,9 +72,9 @@ namespace Libretto.Forms
                 customersEmpty = true;
             }
 
-            comboBooks.Items.AddRange(booksList);
-            comboBooks.SelectedIndex = 0;
-            trackBar1.Enabled = buttonConfirm.Enabled = !customersEmpty;
+            itemDescription.Items.AddRange(booksList);
+            itemDescription.SelectedIndex = 0;
+            orderQuantity.Enabled = buttonConfirm.Enabled = !customersEmpty;
         }
 
         /// <summary>
@@ -106,24 +106,24 @@ namespace Libretto.Forms
         /// <param name="numberUnits"></param>
         private void UpdateStock(int numberUnits)
         {
-            fieldQuantity.Text = Convert.ToString(numberUnits);
+            orderQuantityInfo.Text = Convert.ToString(numberUnits);
 
             var remainingUnits = _bookInformation.Stock - numberUnits;
             var purchaseTotal = _bookInformation.Price * numberUnits;
 
             if (remainingUnits < 0)
             {
-                radioButton1.Checked = true;
+                statusWaiting.Checked = true;
             }
             else
             {
-                radioButton2.Checked = true;
+                statusProcessing.Checked = true;
             }
 
-            radioButton1.Enabled = remainingUnits < 0;
-            radioButton2.Enabled = radioButton3.Enabled = !radioButton1.Enabled;
-            fieldStock.Text = Convert.ToString(remainingUnits);
-            fieldTotal.Text = LibrettoCommon.FormatCurrency(purchaseTotal);
+            statusWaiting.Enabled = remainingUnits < 0;
+            statusProcessing.Enabled = statusDispatched.Enabled = !statusWaiting.Enabled;
+            itemStock.Text = Convert.ToString(remainingUnits);
+            orderTotal.Text = LibrettoCommon.FormatCurrency(purchaseTotal);
             Information.Quantity = numberUnits;
             Information.Total = purchaseTotal;
         }
@@ -135,7 +135,7 @@ namespace Libretto.Forms
         /// <param name="e"></param>
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
-            UpdateStock(trackBar1.Value);
+            UpdateStock(orderQuantity.Value);
         }
 
         /// <summary>
@@ -145,11 +145,11 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ComboCustomers_SelectedIndexChanged(object sender, EventArgs args)
         {
-            var customerIndex = customerCombo.SelectedIndex;
+            var customerIndex = customerName.SelectedIndex;
 
             if (customerIndex >= 0)
             {
-                UpdateCustomer(LibrettoClient.Instance.Customers[customerCombo.SelectedIndex]);
+                UpdateCustomer(LibrettoClient.Instance.Customers[customerName.SelectedIndex]);
             }
         }
 
@@ -160,9 +160,9 @@ namespace Libretto.Forms
         private void UpdateCustomer(Customer customerInformation)
         {
             _customerInformation = customerInformation;
-            customerGuidField.Text = LibrettoCommon.FormatGuid(customerInformation.Identifier);
-            customerEmailField.Text = customerInformation.Email;
-            customerLocationField.Text = customerInformation.Location;
+            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Identifier);
+            customerEmail.Text = customerInformation.Email;
+            customerLocation.Text = customerInformation.Location;
             Information.CustomerName = _customerInformation.Name;
             Information.CustomerId = _customerInformation.Identifier;
         }
@@ -174,12 +174,12 @@ namespace Libretto.Forms
         private void UpdateBook(Book bookInformation)
         {
             _bookInformation = bookInformation;
-            bookIdField.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
-            fieldStock.Text = Convert.ToString(bookInformation.Stock);
-            fieldPrice.Text = LibrettoCommon.FormatCurrency(bookInformation.Price);
+            itemGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
+            itemStock.Text = Convert.ToString(bookInformation.Stock);
+            itemPrice.Text = LibrettoCommon.FormatCurrency(bookInformation.Price);
             Information.BookName = _bookInformation.Title;
             Information.BookId = _bookInformation.Identifier;
-            UpdateStock(trackBar1.Value);
+            UpdateStock(orderQuantity.Value);
         }
 
         /// <summary>
@@ -189,12 +189,42 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ComboBooks_SelectedIndexChanged(object sender, EventArgs args)
         {
-            var bookIndex = comboBooks.SelectedIndex;
+            var bookIndex = itemDescription.SelectedIndex;
 
             if (bookIndex >= 0)
             {
-                UpdateBook(LibrettoClient.Instance.Books[comboBooks.SelectedIndex]);
+                UpdateBook(LibrettoClient.Instance.Books[itemDescription.SelectedIndex]);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void RadioWaiting_CheckedChanged(object sender, EventArgs args)
+        {
+            Information.Status = Status.WaitingExpedition;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void RadioProcessing_CheckedChanged(object sender, EventArgs args)
+        {
+            Information.Status = Status.WaitingDispatch;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioDispatched_CheckedChanged(object sender, EventArgs e)
+        {
+            Information.Status = Status.DispatchComplete;
         }
     }
 }

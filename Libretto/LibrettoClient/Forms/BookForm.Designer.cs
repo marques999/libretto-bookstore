@@ -28,265 +28,274 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonPanel = new System.Windows.Forms.Panel();
             this.buttonConfirm = new System.Windows.Forms.Button();
-            this.buttonLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.layoutPrice = new System.Windows.Forms.TableLayoutPanel();
-            this.labelCurrency = new System.Windows.Forms.Label();
-            this.fieldPrice = new System.Windows.Forms.NumericUpDown();
-            this.layoutStock = new System.Windows.Forms.TableLayoutPanel();
-            this.fieldStock = new System.Windows.Forms.NumericUpDown();
-            this.labelUnits = new System.Windows.Forms.Label();
-            this.fieldGuid = new System.Windows.Forms.TextBox();
-            this.labelPrice = new System.Windows.Forms.Label();
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.labelGuid = new System.Windows.Forms.Label();
-            this.fieldTitle = new System.Windows.Forms.TextBox();
-            this.labelStock = new System.Windows.Forms.Label();
-            this.fieldLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonLayout.SuspendLayout();
-            this.layoutPrice.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldPrice)).BeginInit();
-            this.layoutStock.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldStock)).BeginInit();
-            this.fieldLayout.SuspendLayout();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.formPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.stockLabel = new System.Windows.Forms.Label();
+            this.titleField = new System.Windows.Forms.TextBox();
+            this.guidLabel = new System.Windows.Forms.Label();
+            this.titleLabel = new System.Windows.Forms.Label();
+            this.priceLabel = new System.Windows.Forms.Label();
+            this.guidField = new System.Windows.Forms.TextBox();
+            this.stockPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.stockField = new System.Windows.Forms.NumericUpDown();
+            this.unitsLabel = new System.Windows.Forms.Label();
+            this.pricePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.currencyLabel = new System.Windows.Forms.Label();
+            this.priceField = new System.Windows.Forms.NumericUpDown();
+            this.buttonPanel.SuspendLayout();
+            this.formPanel.SuspendLayout();
+            this.stockPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stockField)).BeginInit();
+            this.pricePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.priceField)).BeginInit();
             this.SuspendLayout();
             // 
-            // buttonCancel
+            // buttonPanel
             // 
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(145, 5);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(132, 24);
-            this.buttonCancel.TabIndex = 4;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
+            this.buttonPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.buttonPanel.Controls.Add(this.buttonConfirm);
+            this.buttonPanel.Controls.Add(this.buttonCancel);
+            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonPanel.Location = new System.Drawing.Point(0, 133);
+            this.buttonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPanel.Name = "buttonPanel";
+            this.buttonPanel.Padding = new System.Windows.Forms.Padding(6);
+            this.buttonPanel.Size = new System.Drawing.Size(284, 36);
+            this.buttonPanel.TabIndex = 5;
             // 
             // buttonConfirm
             // 
             this.buttonConfirm.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonConfirm.Dock = System.Windows.Forms.DockStyle.Left;
             this.buttonConfirm.Enabled = false;
             this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(7, 5);
+            this.buttonConfirm.Location = new System.Drawing.Point(6, 6);
+            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(0);
             this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(132, 24);
-            this.buttonConfirm.TabIndex = 4;
+            this.buttonConfirm.Size = new System.Drawing.Size(134, 24);
+            this.buttonConfirm.TabIndex = 7;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = false;
             this.buttonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
             // 
-            // buttonLayout
+            // buttonCancel
             // 
-            this.buttonLayout.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.buttonLayout.Controls.Add(this.buttonCancel);
-            this.buttonLayout.Controls.Add(this.buttonConfirm);
-            this.buttonLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonLayout.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonLayout.Location = new System.Drawing.Point(0, 133);
-            this.buttonLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonLayout.Name = "buttonLayout";
-            this.buttonLayout.Padding = new System.Windows.Forms.Padding(2);
-            this.buttonLayout.Size = new System.Drawing.Size(284, 34);
-            this.buttonLayout.TabIndex = 5;
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.Location = new System.Drawing.Point(144, 6);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(134, 24);
+            this.buttonCancel.TabIndex = 5;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
-            // layoutPrice
+            // formPanel
             // 
-            this.layoutPrice.ColumnCount = 2;
-            this.layoutPrice.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
-            this.layoutPrice.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
-            this.layoutPrice.Controls.Add(this.labelCurrency, 0, 0);
-            this.layoutPrice.Controls.Add(this.fieldPrice, 0, 0);
-            this.layoutPrice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutPrice.Location = new System.Drawing.Point(56, 70);
-            this.layoutPrice.Name = "layoutPrice";
-            this.layoutPrice.RowCount = 1;
-            this.layoutPrice.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutPrice.Size = new System.Drawing.Size(220, 24);
-            this.layoutPrice.TabIndex = 8;
+            this.formPanel.BackColor = System.Drawing.Color.Gainsboro;
+            this.formPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.formPanel.ColumnCount = 2;
+            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.45455F));
+            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.54546F));
+            this.formPanel.Controls.Add(this.stockLabel, 0, 3);
+            this.formPanel.Controls.Add(this.titleField, 1, 1);
+            this.formPanel.Controls.Add(this.guidLabel, 0, 0);
+            this.formPanel.Controls.Add(this.titleLabel, 0, 1);
+            this.formPanel.Controls.Add(this.priceLabel, 0, 2);
+            this.formPanel.Controls.Add(this.guidField, 1, 0);
+            this.formPanel.Controls.Add(this.stockPanel, 1, 3);
+            this.formPanel.Controls.Add(this.pricePanel, 1, 2);
+            this.formPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formPanel.Location = new System.Drawing.Point(0, 0);
+            this.formPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.formPanel.Name = "formPanel";
+            this.formPanel.Padding = new System.Windows.Forms.Padding(4);
+            this.formPanel.RowCount = 4;
+            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.formPanel.Size = new System.Drawing.Size(284, 133);
+            this.formPanel.TabIndex = 6;
             // 
-            // labelCurrency
+            // stockLabel
             // 
-            this.labelCurrency.AutoSize = true;
-            this.labelCurrency.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCurrency.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCurrency.Location = new System.Drawing.Point(188, 0);
-            this.labelCurrency.Name = "labelCurrency";
-            this.labelCurrency.Size = new System.Drawing.Size(29, 24);
-            this.labelCurrency.TabIndex = 10;
-            this.labelCurrency.Text = "€";
-            this.labelCurrency.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.stockLabel.AutoSize = true;
+            this.stockLabel.BackColor = System.Drawing.Color.Silver;
+            this.stockLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stockLabel.Location = new System.Drawing.Point(5, 98);
+            this.stockLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.stockLabel.Name = "stockLabel";
+            this.stockLabel.Size = new System.Drawing.Size(47, 30);
+            this.stockLabel.TabIndex = 5;
+            this.stockLabel.Text = "Stock";
+            this.stockLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // fieldPrice
+            // titleField
             // 
-            this.fieldPrice.DecimalPlaces = 2;
-            this.fieldPrice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldPrice.Location = new System.Drawing.Point(2, 2);
-            this.fieldPrice.Margin = new System.Windows.Forms.Padding(2);
-            this.fieldPrice.Maximum = new decimal(new int[] {
+            this.titleField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.titleField.Location = new System.Drawing.Point(57, 41);
+            this.titleField.Margin = new System.Windows.Forms.Padding(4);
+            this.titleField.Name = "titleField";
+            this.titleField.Size = new System.Drawing.Size(218, 20);
+            this.titleField.TabIndex = 0;
+            this.titleField.TextChanged += new System.EventHandler(this.TitleField_TextChanged);
+            // 
+            // guidLabel
+            // 
+            this.guidLabel.AutoSize = true;
+            this.guidLabel.BackColor = System.Drawing.Color.Silver;
+            this.guidLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.guidLabel.Location = new System.Drawing.Point(5, 5);
+            this.guidLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.guidLabel.Name = "guidLabel";
+            this.guidLabel.Size = new System.Drawing.Size(47, 30);
+            this.guidLabel.TabIndex = 2;
+            this.guidLabel.Text = "GUID";
+            this.guidLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // titleLabel
+            // 
+            this.titleLabel.AutoSize = true;
+            this.titleLabel.BackColor = System.Drawing.Color.Silver;
+            this.titleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.titleLabel.Location = new System.Drawing.Point(5, 36);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(47, 30);
+            this.titleLabel.TabIndex = 3;
+            this.titleLabel.Text = "Title";
+            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // priceLabel
+            // 
+            this.priceLabel.AutoSize = true;
+            this.priceLabel.BackColor = System.Drawing.Color.Silver;
+            this.priceLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.priceLabel.Location = new System.Drawing.Point(5, 67);
+            this.priceLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.priceLabel.Name = "priceLabel";
+            this.priceLabel.Size = new System.Drawing.Size(47, 30);
+            this.priceLabel.TabIndex = 4;
+            this.priceLabel.Text = "Price";
+            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // guidField
+            // 
+            this.guidField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.guidField.Enabled = false;
+            this.guidField.Location = new System.Drawing.Point(57, 10);
+            this.guidField.Margin = new System.Windows.Forms.Padding(4);
+            this.guidField.Name = "guidField";
+            this.guidField.ReadOnly = true;
+            this.guidField.Size = new System.Drawing.Size(218, 20);
+            this.guidField.TabIndex = 1;
+            // 
+            // stockPanel
+            // 
+            this.stockPanel.ColumnCount = 2;
+            this.stockPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
+            this.stockPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
+            this.stockPanel.Controls.Add(this.stockField, 0, 0);
+            this.stockPanel.Controls.Add(this.unitsLabel, 1, 0);
+            this.stockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stockPanel.Location = new System.Drawing.Point(56, 101);
+            this.stockPanel.Name = "stockPanel";
+            this.stockPanel.RowCount = 1;
+            this.stockPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.stockPanel.Size = new System.Drawing.Size(220, 24);
+            this.stockPanel.TabIndex = 7;
+            // 
+            // stockField
+            // 
+            this.stockField.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stockField.Location = new System.Drawing.Point(2, 2);
+            this.stockField.Margin = new System.Windows.Forms.Padding(2);
+            this.stockField.Name = "stockField";
+            this.stockField.Size = new System.Drawing.Size(181, 20);
+            this.stockField.TabIndex = 6;
+            // 
+            // unitsLabel
+            // 
+            this.unitsLabel.AutoSize = true;
+            this.unitsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.unitsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.unitsLabel.Location = new System.Drawing.Point(188, 0);
+            this.unitsLabel.Name = "unitsLabel";
+            this.unitsLabel.Size = new System.Drawing.Size(29, 24);
+            this.unitsLabel.TabIndex = 5;
+            this.unitsLabel.Text = "Un";
+            this.unitsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pricePanel
+            // 
+            this.pricePanel.ColumnCount = 2;
+            this.pricePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
+            this.pricePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
+            this.pricePanel.Controls.Add(this.currencyLabel, 0, 0);
+            this.pricePanel.Controls.Add(this.priceField, 0, 0);
+            this.pricePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pricePanel.Location = new System.Drawing.Point(56, 70);
+            this.pricePanel.Name = "pricePanel";
+            this.pricePanel.RowCount = 1;
+            this.pricePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.pricePanel.Size = new System.Drawing.Size(220, 24);
+            this.pricePanel.TabIndex = 8;
+            // 
+            // currencyLabel
+            // 
+            this.currencyLabel.AutoSize = true;
+            this.currencyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.currencyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.currencyLabel.Location = new System.Drawing.Point(188, 0);
+            this.currencyLabel.Name = "currencyLabel";
+            this.currencyLabel.Size = new System.Drawing.Size(29, 24);
+            this.currencyLabel.TabIndex = 10;
+            this.currencyLabel.Text = "€";
+            this.currencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // priceField
+            // 
+            this.priceField.DecimalPlaces = 2;
+            this.priceField.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.priceField.Location = new System.Drawing.Point(2, 2);
+            this.priceField.Margin = new System.Windows.Forms.Padding(2);
+            this.priceField.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.fieldPrice.Minimum = new decimal(new int[] {
+            this.priceField.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.fieldPrice.Name = "fieldPrice";
-            this.fieldPrice.Size = new System.Drawing.Size(181, 20);
-            this.fieldPrice.TabIndex = 9;
-            this.fieldPrice.ThousandsSeparator = true;
-            this.fieldPrice.Value = new decimal(new int[] {
+            this.priceField.Name = "priceField";
+            this.priceField.Size = new System.Drawing.Size(181, 20);
+            this.priceField.TabIndex = 9;
+            this.priceField.ThousandsSeparator = true;
+            this.priceField.Value = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            // 
-            // layoutStock
-            // 
-            this.layoutStock.ColumnCount = 2;
-            this.layoutStock.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.54546F));
-            this.layoutStock.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.45455F));
-            this.layoutStock.Controls.Add(this.fieldStock, 0, 0);
-            this.layoutStock.Controls.Add(this.labelUnits, 1, 0);
-            this.layoutStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutStock.Location = new System.Drawing.Point(56, 101);
-            this.layoutStock.Name = "layoutStock";
-            this.layoutStock.RowCount = 1;
-            this.layoutStock.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutStock.Size = new System.Drawing.Size(220, 24);
-            this.layoutStock.TabIndex = 7;
-            // 
-            // fieldStock
-            // 
-            this.fieldStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldStock.Location = new System.Drawing.Point(2, 2);
-            this.fieldStock.Margin = new System.Windows.Forms.Padding(2);
-            this.fieldStock.Name = "fieldStock";
-            this.fieldStock.Size = new System.Drawing.Size(181, 20);
-            this.fieldStock.TabIndex = 6;
-            // 
-            // labelUnits
-            // 
-            this.labelUnits.AutoSize = true;
-            this.labelUnits.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelUnits.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUnits.Location = new System.Drawing.Point(188, 0);
-            this.labelUnits.Name = "labelUnits";
-            this.labelUnits.Size = new System.Drawing.Size(29, 24);
-            this.labelUnits.TabIndex = 5;
-            this.labelUnits.Text = "Un";
-            this.labelUnits.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // fieldGuid
-            // 
-            this.fieldGuid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.fieldGuid.Enabled = false;
-            this.fieldGuid.Location = new System.Drawing.Point(57, 10);
-            this.fieldGuid.Margin = new System.Windows.Forms.Padding(4);
-            this.fieldGuid.Name = "fieldGuid";
-            this.fieldGuid.ReadOnly = true;
-            this.fieldGuid.Size = new System.Drawing.Size(218, 20);
-            this.fieldGuid.TabIndex = 1;
-            // 
-            // labelPrice
-            // 
-            this.labelPrice.AutoSize = true;
-            this.labelPrice.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.labelPrice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelPrice.Location = new System.Drawing.Point(8, 67);
-            this.labelPrice.Name = "labelPrice";
-            this.labelPrice.Size = new System.Drawing.Size(41, 30);
-            this.labelPrice.TabIndex = 4;
-            this.labelPrice.Text = "Price";
-            this.labelPrice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelTitle
-            // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTitle.Location = new System.Drawing.Point(8, 36);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(41, 30);
-            this.labelTitle.TabIndex = 3;
-            this.labelTitle.Text = "Title";
-            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelGuid
-            // 
-            this.labelGuid.AutoSize = true;
-            this.labelGuid.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.labelGuid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGuid.Location = new System.Drawing.Point(8, 5);
-            this.labelGuid.Name = "labelGuid";
-            this.labelGuid.Size = new System.Drawing.Size(41, 30);
-            this.labelGuid.TabIndex = 2;
-            this.labelGuid.Text = "GUID";
-            this.labelGuid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // fieldTitle
-            // 
-            this.fieldTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldTitle.Location = new System.Drawing.Point(57, 40);
-            this.fieldTitle.Margin = new System.Windows.Forms.Padding(4);
-            this.fieldTitle.Name = "fieldTitle";
-            this.fieldTitle.Size = new System.Drawing.Size(218, 20);
-            this.fieldTitle.TabIndex = 0;
-            this.fieldTitle.TextChanged += new System.EventHandler(this.FieldTitle_TextChanged);
-            // 
-            // labelStock
-            // 
-            this.labelStock.AutoSize = true;
-            this.labelStock.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.labelStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelStock.Location = new System.Drawing.Point(8, 98);
-            this.labelStock.Name = "labelStock";
-            this.labelStock.Size = new System.Drawing.Size(41, 30);
-            this.labelStock.TabIndex = 5;
-            this.labelStock.Text = "Stock";
-            this.labelStock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // fieldLayout
-            // 
-            this.fieldLayout.BackColor = System.Drawing.Color.Gainsboro;
-            this.fieldLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.fieldLayout.ColumnCount = 2;
-            this.fieldLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.45455F));
-            this.fieldLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 82.54546F));
-            this.fieldLayout.Controls.Add(this.labelStock, 0, 3);
-            this.fieldLayout.Controls.Add(this.fieldTitle, 1, 1);
-            this.fieldLayout.Controls.Add(this.labelGuid, 0, 0);
-            this.fieldLayout.Controls.Add(this.labelTitle, 0, 1);
-            this.fieldLayout.Controls.Add(this.labelPrice, 0, 2);
-            this.fieldLayout.Controls.Add(this.fieldGuid, 1, 0);
-            this.fieldLayout.Controls.Add(this.layoutStock, 1, 3);
-            this.fieldLayout.Controls.Add(this.layoutPrice, 1, 2);
-            this.fieldLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fieldLayout.Location = new System.Drawing.Point(0, 0);
-            this.fieldLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.fieldLayout.Name = "fieldLayout";
-            this.fieldLayout.Padding = new System.Windows.Forms.Padding(4);
-            this.fieldLayout.RowCount = 4;
-            this.fieldLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.fieldLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.fieldLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.fieldLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.fieldLayout.Size = new System.Drawing.Size(284, 133);
-            this.fieldLayout.TabIndex = 4;
             // 
             // BookForm
             // 
             this.AcceptButton = this.buttonConfirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 167);
-            this.Controls.Add(this.fieldLayout);
-            this.Controls.Add(this.buttonLayout);
+            this.CancelButton = this.buttonCancel;
+            this.ClientSize = new System.Drawing.Size(284, 169);
+            this.Controls.Add(this.formPanel);
+            this.Controls.Add(this.buttonPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -296,35 +305,35 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Publish Book";
             this.Load += new System.EventHandler(this.BookForm_Load);
-            this.buttonLayout.ResumeLayout(false);
-            this.layoutPrice.ResumeLayout(false);
-            this.layoutPrice.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldPrice)).EndInit();
-            this.layoutStock.ResumeLayout(false);
-            this.layoutStock.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fieldStock)).EndInit();
-            this.fieldLayout.ResumeLayout(false);
-            this.fieldLayout.PerformLayout();
+            this.buttonPanel.ResumeLayout(false);
+            this.formPanel.ResumeLayout(false);
+            this.formPanel.PerformLayout();
+            this.stockPanel.ResumeLayout(false);
+            this.stockPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stockField)).EndInit();
+            this.pricePanel.ResumeLayout(false);
+            this.pricePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.priceField)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Panel buttonPanel;
         private System.Windows.Forms.Button buttonConfirm;
-        private System.Windows.Forms.FlowLayoutPanel buttonLayout;
-        private System.Windows.Forms.TableLayoutPanel layoutPrice;
-        private System.Windows.Forms.Label labelCurrency;
-        private System.Windows.Forms.NumericUpDown fieldPrice;
-        private System.Windows.Forms.TableLayoutPanel layoutStock;
-        private System.Windows.Forms.NumericUpDown fieldStock;
-        private System.Windows.Forms.Label labelUnits;
-        private System.Windows.Forms.TextBox fieldGuid;
-        private System.Windows.Forms.Label labelPrice;
-        private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelGuid;
-        private System.Windows.Forms.TextBox fieldTitle;
-        private System.Windows.Forms.Label labelStock;
-        private System.Windows.Forms.TableLayoutPanel fieldLayout;
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.TableLayoutPanel formPanel;
+        private System.Windows.Forms.Label stockLabel;
+        private System.Windows.Forms.TextBox titleField;
+        private System.Windows.Forms.Label guidLabel;
+        private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Label priceLabel;
+        private System.Windows.Forms.TextBox guidField;
+        private System.Windows.Forms.TableLayoutPanel stockPanel;
+        private System.Windows.Forms.NumericUpDown stockField;
+        private System.Windows.Forms.Label unitsLabel;
+        private System.Windows.Forms.TableLayoutPanel pricePanel;
+        private System.Windows.Forms.Label currencyLabel;
+        private System.Windows.Forms.NumericUpDown priceField;
     }
 }

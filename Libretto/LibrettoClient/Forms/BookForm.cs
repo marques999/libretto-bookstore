@@ -17,7 +17,6 @@ namespace Libretto.Forms
         public BookForm()
         {
             InitializeComponent();
-            BookInformation = new Book();
         }
 
         /// <summary>
@@ -27,9 +26,9 @@ namespace Libretto.Forms
         {
             InitializeComponent();
             BookInformation = bookInformation;
-            fieldTitle.Text = bookInformation.Title;
-            fieldStock.Text = Convert.ToString(bookInformation.Stock);
-            fieldPrice.Text = Convert.ToString(bookInformation.Price, CultureInfo.InvariantCulture);
+            titleField.Text = bookInformation.Title;
+            stockField.Text = Convert.ToString(bookInformation.Stock);
+            priceField.Text = Convert.ToString(bookInformation.Price, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -38,16 +37,16 @@ namespace Libretto.Forms
         public Book BookInformation
         {
             get;
-        }
+        } = new Book();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FieldTitle_TextChanged(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void TitleField_TextChanged(object sender, EventArgs args)
         {
-            buttonConfirm.Enabled = string.IsNullOrEmpty(fieldTitle.Text.Trim()) == false;
+            buttonConfirm.Enabled = string.IsNullOrEmpty(titleField.Text.Trim()) == false;
         }
 
         /// <summary>
@@ -57,9 +56,9 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonConfirm_Click(object sender, EventArgs args)
         {
-            BookInformation.Title = fieldTitle.Text;
-            BookInformation.Price = Convert.ToDouble(fieldPrice.Value);
-            BookInformation.Stock = Convert.ToInt32(fieldStock.Value);
+            BookInformation.Title = titleField.Text;
+            BookInformation.Price = Convert.ToDouble(priceField.Value);
+            BookInformation.Stock = Convert.ToInt32(stockField.Value);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -79,10 +78,10 @@ namespace Libretto.Forms
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BookForm_Load(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void BookForm_Load(object sender, EventArgs args)
         {
-            fieldGuid.Text = LibrettoCommon.FormatGuid(BookInformation.Identifier);
+            guidField.Text = LibrettoCommon.FormatGuid(BookInformation.Identifier);
         }
     }
 }

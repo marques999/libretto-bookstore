@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -10,7 +9,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    public partial class InventoryForm : Form
+    internal partial class InventoryForm : Form
     {
         /// <summary>
         /// 
@@ -202,7 +201,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void BooksList_SelectedIndexChanged(object sender, EventArgs args)
+        private void ListView_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateButtons();
         }

@@ -1,4 +1,4 @@
-﻿namespace LibrettoClient
+﻿namespace Libretto.Forms
 {
     partial class LoginForm
     {

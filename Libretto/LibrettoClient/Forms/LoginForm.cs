@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using Libretto.Forms;
 
-namespace LibrettoClient
+namespace Libretto.Forms
 {
-    public partial class LoginForm : Form
+    /// <summary>
+    /// 
+    /// </summary>
+    internal partial class LoginForm : Form
 
     {
         /// <summary>
@@ -15,7 +17,7 @@ namespace LibrettoClient
             InitializeComponent();
             buttonConfigure.Enabled = true;
         }
-        
+
         /// <summary>
         ///
         /// </summary>

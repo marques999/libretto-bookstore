@@ -45,7 +45,7 @@
             this.customerPanel = new System.Windows.Forms.Panel();
             this.customerLabel = new System.Windows.Forms.Label();
             this.ordersLayout = new System.Windows.Forms.Panel();
-            this.ordersList = new System.Windows.Forms.ListView();
+            this.transactionList = new System.Windows.Forms.ListView();
             this.columnDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnCustomer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -56,6 +56,7 @@
             this.ordersLabel = new System.Windows.Forms.Label();
             this.buttonPanel = new System.Windows.Forms.Panel();
             this.buttonLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -91,7 +92,7 @@
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 307F));
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 312F));
             this.tableLayout.Controls.Add(this.labelUntil, 2, 1);
             this.tableLayout.Controls.Add(this.labelFrom, 2, 0);
             this.tableLayout.Controls.Add(this.nameLabel, 0, 0);
@@ -109,26 +110,26 @@
             this.tableLayout.Size = new System.Drawing.Size(696, 68);
             this.tableLayout.TabIndex = 1;
             // 
-            // dateUntilLabel
+            // labelUntil
             // 
             this.labelUntil.AutoSize = true;
             this.labelUntil.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelUntil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUntil.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.labelUntil.Location = new System.Drawing.Point(340, 34);
+            this.labelUntil.Location = new System.Drawing.Point(335, 34);
             this.labelUntil.Name = "labelUntil";
             this.labelUntil.Size = new System.Drawing.Size(44, 33);
             this.labelUntil.TabIndex = 11;
             this.labelUntil.Text = "Until";
             this.labelUntil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // dateFromLabel
+            // labelFrom
             // 
             this.labelFrom.AutoSize = true;
             this.labelFrom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFrom.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.labelFrom.Location = new System.Drawing.Point(340, 1);
+            this.labelFrom.Location = new System.Drawing.Point(335, 1);
             this.labelFrom.Name = "labelFrom";
             this.labelFrom.Size = new System.Drawing.Size(44, 32);
             this.labelFrom.TabIndex = 10;
@@ -171,29 +172,29 @@
             this.comboCustomer.Margin = new System.Windows.Forms.Padding(6);
             this.comboCustomer.MaxDropDownItems = 20;
             this.comboCustomer.Name = "comboCustomer";
-            this.comboCustomer.Size = new System.Drawing.Size(272, 21);
+            this.comboCustomer.Size = new System.Drawing.Size(267, 21);
             this.comboCustomer.TabIndex = 5;
             this.comboCustomer.SelectedIndexChanged += new System.EventHandler(this.ComboCustomer_SelectedIndexChanged);
             // 
-            // dateFromPicker
+            // pickerFrom
             // 
             this.pickerFrom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pickerFrom.Location = new System.Drawing.Point(394, 7);
+            this.pickerFrom.Location = new System.Drawing.Point(389, 7);
             this.pickerFrom.Margin = new System.Windows.Forms.Padding(6);
             this.pickerFrom.Name = "pickerFrom";
             this.pickerFrom.ShowCheckBox = true;
-            this.pickerFrom.Size = new System.Drawing.Size(295, 20);
+            this.pickerFrom.Size = new System.Drawing.Size(300, 20);
             this.pickerFrom.TabIndex = 8;
             this.pickerFrom.ValueChanged += new System.EventHandler(this.DateFromPicker_ValueChanged);
             // 
-            // dateUntilPicker
+            // pickerUntil
             // 
             this.pickerUntil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pickerUntil.Location = new System.Drawing.Point(394, 40);
+            this.pickerUntil.Location = new System.Drawing.Point(389, 40);
             this.pickerUntil.Margin = new System.Windows.Forms.Padding(6);
             this.pickerUntil.Name = "pickerUntil";
             this.pickerUntil.ShowCheckBox = true;
-            this.pickerUntil.Size = new System.Drawing.Size(295, 20);
+            this.pickerUntil.Size = new System.Drawing.Size(300, 20);
             this.pickerUntil.TabIndex = 9;
             this.pickerUntil.ValueChanged += new System.EventHandler(this.DateUntilPicker_ValueChanged);
             // 
@@ -206,7 +207,7 @@
             this.statusPanel.Location = new System.Drawing.Point(58, 40);
             this.statusPanel.Margin = new System.Windows.Forms.Padding(6);
             this.statusPanel.Name = "statusPanel";
-            this.statusPanel.Size = new System.Drawing.Size(272, 21);
+            this.statusPanel.Size = new System.Drawing.Size(267, 21);
             this.statusPanel.TabIndex = 12;
             // 
             // checkWaiting
@@ -275,7 +276,7 @@
             // ordersLayout
             // 
             this.ordersLayout.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ordersLayout.Controls.Add(this.ordersList);
+            this.ordersLayout.Controls.Add(this.transactionList);
             this.ordersLayout.Controls.Add(this.ordersPanel);
             this.ordersLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ordersLayout.Location = new System.Drawing.Point(0, 96);
@@ -284,29 +285,29 @@
             this.ordersLayout.Size = new System.Drawing.Size(704, 422);
             this.ordersLayout.TabIndex = 2;
             // 
-            // ordersList
+            // transactionList
             // 
-            this.ordersList.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ordersList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.transactionList.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.transactionList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnDate,
             this.columnTitle,
             this.columnCustomer,
             this.columnQuantity,
             this.columnTotal,
             this.columnStatus});
-            this.ordersList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ordersList.FullRowSelect = true;
-            this.ordersList.GridLines = true;
-            this.ordersList.LabelWrap = false;
-            this.ordersList.Location = new System.Drawing.Point(4, 28);
-            this.ordersList.MultiSelect = false;
-            this.ordersList.Name = "ordersList";
-            this.ordersList.Size = new System.Drawing.Size(696, 390);
-            this.ordersList.TabIndex = 2;
-            this.ordersList.UseCompatibleStateImageBehavior = false;
-            this.ordersList.View = System.Windows.Forms.View.Details;
-            this.ordersList.SelectedIndexChanged += new System.EventHandler(this.OrderList_SelectedIndexChanged);
-            this.ordersList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OrdersList_DoubleClicked);
+            this.transactionList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.transactionList.FullRowSelect = true;
+            this.transactionList.GridLines = true;
+            this.transactionList.LabelWrap = false;
+            this.transactionList.Location = new System.Drawing.Point(4, 28);
+            this.transactionList.MultiSelect = false;
+            this.transactionList.Name = "transactionList";
+            this.transactionList.Size = new System.Drawing.Size(696, 390);
+            this.transactionList.TabIndex = 2;
+            this.transactionList.UseCompatibleStateImageBehavior = false;
+            this.transactionList.View = System.Windows.Forms.View.Details;
+            this.transactionList.SelectedIndexChanged += new System.EventHandler(this.OrderList_SelectedIndexChanged);
+            this.transactionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OrdersList_DoubleClicked);
             // 
             // columnDate
             // 
@@ -360,9 +361,9 @@
             this.ordersLabel.Location = new System.Drawing.Point(7, 5);
             this.ordersLabel.Margin = new System.Windows.Forms.Padding(2);
             this.ordersLabel.Name = "ordersLabel";
-            this.ordersLabel.Size = new System.Drawing.Size(44, 13);
+            this.ordersLabel.Size = new System.Drawing.Size(80, 13);
             this.ordersLabel.TabIndex = 8;
-            this.ordersLabel.Text = "Orders";
+            this.ordersLabel.Text = "Transactions";
             this.ordersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonPanel
@@ -378,6 +379,7 @@
             // 
             // buttonLayout
             // 
+            this.buttonLayout.Controls.Add(this.button1);
             this.buttonLayout.Controls.Add(this.buttonConfirm);
             this.buttonLayout.Controls.Add(this.buttonUpdate);
             this.buttonLayout.Controls.Add(this.buttonDelete);
@@ -389,15 +391,31 @@
             this.buttonLayout.Size = new System.Drawing.Size(696, 33);
             this.buttonLayout.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(0, 3);
+            this.button1.Margin = new System.Windows.Forms.Padding(0, 3, 2, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 28);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Register Purchase";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // buttonConfirm
             // 
             this.buttonConfirm.AutoSize = true;
             this.buttonConfirm.BackColor = System.Drawing.SystemColors.Control;
             this.buttonConfirm.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonConfirm.Location = new System.Drawing.Point(3, 3);
+            this.buttonConfirm.Location = new System.Drawing.Point(124, 3);
+            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(132, 28);
+            this.buttonConfirm.Size = new System.Drawing.Size(120, 28);
             this.buttonConfirm.TabIndex = 5;
             this.buttonConfirm.Text = "Place Order";
             this.buttonConfirm.UseVisualStyleBackColor = false;
@@ -408,11 +426,12 @@
             this.buttonUpdate.BackColor = System.Drawing.SystemColors.Control;
             this.buttonUpdate.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonUpdate.Location = new System.Drawing.Point(141, 3);
+            this.buttonUpdate.Location = new System.Drawing.Point(248, 3);
+            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(132, 28);
+            this.buttonUpdate.Size = new System.Drawing.Size(100, 28);
             this.buttonUpdate.TabIndex = 6;
-            this.buttonUpdate.Text = "Update Order";
+            this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = false;
             this.buttonUpdate.Click += new System.EventHandler(this.ButtonUpdate_Click);
             // 
@@ -422,11 +441,12 @@
             this.buttonDelete.BackColor = System.Drawing.SystemColors.Control;
             this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Location = new System.Drawing.Point(279, 3);
+            this.buttonDelete.Location = new System.Drawing.Point(352, 3);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(132, 28);
+            this.buttonDelete.Size = new System.Drawing.Size(100, 28);
             this.buttonDelete.TabIndex = 7;
-            this.buttonDelete.Text = "Delete Order";
+            this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Click += new System.EventHandler(this.ButtonDelete_Click);
             // 
@@ -437,9 +457,10 @@
             this.buttonManage.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonManage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonManage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonManage.Location = new System.Drawing.Point(417, 3);
+            this.buttonManage.Location = new System.Drawing.Point(456, 3);
+            this.buttonManage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonManage.Name = "buttonManage";
-            this.buttonManage.Size = new System.Drawing.Size(132, 28);
+            this.buttonManage.Size = new System.Drawing.Size(120, 28);
             this.buttonManage.TabIndex = 8;
             this.buttonManage.Text = "Manage Books";
             this.buttonManage.UseVisualStyleBackColor = false;
@@ -452,9 +473,10 @@
             this.buttonLogout.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
             this.buttonLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLogout.Location = new System.Drawing.Point(555, 3);
+            this.buttonLogout.Location = new System.Drawing.Point(580, 3);
+            this.buttonLogout.Margin = new System.Windows.Forms.Padding(2, 3, 0, 3);
             this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(138, 28);
+            this.buttonLogout.Size = new System.Drawing.Size(100, 28);
             this.buttonLogout.TabIndex = 9;
             this.buttonLogout.Text = "Logout";
             this.buttonLogout.UseVisualStyleBackColor = false;
@@ -510,7 +532,7 @@
         private System.Windows.Forms.ColumnHeader columnDate;
         private System.Windows.Forms.ColumnHeader columnTitle;
         private System.Windows.Forms.ColumnHeader columnCustomer;
-        private System.Windows.Forms.ListView ordersList;
+        private System.Windows.Forms.ListView transactionList;
         private System.Windows.Forms.ColumnHeader columnQuantity;
         private System.Windows.Forms.ColumnHeader columnTotal;
         private System.Windows.Forms.ColumnHeader columnStatus;
@@ -525,5 +547,6 @@
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonManage;
         private System.Windows.Forms.Button buttonLogout;
+        private System.Windows.Forms.Button button1;
     }
 }

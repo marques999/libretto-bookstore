@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 using Libretto.Forms;
 using Libretto.Model;
-using LibrettoClient;
 
 namespace Libretto
 {
@@ -108,7 +107,7 @@ namespace Libretto
             var randomBook = Books[_randomGenerator.Next(Books.Count)];
             var randomCustomer = Customers[_randomGenerator.Next(Customers.Count)];
 
-            Orders.Add(new Order
+            Transactions.Add(new Order
             {
                 Identifier = orderIdentifier,
                 CustomerId = randomCustomer.Identifier,
@@ -131,10 +130,10 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public List<Order> Orders
+        public List<Transaction> Transactions
         {
             get;
-        } = new List<Order>();
+        } = new List<Transaction>();
 
         /// <summary>
         /// 
