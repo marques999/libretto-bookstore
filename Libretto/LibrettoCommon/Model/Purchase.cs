@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Libretto.Model
 {
@@ -18,5 +17,11 @@ namespace Libretto.Model
             get;
             set;
         } = Status.StorePurchased;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public override TransactionType Type => TransactionType.Purchase;
     }
 }

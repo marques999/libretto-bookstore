@@ -28,5 +28,11 @@ namespace Libretto.Model
             get;
             set;
         } = DateTime.Now;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public override TransactionType Type => TransactionType.Order;
     }
 }

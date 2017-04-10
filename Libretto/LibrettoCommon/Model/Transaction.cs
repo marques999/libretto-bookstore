@@ -33,6 +33,15 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
+        public abstract TransactionType Type
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
         public Guid BookId
         {
             get;
