@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Libretto.Controls;
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -8,7 +9,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    internal partial class CustomerForm : Form
+    internal partial class CustomerForm : FlatDialog
     {
         /// <summary>
         /// 
@@ -54,19 +55,6 @@ namespace Libretto.Forms
             CustomerInformation.Name = nameField.Text.Trim();
             CustomerInformation.Email = emailField.Text.Trim();
             CustomerInformation.Location = locationField.Text.Trim();
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonCancel_Click(object sender, EventArgs args)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
 
         /// <summary>

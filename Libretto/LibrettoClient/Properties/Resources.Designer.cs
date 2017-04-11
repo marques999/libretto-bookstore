@@ -61,6 +61,42 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We couldn&apos;t authenticate with the details you provided, please check your e-mail address and password and try again!.
+        /// </summary>
+        internal static string AuthenticationFailed {
+            get {
+                return ResourceManager.GetString("AuthenticationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication Failed.
+        /// </summary>
+        internal static string AuthenticationFailed_Title {
+            get {
+                return ResourceManager.GetString("AuthenticationFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to remove the selected book(s) from the system..
+        /// </summary>
+        internal static string DeleteBook {
+            get {
+                return ResourceManager.GetString("DeleteBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Book.
+        /// </summary>
+        internal static string DeleteBook_Title {
+            get {
+                return ResourceManager.GetString("DeleteBook_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please confirm that you want to remove the selected customer order(s) from the system..
         /// </summary>
         internal static string DeleteOrder {
@@ -72,9 +108,9 @@ namespace Libretto.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Delete Order(s).
         /// </summary>
-        internal static string DeleteOrderTitle {
+        internal static string DeleteOrder_Title {
             get {
-                return ResourceManager.GetString("DeleteOrderTitle", resourceCulture);
+                return ResourceManager.GetString("DeleteOrder_Title", resourceCulture);
             }
         }
         

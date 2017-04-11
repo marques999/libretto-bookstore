@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
+using Libretto.Controls;
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -9,7 +10,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    internal partial class PurchaseForm : Form
+    internal partial class PurchaseForm : FlatDialog
     {
         /// <summary>
         /// 
@@ -42,7 +43,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void OrderForm_Load(object sender, EventArgs args)
+        private void PurchaseForm_Load(object sender, EventArgs args)
         {
             var validPurchase = false;
             var booksList = LibrettoClient.Instance.Books.Select(bookInformation => bookInformation.Title).ToArray<object>();
@@ -57,8 +58,8 @@ namespace Libretto.Forms
 
             if (booksList.Length > 0)
             {
-                itemDescription.Items.AddRange(booksList);
-                itemDescription.SelectedIndex = 0;
+                bookTitle.Items.AddRange(booksList);
+                bookTitle.SelectedIndex = 0;
                 validPurchase = true;
             }
 
@@ -76,9 +77,9 @@ namespace Libretto.Forms
             purchaseQuantity.Maximum = bookInformation.Stock;
             Information.BookName = bookInformation.Title;
             Information.BookId = bookInformation.Identifier;
-            itemStock.Text = Convert.ToString(bookInformation.Stock);
-            itemPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
-            itemGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
+            bookStock.Text = Convert.ToString(bookInformation.Stock);
+            bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
+            bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
             UpdateQuantity(purchaseQuantity.Value);
         }
 
@@ -105,7 +106,7 @@ namespace Libretto.Forms
             Information.Quantity = stockQuantity;
             Information.Total = _bookInformation.Price * stockQuantity;
             purchaseQuantityInfo.Text = Convert.ToString(stockQuantity);
-            itemStock.Text = Convert.ToString(_bookInformation.Stock - stockQuantity);
+            bookStock.Text = Convert.ToString(_bookInformation.Stock - stockQuantity);
             purchaseTotal.Text = LibrettoCommon.FormatDecimal(_bookInformation.Price * stockQuantity);
         }
 
@@ -114,20 +115,9 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void TrackBar1_Scroll(object sender, EventArgs args)
+        private void PurchaseQuantity_Scroll(object sender, EventArgs args)
         {
             UpdateQuantity(purchaseQuantity.Value);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonCancel_Click(object sender, EventArgs args)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
 
         /// <summary>
@@ -138,8 +128,6 @@ namespace Libretto.Forms
         private void ButtonConfirm_Click(object sender, EventArgs args)
         {
             Information.Timestamp = DateTime.Now;
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
         /// <summary>
@@ -147,11 +135,11 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ComboBooks_SelectedIndexChanged(object sender, EventArgs args)
+        private void BookTitle_SelectedIndexChanged(object sender, EventArgs args)
         {
-            if (itemDescription.SelectedIndex >= 0)
+            if (bookTitle.SelectedIndex >= 0)
             {
-                UpdateBook(LibrettoClient.Instance.Books[itemDescription.SelectedIndex]);
+                UpdateBook(LibrettoClient.Instance.Books[bookTitle.SelectedIndex]);
             }
         }
 

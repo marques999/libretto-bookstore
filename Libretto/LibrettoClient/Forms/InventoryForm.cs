@@ -2,14 +2,16 @@
 using System.Linq;
 using System.Windows.Forms;
 
+using Libretto.Controls;
 using Libretto.Model;
+using Libretto.Properties;
 
 namespace Libretto.Forms
 {
     /// <summary>
     /// 
     /// </summary>
-    internal partial class InventoryForm : Form
+    internal partial class InventoryForm : FlatDialog
     {
         /// <summary>
         /// 
@@ -53,11 +55,6 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
-            if (listView.SelectedItems.Count <= 0)
-            {
-                return;
-            }
-
             var listItem = listView.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
@@ -80,28 +77,21 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonDelete_Click(object sender, EventArgs args)
         {
-            if (listView.SelectedItems.Count <= 0)
+            if (MessageBox.Show(this, Resources.DeleteBook, Resources.DeleteBook_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             {
                 return;
             }
 
-            var listItem = listView.SelectedItems[0];
-
-            if (listItem == null || listItem.Index < 0)
+            foreach (ListViewItem listItem in listView.SelectedItems)
             {
-                return;
+                if (listItem == null || listItem.Index < 0)
+                {
+                    continue;
+                }
+
+                LibrettoClient.Instance.Books.RemoveAt(listItem.Index);
+                listView.Items.Remove(listItem);
             }
-
-            var bookIndex = listItem.Index;
-            var bookInformation = LibrettoClient.Instance.Books[listItem.Index];
-
-            if (MessageBox.Show(this, $@"Please confirm you want to remove ""{bookInformation.Title}"" from your bookstore.", @"Remove Book", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-            {
-                return;
-            }
-
-            LibrettoClient.Instance.Books.RemoveAt(bookIndex);
-            listView.Items.Remove(listItem);
         }
 
         /// <summary>
@@ -182,7 +172,8 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = buttonDelete.Enabled = listView.SelectedItems.Count > 0;
+            buttonUpdate.Enabled = listView.SelectedItems.Count == 1;
+            buttonDelete.Enabled = listView.SelectedItems.Count > 0;
         }
 
         /// <summary>

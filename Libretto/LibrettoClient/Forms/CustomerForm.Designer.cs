@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Libretto.Controls;
+
 namespace Libretto.Forms
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Libretto.Forms
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && components != null)
             {
                 components.Dispose();
             }
@@ -35,17 +37,17 @@ namespace Libretto.Forms
         private void InitializeComponent()
         {
             formPanel = new TableLayoutPanel();
-            locationLabel = new Label();
+            locationLabel = new FlatLabel();
             nameField = new TextBox();
-            guidLabel = new Label();
-            nameLabel = new Label();
-            emailLabel = new Label();
+            guidLabel = new FlatLabel();
+            nameLabel = new FlatLabel();
+            emailLabel = new FlatLabel();
             guidField = new TextBox();
             emailField = new TextBox();
             locationField = new TextBox();
             buttonPanel = new Panel();
-            buttonConfirm = new Button();
-            buttonCancel = new Button();
+            buttonConfirm = new FlatButton();
+            buttonCancel = new FlatButton();
             formPanel.SuspendLayout();
             buttonPanel.SuspendLayout();
             SuspendLayout();
@@ -77,17 +79,12 @@ namespace Libretto.Forms
             formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             formPanel.Size = new Size(284, 133);
             //
-            // locationLabel
+            // nameLabel
             //
-            locationLabel.AutoSize = true;
-            locationLabel.BackColor = Color.Silver;
-            locationLabel.Dock = DockStyle.Fill;
-            locationLabel.Location = new Point(5, 98);
-            locationLabel.Margin = new Padding(0);
-            locationLabel.Name = "locationLabel";
-            locationLabel.Size = new Size(50, 30);
-            locationLabel.Text = "Location";
-            locationLabel.TextAlign = ContentAlignment.MiddleCenter;
+            nameLabel.Location = new Point(5, 36);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(50, 30);
+            nameLabel.Text = "Name";
             //
             // nameField
             //
@@ -102,39 +99,10 @@ namespace Libretto.Forms
             //
             // guidLabel
             //
-            guidLabel.AutoSize = true;
-            guidLabel.BackColor = Color.Silver;
-            guidLabel.Dock = DockStyle.Fill;
             guidLabel.Location = new Point(5, 5);
-            guidLabel.Margin = new Padding(0);
             guidLabel.Name = "guidLabel";
             guidLabel.Size = new Size(50, 30);
             guidLabel.Text = "GUID";
-            guidLabel.TextAlign = ContentAlignment.MiddleCenter;
-            //
-            // nameLabel
-            //
-            nameLabel.AutoSize = true;
-            nameLabel.BackColor = Color.Silver;
-            nameLabel.Dock = DockStyle.Fill;
-            nameLabel.Location = new Point(5, 36);
-            nameLabel.Margin = new Padding(0);
-            nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(50, 30);
-            nameLabel.Text = "Name";
-            nameLabel.TextAlign = ContentAlignment.MiddleCenter;
-            //
-            // emailLabel
-            //
-            emailLabel.AutoSize = true;
-            emailLabel.BackColor = Color.Silver;
-            emailLabel.Dock = DockStyle.Fill;
-            emailLabel.Location = new Point(5, 67);
-            emailLabel.Margin = new Padding(0);
-            emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(50, 30);
-            emailLabel.Text = "E-mail";
-            emailLabel.TextAlign = ContentAlignment.MiddleCenter;
             //
             // guidField
             //
@@ -146,6 +114,13 @@ namespace Libretto.Forms
             guidField.ReadOnly = true;
             guidField.Size = new Size(215, 20);
             //
+            // emailLabel
+            //
+            emailLabel.Location = new Point(5, 67);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new Size(50, 30);
+            emailLabel.Text = "E-mail";
+            //
             // emailField
             //
             emailField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -156,6 +131,13 @@ namespace Libretto.Forms
             emailField.TabIndex = 3;
             emailField.TextChanged += new EventHandler(EmailField_TextChanged);
             emailField.KeyPress += new KeyPressEventHandler(EmailField_KeyPress);
+            //
+            // locationLabel
+            //
+            locationLabel.Location = new Point(5, 98);
+            locationLabel.Name = "locationLabel";
+            locationLabel.Size = new Size(50, 30);
+            locationLabel.Text = "Location";
             //
             // locationField
             //
@@ -181,52 +163,35 @@ namespace Libretto.Forms
             //
             // buttonConfirm
             //
-            buttonConfirm.BackColor = SystemColors.Control;
-            buttonConfirm.DialogResult = DialogResult.Cancel;
+            buttonConfirm.DialogResult = DialogResult.OK;
             buttonConfirm.Dock = DockStyle.Left;
-            buttonConfirm.Enabled = false;
-            buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonConfirm.FlatStyle = FlatStyle.Flat;
             buttonConfirm.Location = new Point(6, 6);
             buttonConfirm.Margin = new Padding(0);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(134, 24);
             buttonConfirm.TabIndex = 0;
             buttonConfirm.Text = "Confirm";
-            buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // buttonCancel
             //
-            buttonCancel.BackColor = SystemColors.Control;
             buttonCancel.DialogResult = DialogResult.Cancel;
             buttonCancel.Dock = DockStyle.Right;
-            buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonCancel.FlatStyle = FlatStyle.Flat;
             buttonCancel.Location = new Point(144, 6);
             buttonCancel.Margin = new Padding(0);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(134, 24);
             buttonCancel.TabIndex = 1;
             buttonCancel.Text = "Cancel";
-            buttonCancel.UseVisualStyleBackColor = false;
-            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // CustomerForm
             //
             AcceptButton = buttonConfirm;
-            AutoScaleMode = AutoScaleMode.Font;
             CancelButton = buttonCancel;
             ClientSize = new Size(284, 169);
             Controls.Add(formPanel);
             Controls.Add(buttonPanel);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "CustomerForm";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
             Text = "Register Customer";
             Load += new EventHandler(CustomerForm_Load);
             formPanel.ResumeLayout(false);
@@ -235,17 +200,17 @@ namespace Libretto.Forms
             ResumeLayout(false);
         }
 
-        private Label guidLabel;
-        private Label nameLabel;
-        private Label emailLabel;
-        private Label locationLabel;
+        private Panel buttonPanel;
+        private FlatLabel guidLabel;
+        private FlatLabel nameLabel;
+        private FlatLabel emailLabel;
+        private FlatLabel locationLabel;
         private TextBox guidField;
         private TextBox nameField;
         private TextBox emailField;
         private TextBox locationField;
-        private Panel buttonPanel;
-        private Button buttonConfirm;
-        private Button buttonCancel;
+        private FlatButton buttonConfirm;
+        private FlatButton buttonCancel;
         private TableLayoutPanel formPanel;
     }
 }

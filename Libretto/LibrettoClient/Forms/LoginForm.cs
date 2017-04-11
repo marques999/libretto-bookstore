@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Libretto.Controls;
+using Libretto.Properties;
+
 namespace Libretto.Forms
 {
     /// <summary>
     /// 
     /// </summary>
-    internal partial class LoginForm : Form
-
+    internal partial class LoginForm : FlatDialog
     {
         /// <summary>
         ///
@@ -15,7 +17,15 @@ namespace Libretto.Forms
         public LoginForm()
         {
             InitializeComponent();
-            buttonCancel.Enabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateLogin()
+        {
+            return emailField.Text == @"admin@libretto.pt" && passwordField.Text == @"changemeplease";
         }
 
         /// <summary>
@@ -24,17 +34,14 @@ namespace Libretto.Forms
         /// <returns></returns>
         private bool ValidateForm()
         {
-            return string.IsNullOrWhiteSpace(fieldEmail.Text) == false && string.IsNullOrWhiteSpace(fieldPassword.Text) == false;
-        }
+            if (string.IsNullOrWhiteSpace(emailField.Text) || string.IsNullOrWhiteSpace(passwordField.Text))
+            {
+                return false;
+            }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void LoginForm_Load(object sender, EventArgs args)
-        {
-            buttonValidate.Enabled = ValidateForm();
+            LibrettoClient.Instance.Login(emailField.Text);
+
+            return true;
         }
 
         /// <summary>
@@ -54,9 +61,26 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonValidate_Click(object sender, EventArgs args)
         {
-            Hide();
-            new StoreForm().ShowDialog();
-            Show();
+            if (ValidateLogin())
+            {
+                Hide();
+                new StoreForm().ShowDialog();
+                Show();
+            }
+            else
+            {
+                MessageBox.Show(this, Resources.AuthenticationFailed, Resources.AuthenticationFailed_Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void LoginForm_Load(object sender, EventArgs args)
+        {
+            buttonValidate.Enabled = ValidateForm();
         }
 
         /// <summary>
@@ -86,7 +110,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void FieldEmail_KeyPress(object sender, KeyPressEventArgs args)
         {
-            if (char.IsControl(args.KeyChar) == false && char.IsLetterOrDigit(args.KeyChar) == false)
+            if (char.IsWhiteSpace(args.KeyChar))
             {
                 args.Handled = true;
             }
@@ -99,7 +123,10 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void FieldPassword_KeyPress(object sender, KeyPressEventArgs args)
         {
-            FieldEmail_KeyPress(sender, args);
+            if (char.IsControl(args.KeyChar) == false && char.IsLetterOrDigit(args.KeyChar) == false)
+            {
+                args.Handled = true;
+            }
         }
     }
 }

@@ -3,25 +3,27 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Libretto.Controls;
+
 namespace Libretto.Forms
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal partial class InventoryForm
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private IContainer components = null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && components != null)
             {
                 components.Dispose();
             }
@@ -30,22 +32,22 @@ namespace Libretto.Forms
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private void InitializeComponent()
         {
             buttonPanel = new FlowLayoutPanel();
-            buttonRefresh = new Button();
-            buttonPublish = new Button();
-            buttonUpdate = new Button();
-            buttonDelete = new Button();
+            buttonRefresh = new FlatButton();
+            buttonPublish = new FlatButton();
+            buttonUpdate = new FlatButton();
+            buttonDelete = new FlatButton();
             booksPanel = new TableLayoutPanel();
             listView = new ListView();
             columnId = new ColumnHeader();
             columnTitle = new ColumnHeader();
             columnPrice = new ColumnHeader();
             columnStock = new ColumnHeader();
-            booksLabel = new Label();
+            booksLabel = new FlatHeader();
             buttonPanel.SuspendLayout();
             booksPanel.SuspendLayout();
             SuspendLayout();
@@ -64,10 +66,6 @@ namespace Libretto.Forms
             //
             // buttonRefresh
             //
-            buttonRefresh.AutoSize = true;
-            buttonRefresh.BackColor = SystemColors.Control;
-            buttonRefresh.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonRefresh.FlatStyle = FlatStyle.Flat;
             buttonRefresh.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonRefresh.Location = new Point(0, 4);
             buttonRefresh.Margin = new Padding(0, 4, 2, 4);
@@ -79,9 +77,6 @@ namespace Libretto.Forms
             //
             // buttonPublish
             //
-            buttonPublish.BackColor = SystemColors.Control;
-            buttonPublish.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonPublish.FlatStyle = FlatStyle.Flat;
             buttonPublish.Location = new Point(154, 4);
             buttonPublish.Margin = new Padding(2, 4, 2, 4);
             buttonPublish.Name = "buttonPublish";
@@ -92,10 +87,6 @@ namespace Libretto.Forms
             //
             // buttonUpdate
             //
-            buttonUpdate.AutoSize = true;
-            buttonUpdate.BackColor = SystemColors.Control;
-            buttonUpdate.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonUpdate.FlatStyle = FlatStyle.Flat;
             buttonUpdate.Location = new Point(309, 4);
             buttonUpdate.Margin = new Padding(2, 4, 2, 4);
             buttonUpdate.Name = "buttonUpdate";
@@ -106,11 +97,6 @@ namespace Libretto.Forms
             //
             // buttonDelete
             //
-            buttonDelete.AutoSize = true;
-            buttonDelete.BackColor = SystemColors.Control;
-            buttonDelete.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonDelete.FlatStyle = FlatStyle.Flat;
-            buttonDelete.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonDelete.Location = new Point(464, 4);
             buttonDelete.Margin = new Padding(2, 4, 0, 4);
             buttonDelete.Name = "buttonDelete";
@@ -141,25 +127,17 @@ namespace Libretto.Forms
             listView.FullRowSelect = true;
             listView.GridLines = true;
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView.LabelWrap = false;
             listView.Location = new Point(0, 24);
             listView.Margin = new Padding(0);
-            listView.MultiSelect = false;
             listView.Name = "listView";
             listView.Size = new Size(616, 347);
             listView.TabIndex = 4;
-            listView.UseCompatibleStateImageBehavior = false;
             listView.View = View.Details;
             listView.SelectedIndexChanged += new EventHandler(ListView_SelectedIndexChanged);
             listView.MouseDoubleClick += new MouseEventHandler(BooksList_MouseDoubleClick);
             //
             // booksLabel
             //
-            booksLabel.AutoSize = true;
-            booksLabel.BackColor = SystemColors.ControlDarkDark;
-            booksLabel.Dock = DockStyle.Fill;
-            booksLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            booksLabel.ForeColor = Color.Silver;
             booksLabel.Location = new Point(0, 0);
             booksLabel.Margin = new Padding(0);
             booksLabel.Name = "booksLabel";
@@ -176,23 +154,17 @@ namespace Libretto.Forms
             columnTitle.Width = 240;
             columnPrice.Text = "Price";
             columnPrice.TextAlign = HorizontalAlignment.Center;
-            columnPrice.Width = 72;
+            columnPrice.Width = 75;
             columnStock.Text = "Stock";
             columnStock.TextAlign = HorizontalAlignment.Center;
-            columnStock.Width = 72;
+            columnStock.Width = 75;
             AcceptButton = buttonRefresh;
             BackColor = SystemColors.ControlDark;
             ClientSize = new Size(624, 411);
             Controls.Add(booksPanel);
             Controls.Add(buttonPanel);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "InventoryForm";
             Padding = new Padding(4);
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
             Text = "Store Management";
             Load += new EventHandler(BookForm_Load);
             buttonPanel.ResumeLayout(false);
@@ -202,12 +174,12 @@ namespace Libretto.Forms
             ResumeLayout(false);
         }
 
-        private Label booksLabel;
         private ListView listView;
-        private Button buttonDelete;
-        private Button buttonUpdate;
-        private Button buttonPublish;
-        private Button buttonRefresh;
+        private FlatHeader booksLabel;
+        private FlatButton buttonDelete;
+        private FlatButton buttonUpdate;
+        private FlatButton buttonPublish;
+        private FlatButton buttonRefresh;
         private ColumnHeader columnId;
         private ColumnHeader columnPrice;
         private ColumnHeader columnStock;

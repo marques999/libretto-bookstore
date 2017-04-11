@@ -78,7 +78,7 @@ namespace Libretto
             Books.Add(new Book
             {
                 Identifier = bookIdentifier,
-                Price = _randomGenerator.NextDouble() * 1000,
+                Price = _randomGenerator.NextDouble() * 200,
                 Stock = _randomGenerator.Next(100),
                 Title = $"Dummy Book {(char)('A' + bookIndex)}"
             });
@@ -142,6 +142,43 @@ namespace Libretto
         {
             get;
         } = new List<Customer>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Email
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Permissions Permissions
+        {
+            get;
+            private set;
+        } = Permissions.None;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userEmail"></param>
+        public void Login(string userEmail)
+        {
+            Email = userEmail;
+            Permissions = Permissions.Administrator;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Logout()
+        {
+            Email = null;
+            Permissions = Permissions.None;
+        }
 
         /// <summary>
         /// 

@@ -18,6 +18,7 @@ namespace Libretto.Forms
         public StoreForm()
         {
             InitializeComponent();
+            _hasPermission = LibrettoClient.Instance.Permissions == Permissions.Administrator;
         }
 
         /// <summary>
@@ -38,12 +39,7 @@ namespace Libretto.Forms
 
         private void ButtonDelete_Click(object sender, EventArgs args)
         {
-            if (transactionList.SelectedItems.Count <= 0)
-            {
-                return;
-            }
-
-            if (MessageBox.Show(this, Resources.DeleteOrder, Resources.DeleteOrderTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            if (MessageBox.Show(this, Resources.DeleteOrder, Resources.DeleteOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             {
                 return;
             }
@@ -63,15 +59,15 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
+        private readonly bool _hasPermission;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
-            if (transactionList.SelectedItems.Count != 1)
-            {
-                return;
-            }
-
             var listItem = transactionList.SelectedItems[0];
 
             if (listItem == null || listItem.Index < 0)
@@ -157,15 +153,15 @@ namespace Libretto.Forms
         /// <returns></returns>
         private bool FilterOrder(Transaction orderInformation)
         {
-            var customerName = comboCustomer.Text;
+            var cName = customerName.Text;
             var orderTimestamp = orderInformation.Timestamp;
             return (orderInformation.Status == Status.StorePurchased
                 || orderInformation.Status == Status.WaitingExpedition && checkWaiting.Checked
                 || orderInformation.Status == Status.WaitingDispatch && checkProcessing.Checked
                 || orderInformation.Status == Status.DispatchComplete && checkDispatched.Checked)
-                && (string.IsNullOrEmpty(customerName) || customerName == orderInformation.CustomerName)
-                && (pickerFrom.Checked == false || orderTimestamp > pickerFrom.Value)
-                && (pickerUntil.Checked == false || orderTimestamp < pickerUntil.Value);
+                && (string.IsNullOrEmpty(cName) || cName == orderInformation.CustomerName)
+                && (dateFromPicker.Checked == false || orderTimestamp > dateFromPicker.Value)
+                && (dateToPicker.Checked == false || orderTimestamp < dateToPicker.Value);
         }
 
         /// <summary>
@@ -173,7 +169,8 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
+            buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1;
+            buttonDelete.Enabled = _hasPermission && transactionList.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -203,10 +200,11 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void StoreForm_Load(object sender, EventArgs args)
         {
-            comboCustomer.Items.Add("");
-            comboCustomer.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
-            pickerFrom.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            pickerUntil.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            customerName.Items.Add("");
+            customerName.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
+            buttonDelete.Enabled = buttonManage.Enabled = _hasPermission;
+            dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            dateToPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();
             UpdateFilter();
         }
@@ -241,7 +239,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void DateFromPicker_ValueChanged(object sender, EventArgs args)
+        private void PickerFrom_ValueChanged(object sender, EventArgs args)
         {
             UpdateFilter();
         }
@@ -251,7 +249,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void DateUntilPicker_ValueChanged(object sender, EventArgs args)
+        private void PickerUntil_ValueChanged(object sender, EventArgs args)
         {
             UpdateFilter();
         }

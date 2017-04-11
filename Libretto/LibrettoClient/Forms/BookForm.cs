@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
 
+using Libretto.Controls;
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -9,7 +8,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    internal partial class BookForm : Form
+    internal sealed partial class BookForm : FlatDialog
     {
         /// <summary>
         /// 
@@ -25,10 +24,11 @@ namespace Libretto.Forms
         public BookForm(Book bookInformation)
         {
             InitializeComponent();
+            Text = @"Update Book";
             BookInformation = bookInformation;
             titleField.Text = bookInformation.Title;
             stockField.Text = Convert.ToString(bookInformation.Stock);
-            priceField.Text = Convert.ToString(bookInformation.Price, CultureInfo.InvariantCulture);
+            priceField.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
         }
 
         /// <summary>
@@ -42,11 +42,20 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        private bool ValidateForm()
+        {
+            return string.IsNullOrEmpty(titleField.Text.Trim()) == false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void TitleField_TextChanged(object sender, EventArgs args)
         {
-            buttonConfirm.Enabled = string.IsNullOrEmpty(titleField.Text.Trim()) == false;
+            buttonConfirm.Enabled = ValidateForm();
         }
 
         /// <summary>
@@ -56,22 +65,9 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonConfirm_Click(object sender, EventArgs args)
         {
-            BookInformation.Title = titleField.Text;
+            BookInformation.Title = titleField.Text.Trim();
             BookInformation.Price = Convert.ToDouble(priceField.Value);
             BookInformation.Stock = Convert.ToInt32(stockField.Value);
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonCancel_Click(object sender, EventArgs args)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
 
         /// <summary>
@@ -81,6 +77,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void BookForm_Load(object sender, EventArgs args)
         {
+            buttonConfirm.Enabled = ValidateForm();
             guidField.Text = LibrettoCommon.FormatGuid(BookInformation.Identifier);
         }
     }

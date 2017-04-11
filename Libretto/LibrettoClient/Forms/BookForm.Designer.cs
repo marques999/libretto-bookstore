@@ -3,12 +3,14 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Libretto.Controls;
+
 namespace Libretto.Forms
 {
     /// <summary>
     ///
     /// </summary>
-    internal partial class BookForm
+    internal sealed partial class BookForm
     {
         /// <summary>
         ///
@@ -21,7 +23,7 @@ namespace Libretto.Forms
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && components != null)
             {
                 components.Dispose();
             }
@@ -35,27 +37,27 @@ namespace Libretto.Forms
         private void InitializeComponent()
         {
             buttonPanel = new Panel();
-            buttonConfirm = new Button();
-            buttonCancel = new Button();
+            buttonConfirm = new FlatButton();
+            buttonCancel = new FlatButton();
             formPanel = new TableLayoutPanel();
-            stockLabel = new Label();
+            stockLabel = new FlatLabel();
             titleField = new TextBox();
-            guidLabel = new Label();
-            titleLabel = new Label();
-            priceLabel = new Label();
+            guidLabel = new FlatLabel();
+            titleLabel = new FlatLabel();
+            priceLabel = new FlatLabel();
             guidField = new TextBox();
             stockPanel = new TableLayoutPanel();
             stockField = new NumericUpDown();
-            unitsLabel = new Label();
+            unitsLabel = new FlatBadge();
             pricePanel = new TableLayoutPanel();
-            currencyLabel = new Label();
+            currencyLabel = new FlatBadge();
             priceField = new NumericUpDown();
             buttonPanel.SuspendLayout();
             formPanel.SuspendLayout();
             stockPanel.SuspendLayout();
-            ((ISupportInitialize)(stockField)).BeginInit();
+            stockField.BeginInit();
             pricePanel.SuspendLayout();
-            ((ISupportInitialize)(priceField)).BeginInit();
+            priceField.BeginInit();
             SuspendLayout();
             //
             // buttonPanel
@@ -72,35 +74,26 @@ namespace Libretto.Forms
             //
             // buttonConfirm
             //
-            buttonConfirm.BackColor = SystemColors.Control;
+            buttonConfirm.DialogResult = DialogResult.OK;
             buttonConfirm.Dock = DockStyle.Left;
-            buttonConfirm.Enabled = false;
-            buttonConfirm.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonConfirm.FlatStyle = FlatStyle.Flat;
             buttonConfirm.Location = new Point(6, 6);
             buttonConfirm.Margin = new Padding(0);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(134, 24);
             buttonConfirm.TabIndex = 0;
             buttonConfirm.Text = "Confirm";
-            buttonConfirm.UseVisualStyleBackColor = false;
             buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // buttonCancel
             //
-            buttonCancel.BackColor = SystemColors.Control;
             buttonCancel.DialogResult = DialogResult.Cancel;
             buttonCancel.Dock = DockStyle.Right;
-            buttonCancel.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
-            buttonCancel.FlatStyle = FlatStyle.Flat;
             buttonCancel.Location = new Point(144, 6);
             buttonCancel.Margin = new Padding(0);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(134, 24);
             buttonCancel.TabIndex = 1;
             buttonCancel.Text = "Cancel";
-            buttonCancel.UseVisualStyleBackColor = false;
-            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // formPanel
             //
@@ -129,18 +122,6 @@ namespace Libretto.Forms
             formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             formPanel.Size = new Size(284, 133);
             //
-            // stockLabel
-            //
-            stockLabel.AutoSize = true;
-            stockLabel.BackColor = Color.Silver;
-            stockLabel.Dock = DockStyle.Fill;
-            stockLabel.Location = new Point(5, 98);
-            stockLabel.Margin = new Padding(0);
-            stockLabel.Name = "stockLabel";
-            stockLabel.Size = new Size(50, 30);
-            stockLabel.Text = "Stock";
-            stockLabel.TextAlign = ContentAlignment.MiddleCenter;
-            //
             // titleField
             //
             titleField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -153,39 +134,31 @@ namespace Libretto.Forms
             //
             // guidLabel
             //
-            guidLabel.AutoSize = true;
-            guidLabel.BackColor = Color.Silver;
-            guidLabel.Dock = DockStyle.Fill;
             guidLabel.Location = new Point(5, 5);
-            guidLabel.Margin = new Padding(0);
             guidLabel.Name = "guidLabel";
             guidLabel.Size = new Size(50, 30);
             guidLabel.Text = "GUID";
-            guidLabel.TextAlign = ContentAlignment.MiddleCenter;
-            //
-            // titleLabel
-            //
-            titleLabel.AutoSize = true;
-            titleLabel.BackColor = Color.Silver;
-            titleLabel.Dock = DockStyle.Fill;
-            titleLabel.Location = new Point(5, 36);
-            titleLabel.Margin = new Padding(0);
-            titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(50, 30);
-            titleLabel.Text = "Title";
-            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             //
             // priceLabel
             //
-            priceLabel.AutoSize = true;
-            priceLabel.BackColor = Color.Silver;
-            priceLabel.Dock = DockStyle.Fill;
             priceLabel.Location = new Point(5, 67);
-            priceLabel.Margin = new Padding(0);
             priceLabel.Name = "priceLabel";
             priceLabel.Size = new Size(50, 30);
             priceLabel.Text = "Price";
-            priceLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
+            // stockLabel
+            //
+            stockLabel.Location = new Point(5, 98);
+            stockLabel.Name = "stockLabel";
+            stockLabel.Size = new Size(50, 30);
+            stockLabel.Text = "Stock";
+            //
+            // titleLabel
+            //
+            titleLabel.Location = new Point(5, 36);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(50, 30);
+            titleLabel.Text = "Title";
             //
             // guidField
             //
@@ -222,14 +195,10 @@ namespace Libretto.Forms
             //
             // unitsLabel
             //
-            unitsLabel.AutoSize = true;
-            unitsLabel.Dock = DockStyle.Fill;
-            unitsLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             unitsLabel.Location = new Point(188, 0);
             unitsLabel.Name = "unitsLabel";
             unitsLabel.Size = new Size(26, 24);
             unitsLabel.Text = "Un";
-            unitsLabel.TextAlign = ContentAlignment.MiddleCenter;
             //
             // pricePanel
             //
@@ -247,14 +216,10 @@ namespace Libretto.Forms
             //
             // currencyLabel
             //
-            currencyLabel.AutoSize = true;
-            currencyLabel.Dock = DockStyle.Fill;
-            currencyLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             currencyLabel.Location = new Point(188, 0);
             currencyLabel.Name = "currencyLabel";
             currencyLabel.Size = new Size(26, 24);
             currencyLabel.Text = "€";
-            currencyLabel.TextAlign = ContentAlignment.MiddleCenter;
             //
             // priceField
             //
@@ -273,19 +238,11 @@ namespace Libretto.Forms
             // BookForm
             //
             AcceptButton = buttonConfirm;
-            AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = AutoScaleMode.Font;
             CancelButton = buttonCancel;
             ClientSize = new Size(284, 169);
             Controls.Add(formPanel);
             Controls.Add(buttonPanel);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "BookForm";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
             Text = "Publish Book";
             Load += new EventHandler(BookForm_Load);
             buttonPanel.ResumeLayout(false);
@@ -293,22 +250,22 @@ namespace Libretto.Forms
             formPanel.PerformLayout();
             stockPanel.ResumeLayout(false);
             stockPanel.PerformLayout();
-            ((ISupportInitialize)(stockField)).EndInit();
+            stockField.EndInit();
             pricePanel.ResumeLayout(false);
             pricePanel.PerformLayout();
-            ((ISupportInitialize)(priceField)).EndInit();
+            priceField.EndInit();
             ResumeLayout(false);
         }
 
         private Panel buttonPanel;
-        private Button buttonConfirm;
-        private Button buttonCancel;
-        private Label guidLabel;
-        private Label priceLabel;
-        private Label stockLabel;
-        private Label titleLabel;
-        private Label unitsLabel;
-        private Label currencyLabel;
+        private FlatButton buttonConfirm;
+        private FlatButton buttonCancel;
+        private FlatLabel guidLabel;
+        private FlatLabel priceLabel;
+        private FlatLabel stockLabel;
+        private FlatLabel titleLabel;
+        private FlatBadge unitsLabel;
+        private FlatBadge currencyLabel;
         private TextBox guidField;
         private TextBox titleField;
         private NumericUpDown priceField;
