@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Libretto.Model
 {
@@ -8,7 +9,11 @@ namespace Libretto.Model
     [DataContract]
     public enum TransactionType
     {
-        [EnumMember] Order,
-        [EnumMember] Purchase
+        [EnumMember]
+        [Description("Order")]
+        Order,
+        [EnumMember]
+        [Description("Purchase")]
+        Purchase
     }
 }

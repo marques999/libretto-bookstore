@@ -39,6 +39,7 @@
     <Compile Include="LibrettoCommon.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Permissions.cs" />
     <Compile Include="Model\Purchase.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\Order.cs" />

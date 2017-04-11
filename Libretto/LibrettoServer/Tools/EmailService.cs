@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Net.Mail;
 
 using Libretto.Model;
@@ -25,7 +24,7 @@ namespace Libretto.Tools
                 DeliveryFormat = SmtpDeliveryFormat.International
             };
 
-            _smtp.SendCompleted += delegate (object sender, AsyncCompletedEventArgs args)
+            _smtp.SendCompleted += (sender, args) =>
             {
                 var emailData = args.UserState as MailMessage;
 
@@ -67,19 +66,17 @@ namespace Libretto.Tools
         /// <param name="emailBody"></param>
         public void Send(Customer customerInformation, string emailSubject, string emailBody)
         {
-            var mail = new MailMessage
-            {
-                Body = emailBody,
-                IsBodyHtml = true,
-                Subject = emailSubject,
-                Priority = MailPriority.High,
-                From = LibrettoCommon.EmailAccount,
-                To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
-            };
-
             try
             {
-                _smtp.SendAsync(mail, mail);
+                _smtp.SendAsync(new MailMessage
+                {
+                    Body = emailBody,
+                    IsBodyHtml = true,
+                    Subject = emailSubject,
+                    Priority = MailPriority.High,
+                    From = LibrettoCommon.EmailAccount,
+                    To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
+                }, customerInformation.Identifier);
             }
             catch (SmtpException ex)
             {
