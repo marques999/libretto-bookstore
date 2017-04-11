@@ -185,6 +185,7 @@ namespace Libretto.Forms
             // bookTitle
             //
             bookTitle.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            bookTitle.DropDownStyle = ComboBoxStyle.DropDownList;
             bookTitle.Location = new Point(68, 40);
             bookTitle.Margin = new Padding(4);
             bookTitle.Name = "bookTitle";
@@ -299,7 +300,6 @@ namespace Libretto.Forms
             // customerGuid
             //
             customerGuid.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            customerGuid.BorderStyle = BorderStyle.FixedSingle;
             customerGuid.Enabled = false;
             customerGuid.Location = new Point(70, 10);
             customerGuid.Margin = new Padding(4);
@@ -502,9 +502,9 @@ namespace Libretto.Forms
             orderQuantityPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             orderQuantityPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 48F));
             orderQuantityPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
-            orderQuantityPanel.Controls.Add(unitLabel2, 0, 0);
-            orderQuantityPanel.Controls.Add(orderQuantityInfo, 0, 0);
             orderQuantityPanel.Controls.Add(orderQuantity, 0, 0);
+            orderQuantityPanel.Controls.Add(orderQuantityInfo, 1, 0);
+            orderQuantityPanel.Controls.Add(unitLabel2, 2, 0);
             orderQuantityPanel.Dock = DockStyle.Fill;
             orderQuantityPanel.Location = new Point(69, 8);
             orderQuantityPanel.Name = "orderQuantityPanel";

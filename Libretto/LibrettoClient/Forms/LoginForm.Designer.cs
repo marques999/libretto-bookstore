@@ -177,7 +177,7 @@ namespace Libretto.Forms
             Name = "LoginForm";
             ShowIcon = true;
             ShowInTaskbar = true;
-            StartPosition = FormStartPosition.CenterScreen; ;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Libretto Bookstore";
             Load += new EventHandler(LoginForm_Load);
             formPanel.ResumeLayout(false);

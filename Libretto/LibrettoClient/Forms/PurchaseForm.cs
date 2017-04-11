@@ -45,25 +45,24 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void PurchaseForm_Load(object sender, EventArgs args)
         {
-            var validPurchase = false;
-            var booksList = LibrettoClient.Instance.Books.Select(bookInformation => bookInformation.Title).ToArray<object>();
             var customersList = LibrettoClient.Instance.Customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
 
             if (customersList.Length > 0)
             {
                 customerName.Items.AddRange(customersList);
                 customerName.SelectedIndex = 0;
-                validPurchase = true;
             }
+
+            var booksList = LibrettoClient.Instance.Books.Select(bookInformation => bookInformation.Title).ToArray<object>();
 
             if (booksList.Length > 0)
             {
                 bookTitle.Items.AddRange(booksList);
                 bookTitle.SelectedIndex = 0;
-                validPurchase = true;
             }
 
-            purchaseQuantity.Enabled = buttonConfirm.Enabled = validPurchase;
+            purchaseQuantity.Enabled = booksList.Length > 0;
+            buttonConfirm.Enabled = purchaseQuantity.Enabled && customersList.Length > 0;
         }
 
         /// <summary>

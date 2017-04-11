@@ -307,7 +307,6 @@ namespace Libretto.Forms
             // customerGuid
             //
             customerGuid.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            customerGuid.BorderStyle = BorderStyle.FixedSingle;
             customerGuid.Enabled = false;
             customerGuid.Location = new Point(70, 10);
             customerGuid.Margin = new Padding(4);
@@ -462,8 +461,8 @@ namespace Libretto.Forms
             purchaseQuantityPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 48F));
             purchaseQuantityPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
             purchaseQuantityPanel.Controls.Add(purchaseQuantity, 0, 0);
-            purchaseQuantityPanel.Controls.Add(purchaseQuantityInfo, 0, 1);
-            purchaseQuantityPanel.Controls.Add(unitLabel2, 0, 2);
+            purchaseQuantityPanel.Controls.Add(purchaseQuantityInfo, 1, 0);
+            purchaseQuantityPanel.Controls.Add(unitLabel2, 2, 0);
             purchaseQuantityPanel.Dock = DockStyle.Fill;
             purchaseQuantityPanel.Location = new Point(69, 8);
             purchaseQuantityPanel.Name = "purchaseQuantityPanel";
