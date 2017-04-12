@@ -36,7 +36,7 @@ namespace Libretto.Messaging
 
             messageQueue.Formatter = new XmlMessageFormatter(new[]
             {
-                typeof(Purchase)
+                typeof(Invoice)
             });
 
             return messageQueue;

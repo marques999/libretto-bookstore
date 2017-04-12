@@ -18,12 +18,17 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        public static readonly string EmailPassword = "tdin1617-g10";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string EmailAddress = "libretto.alertas@gmail.com";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string EmailPassword = "tdin1617-g10";
+        public static readonly string InvoicesFilename = $"{AppDomain.CurrentDomain.BaseDirectory}LibrettoInvoices.xml";
 
         /// <summary>
         /// 
