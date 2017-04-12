@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 using Libretto.Model;
 
-namespace Libretto.Bookstore
+namespace Libretto
 {
     /// <summary>
     /// 
