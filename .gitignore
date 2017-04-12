@@ -12,6 +12,7 @@
 
 # Build results
 bld/
+[Bb]in/
 [Oo]bj/
 [Ll]og/
 
