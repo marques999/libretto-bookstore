@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
+using System.Messaging;
 using System.Text.RegularExpressions;
+
+using Libretto.Messaging;
+using Libretto.Model;
 
 namespace Libretto
 {
@@ -10,23 +12,6 @@ namespace Libretto
     /// </summary>
     public class LibrettoCommon
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string DisplayName = "Alertas Libretto";
-        public static readonly string EmailAddress = "libretto.alertas@gmail.com";
-        public static readonly string EmailPassword = "tdin1617-g10";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static NetworkCredential EmailCredentials => new NetworkCredential(EmailAddress, EmailPassword);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static MailAddress EmailAccount => new MailAddress(EmailAddress, DisplayName);
-
         /// <summary>
         /// 
         /// </summary>
@@ -40,6 +25,29 @@ namespace Libretto
         public static string FormatGuid(Guid dummyIdentifier)
         {
             return dummyIdentifier.ToString("N").ToUpper();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string MsmqPath = @".\private$\WarehouseMsmq";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static MessageQueue InitializeQueue()
+        {
+            var messageQueue = MessageQueue.Exists(MsmqPath) ? new MessageQueue(MsmqPath) : MessageQueue.Create(MsmqPath);
+
+            messageQueue.Formatter = new XmlMessageFormatter(new[]
+            {
+                typeof(Order),
+                typeof(MessageCancel),
+                typeof(MessageUpdate)
+            });
+
+            return messageQueue;
         }
 
         /// <summary>

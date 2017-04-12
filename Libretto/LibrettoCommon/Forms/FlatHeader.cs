@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Libretto.Controls
+namespace Libretto.Forms
 {
     /// <summary>
     /// 
     /// </summary>
-    internal sealed class FlatHeader : Label
+    public sealed class FlatHeader : Label
     {
         /// <summary>
         /// 

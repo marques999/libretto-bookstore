@@ -1,42 +1,45 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using Libretto.Messaging;
+using Libretto.Model;
 
-namespace Libretto.Model
+namespace Libretto.Messaging
 {
     /// <summary>
     /// 
     /// </summary>
-    [DataContract, Serializable]
-    public class Order : Transaction, IMessageSubject
+    [Serializable]
+    public class MessageUpdate : IMessageSubject
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlIgnore]
-        public override Status Status
+        [XmlElement("Identifier")]
+        public Guid Identifier
         {
             get;
             set;
-        } = Status.WaitingDispatch;
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlElement("StatusDate")]
-        public DateTime StatusDate
+        [XmlElement("Status")]
+        public Status Status
         {
             get;
             set;
-        } = DateTime.Now;
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlIgnore]
-        public override TransactionType Type => TransactionType.Order;
+        [XmlElement("Timestamp")]
+        public DateTime Timestamp
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// 
@@ -44,7 +47,7 @@ namespace Libretto.Model
         /// <param name="messageVisitor"></param>
         public void Process(IMessageVisitor messageVisitor)
         {
-            messageVisitor.InsertOrder(this);
+            messageVisitor.UpdateOrder(this);
         }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Libretto.Model
 {
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+    [DataContract, Serializable]
     public class Book
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Identifier")]
         public Guid Identifier
         {
             get;
@@ -22,7 +23,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Title")]
         public string Title
         {
             get;
@@ -32,7 +33,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Price")]
         public double Price
         {
             get;
@@ -42,7 +43,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Stock")]
         public int Stock
         {
             get;

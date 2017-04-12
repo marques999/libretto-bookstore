@@ -1,28 +1,27 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Libretto.Controls
+namespace Libretto.Forms
 {
     /// <summary>
     /// 
     /// </summary>
-    internal sealed class FlatLabel : Label
+    public sealed class FlatBadge : Label
     {
         /// <summary>
         /// 
         /// </summary>
-        public FlatLabel()
+        public FlatBadge()
         {
             AutoSize = true;
-            Margin = LabelMargin;
+            Font = LabelFont;
             Dock = DockStyle.Fill;
-            BackColor = Color.Silver;
             TextAlign = ContentAlignment.MiddleCenter;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private static readonly Padding LabelMargin = new Padding(0);
+        private static readonly Font LabelFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
     }
 }

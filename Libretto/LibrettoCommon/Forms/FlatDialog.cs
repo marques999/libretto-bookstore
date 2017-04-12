@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Libretto.Controls
+namespace Libretto.Forms
 {
     /// <summary>
     /// 
     /// </summary>
-    internal class FlatDialog : Form
+    public class FlatDialog : Form
     {
         /// <summary>
         /// 

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Libretto.Model
 {
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+    [DataContract, Serializable]
     public abstract class Transaction
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Identifier")]
         public Guid Identifier
         {
             get;
@@ -22,7 +23,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("Status")]
         public abstract Status Status
         {
             get;
@@ -32,7 +33,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlIgnore]
         public abstract TransactionType Type
         {
             get;
@@ -41,7 +42,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("BookId")]
         public Guid BookId
         {
             get;
@@ -51,7 +52,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, XmlElement("BookName")]
         public string BookName
         {
             get;
@@ -62,6 +63,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
+        [XmlElement("CustomerId")]
         public Guid CustomerId
         {
             get;
@@ -72,6 +74,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
+        [XmlElement("CustomerName")]
         public string CustomerName
         {
             get;
@@ -82,6 +85,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
+        [XmlElement("Timestamp")]
         public DateTime Timestamp
         {
             get;
@@ -92,6 +96,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
+        [XmlElement("Quantity")]
         public int Quantity
         {
             get;
@@ -102,6 +107,7 @@ namespace Libretto.Model
         /// /
         /// </summary>
         [DataMember]
+        [XmlElement("Total")]
         public double Total
         {
             get;
@@ -111,6 +117,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
+        [XmlIgnore]
         public string Description => Status.GetDescription();
     }
 }
