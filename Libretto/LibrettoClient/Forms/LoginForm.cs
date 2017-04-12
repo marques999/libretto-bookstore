@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-
-using Libretto.Controls;
 using Libretto.Properties;
 
 namespace Libretto.Forms

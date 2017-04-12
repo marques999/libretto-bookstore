@@ -1,6 +1,4 @@
 ﻿using System;
-
-using Libretto.Controls;
 using Libretto.Model;
 
 namespace Libretto.Forms

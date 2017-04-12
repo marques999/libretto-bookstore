@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-
-using Libretto.Controls;
 using Libretto.Model;
 
 namespace Libretto.Forms
