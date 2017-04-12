@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using Libretto.Model;
 
 namespace Libretto.Forms
 {
@@ -16,7 +17,7 @@ namespace Libretto.Forms
         /// 
         /// </summary>
         /// <param name="invoiceInformation"></param>
-        public InvoiceForm(Model.Invoice invoiceInformation)
+        public InvoiceForm(Invoice invoiceInformation)
         {
             InitializeComponent();
             _invoiceInformation = invoiceInformation;
