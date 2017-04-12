@@ -1,30 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 
 namespace WcfServiceLibrary1
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
+    /// <summary>
+    /// 
+    /// </summary>
     public class StoreService : IStoreService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public string GetData(int value)
         {
-            return string.Format("You entered: {0}", value);
+            return $"You entered: {value}";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="composite"></param>
+        /// <returns></returns>
         public CompositeType GetDataUsingDataContract(CompositeType composite)
         {
             if (composite == null)
             {
-                throw new ArgumentNullException("composite");
+                throw new ArgumentNullException(nameof(composite));
             }
+
             if (composite.BoolValue)
             {
                 composite.StringValue += "Suffix";
             }
+
             return composite;
         }
     }
