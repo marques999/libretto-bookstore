@@ -55,7 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libretto\LibrettoCommon\LibrettoCommon.csproj">
+    <ProjectReference Include="..\..\LibrettoCommon\LibrettoCommon.csproj">
       <Project>{CF64510B-78EC-4D27-BADF-65D9C392C7BB}</Project>
       <Name>LibrettoCommon</Name>
     </ProjectReference>
