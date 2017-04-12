@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoServer", "LibrettoServer\LibrettoServer.csproj", "{589A4746-AA39-4E0E-8AAA-433724869A66}"
 EndProject

@@ -61,7 +61,7 @@
     <Compile Include="Database\SqliteColumns.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibrettoCommon\LibrettoCommon.csproj">
+    <ProjectReference Include="..\..\LibrettoCommon\LibrettoCommon.csproj">
       <Project>{cf64510b-78ec-4d27-badf-65d9c392c7bb}</Project>
       <Name>LibrettoCommon</Name>
     </ProjectReference>

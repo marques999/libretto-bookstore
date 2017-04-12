@@ -19,7 +19,7 @@ namespace Libretto.Tools
             {
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = LibrettoCommon.EmailCredentials,
+                Credentials = BookstoreCommon.EmailCredentials,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 DeliveryFormat = SmtpDeliveryFormat.International
             };
@@ -74,7 +74,7 @@ namespace Libretto.Tools
                     IsBodyHtml = true,
                     Subject = emailSubject,
                     Priority = MailPriority.High,
-                    From = LibrettoCommon.EmailAccount,
+                    From = BookstoreCommon.EmailAccount,
                     To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
                 }, customerInformation.Identifier);
             }
