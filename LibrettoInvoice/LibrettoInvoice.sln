@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceClient", "LibrettoInvoice\InvoiceClient.csproj", "{376E9FED-A21A-4505-B210-4AC30FCF5936}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoInvoice", "LibrettoInvoice\LibrettoInvoice.csproj", "{376E9FED-A21A-4505-B210-4AC30FCF5936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceServer", "InvoiceTest\InvoiceServer.csproj", "{B76C14CE-6181-4D68-8DEA-1C8BB5152B52}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\..\..\GitHub\feup-tdin\Libretto\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{376E9FED-A21A-4505-B210-4AC30FCF5936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{376E9FED-A21A-4505-B210-4AC30FCF5936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{376E9FED-A21A-4505-B210-4AC30FCF5936}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B76C14CE-6181-4D68-8DEA-1C8BB5152B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B76C14CE-6181-4D68-8DEA-1C8BB5152B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B76C14CE-6181-4D68-8DEA-1C8BB5152B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B76C14CE-6181-4D68-8DEA-1C8BB5152B52}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
