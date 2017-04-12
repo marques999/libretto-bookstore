@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<Warehouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <OrderList>
+    <Order>
+      <Identifier>762eb29d-a8ee-4ce2-89f6-8df65d2ed880</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>e7a1ff1c-684f-439a-a3fa-6ce4cc24d9c6</BookId>
+      <BookName>Dummy Book I</BookName>
+      <CustomerId>b9607e55-189c-4478-83d7-66a30ff5bd48</CustomerId>
+      <CustomerName>Heather Davis</CustomerName>
+      <Timestamp>2017-04-16T18:49:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3308424+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>c7cc5d2e-14e3-4672-ad77-4d05fc94ba22</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>eb97e9f9-9d56-4555-b51c-f9a68961f69c</BookId>
+      <BookName>Dummy Book A</BookName>
+      <CustomerId>dbc3f107-af7e-4907-8070-fb12665f6e88</CustomerId>
+      <CustomerName>Matthew Perry</CustomerName>
+      <Timestamp>2017-03-15T17:11:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>3dee75d9-add1-463a-8df2-8846b55aa551</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>9b3f1d7e-41cf-4e54-b8a7-5210a072397d</BookId>
+      <BookName>Dummy Book D</BookName>
+      <CustomerId>dbc3f107-af7e-4907-8070-fb12665f6e88</CustomerId>
+      <CustomerName>Matthew Perry</CustomerName>
+      <Timestamp>2017-03-05T16:29:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>bf26e5fc-5dba-4969-b8ea-8635ddfecbb0</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>b18523f4-0947-475b-bf76-3910a942d728</BookId>
+      <BookName>Dummy Book F</BookName>
+      <CustomerId>fe5db995-1786-4d34-befc-202f50662b62</CustomerId>
+      <CustomerName>Steven Mitchell</CustomerName>
+      <Timestamp>2017-03-21T18:39:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>0e48499c-708a-466e-8d69-52d67fa23368</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>af5c9596-0f8e-4dfc-8dfd-865d75334544</BookId>
+      <BookName>Dummy Book H</BookName>
+      <CustomerId>dbc3f107-af7e-4907-8070-fb12665f6e88</CustomerId>
+      <CustomerName>Matthew Perry</CustomerName>
+      <Timestamp>2017-04-06T00:12:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>db145a99-5483-480c-b631-36d703806b04</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>8395357f-ee28-45e6-ae8b-d6cdbf4a83bd</BookId>
+      <BookName>Dummy Book C</BookName>
+      <CustomerId>fe5db995-1786-4d34-befc-202f50662b62</CustomerId>
+      <CustomerName>Steven Mitchell</CustomerName>
+      <Timestamp>2017-03-26T12:19:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>197d5f80-e828-4be1-a209-4cf9314f2003</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>34979618-6828-443f-9c80-093f1eb741e4</BookId>
+      <BookName>Dummy Book B</BookName>
+      <CustomerId>dbc3f107-af7e-4907-8070-fb12665f6e88</CustomerId>
+      <CustomerName>Matthew Perry</CustomerName>
+      <Timestamp>2017-04-16T18:54:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>63641205-1527-4e44-8943-fdb4041ee31b</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>34979618-6828-443f-9c80-093f1eb741e4</BookId>
+      <BookName>Dummy Book B</BookName>
+      <CustomerId>a424cef6-7d3c-48b2-8ce6-2c9690f63eff</CustomerId>
+      <CustomerName>Randy White</CustomerName>
+      <Timestamp>2017-03-04T11:33:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>5d8b1093-ba17-4b03-852a-d36fcc82bd59</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>af5c9596-0f8e-4dfc-8dfd-865d75334544</BookId>
+      <BookName>Dummy Book H</BookName>
+      <CustomerId>fe5db995-1786-4d34-befc-202f50662b62</CustomerId>
+      <CustomerName>Steven Mitchell</CustomerName>
+      <Timestamp>2017-04-03T15:20:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+    <Order>
+      <Identifier>a641f70e-9884-4de9-829e-97c223e813b2</Identifier>
+      <Status>WaitingDispatch</Status>
+      <BookId>eb97e9f9-9d56-4555-b51c-f9a68961f69c</BookId>
+      <BookName>Dummy Book A</BookName>
+      <CustomerId>dbc3f107-af7e-4907-8070-fb12665f6e88</CustomerId>
+      <CustomerName>Matthew Perry</CustomerName>
+      <Timestamp>2017-04-19T13:07:00</Timestamp>
+      <Quantity>1</Quantity>
+      <Total>0</Total>
+      <StatusDate>2017-04-11T19:57:25.3328472+01:00</StatusDate>
+    </Order>
+  </OrderList>
+</Warehouse>
