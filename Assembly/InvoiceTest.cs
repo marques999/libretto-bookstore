@@ -1,4 +1,6 @@
 ﻿using System;
+
+using Libretto.Messaging;
 using Libretto.Model;
 
 namespace Libretto
@@ -15,17 +17,14 @@ namespace Libretto
         {
             try
             {
-                BookstoreCommon.InitializeInvoiceQueue().Send(new Purchase
+                MessagingCommon.InitializeInvoiceQueue().Send(new Invoice
                 {
-                    BookId = Guid.NewGuid(),
-                    BookTitle = "Dummy Book A",
-                    CustomerId = Guid.NewGuid(),
-                    CustomerName = "Diogo Marques",
-                    Identifier = Guid.NewGuid(),
                     Quantity = 5,
-                    Status = Status.StorePurchased,
+                    Total = 9.99,
+                    Title = "Dummy Book A",
                     Timestamp = DateTime.Now,
-                    Total = 9.99
+                    Customer = "Diogo Marques",
+                    Identifier = Guid.NewGuid()
                 });
             }
             catch (Exception ex)
