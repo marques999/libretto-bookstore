@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookstoreCommon.cs" />
+    <Compile Include="Warehouse\IRemotingService.cs" />
     <Compile Include="Forms\FlatBadge.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -58,8 +58,8 @@
     <Compile Include="EnumExtension.cs" />
     <Compile Include="LibrettoCommon.cs" />
     <Compile Include="Messaging\IMessageSubject.cs" />
-    <Compile Include="Messaging\MessageUpdate.cs" />
     <Compile Include="Messaging\IMessageVisitor.cs" />
+    <Compile Include="Messaging\MessagingCommon.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Customer.cs" />
@@ -72,8 +72,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messaging\MessageCancel.cs" />
     <Compile Include="Warehouse\WarehouseCommon.cs" />
-    <Compile Include="Warehouse\WarehouseInterface.cs" />
+    <Compile Include="Warehouse\IWarehouseService.cs" />
     <Compile Include="Warehouse\WarehouseIntermediate.cs" />
+    <Compile Include="Warehouse\WarehouseOrder.cs" />
+    <Compile Include="Warehouse\WarehouseStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bookstore\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

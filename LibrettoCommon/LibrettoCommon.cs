@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Messaging;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
-
-using Libretto.Messaging;
-using Libretto.Model;
 
 namespace Libretto
 {
@@ -15,39 +13,41 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        public static readonly string DisplayName = "Alertas Libretto";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string EmailAddress = "libretto.alertas@gmail.com";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string EmailPassword = "tdin1617-g10";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static MailAddress EmailAccount => new MailAddress(EmailAddress, DisplayName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static NetworkCredential EmailCredentials => new NetworkCredential(EmailAddress, EmailPassword);
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly Regex EmailRegex = new Regex(@"^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dummyIdentifier"></param>
+        /// <param name="currencyValue"></param>
         /// <returns></returns>
-        public static string FormatGuid(Guid dummyIdentifier)
+        public static string FormatCurrency(double currencyValue)
         {
-            return dummyIdentifier.ToString("N").ToUpper();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private const string MsmqPath = @".\private$\WarehouseMsmq";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static MessageQueue InitializeQueue()
-        {
-            var messageQueue = MessageQueue.Exists(MsmqPath) ? new MessageQueue(MsmqPath) : MessageQueue.Create(MsmqPath);
-
-            messageQueue.Formatter = new XmlMessageFormatter(new[]
-            {
-                typeof(Order),
-                typeof(MessageCancel),
-                typeof(MessageUpdate)
-            });
-
-            return messageQueue;
+            return $"{currencyValue:C2}";
         }
 
         /// <summary>
@@ -63,21 +63,21 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="currencyValue"></param>
-        /// <returns></returns>
-        public static string FormatCurrency(double currencyValue)
-        {
-            return $"{currencyValue:C2}";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="decimalValue"></param>
         /// <returns></returns>
         public static string FormatDecimal(double decimalValue)
         {
             return decimalValue.ToString("#,##0.00");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dummyIdentifier"></param>
+        /// <returns></returns>
+        public static string FormatGuid(Guid dummyIdentifier)
+        {
+            return dummyIdentifier.ToString("N").ToUpper();
         }
 
         /// <summary>

@@ -47,5 +47,14 @@ namespace Libretto.Model
         {
             get;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{Host}:{Port:D}";
+        }
     }
 }

@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
-
-using Libretto.Messaging;
 
 namespace Libretto.Model
 {
     /// <summary>
     /// 
     /// </summary>
-    [DataContract, Serializable]
-    public class Order : Transaction, IMessageSubject
+    [DataContract]
+    public class Order : Transaction
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlIgnore]
+        [DataMember]
         public override Status Status
         {
             get;
@@ -25,7 +22,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlElement("StatusDate")]
+        [DataMember]
         public DateTime StatusDate
         {
             get;
@@ -35,16 +32,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlIgnore]
+        [DataMember]
         public override TransactionType Type => TransactionType.Order;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="messageVisitor"></param>
-        public void Process(IMessageVisitor messageVisitor)
-        {
-            messageVisitor.InsertOrder(this);
-        }
     }
 }

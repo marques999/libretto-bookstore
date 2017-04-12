@@ -10,22 +10,32 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ushort RemotingPort = 13333;
+        public static readonly short BookstorePort = 14666;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string RemotingEndpoint = "warehouse.rem";
+        public static readonly ushort WarehousePort = 13333;
 
         /// <summary>
         /// 
         /// </summary>
-        public static string RemotingAddress => $"tcp://localhost:{RemotingPort}/{RemotingEndpoint}";
+        public static readonly string BookstoreEndpoint = "bookstore.rem";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string BooksFilename = $"{AppDomain.CurrentDomain.BaseDirectory}WarehouseBooks.xml";
+        public static readonly string WarehouseEndpoint = "warehouse.rem";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string BookstoreAddress = $"tcp://localhost:{BookstorePort}/{BookstoreEndpoint}";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string WarehouseAddress = $"tcp://localhost:{WarehousePort}/{WarehouseEndpoint}";
 
         /// <summary>
         /// 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Libretto.Warehouse
 {
@@ -10,27 +11,21 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        public event RefreshHandler OnRefreshBooks;
+        public event TransactionHandler OnRefresh;
 
         /// <summary>
         /// 
         /// </summary>
-        public event RefreshHandler OnRefreshOrders;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void RefreshBooks()
+        public WarehouseIntermediate()
         {
-            OnRefreshBooks?.Invoke();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void RefreshOrders()
+        public void Refresh(List<WarehouseOrder> transactionInformation)
         {
-            OnRefreshOrders?.Invoke();
+            OnRefresh?.Invoke(transactionInformation);
         }
 
         /// <summary>
