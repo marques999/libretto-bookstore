@@ -81,7 +81,7 @@ namespace Libretto
         /// <param name="fileName"></param>
         public void Serialize(XmlSerializer xmlSerializer, string fileName)
         {
-            using (var writer = new FileStream(fileName, FileMode.OpenOrCreate))
+            using (var writer = new FileStream(fileName, FileMode.Create))
             {
                 xmlSerializer.Serialize(writer, this);
             }
