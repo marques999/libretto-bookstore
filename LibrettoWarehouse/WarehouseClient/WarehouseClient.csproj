@@ -51,13 +51,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WarehouseForm.cs">
+    <Compile Include="WarehouseClient.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WarehouseForm.Designer.cs">
-      <DependentUpon>WarehouseForm.cs</DependentUpon>
+    <Compile Include="WarehouseClient.Designer.cs">
+      <DependentUpon>WarehouseClient.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -65,8 +64,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="WarehouseForm.resx">
-      <DependentUpon>WarehouseForm.cs</DependentUpon>
+    <EmbeddedResource Include="WarehouseClient.resx">
+      <DependentUpon>WarehouseClient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

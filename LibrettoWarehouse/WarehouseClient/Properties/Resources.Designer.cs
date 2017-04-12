@@ -61,12 +61,102 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to satisfy this order. This operation cannot be undone..
+        /// </summary>
+        internal static string ConfirmRequest {
+            get {
+                return ResourceManager.GetString("ConfirmRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satisfy Order.
+        /// </summary>
+        internal static string ConfirmRequest_Title {
+            get {
+                return ResourceManager.GetString("ConfirmRequest_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon librettoIcon {
             get {
                 object obj = ResourceManager.GetObject("librettoIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested action could not be completed because the selected item has an invalid unique identifier..
+        /// </summary>
+        internal static string ParseError {
+            get {
+                return ResourceManager.GetString("ParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid GUID.
+        /// </summary>
+        internal static string ParseError_Title {
+            get {
+                return ResourceManager.GetString("ParseError_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested action completed successfully! The bookstore will be notified shortly..
+        /// </summary>
+        internal static string RequestComplete {
+            get {
+                return ResourceManager.GetString("RequestComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Complete.
+        /// </summary>
+        internal static string RequestComplete_Title {
+            get {
+                return ResourceManager.GetString("RequestComplete_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested action could not be completed, received a negative response from the warehouse server!.
+        /// </summary>
+        internal static string RequestDenied {
+            get {
+                return ResourceManager.GetString("RequestDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Denied.
+        /// </summary>
+        internal static string RequestDenied_Title {
+            get {
+                return ResourceManager.GetString("RequestDenied_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to terminate your current session and disconnect from the server..
+        /// </summary>
+        internal static string TerminateSession {
+            get {
+                return ResourceManager.GetString("TerminateSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminate Session.
+        /// </summary>
+        internal static string TerminateSession_Title {
+            get {
+                return ResourceManager.GetString("TerminateSession_Title", resourceCulture);
             }
         }
     }

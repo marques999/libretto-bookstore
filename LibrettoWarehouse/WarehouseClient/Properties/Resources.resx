@@ -121,4 +121,34 @@
   <data name="librettoIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\librettoIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RequestDenied" xml:space="preserve">
+    <value>The requested action could not be completed, received a negative response from the warehouse server!</value>
+  </data>
+  <data name="RequestDenied_Title" xml:space="preserve">
+    <value>Request Denied</value>
+  </data>
+  <data name="RequestComplete" xml:space="preserve">
+    <value>The requested action completed successfully! The bookstore will be notified shortly.</value>
+  </data>
+  <data name="RequestComplete_Title" xml:space="preserve">
+    <value>Request Complete</value>
+  </data>
+  <data name="ParseError" xml:space="preserve">
+    <value>The requested action could not be completed because the selected item has an invalid unique identifier.</value>
+  </data>
+  <data name="ParseError_Title" xml:space="preserve">
+    <value>Invalid GUID</value>
+  </data>
+  <data name="ConfirmRequest" xml:space="preserve">
+    <value>Please confirm that you want to satisfy this order. This operation cannot be undone.</value>
+  </data>
+  <data name="ConfirmRequest_Title" xml:space="preserve">
+    <value>Satisfy Order</value>
+  </data>
+  <data name="TerminateSession_Title" xml:space="preserve">
+    <value>Terminate Session</value>
+  </data>
+  <data name="TerminateSession" xml:space="preserve">
+    <value>Please confirm that you want to terminate your current session and disconnect from the server.</value>
+  </data>
 </root>
