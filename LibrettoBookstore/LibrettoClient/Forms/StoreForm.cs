@@ -118,7 +118,7 @@ namespace Libretto.Forms
             {
                 SubItems =
                 {
-                    transactionInformation.BookName,
+                    transactionInformation.BookTitle,
                     transactionInformation.CustomerName,
                     Convert.ToString(transactionInformation.Quantity),
                     LibrettoCommon.FormatCurrency(transactionInformation.Total),

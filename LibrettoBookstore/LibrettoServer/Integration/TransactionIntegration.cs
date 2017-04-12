@@ -45,7 +45,7 @@ namespace Libretto.Integration
                         {
                             Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
                             BookId = ReadGuid(sqlReader, SqliteColumns.BookId),
-                            BookName = ReadString(sqlReader, SqliteColumns.BookName),
+                            BookTitle = ReadString(sqlReader, SqliteColumns.BookName),
                             CustomerId = ReadGuid(sqlReader, SqliteColumns.CustomerId),
                             CustomerName = ReadString(sqlReader, SqliteColumns.CustomerName),
                             Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),
@@ -61,7 +61,7 @@ namespace Libretto.Integration
                         {
                             Identifier = ReadGuid(sqlReader, SqliteColumns.Identifier),
                             BookId = ReadGuid(sqlReader, SqliteColumns.BookId),
-                            BookName = ReadString(sqlReader, SqliteColumns.BookName),
+                            BookTitle = ReadString(sqlReader, SqliteColumns.BookName),
                             CustomerId = ReadGuid(sqlReader, SqliteColumns.CustomerId),
                             CustomerName = ReadString(sqlReader, SqliteColumns.CustomerName),
                             Quantity = ReadInteger(sqlReader, SqliteColumns.Quantity),

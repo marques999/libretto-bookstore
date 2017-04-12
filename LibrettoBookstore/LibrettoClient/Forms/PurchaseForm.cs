@@ -72,7 +72,7 @@ namespace Libretto.Forms
             _bookInformation = bookInformation;
             purchaseQuantity.Minimum = 1;
             purchaseQuantity.Maximum = bookInformation.Stock;
-            Information.BookName = bookInformation.Title;
+            Information.BookTitle = bookInformation.Title;
             Information.BookId = bookInformation.Identifier;
             bookStock.Text = Convert.ToString(bookInformation.Stock);
             bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);

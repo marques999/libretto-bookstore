@@ -175,7 +175,7 @@ namespace Libretto.Forms
             bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
             bookStock.Text = Convert.ToString(bookInformation.Stock);
             bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
-            Information.BookName = _bookInformation.Title;
+            Information.BookTitle = _bookInformation.Title;
             Information.BookId = _bookInformation.Identifier;
             UpdateStock(orderQuantity.Value);
         }

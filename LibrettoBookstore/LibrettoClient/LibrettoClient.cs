@@ -113,7 +113,7 @@ namespace Libretto
                 CustomerId = randomCustomer.Identifier,
                 CustomerName = randomCustomer.Name,
                 BookId = randomBook.Identifier,
-                BookName = randomBook.Title,
+                BookTitle = randomBook.Title,
                 Quantity = 1,
                 Timestamp = RandomTimestamp(new DateTime(2017, 3, 1), new DateTime(2017, 5, 1))
             });
