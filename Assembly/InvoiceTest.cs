@@ -18,7 +18,7 @@ namespace Libretto
                 BookstoreCommon.InitializeInvoiceQueue().Send(new Purchase
                 {
                     BookId = Guid.NewGuid(),
-                    BookName = "Dummy Book A",
+                    BookTitle = "Dummy Book A",
                     CustomerId = Guid.NewGuid(),
                     CustomerName = "Diogo Marques",
                     Identifier = Guid.NewGuid(),
