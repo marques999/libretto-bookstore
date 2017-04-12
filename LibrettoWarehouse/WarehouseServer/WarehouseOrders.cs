@@ -1,76 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 
-using Libretto.Model;
+using Libretto.Warehouse;
 
 namespace Libretto
 {
     /// <summary>
     /// 
     /// </summary>
-    [Serializable]
-    [XmlRoot("Warehouse")]
-    public class WarehouseOrders : SerializableClass
+    [Serializable, XmlRoot("Warehouse")]
+    public class WarehouseOrders
     {
         /// <summary>
         /// 
         /// </summary>
         [XmlArray("OrderList")]
-        [XmlArrayItem("Order", typeof(Order))]
-        public List<Order> Orders
+        [XmlArrayItem("Order", typeof(WarehouseOrder))]
+        public List<WarehouseOrder> Orders
         {
             get;
-        } = new List<Order>();
+        } = new List<WarehouseOrder>();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Order this[int key]
+        /// <param name="warehouseOrder"></param>
+        public void Insert(WarehouseOrder warehouseOrder)
         {
-            get => Orders[key];
-            set => Orders[key] = value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionInformation"></param>
-        public void Insert(Order transactionInformation)
-        {
-            Orders.Add(transactionInformation);
+            Orders.Add(warehouseOrder);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <returns></returns>
-        public int IndexOf(Guid transactionIdentifier)
-        {
-            return Orders.FindIndex(orderInformation => orderInformation.Identifier == transactionIdentifier);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionStatus"></param>
         /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        public bool Update(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
+        public bool Dispatch(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
             var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
 
-            if (transactionInformation == null || transactionInformation.Status == transactionStatus)
+            if (transactionInformation == null || transactionInformation.Status != WarehouseStatus.Pending)
             {
                 return false;
             }
 
-            transactionInformation.Status = transactionStatus;
-            transactionInformation.StatusDate = transactionTimestamp;
+            transactionInformation.Status = WarehouseStatus.Dispatched;
+            transactionInformation.DateModified = transactionTimestamp;
 
             return true;
         }
@@ -79,9 +57,34 @@ namespace Libretto
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        public bool Delete(Guid transactionIdentifier)
+        /// <param name="transactionTimestamp"></param>
+        /// <returns></returns>
+        public bool Cancel(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
-            return Orders.RemoveAll(orderInformation => orderInformation.Identifier == transactionIdentifier) > 0;
+            var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
+
+            if (transactionInformation == null || transactionInformation.Status != WarehouseStatus.Pending)
+            {
+                return false;
+            }
+
+            transactionInformation.Status = WarehouseStatus.Cancelled;
+            transactionInformation.DateModified = transactionTimestamp;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xmlSerializer"></param>
+        /// <param name="fileName"></param>
+        public void Serialize(XmlSerializer xmlSerializer, string fileName)
+        {
+            using (var writer = new FileStream(fileName, FileMode.OpenOrCreate))
+            {
+                xmlSerializer.Serialize(writer, this);
+            }
         }
     }
 }
