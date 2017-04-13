@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Libretto.Model
@@ -13,7 +15,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
-        public Guid Identifier
+        public Guid Id
         {
             get;
             set;
@@ -22,26 +24,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public abstract Status Status
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public abstract TransactionType Type
-        {
-            get;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public Guid BookId
         {
             get;
@@ -51,7 +34,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public string BookTitle
         {
             get;
@@ -61,7 +44,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public Guid CustomerId
         {
             get;
@@ -71,8 +54,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-
+        [DataMember, Required]
         public string CustomerName
         {
             get;
@@ -112,6 +94,19 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        public string Description => Status.GetDescription();
+        [DataMember, NotMapped]
+        public abstract string Description
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="waitingChecked"></param>
+        /// <param name="processingChecked"></param>
+        /// <param name="dispatchedChecked"></param>
+        /// <returns></returns>
+        public abstract bool Filter(bool waitingChecked, bool processingChecked, bool dispatchedChecked);
     }
 }

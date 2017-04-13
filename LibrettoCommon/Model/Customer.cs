@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Libretto.Model
@@ -6,14 +8,14 @@ namespace Libretto.Model
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+    [DataContract, Table("Customer")]
     public class Customer
     {
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        public Guid Identifier
+        public Guid Id
         {
             get;
             set;
@@ -22,7 +24,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public string Name
         {
             get;
@@ -32,7 +34,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public string Email
         {
             get;
@@ -42,7 +44,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public string Location
         {
             get;

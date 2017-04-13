@@ -19,7 +19,7 @@ namespace Libretto.Model
         [Description("Dispatched")]
         DispatchComplete,
         [EnumMember]
-        [Description("Purchased")]
-        StorePurchased
+        [Description("Cancelled")]
+        OrderCancelled
     }
 }

@@ -67,6 +67,8 @@ namespace Libretto
             filterTitle.Items.Clear();
             filterTitle.Items.Add("");
             filterTitle.SelectedIndex = 0;
+            dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            dateUntilPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();
             UpdateFilter(true);
         }
@@ -157,8 +159,6 @@ namespace Libretto
         private void WarehouseClient_Load(object sender, EventArgs args)
         {
             RefreshOrders(_warehouse.ListOrders());
-            dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            dateUntilPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
         }
 
         /// <summary>

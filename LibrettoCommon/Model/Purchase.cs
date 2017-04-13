@@ -1,27 +1,30 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace Libretto.Model
 {
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+    [DataContract, Table("Purchase")]
     public class Purchase : Transaction
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public override Status Status
-        {
-            get;
-            set;
-        } = Status.StorePurchased;
+        [DataMember, NotMapped]
+        public override string Description => "Purchased";
 
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public override TransactionType Type => TransactionType.Purchase;
+        /// <param name="waitingChecked"></param>
+        /// <param name="processingChecked"></param>
+        /// <param name="dispatchedChecked"></param>
+        /// <returns></returns>
+        public override bool Filter(bool waitingChecked, bool processingChecked, bool dispatchedChecked)
+        {
+            return true;
+        }
     }
 }

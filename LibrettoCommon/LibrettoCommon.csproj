@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
@@ -70,7 +71,6 @@
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Status.cs" />
-    <Compile Include="Model\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messaging\MessageCancel.cs" />
     <Compile Include="Warehouse\WarehouseCommon.cs" />

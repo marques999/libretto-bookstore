@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Libretto.Model
@@ -6,14 +7,14 @@ namespace Libretto.Model
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
+    [DataContract, Table("Order")]
     public class Order : Transaction
     {
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        public override Status Status
+        public Status Status
         {
             get;
             set;
@@ -23,7 +24,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [DataMember]
-        public DateTime StatusDate
+        public DateTime StatusTimestamp
         {
             get;
             set;
@@ -32,7 +33,19 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public override TransactionType Type => TransactionType.Order;
+        [DataMember, NotMapped]
+        public override string Description => Status.GetDescription();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="waitingChecked"></param>
+        /// <param name="processingChecked"></param>
+        /// <param name="dispatchedChecked"></param>
+        /// <returns></returns>
+        public override bool Filter(bool waitingChecked, bool processingChecked, bool dispatchedChecked)
+        {
+            return Status == Status.WaitingExpedition && waitingChecked || Status == Status.WaitingDispatch && processingChecked || Status == Status.DispatchComplete && dispatchedChecked;
+        }
     }
 }
