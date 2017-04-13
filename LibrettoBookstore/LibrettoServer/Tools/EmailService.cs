@@ -76,7 +76,7 @@ namespace Libretto.Tools
                     Priority = MailPriority.High,
                     From = LibrettoCommon.EmailAccount,
                     To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
-                }, customerInformation.Identifier);
+                }, customerInformation.Id);
             }
             catch (SmtpException ex)
             {

@@ -122,7 +122,7 @@ namespace Libretto.Forms
                     transactionInformation.CustomerName,
                     Convert.ToString(transactionInformation.Quantity),
                     LibrettoCommon.FormatCurrency(transactionInformation.Total),
-                    transactionInformation.Status.GetDescription()
+                    transactionInformation.Description
                 }
             };
         }
@@ -153,15 +153,10 @@ namespace Libretto.Forms
         /// <returns></returns>
         private bool FilterOrder(Transaction orderInformation)
         {
-            var cName = customerName.Text;
-            var orderTimestamp = orderInformation.Timestamp;
-            return (orderInformation.Status == Status.StorePurchased
-                || orderInformation.Status == Status.WaitingExpedition && checkWaiting.Checked
-                || orderInformation.Status == Status.WaitingDispatch && checkProcessing.Checked
-                || orderInformation.Status == Status.DispatchComplete && checkDispatched.Checked)
-                && (string.IsNullOrEmpty(cName) || cName == orderInformation.CustomerName)
-                && (dateFromPicker.Checked == false || orderTimestamp > dateFromPicker.Value)
-                && (dateToPicker.Checked == false || orderTimestamp < dateToPicker.Value);
+            return orderInformation.Filter(checkWaiting.Checked, checkProcessing.Checked, checkDispatched.Checked)
+                && (string.IsNullOrEmpty(customerName.Text) || customerName.Text == orderInformation.CustomerName)
+                && (dateFromPicker.Checked == false || orderInformation.Timestamp > dateFromPicker.Value)
+                && (dateToPicker.Checked == false || orderInformation.Timestamp < dateToPicker.Value);
         }
 
         /// <summary>

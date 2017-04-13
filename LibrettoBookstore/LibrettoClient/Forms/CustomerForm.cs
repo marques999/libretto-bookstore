@@ -100,7 +100,7 @@ namespace Libretto.Forms
         private void CustomerForm_Load(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
-            guidField.Text = LibrettoCommon.FormatGuid(CustomerInformation.Identifier);
+            guidField.Text = LibrettoCommon.FormatGuid(CustomerInformation.Id);
         }
 
         /// <summary>

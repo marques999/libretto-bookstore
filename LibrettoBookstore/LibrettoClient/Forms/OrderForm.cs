@@ -158,11 +158,11 @@ namespace Libretto.Forms
         private void UpdateCustomer(Customer customerInformation)
         {
             _customerInformation = customerInformation;
-            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Identifier);
+            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Id);
             customerEmail.Text = customerInformation.Email;
             customerLocation.Text = customerInformation.Location;
             Information.CustomerName = _customerInformation.Name;
-            Information.CustomerId = _customerInformation.Identifier;
+            Information.CustomerId = _customerInformation.Id;
         }
 
         /// <summary>
@@ -172,11 +172,11 @@ namespace Libretto.Forms
         private void UpdateBook(Book bookInformation)
         {
             _bookInformation = bookInformation;
-            bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
+            bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Id);
             bookStock.Text = Convert.ToString(bookInformation.Stock);
             bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
             Information.BookTitle = _bookInformation.Title;
-            Information.BookId = _bookInformation.Identifier;
+            Information.BookId = _bookInformation.Id;
             UpdateStock(orderQuantity.Value);
         }
 

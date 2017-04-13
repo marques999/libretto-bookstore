@@ -19,7 +19,7 @@ namespace Libretto
         {
             Customers.Add(new Customer
             {
-                Identifier = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "Allison Turner",
                 Email = "allison.t@yahoo.com",
                 Location = "Valongo, Portugal"
@@ -27,7 +27,7 @@ namespace Libretto
 
             Customers.Add(new Customer
             {
-                Identifier = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "Matthew Perry",
                 Email = "matt_perry@hotmail.com",
                 Location = "Chaves, Portugal"
@@ -35,7 +35,7 @@ namespace Libretto
 
             Customers.Add(new Customer
             {
-                Identifier = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "Randy White",
                 Email = "randy@gmail.com",
                 Location = "Lisboa, Portugal"
@@ -43,7 +43,7 @@ namespace Libretto
 
             Customers.Add(new Customer
             {
-                Identifier = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "Heather Davis",
                 Email = "hdavis@aol.com",
                 Location = "Trancoso, Portugal"
@@ -51,7 +51,7 @@ namespace Libretto
 
             Customers.Add(new Customer
             {
-                Identifier = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Name = "Steven Mitchell",
                 Email = "steven.xxx@outlook.com",
                 Location = "Penafiel, Portugal"
@@ -77,7 +77,7 @@ namespace Libretto
         {
             Books.Add(new Book
             {
-                Identifier = bookIdentifier,
+                Id = bookIdentifier,
                 Price = _randomGenerator.NextDouble() * 200,
                 Stock = _randomGenerator.Next(100),
                 Title = $"Dummy Book {(char)('A' + bookIndex)}"
@@ -109,10 +109,10 @@ namespace Libretto
 
             Transactions.Add(new Order
             {
-                Identifier = orderIdentifier,
-                CustomerId = randomCustomer.Identifier,
+                Id = orderIdentifier,
+                CustomerId = randomCustomer.Id,
                 CustomerName = randomCustomer.Name,
-                BookId = randomBook.Identifier,
+                BookId = randomBook.Id,
                 BookTitle = randomBook.Title,
                 Quantity = 1,
                 Timestamp = RandomTimestamp(new DateTime(2017, 3, 1), new DateTime(2017, 5, 1))

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
-
-using Libretto.Integration;
+using Libretto.Database;
 
 namespace Libretto
 {
@@ -13,37 +11,34 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private LibrettoServer()
+        public BookIntegration Books
         {
-            _sqlConnection.Open();
-            BookIntegration = new BookIntegration(_sqlConnection);
-            CustomerIntegration = new CustomerIntegration(_sqlConnection);
-            TransactionIntegration = new TransactionIntegration(_sqlConnection);
-        }
+            get;
+        } = new BookIntegration(DatabaseContext);
 
         /// <summary>
         /// 
         /// </summary>
-        public BookIntegration BookIntegration
+        public OrderIntegration Orders
         {
             get;
-        }
+        } = new OrderIntegration(DatabaseContext);
 
         /// <summary>
         /// 
         /// </summary>
-        public CustomerIntegration CustomerIntegration
+        public CustomerIntegration Customers
         {
             get;
-        }
+        } = new CustomerIntegration(DatabaseContext);
 
         /// <summary>
         /// 
         /// </summary>
-        public TransactionIntegration TransactionIntegration
+        public PurchaseIntegration Purchases
         {
             get;
-        }
+        } = new PurchaseIntegration(DatabaseContext);
 
         /// <summary>
         /// 
@@ -53,14 +48,12 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public static LibrettoServer Instance => _instance ?? (_instance = new LibrettoServer());
+        private static readonly LibrettoDatabase DatabaseContext = new LibrettoDatabase();
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly SqlConnection _sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;" +
-            $"AttachDbFilename={AppDomain.CurrentDomain.BaseDirectory}LibrettoDatabase.mdf;" +
-            "Integrated Security=True;Connect Timeout=5");
+        public static LibrettoServer Instance => _instance ?? (_instance = new LibrettoServer());
 
         /// <summary>
         /// 
@@ -69,25 +62,30 @@ namespace Libretto
         {
             try
             {
-                var customerList = Instance.CustomerIntegration.Customers;
-
-                foreach (var customerInformation in customerList)
+                foreach (var customerInformation in Instance.Customers.List())
                 {
-                    Console.WriteLine($@"Name       | {customerInformation.Value.Name}");
-                    Console.WriteLine($@"E-mail     | {customerInformation.Value.Email}");
-                    Console.WriteLine($@"Location   | {customerInformation.Value.Location}");
-                    Console.WriteLine($@"Identifier | {customerInformation.Value.Identifier}");
+                    Console.WriteLine($@"Identifier | {customerInformation.Id}");
+                    Console.WriteLine($@"Name       | {customerInformation.Name}");
+                    Console.WriteLine($@"E-mail     | {customerInformation.Email}");
+                    Console.WriteLine($@"Location   | {customerInformation.Location}");
                     Console.WriteLine(@"+========+==================+");
                 }
 
-                var itemList = Instance.BookIntegration.Books;
-
-                foreach (var bookInformation in itemList)
+                foreach (var bookInformation in Instance.Books.List())
                 {
-                    Console.WriteLine($@"Title      | {bookInformation.Value.Title}");
-                    Console.WriteLine($@"Price      | {bookInformation.Value.Price}");
-                    Console.WriteLine($@"Stock      | {bookInformation.Value.Stock}");
-                    Console.WriteLine($@"Identifier | {bookInformation.Value.Identifier}");
+                    Console.WriteLine($@"Identifier | {bookInformation.Id}");
+                    Console.WriteLine($@"Title      | {bookInformation.Title}");
+                    Console.WriteLine($@"Price      | {bookInformation.Price}");
+                    Console.WriteLine($@"Stock      | {bookInformation.Stock}");
+                    Console.WriteLine(@"+========+==================+");
+                }
+
+                foreach (var transactioninformation in Instance.Purchases.List())
+                {
+                    Console.WriteLine($@"Identifier | {transactioninformation.Key}");
+                    Console.WriteLine($@"Title      | {transactioninformation.Value.BookTitle}");
+                    Console.WriteLine($@"Price      | {transactioninformation.Value.CustomerName}");
+                    Console.WriteLine($@"Stock      | {transactioninformation.Value.Timestamp:F}");
                     Console.WriteLine(@"+========+==================+");
                 }
             }
@@ -95,6 +93,8 @@ namespace Libretto
             {
                 Console.WriteLine(ex);
             }
+
+            Console.ReadKey(true);
         }
     }
 }

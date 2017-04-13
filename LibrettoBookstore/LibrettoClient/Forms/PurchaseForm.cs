@@ -73,10 +73,10 @@ namespace Libretto.Forms
             purchaseQuantity.Minimum = 1;
             purchaseQuantity.Maximum = bookInformation.Stock;
             Information.BookTitle = bookInformation.Title;
-            Information.BookId = bookInformation.Identifier;
+            Information.BookId = bookInformation.Id;
             bookStock.Text = Convert.ToString(bookInformation.Stock);
             bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
-            bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Identifier);
+            bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Id);
             UpdateQuantity(purchaseQuantity.Value);
         }
 
@@ -88,10 +88,10 @@ namespace Libretto.Forms
         {
             _customerInformation = customerInformation;
             Information.CustomerName = _customerInformation.Name;
-            Information.CustomerId = _customerInformation.Identifier;
+            Information.CustomerId = _customerInformation.Id;
             customerEmail.Text = customerInformation.Email;
             customerLocation.Text = customerInformation.Location;
-            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Identifier);
+            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Id);
         }
 
         /// <summary>

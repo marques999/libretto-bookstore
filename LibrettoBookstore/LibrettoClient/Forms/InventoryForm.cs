@@ -35,7 +35,7 @@ namespace Libretto.Forms
         /// <returns></returns>
         private static ListViewItem ParseBook(Book bookInformation)
         {
-            return new ListViewItem(LibrettoCommon.FormatGuid(bookInformation.Identifier))
+            return new ListViewItem(LibrettoCommon.FormatGuid(bookInformation.Id))
             {
                 SubItems =
                 {

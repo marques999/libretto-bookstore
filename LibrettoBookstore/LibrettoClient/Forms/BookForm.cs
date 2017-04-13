@@ -76,7 +76,7 @@ namespace Libretto.Forms
         private void BookForm_Load(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
-            guidField.Text = LibrettoCommon.FormatGuid(BookInformation.Identifier);
+            guidField.Text = LibrettoCommon.FormatGuid(BookInformation.Id);
         }
     }
 }
