@@ -10,74 +10,42 @@
       <Total>9.99</Total>
     </Invoice>
     <Invoice>
-      <Identifier>c2938cb7-ad9e-4e24-baec-ed0d36858f3a</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:44:53.5767962+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>0b9b334b-2892-4bd1-98ab-dcfae24b5d2b</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:44:53.7763257+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>467ca553-751f-403a-89ec-72e3bcbe7346</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:11.2762406+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>106b197d-3a64-4166-be6f-8a62d348a664</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:11.6026061+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>4821cc50-fb2d-48a6-aca4-5a125f9ab0e1</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:11.9314784+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>7f618d00-60c0-4a9a-a8af-50894c669372</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:12.2588465+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>c77f7e77-b4a3-4a36-b49f-3d58c0223ba5</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:12.6122843+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
-      <Identifier>5d4ccea8-c91e-402d-9417-dd39a7d8eb85</Identifier>
-      <Title>Dummy Book A</Title>
-      <Customer>Diogo Marques</Customer>
-      <Timestamp>2017-04-12T23:45:12.9642178+01:00</Timestamp>
-      <Quantity>5</Quantity>
-      <Total>9.99</Total>
-    </Invoice>
-    <Invoice>
       <Identifier>b3c01e2d-f8b8-44c7-ba63-bf6932cf27a1</Identifier>
       <Title>Dummy Book A</Title>
       <Customer>Diogo Marques</Customer>
       <Timestamp>2017-04-12T23:45:13.3161509+01:00</Timestamp>
+      <Quantity>5</Quantity>
+      <Total>9.99</Total>
+    </Invoice>
+    <Invoice>
+      <Identifier>8a30f4f4-9fcd-4d56-8649-311bc131f429</Identifier>
+      <Title>Dummy Book A</Title>
+      <Customer>Diogo Marques</Customer>
+      <Timestamp>2017-04-13T17:05:03.1211345+01:00</Timestamp>
+      <Quantity>5</Quantity>
+      <Total>9.99</Total>
+    </Invoice>
+    <Invoice>
+      <Identifier>ab4883f5-7a79-401d-a5c7-dd4373f96dc4</Identifier>
+      <Title>Dummy Book A</Title>
+      <Customer>Diogo Marques</Customer>
+      <Timestamp>2017-04-13T17:05:12.4467346+01:00</Timestamp>
+      <Quantity>5</Quantity>
+      <Total>9.99</Total>
+    </Invoice>
+    <Invoice>
+      <Identifier>ec2e57e1-8c13-4f10-8ea6-0219d04f65be</Identifier>
+      <Title>Dummy Book A</Title>
+      <Customer>Diogo Marques</Customer>
+      <Timestamp>2017-04-13T17:05:17.1074614+01:00</Timestamp>
+      <Quantity>5</Quantity>
+      <Total>9.99</Total>
+    </Invoice>
+    <Invoice>
+      <Identifier>a2d7562e-d235-4049-981b-1b570b12e90a</Identifier>
+      <Title>Dummy Book A</Title>
+      <Customer>Diogo Marques</Customer>
+      <Timestamp>2017-04-13T17:07:00.8138189+01:00</Timestamp>
       <Quantity>5</Quantity>
       <Total>9.99</Total>
     </Invoice>

@@ -38,11 +38,13 @@ namespace Libretto
         private void InitializeComponent()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(InvoiceClient));
+            components = new Container();
             buttonView = new FlatButton();
             buttonDelete = new FlatButton();
             buttonExit = new FlatButton();
             transactionsLayout = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            notifyIcon = new NotifyIcon(components);
             listView = new ListView();
             transactionsLayout.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -111,13 +113,11 @@ namespace Libretto
             {
                 new ColumnHeader
                 {
-                    Text = "Date",
-                    Width = 100
+                    Text = "Date", Width = 100
                 },
                 new ColumnHeader
                 {
-                    Text = "Identifier",
-                    Width = 290
+                    Text = "Identifier", Width = 290
                 }
             });
             listView.Dock = DockStyle.Fill;
@@ -144,6 +144,9 @@ namespace Libretto
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Libretto Invoices";
             Load += new EventHandler(InvoiceClient_Load);
+            notifyIcon.Text = Text;
+            notifyIcon.Visible = true;
+            notifyIcon.Icon = Resources.librettoIcon;
             transactionsLayout.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
@@ -151,6 +154,7 @@ namespace Libretto
         }
 
         private ListView listView;
+        private NotifyIcon notifyIcon;
         private FlatButton buttonView;
         private FlatButton buttonExit;
         private FlatButton buttonDelete;

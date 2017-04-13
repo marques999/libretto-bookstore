@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Invoice.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Warehouse\IRemotingService.cs" />
     <Compile Include="Forms\FlatBadge.cs">
       <SubType>Component</SubType>

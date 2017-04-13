@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvoiceCollection.cs" />
-    <Compile Include="User32.cs" />
     <Compile Include="InvoiceClient.cs">
       <SubType>Form</SubType>
     </Compile>

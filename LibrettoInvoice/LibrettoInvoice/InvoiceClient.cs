@@ -78,7 +78,7 @@ namespace Libretto
         {
             try
             {
-                User32.FlashWindowEx(this);
+                NativeMethods.FlashWindowEx(this);
                 OnInsert(_invoiceQueue.EndReceive(receiveCompletedEventArgs.AsyncResult)?.Body as Invoice);
             }
             catch (Exception ex)
@@ -95,18 +95,16 @@ namespace Libretto
         /// <param name="purchaseInformation"></param>
         private void OnInsert(Invoice purchaseInformation)
         {
-            if (purchaseInformation == null)
+            if (purchaseInformation != null)
             {
-                return;
-            }
-
-            if (InvokeRequired)
-            {
-                BeginInvoke(new ReceiveHandler(OnInsertAux), purchaseInformation, true);
-            }
-            else
-            {
-                OnInsertAux(purchaseInformation, true);
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new ReceiveHandler(OnInsertAux), purchaseInformation, true);
+                }
+                else
+                {
+                    OnInsertAux(purchaseInformation, true);
+                }
             }
         }
 
@@ -117,18 +115,19 @@ namespace Libretto
         /// <param name="fromQueue"></param>
         private void OnInsertAux(Invoice purchaseInformation, bool fromQueue)
         {
+            var purchaseIdentifier = purchaseInformation.Identifier.ToString("B").ToUpper();
+            var purchaseTimestamp = LibrettoCommon.FormatDate(purchaseInformation.Timestamp);
+
             if (fromQueue)
             {
                 _invoices.Insert(purchaseInformation);
                 _invoices.Serialize(_serializer, LibrettoCommon.InvoicesFilename);
+                notifyIcon.ShowBalloonTip(5000, $"Invoice Arrived [{purchaseTimestamp}]", $"Identifier: {purchaseIdentifier}", ToolTipIcon.Info);
             }
 
-            listView.Items.Add(new ListViewItem(LibrettoCommon.FormatDate(purchaseInformation.Timestamp))
+            listView.Items.Add(new ListViewItem(purchaseTimestamp)
             {
-                SubItems =
-                {
-                    purchaseInformation.Identifier.ToString("B").ToUpper()
-                }
+                SubItems = { purchaseIdentifier }
             });
         }
 

@@ -7,7 +7,7 @@ namespace Libretto
     /// <summary>
     ///
     /// </summary>
-    internal class User32
+    public class NativeMethods
     {
         /// <summary>
         ///
