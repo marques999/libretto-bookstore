@@ -8,7 +8,7 @@ namespace Libretto.Warehouse
     /// 
     /// </summary>
     [Serializable]
-    public class WarehouseOrder : IMessageSubject
+    public class WarehouseOrder : IMessage
     {
         /// <summary>
         /// 

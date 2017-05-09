@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="EnumExtension.cs" />
     <Compile Include="LibrettoCommon.cs" />
-    <Compile Include="Messaging\IMessageSubject.cs" />
+    <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\IMessageVisitor.cs" />
     <Compile Include="Messaging\MessagingCommon.cs" />
     <Compile Include="Model\Address.cs" />
@@ -79,9 +79,7 @@
     <Compile Include="Warehouse\WarehouseOrder.cs" />
     <Compile Include="Warehouse\WarehouseStatus.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bookstore\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

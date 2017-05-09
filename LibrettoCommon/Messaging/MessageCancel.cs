@@ -7,7 +7,7 @@ namespace Libretto.Messaging
     /// 
     /// </summary>
     [Serializable]
-    public class MessageCancel : IMessageSubject
+    public class MessageCancel : IMessage
     {
         /// <summary>
         /// 
