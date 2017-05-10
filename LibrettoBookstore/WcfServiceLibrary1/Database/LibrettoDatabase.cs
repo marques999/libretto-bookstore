@@ -1,9 +1,11 @@
+using System.Data.Entity;
 using Libretto.Model;
 
-namespace LibrettoWCF
+namespace LibrettoWCF.Database
 {
-    using System.Data.Entity;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class LibrettoDatabase : DbContext
     {
         /// <summary>

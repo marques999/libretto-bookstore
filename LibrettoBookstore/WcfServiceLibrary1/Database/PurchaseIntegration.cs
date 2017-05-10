@@ -4,7 +4,7 @@ using System.Linq;
 
 using Libretto.Model;
 
-namespace Libretto.Database
+namespace LibrettoWCF.Database
 {
     /// <summary>
     /// 
@@ -46,29 +46,63 @@ namespace Libretto.Database
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Guid, Purchase> List()
+        public List<Purchase> List()
+        {
+            return _context.Purchases.ToList();
+        }
+
+        /*public Dictionary<Guid, Purchase> List()
         {
             return _context.Purchases.ToDictionary(transactionInformation => transactionInformation.Id, transactionInformation => transactionInformation);
+        }*/
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
+        public List<Purchase> Insert(Purchase purchaseInformation)
+        {
+            try
+            {
+                _context.Purchases.Add(purchaseInformation);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return null;
+            }
+
+            return _context.Purchases.ToList();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformatioon"></param>
+        /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public bool Insert(Purchase purchaseInformatioon)
+        public List<Purchase> Update(Purchase purchaseInformation)
         {
+            var sqlEntity = _context.Purchases.SingleOrDefault(previousPurchase => previousPurchase.Id == purchaseInformation.Id);
+
+            if (sqlEntity == null)
+            {
+                return null;
+            }
+
             try
             {
-                _context.Purchases.Add(purchaseInformatioon);
+                sqlEntity.Quantity = purchaseInformation.Quantity;
+                sqlEntity.Timestamp = purchaseInformation.Timestamp;
+                sqlEntity.Total = purchaseInformation.Total;
                 _context.SaveChanges();
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Purchases.ToList();
         }
 
         /// <summary>
@@ -76,13 +110,13 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        public bool Delete(Guid transactionIdentifier)
+        public List<Purchase> Delete(Guid transactionIdentifier)
         {
             var sqlEntity = _context.Purchases.SingleOrDefault(purchaseInformation => purchaseInformation.Id == transactionIdentifier);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
 
             try
@@ -92,10 +126,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Purchases.ToList();
         }
     }
 }

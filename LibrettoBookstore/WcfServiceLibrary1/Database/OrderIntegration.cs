@@ -4,7 +4,7 @@ using System.Linq;
 
 using Libretto.Model;
 
-namespace Libretto.Database
+namespace LibrettoWCF.Database
 {
     /// <summary>
     /// 
@@ -42,13 +42,19 @@ namespace Libretto.Database
             return _context.Orders.FirstOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
         }
 
+        /*
+        public Dictionary<Guid, Order> List()
+        {
+            return _context.Orders.ToDictionary(transactionInformation => transactionInformation.Id, transactionInformation => transactionInformation);
+        }*/
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Guid, Order> List()
+        public List<Order> List()
         {
-            return _context.Orders.ToDictionary(transactionInformation => transactionInformation.Id, transactionInformation => transactionInformation);
+            return _context.Orders.ToList();
         }
 
         /// <summary>
@@ -56,7 +62,7 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        public bool Insert(Order transactionInformation)
+        public List<Order> Insert(Order transactionInformation)
         {
             try
             {
@@ -65,10 +71,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Orders.ToList();
         }
 
         /// <summary>
@@ -76,9 +82,9 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
-        public bool DispatchOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public List<Order> DispatchOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
-            return Update(transactionIdentifier, Status.WaitingDispatch, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.WaitingDispatch, transactionTimestamp);
         }
 
         /// <summary>
@@ -86,9 +92,9 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
-        public bool ExecuteOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public List<Order> ExecuteOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
-            return Update(transactionIdentifier, Status.DispatchComplete, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.DispatchComplete, transactionTimestamp);
         }
 
         /// <summary>
@@ -97,9 +103,9 @@ namespace Libretto.Database
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        public bool CancelOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public List<Order> CancelOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
-            return Update(transactionIdentifier, Status.OrderCancelled, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.OrderCancelled, transactionTimestamp);
         }
 
         /// <summary>
@@ -109,13 +115,13 @@ namespace Libretto.Database
         /// <param name="transactionStatus"></param>
         /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        private bool Update(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
+        private List<Order> UpdateStatus(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
             try
             {
@@ -125,10 +131,66 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Orders.ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public List<Order> Update(Order orderInformation)
+        {
+            var sqlEntity = _context.Orders.SingleOrDefault(previousOrder => previousOrder.Id == orderInformation.Id);
+
+            if (sqlEntity == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                sqlEntity.Quantity = orderInformation.Quantity;
+                sqlEntity.Timestamp = orderInformation.Timestamp;
+                sqlEntity.Total = orderInformation.Total;
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return null;
+            }
+
+            return _context.Orders.ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public List<Order> DeleteOrder(Order order)
+        {
+            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == order.Id);
+
+            if (sqlEntity == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                _context.Orders.Remove(sqlEntity);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return null;
+            }
+
+            return _context.Orders.ToList();
         }
     }
 }

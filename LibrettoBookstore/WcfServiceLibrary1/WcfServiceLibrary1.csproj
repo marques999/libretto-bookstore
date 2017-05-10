@@ -9,8 +9,8 @@
     <ProjectGuid>{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WcfServiceLibrary1</RootNamespace>
-    <AssemblyName>WcfServiceLibrary1</AssemblyName>
+    <RootNamespace>LibrettoWCF</RootNamespace>
+    <AssemblyName>LibrettoWCF</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -54,10 +55,10 @@
     <Compile Include="Database\CustomerIntegration.cs" />
     <Compile Include="Database\OrderIntegration.cs" />
     <Compile Include="Database\PurchaseIntegration.cs" />
-    <Compile Include="IInterfaceProvider.cs" />
-    <Compile Include="LibrettoDatabase.cs" />
+    <Compile Include="IWebstoreService.cs" />
+    <Compile Include="Database\LibrettoDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InterfaceProvider.cs" />
+    <Compile Include="WebstoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

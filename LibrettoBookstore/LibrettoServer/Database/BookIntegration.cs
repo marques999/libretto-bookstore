@@ -56,7 +56,7 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public bool Insert(Book bookInformation)
+        public List<Book> Insert(Book bookInformation)
         {
             try
             {
@@ -65,10 +65,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Books.ToList();
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using System.Linq;
 
 using Libretto.Model;
 
-namespace Libretto.Database
+namespace LibrettoWCF.Database
 {
     /// <summary>
     /// 
@@ -48,7 +48,7 @@ namespace Libretto.Database
         /// <returns></returns>
         public Customer Lookup(Guid customerIdentifier)
         {
-            return _context.Customers.FirstOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
+            return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public bool Insert(Customer customerInformation)
+        public List<Customer> Insert(Customer customerInformation)
         {
             try
             {
@@ -65,10 +65,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Customers.ToList();
         }
 
         /// <summary>
@@ -76,13 +76,13 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public bool Update(Customer customerInformation)
+        public List<Customer> Update(Customer customerInformation)
         {
             var sqlEntity = _context.Customers.SingleOrDefault(previousCustomer => previousCustomer.Id == customerInformation.Id);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
 
             try
@@ -94,10 +94,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Customers.ToList();
         }
 
         /// <summary>
@@ -105,13 +105,13 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
-        public bool Delete(Guid customerIdentifier)
+        public List<Customer> Delete(Guid customerIdentifier)
         {
             var sqlEntity = _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
 
             try
@@ -121,10 +121,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Customers.ToList();
         }
     }
 }

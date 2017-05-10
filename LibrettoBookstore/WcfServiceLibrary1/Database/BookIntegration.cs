@@ -4,7 +4,7 @@ using System.Linq;
 
 using Libretto.Model;
 
-namespace Libretto.Database
+namespace LibrettoWCF.Database
 {
     /// <summary>
     /// 
@@ -48,7 +48,7 @@ namespace Libretto.Database
         /// <returns></returns>
         public Book Lookup(Guid bookIdentifier)
         {
-            return _context.Books.FirstOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
+            return _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public bool Insert(Book bookInformation)
+        public List<Book> Insert(Book bookInformation)
         {
             try
             {
@@ -65,10 +65,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Books.ToList();
         }
 
         /// <summary>
@@ -76,13 +76,13 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public bool Update(Book bookInformation)
+        public List<Book> Update(Book bookInformation)
         {
             var sqlEntity = _context.Books.SingleOrDefault(previousBook => previousBook.Id == bookInformation.Id);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
 
             try
@@ -94,10 +94,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Books.ToList();
         }
 
         /// <summary>
@@ -105,13 +105,13 @@ namespace Libretto.Database
         /// </summary>
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        public bool Delete(Guid bookIdentifier)
+        public List<Book> Delete(Guid bookIdentifier)
         {
             var sqlEntity = _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
 
             if (sqlEntity == null)
             {
-                return false;
+                return null;
             }
 
             try
@@ -121,10 +121,10 @@ namespace Libretto.Database
             }
             catch
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return _context.Books.ToList();
         }
     }
 }
