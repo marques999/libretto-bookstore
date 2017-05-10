@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Libretto.Forms;
 using Libretto.Model;
+using System.ServiceModel;
 
 namespace Libretto
 {
@@ -20,7 +21,7 @@ namespace Libretto
             Customers.Add(new Customer
             {
                 Id = Guid.NewGuid(),
-                Name = "Allison Turner",
+                Name = "Allison Testa",
                 Email = "allison.t@yahoo.com",
                 Location = "Valongo, Portugal"
             });
