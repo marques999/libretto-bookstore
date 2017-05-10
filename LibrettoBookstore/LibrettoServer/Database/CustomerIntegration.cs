@@ -109,7 +109,7 @@ namespace Libretto.Database
         {
             var sqlEntity = _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
 
-            if (sqlEntity is null)
+            if (sqlEntity == null)
             {
                 return false;
             }

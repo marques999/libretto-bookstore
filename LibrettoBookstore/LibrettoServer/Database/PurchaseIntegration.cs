@@ -80,7 +80,7 @@ namespace Libretto.Database
         {
             var sqlEntity = _context.Purchases.SingleOrDefault(purchaseInformation => purchaseInformation.Id == transactionIdentifier);
 
-            if (sqlEntity is null)
+            if (sqlEntity == null)
             {
                 return false;
             }

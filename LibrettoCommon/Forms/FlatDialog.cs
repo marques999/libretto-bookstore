@@ -29,8 +29,8 @@ namespace Libretto.Forms
         /// </summary>
         public sealed override Color BackColor
         {
-            get => base.BackColor;
-            set => base.BackColor = value;
+            get;
+            set;
         }
 
         /// <summary>

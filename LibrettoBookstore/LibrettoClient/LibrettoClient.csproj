@@ -41,7 +41,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\BookForm.cs">
@@ -88,6 +91,11 @@
     <Compile Include="Forms\StoreForm.Designer.cs">
       <DependentUpon>StoreForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\InterfaceProvider\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\BookForm.resx">
       <DependentUpon>BookForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +127,7 @@
     <EmbeddedResource Include="Forms\StoreForm.resx">
       <DependentUpon>StoreForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -128,15 +137,44 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\InterfaceProvider\service.wsdl" />
+    <None Include="Service References\InterfaceProvider\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InterfaceProvider\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LibrettoCommon\LibrettoCommon.csproj">
       <Project>{cf64510b-78ec-4d27-badf-65d9c392c7bb}</Project>
       <Name>LibrettoCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WcfServiceLibrary1\WcfServiceLibrary1.csproj">
+      <Project>{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}</Project>
+      <Name>WcfServiceLibrary1</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\librettoIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\InterfaceProvider\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\InterfaceProvider\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\InterfaceProvider\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\InterfaceProvider\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
