@@ -33,7 +33,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "GET",
                    ResponseFormat = WebMessageFormat.Json,
                    UriTemplate = "book/{id}")]
-        Book GetBookById(string bookIdentifier);
+        Book GetBookById(string id);
 
         /// <summary>
         /// 
@@ -88,7 +88,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "customer/{id}")]
-        Customer GetCustomerById(string customerIdentifier);
+        Customer GetCustomerById(string id);
 
         /// <summary>
         /// 
@@ -148,7 +148,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "purchase/{id}")]
-        Purchase GetPurchaseById(string purchaseIdentifier);
+        Purchase GetPurchaseById(string id);
 
         /// <summary>
         /// 
@@ -208,7 +208,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "order/{id}")]
-        Order GetOrderById(string orderIdentifier);
+        Order GetOrderById(string id);
 
         /// <summary>
         /// 
@@ -245,22 +245,5 @@ namespace LibrettoWCF
                     BodyStyle = WebMessageBodyStyle.Bare,
                     UriTemplate = "/orders/update")]
         List<Order> UpdateOrder(Order orderInformation);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [DataContract]
-    public class Texto
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public string Title
-        {
-            get;
-            set;
-        }
     }
 }
