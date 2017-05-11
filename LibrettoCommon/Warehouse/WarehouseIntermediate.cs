@@ -16,13 +16,6 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        public WarehouseIntermediate()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void Refresh(List<WarehouseOrder> transactionInformation)
         {
             OnRefresh?.Invoke(transactionInformation);

@@ -39,7 +39,7 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Order Lookup(Guid transactionIdentifier)
         {
-            return _context.Orders.FirstOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+            return _context.Orders.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
         }
 
         /*

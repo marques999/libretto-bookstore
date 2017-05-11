@@ -66,17 +66,21 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "PUT",
-                    ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "/books/update")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   UriTemplate = "/books/update")]
         List<Book> UpdateBook(Book bookInformation);
 
-
         // ----------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Wrapped,
-                    UriTemplate = "customers")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Wrapped,
+                   UriTemplate = "customers")]
         List<Customer> GetCustomersList();
 
         /// <summary>
@@ -97,9 +101,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "POST",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/customers/add")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/customers/add")]
         List<Customer> AddCustomer(Customer customerInformation);
 
         /// <summary>
@@ -109,9 +113,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "DELETE",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/customers/delete")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/customers/delete")]
         List<Customer> DeleteCustomer(Customer customerInfromation);
 
         /// <summary>
@@ -121,9 +125,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "PUT",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/customers/update")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/customers/update")]
         List<Customer> UpdateCustomer(Customer customerInformation);
 
         //---------------------------------------------------------------------------------------------------------
@@ -134,9 +138,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Wrapped,
-                    UriTemplate = "purchases")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Wrapped,
+                   UriTemplate = "purchases")]
         List<Purchase> GetPurchasesList();
 
         /// <summary>
@@ -157,9 +161,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "POST",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/purchases/add")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/purchases/add")]
         List<Purchase> AddPurchase(Purchase purchaseInformation);
 
         /// <summary>
@@ -169,9 +173,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "DELETE",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/purchases/delete")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/purchases/delete")]
         List<Purchase> DeletePurchase(Purchase purchaseInformation);
 
         /// <summary>
@@ -181,9 +185,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "PUT",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/purchases/update")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/purchases/update")]
         List<Purchase> UpdatePurchase(Purchase purchaseInformation);
 
         //---------------------------------------------------------------------------------------------------------
@@ -194,9 +198,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Wrapped,
-                    UriTemplate = "orders")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Wrapped,
+                   UriTemplate = "orders")]
         List<Order> GetOrdersList();
 
         /// <summary>
@@ -217,9 +221,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "POST",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/orders/add")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/orders/add")]
         List<Order> AddOrder(Order orderInformation);
 
         /// <summary>
@@ -229,9 +233,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "DELETE",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/orders/delete")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/orders/delete")]
         List<Order> DeleteOrder(Order orderInformation);
 
         /// <summary>
@@ -241,9 +245,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "PUT",
-                    ResponseFormat = WebMessageFormat.Json,
-                    BodyStyle = WebMessageBodyStyle.Bare,
-                    UriTemplate = "/orders/update")]
+                   ResponseFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "/orders/update")]
         List<Order> UpdateOrder(Order orderInformation);
     }
 }

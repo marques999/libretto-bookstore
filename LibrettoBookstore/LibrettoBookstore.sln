@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoClient", "LibrettoClient\LibrettoClient.csproj", "{CEA1BDB5-41D4-4005-B565-9595EAFD6BDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceLibrary1", "WcfServiceLibrary1\WcfServiceLibrary1.csproj", "{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoHost", "..\..\LibrettoHost\LibrettoHost.csproj", "{032E94EF-2512-4AA6-B262-84AB1044547F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032E94EF-2512-4AA6-B262-84AB1044547F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032E94EF-2512-4AA6-B262-84AB1044547F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032E94EF-2512-4AA6-B262-84AB1044547F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032E94EF-2512-4AA6-B262-84AB1044547F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
