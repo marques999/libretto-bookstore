@@ -51,6 +51,31 @@ namespace LibrettoWCF.Database
             return _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
         }
 
+        public bool UpdateStock(Guid bookIdentifier, int quantity)
+        {
+            var book = _context.Books.SingleOrDefault(bookInfo => bookInfo.Id == bookIdentifier);
+
+            try
+            {
+                if(book.Stock >= quantity)
+                {
+                    book.Stock -= quantity;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -13,6 +13,12 @@ namespace LibrettoWCF
     [ServiceContract]
     public interface IWebstoreService
     {
+
+        [OperationContract]
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
+        string GetOptions();
+
+        //----------------------------------------------------------------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
@@ -94,6 +100,11 @@ namespace LibrettoWCF
                     UriTemplate = "customer/{id}")]
         Customer GetCustomerById(string id);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+                    ResponseFormat = WebMessageFormat.Json,
+                    UriTemplate = "auth/login")]
+        Customer Login(LoginForm creds);
         /// <summary>
         /// 
         /// </summary>
@@ -101,10 +112,10 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "POST",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/customers/add")]
-        List<Customer> AddCustomer(Customer customerInformation);
+                    ResponseFormat = WebMessageFormat.Json,
+                    BodyStyle = WebMessageBodyStyle.Bare,
+                    UriTemplate = "/customers/add")]
+        string AddCustomer(Customer customerInformation);
 
         /// <summary>
         /// 
@@ -214,17 +225,11 @@ namespace LibrettoWCF
                     UriTemplate = "order/{id}")]
         Order GetOrderById(string id);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderInformation"></param>
-        /// <returns></returns>
         [OperationContract]
-        [WebInvoke(Method = "POST",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/orders/add")]
-        List<Order> AddOrder(Order orderInformation);
+        [WebInvoke(Method = "GET",
+                    ResponseFormat = WebMessageFormat.Json,
+                    UriTemplate = "order/user/{id}")]
+        List<Order> GetOrdersByUser(string id);
 
         /// <summary>
         /// 
@@ -232,11 +237,23 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        [WebInvoke(Method = "DELETE",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/orders/delete")]
-        List<Order> DeleteOrder(Order orderInformation);
+        [WebInvoke(Method = "POST",
+                    ResponseFormat = WebMessageFormat.Json,
+                    BodyStyle = WebMessageBodyStyle.Bare,
+                    UriTemplate = "orders/add")]
+        string AddOrder(OrderForm orderInformation);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+                    ResponseFormat = WebMessageFormat.Json,
+                    BodyStyle = WebMessageBodyStyle.Bare,
+                    UriTemplate = "orders/delete")]
+        List<Order> DeleteOrder(OrderId orderInformation);
 
         /// <summary>
         /// 
@@ -249,5 +266,77 @@ namespace LibrettoWCF
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "/orders/update")]
         List<Order> UpdateOrder(Order orderInformation);
+    }
+
+    [DataContract]
+    public class LoginForm
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public string Email
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public string Password
+        {
+            get;
+            set;
+        }
+    }
+
+    [DataContract]
+    public class OrderForm
+    {
+        [DataMember]
+        public string bookId
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public string customerId
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public int quantity
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public string bookTitle
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public string customerName
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public double total
+        {
+            get;
+            set;
+        }
+    }
+
+    [DataContract]
+    public class OrderId
+    {
+        [DataMember]
+        public string Id
+        {
+            get;
+            set;
+        }
     }
 }
