@@ -94,7 +94,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, NotMapped]
+        [NotMapped]
         public abstract string Description
         {
             get;

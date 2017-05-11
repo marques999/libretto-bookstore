@@ -33,7 +33,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, NotMapped]
+        [NotMapped]
         public override string Description => Status.GetDescription();
 
         /// <summary>

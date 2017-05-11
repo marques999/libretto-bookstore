@@ -51,12 +51,17 @@ namespace LibrettoWCF.Database
             return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
         }
 
+        public Customer LookupEmail(string email)
+        {
+            return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Email == email);
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public List<Customer> Insert(Customer customerInformation)
+        public string Insert(Customer customerInformation)
         {
             try
             {
@@ -65,10 +70,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return "ERROR!";
             }
 
-            return _context.Customers.ToList();
+            return "Ok";
         }
 
         /// <summary>

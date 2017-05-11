@@ -57,12 +57,17 @@ namespace LibrettoWCF.Database
             return _context.Orders.ToList();
         }
 
+        public List<Order> List(Guid id)
+        {
+            return _context.Orders.Where(elem => elem.CustomerId == id).ToList();
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        public List<Order> Insert(Order transactionInformation)
+        public string Insert(Order transactionInformation)
         {
             try
             {
@@ -71,10 +76,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return "ERROR";
             }
 
-            return _context.Orders.ToList();
+            return "Ok";
         }
 
         /// <summary>
@@ -171,9 +176,9 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="order"></param>
         /// <returns></returns>
-        public List<Order> DeleteOrder(Order order)
+        public List<Order> DeleteOrder(Guid id)
         {
-            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == order.Id);
+            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == id);
 
             if (sqlEntity == null)
             {
