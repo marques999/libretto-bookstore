@@ -5,6 +5,8 @@ using System.ServiceModel.Web;
 using Libretto.Model;
 using LibrettoWCF.Database;
 using LibrettoWCF.Model;
+using System.Messaging;
+using Libretto.Messaging;
 
 namespace LibrettoWCF
 {
@@ -13,6 +15,23 @@ namespace LibrettoWCF
     /// </summary>
     public class WebstoreService : IWebstoreService
     {
+
+
+        private MessageQueue warehouseQ
+        {
+            get;
+            set;
+        } = LibrettoHost.InitializeWarehouseQueue();
+
+        private MessageQueue invoiceQ
+        {
+            get;
+            set;
+        } = LibrettoHost.InitializeInvoiceQueue();
+
+        
+
+        private MessageQueue messageQueue;
         /// <summary>
         /// 
         /// </summary>
@@ -118,6 +137,7 @@ namespace LibrettoWCF
         public List<Book> GetBooksList()
         {
             setCrossOrigin();
+            warehouseQ.Send("C# is my middle name - Ranjeet \"C#\" Shiva");
             return LibrettoDatabase.BookIntegration.List();
         }
 
@@ -237,6 +257,8 @@ namespace LibrettoWCF
             }))
             {
                 LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+
+                warehouseQ.Send(orderInformation);
             }
             else
             {
