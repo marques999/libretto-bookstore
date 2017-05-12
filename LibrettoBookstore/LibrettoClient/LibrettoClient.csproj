@@ -38,6 +38,7 @@
     <ApplicationIcon>Resources\librettoIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibrettoWCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -96,6 +97,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\StoreService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\BookForm.resx">
       <DependentUpon>BookForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +134,10 @@
       <DependentUpon>StoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\Libretto.Model.Book.datasource" />
+    <None Include="Properties\DataSources\Libretto.Model.Customer.datasource" />
+    <None Include="Properties\DataSources\Libretto.Model.Order.datasource" />
+    <None Include="Properties\DataSources\Libretto.Model.Purchase.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -142,6 +152,22 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\InterfaceProvider\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoreService\Libretto.Model.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoreService\LibrettoWCF.Model.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoreService\LibrettoWCF.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoreService\service.wsdl" />
+    <None Include="Service References\StoreService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoreService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -163,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\InterfaceProvider\" />
+    <WCFMetadataStorage Include="Service References\StoreService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\InterfaceProvider\configuration91.svcinfo" />
@@ -172,6 +199,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\InterfaceProvider\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\StoreService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\StoreService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\StoreService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

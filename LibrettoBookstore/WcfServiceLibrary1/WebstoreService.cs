@@ -137,7 +137,6 @@ namespace LibrettoWCF
         public List<Book> GetBooksList()
         {
             setCrossOrigin();
-            warehouseQ.Send("C# is my middle name - Ranjeet \"C#\" Shiva");
             return LibrettoDatabase.BookIntegration.List();
         }
 

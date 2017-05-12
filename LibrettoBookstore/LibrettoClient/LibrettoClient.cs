@@ -12,77 +12,17 @@ namespace Libretto
     /// </summary>
     internal class LibrettoClient
     {
-        /// <summary>
-        /// 
-        /// </summary>
+
+        private static StoreService.StoreServiceClient proxy;
+
         private LibrettoClient()
         {
-            Customers.Add(new Customer
-            {
-                Id = Guid.NewGuid(),
-                Name = "Allison Testa",
-                Email = "allison.t@yahoo.com",
-                Location = "Valongo, Portugal"
-            });
-
-            Customers.Add(new Customer
-            {
-                Id = Guid.NewGuid(),
-                Name = "Matthew Perry",
-                Email = "matt_perry@hotmail.com",
-                Location = "Chaves, Portugal"
-            });
-
-            Customers.Add(new Customer
-            {
-                Id = Guid.NewGuid(),
-                Name = "Randy White",
-                Email = "randy@gmail.com",
-                Location = "Lisboa, Portugal"
-            });
-
-            Customers.Add(new Customer
-            {
-                Id = Guid.NewGuid(),
-                Name = "Heather Davis",
-                Email = "hdavis@aol.com",
-                Location = "Trancoso, Portugal"
-            });
-
-            Customers.Add(new Customer
-            {
-                Id = Guid.NewGuid(),
-                Name = "Steven Mitchell",
-                Email = "steven.xxx@outlook.com",
-                Location = "Penafiel, Portugal"
-            });
-
-            for (var i = 0; i < 10; i++)
-            {
-                GenerateBook(i, Guid.NewGuid());
-            }
-
-            for (var i = 0; i < 10; i++)
-            {
-                GenerateOrder(Guid.NewGuid());
-            }
+            /*Customers = proxy.GetCustomersList();
+            Books = proxy.GetBooksList();
+            Orders = proxy.GetOrdersList();
+            Purchases = proxy.GetPurchasesList();*/
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookIndex"></param>
-        /// <param name="bookIdentifier"></param>
-        private void GenerateBook(int bookIndex, Guid bookIdentifier)
-        {
-            Books.Add(new Book
-            {
-                Id = bookIdentifier,
-                Price = _randomGenerator.NextDouble() * 200,
-                Stock = _randomGenerator.Next(100),
-                Title = $"Dummy Book {(char)('A' + bookIndex)}"
-            });
-        }
 
         /// <summary>
         /// 
@@ -98,26 +38,6 @@ namespace Libretto
         /// </summary>
         private readonly Random _randomGenerator = new Random();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        private void GenerateOrder(Guid orderIdentifier)
-        {
-            var randomBook = Books[_randomGenerator.Next(Books.Count)];
-            var randomCustomer = Customers[_randomGenerator.Next(Customers.Count)];
-
-            Transactions.Add(new Order
-            {
-                Id = orderIdentifier,
-                CustomerId = randomCustomer.Id,
-                CustomerName = randomCustomer.Name,
-                BookId = randomBook.Id,
-                BookTitle = randomBook.Title,
-                Quantity = 1,
-                Timestamp = RandomTimestamp(new DateTime(2017, 3, 1), new DateTime(2017, 5, 1))
-            });
-        }
 
         /// <summary>
         /// 
@@ -127,13 +47,15 @@ namespace Libretto
             get;
         } = new List<Book>();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Transaction> Transactions
+        public List<Purchase> Purchases
         {
             get;
-        } = new List<Transaction>();
+        } = new List<Purchase>();
+
+        public List<Order> Orders
+        {
+            get;
+        } = new List<Order>();
 
         /// <summary>
         /// 
@@ -141,6 +63,7 @@ namespace Libretto
         public List<Customer> Customers
         {
             get;
+            set;
         } = new List<Customer>();
 
         /// <summary>
@@ -196,6 +119,8 @@ namespace Libretto
         [STAThread]
         private static void Main()
         {
+            proxy = new StoreService.StoreServiceClient();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());

@@ -62,6 +62,7 @@
     <Compile Include="Database\CustomerIntegration.cs" />
     <Compile Include="Database\OrderIntegration.cs" />
     <Compile Include="Database\PurchaseIntegration.cs" />
+    <Compile Include="IStoreService.cs" />
     <Compile Include="IWebstoreService.cs" />
     <Compile Include="Database\LibrettoDatabase.cs" />
     <Compile Include="LibrettoHost.cs" />
@@ -72,6 +73,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="StoreService.cs" />
     <Compile Include="Tools\EmailService.cs" />
     <Compile Include="Tools\PasswordUtilities.cs" />
     <Compile Include="WebstoreService.cs" />
