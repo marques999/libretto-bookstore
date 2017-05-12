@@ -57,7 +57,7 @@ namespace LibrettoWCF.Database
 
             try
             {
-                if(book.Stock >= quantity)
+                if (book.Stock >= quantity)
                 {
                     book.Stock -= quantity;
                     _context.SaveChanges();

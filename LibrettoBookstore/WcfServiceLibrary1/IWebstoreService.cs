@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
 using Libretto.Model;
+using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -12,12 +14,16 @@ namespace LibrettoWCF
     [ServiceContract]
     public interface IWebstoreService
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
         string GetOptions();
 
         //----------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// 
         /// </summary>
@@ -103,7 +109,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "POST",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "auth/login")]
-        Customer Login(LoginForm creds);
+        Customer Login(LoginForm loginForm);
         /// <summary>
         /// 
         /// </summary>
@@ -267,70 +273,15 @@ namespace LibrettoWCF
         List<Order> UpdateOrder(Order orderInformation);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [DataContract]
-    public class LoginForm
+    public class OrderId
     {
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
-        public string Email
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public string Password
-        {
-            get;
-            set;
-        }
-    }
-
-    [DataContract]
-    public class OrderForm
-    {
-        [DataMember]
-        public string bookId
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public string customerId
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public int quantity
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public string bookTitle
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public string customerName
-        {
-            get;
-            set;
-        }
-        [DataMember]
-        public double total
-        {
-            get;
-            set;
-        }
-    }
-
-    [DataContract]
-    public class OrderId
-    {
         [DataMember]
         public string Id
         {

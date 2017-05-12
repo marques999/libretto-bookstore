@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel.Web;
 
 using Libretto.Model;
 using LibrettoWCF.Database;
-using System.ServiceModel.Web;
+using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -15,40 +16,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        private static readonly LibrettoDatabase DatabaseContext = new LibrettoDatabase();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private BookIntegration Books
-        {
-            get;
-        } = new BookIntegration(DatabaseContext);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private CustomerIntegration Customers
-        {
-            get;
-        } = new CustomerIntegration(DatabaseContext);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private OrderIntegration Orders
-        {
-            get;
-        } = new OrderIntegration(DatabaseContext);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private PurchaseIntegration Purchases
-        {
-            get;
-        } = new PurchaseIntegration(DatabaseContext);
-
         private void setCrossOrigin()
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
@@ -56,11 +23,16 @@ namespace LibrettoWCF
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetOptions()
         {
             setCrossOrigin();
             return "Ok";
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -69,7 +41,7 @@ namespace LibrettoWCF
         public List<Book> AddBook(Book bookInformation)
         {
             setCrossOrigin();
-            return Books.Insert(bookInformation);
+            return LibrettoDatabase.BookIntegration.Insert(bookInformation);
         }
 
         /// <summary>
@@ -80,12 +52,8 @@ namespace LibrettoWCF
         public string AddCustomer(Customer customerInformation)
         {
             setCrossOrigin();
-            Customer c = new Customer();
-            c.Name = customerInformation.Name;
-            c.Email = customerInformation.Email;
-            c.Location= customerInformation.Location;
-            
-            return Customers.Insert(c);
+            customerInformation.Id = Guid.NewGuid();
+            return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
         }
 
         /// <summary>
@@ -96,7 +64,7 @@ namespace LibrettoWCF
         public List<Purchase> AddPurchase(Purchase purchaseInformation)
         {
             setCrossOrigin();
-            return Purchases.Insert(purchaseInformation);
+            return LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
         }
 
         /// <summary>
@@ -107,7 +75,7 @@ namespace LibrettoWCF
         public List<Book> DeleteBook(Book bookInformation)
         {
             setCrossOrigin();
-            return Books.Delete(bookInformation.Id);
+            return LibrettoDatabase.BookIntegration.Delete(bookInformation.Id);
         }
 
         /// <summary>
@@ -118,7 +86,7 @@ namespace LibrettoWCF
         public List<Customer> DeleteCustomer(Customer customerInfromation)
         {
             setCrossOrigin();
-            return Customers.Delete(customerInfromation.Id);
+            return LibrettoDatabase.CustomerIntegration.Delete(customerInfromation.Id);
         }
 
         /// <summary>
@@ -129,7 +97,7 @@ namespace LibrettoWCF
         public List<Purchase> DeletePurchase(Purchase purchaseInformation)
         {
             setCrossOrigin();
-            return Purchases.Delete(purchaseInformation.Id);
+            return LibrettoDatabase.PurchaseIntegration.Delete(purchaseInformation.Id);
         }
 
         /// <summary>
@@ -140,7 +108,7 @@ namespace LibrettoWCF
         public Book GetBookById(string bookIdentifier)
         {
             setCrossOrigin();
-            return Books.Lookup(new Guid(bookIdentifier));
+            return LibrettoDatabase.BookIntegration.Lookup(new Guid(bookIdentifier));
         }
 
         /// <summary>
@@ -150,7 +118,7 @@ namespace LibrettoWCF
         public List<Book> GetBooksList()
         {
             setCrossOrigin();
-            return Books.List();
+            return LibrettoDatabase.BookIntegration.List();
         }
 
         /// <summary>
@@ -161,7 +129,7 @@ namespace LibrettoWCF
         public Customer GetCustomerById(string customerIdentifier)
         {
             setCrossOrigin();
-            return Customers.Lookup(new Guid(customerIdentifier));
+            return LibrettoDatabase.CustomerIntegration.Lookup(new Guid(customerIdentifier));
         }
 
         /// <summary>
@@ -171,7 +139,7 @@ namespace LibrettoWCF
         public List<Customer> GetCustomersList()
         {
             setCrossOrigin();
-            return Customers.List();
+            return LibrettoDatabase.CustomerIntegration.List();
         }
 
         /// <summary>
@@ -182,7 +150,7 @@ namespace LibrettoWCF
         public Purchase GetPurchaseById(string purchaseIdentifier)
         {
             setCrossOrigin();
-            return Purchases.Lookup(new Guid(purchaseIdentifier));
+            return LibrettoDatabase.PurchaseIntegration.Lookup(new Guid(purchaseIdentifier));
         }
 
         /// <summary>
@@ -192,7 +160,7 @@ namespace LibrettoWCF
         public List<Purchase> GetPurchasesList()
         {
             setCrossOrigin();
-            return Purchases.List();
+            return LibrettoDatabase.PurchaseIntegration.List();
         }
 
         /// <summary>
@@ -203,7 +171,7 @@ namespace LibrettoWCF
         public List<Customer> UpdateCustomer(Customer customerInformation)
         {
             setCrossOrigin();
-            return Customers.Update(customerInformation);
+            return LibrettoDatabase.CustomerIntegration.Update(customerInformation);
         }
 
         /// <summary>
@@ -214,7 +182,7 @@ namespace LibrettoWCF
         public List<Purchase> UpdatePurchase(Purchase purchaseInformation)
         {
             setCrossOrigin();
-            return Purchases.Update(purchaseInformation);
+            return LibrettoDatabase.PurchaseIntegration.Update(purchaseInformation);
         }
 
         /// <summary>
@@ -225,7 +193,7 @@ namespace LibrettoWCF
         public List<Book> UpdateBook(Book bookInformation)
         {
             setCrossOrigin();
-            return Books.Update(bookInformation);
+            return LibrettoDatabase.BookIntegration.Update(bookInformation);
         }
 
         /// <summary>
@@ -235,7 +203,7 @@ namespace LibrettoWCF
         public List<Order> GetOrdersList()
         {
             setCrossOrigin();
-            return Orders.List();
+            return LibrettoDatabase.OrderIntegration.List();
         }
 
         /// <summary>
@@ -246,7 +214,7 @@ namespace LibrettoWCF
         public Order GetOrderById(string orderIdentifier)
         {
             setCrossOrigin();
-            return Orders.Lookup(new Guid(orderIdentifier));
+            return LibrettoDatabase.OrderIntegration.Lookup(new Guid(orderIdentifier));
         }
 
         /// <summary>
@@ -257,23 +225,36 @@ namespace LibrettoWCF
         public string AddOrder(OrderForm orderInformation)
         {
             setCrossOrigin();
-            Order c = new Order();
-            c.Quantity = orderInformation.quantity;
-            c.Total = orderInformation.total;
-            c.BookId = new Guid(orderInformation.bookId);
-            c.CustomerId = new Guid(orderInformation.customerId);
-            c.BookTitle = orderInformation.bookTitle;
-            c.CustomerName = orderInformation.customerName;
 
-            Books.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+            if (LibrettoDatabase.OrderIntegration.Insert(new Order
+            {
+                Quantity = orderInformation.quantity,
+                Total = orderInformation.total,
+                BookId = new Guid(orderInformation.bookId),
+                CustomerId = new Guid(orderInformation.customerId),
+                BookTitle = orderInformation.bookTitle,
+                CustomerName = orderInformation.customerName
+            }))
+            {
+                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+            }
+            else
+            {
+                return "ERROR";
+            }
 
-            return Orders.Insert(c);
+            return "Ok";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<Order> GetOrdersByUser(string id)
         {
             setCrossOrigin();
-            return Orders.List(new Guid(id));
+            return LibrettoDatabase.OrderIntegration.List(new Guid(id));
         }
 
         /// <summary>
@@ -284,7 +265,7 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             setCrossOrigin();
-            return Orders.DeleteOrder(new Guid(orderInformation.Id));
+            return LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
         }
 
         /// <summary>
@@ -295,14 +276,26 @@ namespace LibrettoWCF
         public List<Order> UpdateOrder(Order orderInformation)
         {
             setCrossOrigin();
-            return Orders.Update(orderInformation);
+            return LibrettoDatabase.OrderIntegration.Update(orderInformation);
         }
 
-        public Customer Login(LoginForm creds)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginForm"></param>
+        /// <returns></returns>
+        public Customer Login(LoginForm loginForm)
         {
-            //TODO Ver palavra passe!
             setCrossOrigin();
-            return Customers.LookupEmail(creds.Email);
+
+            var customerInformation = LibrettoDatabase.CustomerIntegration.LookupByEmail(loginForm.Email);
+
+            if (customerInformation == null || loginForm.Password != customerInformation.Password)
+            {
+                return null;
+            }
+
+            return customerInformation;
         }
     }
 }

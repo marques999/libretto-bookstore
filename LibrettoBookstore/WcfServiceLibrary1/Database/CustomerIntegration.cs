@@ -51,9 +51,21 @@ namespace LibrettoWCF.Database
             return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
         }
 
-        public Customer LookupEmail(string email)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerEmail"></param>
+        /// <returns></returns>
+        public Customer LookupByEmail(string customerEmail)
         {
-            return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Email == email);
+            try
+            {
+                return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Email == customerEmail);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

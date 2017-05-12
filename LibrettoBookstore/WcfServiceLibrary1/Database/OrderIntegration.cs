@@ -39,14 +39,15 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Order Lookup(Guid transactionIdentifier)
         {
-            return _context.Orders.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+            try
+            {
+                return _context.Orders.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+            }
+            catch
+            {
+                return null;
+            }
         }
-
-        /*
-        public Dictionary<Guid, Order> List()
-        {
-            return _context.Orders.ToDictionary(transactionInformation => transactionInformation.Id, transactionInformation => transactionInformation);
-        }*/
 
         /// <summary>
         /// 
@@ -67,7 +68,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        public string Insert(Order transactionInformation)
+        public bool Insert(Order transactionInformation)
         {
             try
             {
@@ -76,10 +77,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return "ERROR";
+                return false;
             }
 
-            return "Ok";
+            return true;
         }
 
         /// <summary>
@@ -174,11 +175,11 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="order"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public List<Order> DeleteOrder(Guid id)
+        public List<Order> DeleteOrder(Guid orderIdentifier)
         {
-            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == id);
+            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
             if (sqlEntity == null)
             {
