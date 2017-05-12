@@ -71,16 +71,12 @@
     <Compile Include="Database\BookIntegration.cs" />
     <Compile Include="Database\CustomerIntegration.cs" />
     <Compile Include="Database\OrderIntegration.cs" />
-    <Compile Include="LibrettoDatabase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tools\EmailService.cs" />
-    <Compile Include="LibrettoServer.cs" />
     <Compile Include="Database\PurchaseIntegration.cs" />
-    <Compile Include="Tools\PasswordUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +119,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

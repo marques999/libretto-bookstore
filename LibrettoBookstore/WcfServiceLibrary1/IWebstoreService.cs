@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
@@ -33,7 +32,7 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookIdentifier"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -92,7 +91,7 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -157,7 +156,7 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseIdentifier"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -217,7 +216,7 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderIdentifier"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",

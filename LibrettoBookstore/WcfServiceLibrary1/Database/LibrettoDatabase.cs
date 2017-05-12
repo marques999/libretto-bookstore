@@ -1,8 +1,6 @@
-using System;
 using System.Data.Entity;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.ServiceModel;
+
 using Libretto.Model;
 using LibrettoWCF.Properties;
 
@@ -11,14 +9,51 @@ namespace LibrettoWCF.Database
     /// <summary>
     /// 
     /// </summary>
-    public class LibrettoDatabase : DbContext
+    internal class LibrettoDatabase : DbContext
     {
         /// <summary>
         /// 
         /// </summary>
-        public LibrettoDatabase() : base("name=LibrettoDatabase")
+        private LibrettoDatabase() : base("name=LibrettoDatabase")
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly LibrettoDatabase Instance = new LibrettoDatabase();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static BookIntegration BookIntegration
+        {
+            get;
+        } = new BookIntegration(Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static CustomerIntegration CustomerIntegration
+        {
+            get;
+        } = new CustomerIntegration(Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static OrderIntegration OrderIntegration
+        {
+            get;
+        } = new OrderIntegration(Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static PurchaseIntegration PurchaseIntegration
+        {
+            get;
+        } = new PurchaseIntegration(Instance);
 
         /// <summary>
         /// 
@@ -74,7 +109,7 @@ namespace LibrettoWCF.Database
         /// 
         /// </summary>
         /// <param name="baseDirectory"></param>
-        public void CreateDatabase(string baseDirectory)
+        public bool CreateDatabase(string baseDirectory)
         {
             using (var sqlConection = new SqlConnection
             {
@@ -87,26 +122,13 @@ namespace LibrettoWCF.Database
                     sqlConection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Debug.Print(ex.StackTrace);
+                    return false;
                 }
             }
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        private static void Main(string[] args)
-        {
-            using (var host = new ServiceHost(typeof(WebstoreService)))
-            {
-                host.Open();
-                Console.WriteLine(@"WebstoreService ready. Press any key to close.");
-                Console.ReadKey(true);
-                host.Close();
-            }
+            return true;
         }
     }
 }
