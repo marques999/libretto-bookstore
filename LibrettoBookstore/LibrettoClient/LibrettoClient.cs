@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 using Libretto.Forms;
 using Libretto.Model;
-using System.ServiceModel;
 
 namespace Libretto
 {
