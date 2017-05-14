@@ -18,8 +18,7 @@ namespace Libretto.Forms
         public StoreForm()
         {
             InitializeComponent();
-            Text = $@"Libreto Bookstore ({LibrettoClient.Instance.Email})";
-            _hasPermission = LibrettoClient.Instance.Permissions == Permissions.Administrator;
+            Text = $@"Libreto Bookstore ({LibrettoClient.Instance.Session.Name})";
         }
 
         /// <summary>
@@ -56,11 +55,6 @@ namespace Libretto.Forms
                 transactionList.Items.Remove(listItem);
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly bool _hasPermission;
 
         /// <summary>
         /// 
@@ -176,7 +170,7 @@ namespace Libretto.Forms
         private void UpdateButtons()
         {
             buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1;
-            buttonDelete.Enabled = _hasPermission && transactionList.SelectedItems.Count > 0;
+            buttonDelete.Enabled = LibrettoClient.Instance.IsAdministrator() && transactionList.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -208,7 +202,7 @@ namespace Libretto.Forms
         {
             customerName.Items.Add("");
             customerName.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
-            buttonDelete.Enabled = buttonManage.Enabled = _hasPermission;
+            buttonDelete.Enabled = buttonManage.Enabled = LibrettoClient.Instance.IsAdministrator();
             dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateToPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();

@@ -77,6 +77,7 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                customerInformation.Permissions = Permissions.Clerk;;
                 _context.Clerks.Add(customerInformation);
                 _context.SaveChanges();
             }

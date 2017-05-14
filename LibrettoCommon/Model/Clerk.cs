@@ -50,5 +50,15 @@ namespace Libretto.Model
             get;
             set;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember, Required]
+        public Permissions Permissions
+        {
+            get;
+            set;
+        } = Permissions.Clerk;
     }
 }

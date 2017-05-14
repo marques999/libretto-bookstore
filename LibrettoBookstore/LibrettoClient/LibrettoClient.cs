@@ -63,6 +63,15 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        public Clerk Session
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public StoreServiceClient Proxy
         {
             get;
@@ -74,7 +83,7 @@ namespace Libretto
         public List<Book> Books
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -83,7 +92,7 @@ namespace Libretto
         public List<Customer> Customers
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -97,20 +106,11 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public string Email
+        /// <returns></returns>
+        public bool IsAdministrator()
         {
-            get;
-            private set;
+            return Session?.Permissions == Permissions.Administrator;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Permissions Permissions
-        {
-            get;
-            private set;
-        } = Permissions.None;
 
         /// <summary>
         /// 
@@ -118,8 +118,7 @@ namespace Libretto
         /// <param name="clerkInformation"></param>
         public void Login(Clerk clerkInformation)
         {
-            Email = clerkInformation.Email;
-            Permissions = Permissions.Administrator;
+            Session = clerkInformation;
         }
 
         /// <summary>
@@ -127,8 +126,7 @@ namespace Libretto
         /// </summary>
         public void Logout()
         {
-            Email = null;
-            Permissions = Permissions.None;
+            Session = null;
         }
 
         /// <summary>

@@ -193,7 +193,19 @@ namespace LibrettoWCF
 
         public Clerk Login(LoginForm loginForm)
         {
-            return LibrettoDatabase.ClerkIntegration.LookupByEmail(loginForm.Email);
+            if (string.IsNullOrEmpty(loginForm?.Email) || string.IsNullOrEmpty(loginForm.Password))
+            {
+                return null;
+            }
+
+            var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(loginForm.Email);
+
+            if (clerkInformation == null || clerkInformation.Password != loginForm.Password)
+            {
+                return null;
+            }
+
+            return clerkInformation;
         }
 
         public List<Book> UpdateBook(Book bookInformation)
