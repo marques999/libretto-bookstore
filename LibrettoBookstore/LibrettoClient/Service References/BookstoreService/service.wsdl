@@ -90,18 +90,6 @@
   <wsdl:message name="IStoreService_InsertCustomer_OutputMessage">
     <wsdl:part name="parameters" element="tns:InsertCustomerResponse" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_DeleteCustomer_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteCustomer" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_DeleteCustomer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteCustomerResponse" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateCustomer_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateCustomer" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateCustomer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateCustomerResponse" />
-  </wsdl:message>
   <wsdl:message name="IStoreService_ListPurchases_InputMessage">
     <wsdl:part name="parameters" element="tns:ListPurchases" />
   </wsdl:message>
@@ -137,12 +125,6 @@
   </wsdl:message>
   <wsdl:message name="IStoreService_ListOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListOrdersResponse" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_ListOrdersByUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:ListOrdersByUser" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_ListOrdersByUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ListOrdersByUserResponse" />
   </wsdl:message>
   <wsdl:message name="IStoreService_LookupOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:LookupOrder" />
@@ -205,14 +187,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/InsertCustomer" message="tns:IStoreService_InsertCustomer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/InsertCustomerResponse" message="tns:IStoreService_InsertCustomer_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteCustomer">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/DeleteCustomer" message="tns:IStoreService_DeleteCustomer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/DeleteCustomerResponse" message="tns:IStoreService_DeleteCustomer_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateCustomer">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateCustomer" message="tns:IStoreService_UpdateCustomer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateCustomerResponse" message="tns:IStoreService_UpdateCustomer_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="ListPurchases">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/ListPurchases" message="tns:IStoreService_ListPurchases_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/ListPurchasesResponse" message="tns:IStoreService_ListPurchases_OutputMessage" />
@@ -236,10 +210,6 @@
     <wsdl:operation name="ListOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/ListOrders" message="tns:IStoreService_ListOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/ListOrdersResponse" message="tns:IStoreService_ListOrders_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ListOrdersByUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/ListOrdersByUser" message="tns:IStoreService_ListOrdersByUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/ListOrdersByUserResponse" message="tns:IStoreService_ListOrdersByUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="LookupOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/LookupOrder" message="tns:IStoreService_LookupOrder_InputMessage" />
@@ -342,24 +312,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DeleteCustomer">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/DeleteCustomer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateCustomer">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateCustomer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ListPurchases">
       <soap12:operation soapAction="http://tempuri.org/IStoreService/ListPurchases" style="document" />
       <wsdl:input>
@@ -407,15 +359,6 @@
     </wsdl:operation>
     <wsdl:operation name="ListOrders">
       <soap12:operation soapAction="http://tempuri.org/IStoreService/ListOrders" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ListOrdersByUser">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/ListOrdersByUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
