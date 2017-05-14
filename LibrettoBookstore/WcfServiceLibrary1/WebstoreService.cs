@@ -209,7 +209,8 @@ namespace LibrettoWCF
         public List<Customer> UpdateCustomer(Customer customerInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.CustomerIntegration.Update(customerInformation);
+            LibrettoDatabase.CustomerIntegration.Update(customerInformation);
+            return LibrettoDatabase.CustomerIntegration.List();
         }
 
         /// <summary>
@@ -220,7 +221,8 @@ namespace LibrettoWCF
         public List<Purchase> UpdatePurchase(Purchase purchaseInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.PurchaseIntegration.Update(purchaseInformation);
+            LibrettoDatabase.PurchaseIntegration.Update(purchaseInformation);
+            return LibrettoDatabase.PurchaseIntegration.List();
         }
 
         /// <summary>
@@ -231,7 +233,8 @@ namespace LibrettoWCF
         public List<Book> UpdateBook(Book bookInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.BookIntegration.Update(bookInformation);
+            LibrettoDatabase.BookIntegration.Update(bookInformation);
+            return LibrettoDatabase.BookIntegration.List();
         }
 
         /// <summary>
@@ -258,24 +261,25 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderForm"></param>
         /// <returns></returns>
-        public string AddOrder(OrderForm orderInformation)
+        public string AddOrder(OrderForm orderForm)
         {
             setCrossOrigin();
 
-            if (LibrettoDatabase.OrderIntegration.Insert(new Order
+            var orderInformation = new Order
             {
-                Quantity = orderInformation.quantity,
-                Total = orderInformation.total,
-                BookId = new Guid(orderInformation.bookId),
-                CustomerId = new Guid(orderInformation.customerId),
-                BookTitle = orderInformation.bookTitle,
-                CustomerName = orderInformation.customerName
-            }))
-            {
-                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+                Quantity = orderForm.quantity,
+                Total = orderForm.total,
+                BookId = new Guid(orderForm.bookId),
+                CustomerId = new Guid(orderForm.customerId),
+                BookTitle = orderForm.bookTitle,
+                CustomerName = orderForm.customerName
+            };
 
+            if (LibrettoDatabase.OrderIntegration.Insert(orderInformation))
+            {
+                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderForm.bookId), orderForm.quantity);
                 WarehouseQueue.Send(orderInformation);
             }
             else
@@ -311,7 +315,8 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
+            LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
+            return LibrettoDatabase.OrderIntegration.List();
         }
 
         /// <summary>

@@ -29,7 +29,14 @@ namespace LibrettoWCF.Database
         /// </summary>
         public int Count()
         {
-            return _context.Customers.Count();
+            try
+            {
+                return _context.Customers.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -38,7 +45,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public List<Customer> List()
         {
-            return _context.Customers.ToList();
+            try
+            {
+                return _context.Customers.ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -48,7 +62,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Customer Lookup(Guid customerIdentifier)
         {
-            return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
+            try
+            {
+                return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -73,7 +94,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public string Insert(Customer customerInformation)
+        public Response Insert(Customer customerInformation)
         {
             try
             {
@@ -82,10 +103,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return "ERROR!";
+                return Response.DatabaseError;
             }
 
-            return "Ok";
+            return Response.Success;
         }
 
         /// <summary>
@@ -93,28 +114,29 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public List<Customer> Update(Customer customerInformation)
+        public Response Update(Customer customerInformation)
         {
             var sqlEntity = _context.Customers.SingleOrDefault(previousCustomer => previousCustomer.Id == customerInformation.Id);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
+
+            sqlEntity.Name = customerInformation.Name;
+            sqlEntity.Email = customerInformation.Email;
+            sqlEntity.Location = customerInformation.Location;
 
             try
             {
-                sqlEntity.Name = customerInformation.Name;
-                sqlEntity.Email = customerInformation.Email;
-                sqlEntity.Location = customerInformation.Location;
                 _context.SaveChanges();
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Customers.ToList();
+            return Response.Success;
         }
 
         /// <summary>
@@ -122,13 +144,13 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
-        public List<Customer> Delete(Guid customerIdentifier)
+        public Response Delete(Guid customerIdentifier)
         {
             var sqlEntity = _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
 
             try
@@ -138,10 +160,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Customers.ToList();
+            return Response.Success;
         }
     }
 }

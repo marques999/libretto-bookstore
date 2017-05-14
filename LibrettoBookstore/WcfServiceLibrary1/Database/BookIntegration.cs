@@ -29,7 +29,14 @@ namespace LibrettoWCF.Database
         /// </summary>
         public int Count()
         {
-            return _context.Books.Count();
+            try
+            {
+                return _context.Books.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -38,7 +45,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public List<Book> List()
         {
-            return _context.Books.ToList();
+            try
+            {
+                return _context.Books.ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -48,32 +62,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Book Lookup(Guid bookIdentifier)
         {
-            return _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
-        }
-
-        public bool UpdateStock(Guid bookIdentifier, int quantity)
-        {
-            var book = _context.Books.SingleOrDefault(bookInfo => bookInfo.Id == bookIdentifier);
-
             try
             {
-                if (book.Stock >= quantity)
-                {
-                    book.Stock -= quantity;
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    return false;
-                }
-
+                return _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
             }
             catch
             {
-                return false;
+                return null;
             }
-
-            return true;
         }
 
         /// <summary>
@@ -81,7 +77,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public List<Book> Insert(Book bookInformation)
+        public Response Insert(Book bookInformation)
         {
             try
             {
@@ -90,10 +86,45 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Books.ToList();
+            return Response.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bookIdentifier"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public Response UpdateStock(Guid bookIdentifier, int quantity)
+        {
+            var bookInformation = _context.Books.SingleOrDefault(bookInfo => bookInfo.Id == bookIdentifier);
+
+            if (bookInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            try
+            {
+                if (bookInformation.Stock >= quantity)
+                {
+                    bookInformation.Stock -= quantity;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return Response.InvalidArguments;
+                }
+            }
+            catch
+            {
+                return Response.DatabaseError;
+            }
+
+            return Response.Success;
         }
 
         /// <summary>
@@ -101,28 +132,29 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public List<Book> Update(Book bookInformation)
+        public Response Update(Book bookInformation)
         {
             var sqlEntity = _context.Books.SingleOrDefault(previousBook => previousBook.Id == bookInformation.Id);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
+
+            sqlEntity.Price = bookInformation.Price;
+            sqlEntity.Stock = bookInformation.Stock;
+            sqlEntity.Title = bookInformation.Title;
 
             try
             {
-                sqlEntity.Price = bookInformation.Price;
-                sqlEntity.Stock = bookInformation.Stock;
-                sqlEntity.Title = bookInformation.Title;
                 _context.SaveChanges();
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Books.ToList();
+            return Response.Success;
         }
 
         /// <summary>
@@ -130,13 +162,13 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        public List<Book> Delete(Guid bookIdentifier)
+        public Response Delete(Guid bookIdentifier)
         {
             var sqlEntity = _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
 
             try
@@ -146,10 +178,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Books.ToList();
+            return Response.Success;
         }
     }
 }

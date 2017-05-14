@@ -29,7 +29,14 @@ namespace LibrettoWCF.Database
         /// </summary>
         public int Count()
         {
-            return _context.Orders.Count();
+            try
+            {
+                return _context.Orders.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -55,12 +62,31 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public List<Order> List()
         {
-            return _context.Orders.ToList();
+            try
+            {
+                return _context.Orders.ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<Order> List(Guid id)
         {
-            return _context.Orders.Where(elem => elem.CustomerId == id).ToList();
+            try
+            {
+                return _context.Orders.Where(elem => elem.CustomerId == id).ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -68,7 +94,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        public bool Insert(Order transactionInformation)
+        public Response Insert(Order transactionInformation)
         {
             try
             {
@@ -77,10 +103,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return false;
+                return Response.DatabaseError;
             }
 
-            return true;
+            return Response.Success;
         }
 
         /// <summary>
@@ -88,7 +114,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
-        public List<Order> DispatchOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response DispatchOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
             return UpdateStatus(transactionIdentifier, Status.WaitingDispatch, transactionTimestamp);
         }
@@ -98,7 +124,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
-        public List<Order> ExecuteOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response ExecuteOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
             return UpdateStatus(transactionIdentifier, Status.DispatchComplete, transactionTimestamp);
         }
@@ -109,7 +135,7 @@ namespace LibrettoWCF.Database
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        public List<Order> CancelOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response CancelOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
         {
             return UpdateStatus(transactionIdentifier, Status.OrderCancelled, transactionTimestamp);
         }
@@ -121,26 +147,28 @@ namespace LibrettoWCF.Database
         /// <param name="transactionStatus"></param>
         /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        private List<Order> UpdateStatus(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
+        private Response UpdateStatus(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
+
+            sqlEntity.Status = transactionStatus;
+            sqlEntity.StatusTimestamp = transactionTimestamp;
+
             try
             {
-                sqlEntity.Status = transactionStatus;
-                sqlEntity.StatusTimestamp = transactionTimestamp;
                 _context.SaveChanges();
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Orders.ToList();
+            return Response.Success;
         }
 
         /// <summary>
@@ -148,28 +176,28 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public List<Order> Update(Order orderInformation)
+        public Response Update(Order orderInformation)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousOrder => previousOrder.Id == orderInformation.Id);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
+
+            sqlEntity.Total = orderInformation.Total;
+            sqlEntity.Quantity = orderInformation.Quantity;
 
             try
             {
-                sqlEntity.Quantity = orderInformation.Quantity;
-                sqlEntity.Timestamp = orderInformation.Timestamp;
-                sqlEntity.Total = orderInformation.Total;
                 _context.SaveChanges();
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Orders.ToList();
+            return Response.Success;
         }
 
         /// <summary>
@@ -177,13 +205,13 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public List<Order> DeleteOrder(Guid orderIdentifier)
+        public Response DeleteOrder(Guid orderIdentifier)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
 
             try
@@ -193,10 +221,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Orders.ToList();
+            return Response.Success;
         }
     }
 }

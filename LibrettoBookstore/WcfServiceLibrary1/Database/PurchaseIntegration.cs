@@ -29,7 +29,14 @@ namespace LibrettoWCF.Database
         /// </summary>
         public int Count()
         {
-            return _context.Purchases.Count();
+            try
+            {
+                return _context.Purchases.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -39,7 +46,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Purchase Lookup(Guid transactionIdentifier)
         {
-            return _context.Purchases.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+            try
+            {
+                return _context.Purchases.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -48,7 +62,14 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public List<Purchase> List()
         {
-            return _context.Purchases.ToList();
+            try
+            {
+                return _context.Purchases.ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public List<Purchase> List(Guid id)
@@ -81,28 +102,28 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public List<Purchase> Update(Purchase purchaseInformation)
+        public Response Update(Purchase purchaseInformation)
         {
             var sqlEntity = _context.Purchases.SingleOrDefault(previousPurchase => previousPurchase.Id == purchaseInformation.Id);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
+
+            sqlEntity.Total = purchaseInformation.Total;
+            sqlEntity.Quantity = purchaseInformation.Quantity;
 
             try
             {
-                sqlEntity.Quantity = purchaseInformation.Quantity;
-                sqlEntity.Timestamp = purchaseInformation.Timestamp;
-                sqlEntity.Total = purchaseInformation.Total;
                 _context.SaveChanges();
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Purchases.ToList();
+            return Response.Success;
         }
 
         /// <summary>
@@ -110,13 +131,13 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        public List<Purchase> Delete(Guid transactionIdentifier)
+        public Response Delete(Guid transactionIdentifier)
         {
             var sqlEntity = _context.Purchases.SingleOrDefault(purchaseInformation => purchaseInformation.Id == transactionIdentifier);
 
             if (sqlEntity == null)
             {
-                return null;
+                return Response.NotFound;
             }
 
             try
@@ -126,10 +147,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return Response.DatabaseError;
             }
 
-            return _context.Purchases.ToList();
+            return Response.Success;
         }
     }
 }

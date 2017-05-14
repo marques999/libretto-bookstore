@@ -15,6 +15,16 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="loginForm"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Clerk Login(LoginForm loginForm);
+
+        //----------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [OperationContract]
         List<Book> GetBooksList();
@@ -22,10 +32,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="bookIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Book GetBookById(string id);
+        Book GetBookById(string bookIdentifier);
 
         /// <summary>
         /// 
@@ -33,7 +43,7 @@ namespace LibrettoWCF
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Book> AddBook(Book bookInformation);
+        Response AddBook(Book bookInformation);
 
         /// <summary>
         /// 
@@ -41,7 +51,7 @@ namespace LibrettoWCF
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Book> DeleteBook(Book bookInformation);
+        Response DeleteBook(Book bookInformation);
 
         /// <summary>
         /// 
@@ -49,9 +59,9 @@ namespace LibrettoWCF
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Book> UpdateBook(Book bookInformation);
+        Response UpdateBook(Book bookInformation);
 
-        // ----------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------
 
         /// <summary>
         /// 
@@ -63,18 +73,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="customerIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Customer GetCustomerById(string id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="loginForm"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Clerk Login(LoginForm loginForm);
+        Customer GetCustomerById(string customerIdentifier);
 
         /// <summary>
         /// 
@@ -82,15 +84,7 @@ namespace LibrettoWCF
         /// <param name="customerInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        string AddCustomer(Customer customerInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerInfromation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        List<Customer> DeleteCustomer(Customer customerInfromation);
+        Response AddCustomer(Customer customerInformation);
 
         /// <summary>
         /// 
@@ -98,7 +92,15 @@ namespace LibrettoWCF
         /// <param name="customerInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Customer> UpdateCustomer(Customer customerInformation);
+        Response DeleteCustomer(Customer customerInformation);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerInformation"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Response UpdateCustomer(Customer customerInformation);
 
         //---------------------------------------------------------------------------------------------------------
 
@@ -112,10 +114,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Purchase GetPurchaseById(string id);
+        Purchase GetPurchaseById(string purchaseIdentifier);
 
         /// <summary>
         /// 
@@ -131,7 +133,7 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Purchase> DeletePurchase(Purchase purchaseInformation);
+        Response DeletePurchase(Purchase purchaseInformation);
 
         /// <summary>
         /// 
@@ -139,7 +141,7 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Purchase> UpdatePurchase(Purchase purchaseInformation);
+        Response UpdatePurchase(Purchase purchaseInformation);
 
         //---------------------------------------------------------------------------------------------------------
 
@@ -153,26 +155,18 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Order GetOrderById(string id);
+        Order GetOrderById(string orderIdentifier);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="customerIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Order> GetOrdersByUser(string id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        string AddOrder(OrderForm orderInformation);
+        List<Order> GetOrdersByUser(string customerIdentifier);
 
         /// <summary>
         /// 
@@ -180,7 +174,7 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Order> DeleteOrder(OrderId orderInformation);
+        Response AddOrder(OrderForm orderInformation);
 
         /// <summary>
         /// 
@@ -188,6 +182,14 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Order> UpdateOrder(Order orderInformation);
+        Response DeleteOrder(OrderId orderInformation);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Response UpdateOrder(Order orderInformation);
     }
 }

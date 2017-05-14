@@ -37,7 +37,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public List<Book> AddBook(Book bookInformation)
+        public Response AddBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Insert(bookInformation);
         }
@@ -47,9 +47,8 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public string AddCustomer(Customer customerInformation)
+        public Response AddCustomer(Customer customerInformation)
         {
-            customerInformation.Id = Guid.NewGuid();
             return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
         }
 
@@ -58,9 +57,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public string AddOrder(OrderForm orderInformation)
+        public Response AddOrder(OrderForm orderInformation)
         {
-            if (LibrettoDatabase.OrderIntegration.Insert(new Order
+            var operationResult = LibrettoDatabase.OrderIntegration.Insert(new Order
             {
                 Quantity = orderInformation.quantity,
                 Total = orderInformation.total,
@@ -68,18 +67,17 @@ namespace LibrettoWCF
                 CustomerId = new Guid(orderInformation.customerId),
                 BookTitle = orderInformation.bookTitle,
                 CustomerName = orderInformation.customerName
-            }))
-            {
-                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+            });
 
-                WarehouseQueue.Send(orderInformation);
-            }
-            else
+            if (operationResult != Response.Success)
             {
-                return "ERROR";
+                return operationResult;
             }
 
-            return "Ok";
+            LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+            WarehouseQueue.Send(orderInformation);
+
+            return Response.Success;
         }
 
         public string AddPurchase(PurchaseTemplate purchaseInformation)
@@ -111,7 +109,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
-        public List<Book> DeleteBook(Book bookInformation)
+        public Response DeleteBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Delete(bookInformation.Id);
         }
@@ -119,11 +117,11 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerInfromation"></param>
+        /// <param name="customerInformation"></param>
         /// <returns></returns>
-        public List<Customer> DeleteCustomer(Customer customerInfromation)
+        public Response DeleteCustomer(Customer customerInformation)
         {
-            return LibrettoDatabase.CustomerIntegration.Delete(customerInfromation.Id);
+            return LibrettoDatabase.CustomerIntegration.Delete(customerInformation.Id);
         }
 
         /// <summary>
@@ -131,7 +129,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public List<Order> DeleteOrder(OrderId orderInformation)
+        public Response DeleteOrder(OrderId orderInformation)
         {
             return LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
         }
@@ -141,7 +139,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public List<Purchase> DeletePurchase(Purchase purchaseInformation)
+        public Response DeletePurchase(Purchase purchaseInformation)
         {
             return LibrettoDatabase.PurchaseIntegration.Delete(purchaseInformation.Id);
         }
@@ -149,11 +147,11 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        public Book GetBookById(string id)
+        public Book GetBookById(string bookIdentifier)
         {
-            return LibrettoDatabase.BookIntegration.Lookup(new Guid(id));
+            return LibrettoDatabase.BookIntegration.Lookup(new Guid(bookIdentifier));
         }
 
         /// <summary>
@@ -168,43 +166,75 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="customerIdentifier"></param>
         /// <returns></returns>
-        public Customer GetCustomerById(string id)
+        public Customer GetCustomerById(string customerIdentifier)
         {
-            return LibrettoDatabase.CustomerIntegration.Lookup(new Guid(id));
+            return LibrettoDatabase.CustomerIntegration.Lookup(new Guid(customerIdentifier));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Customer> GetCustomersList()
         {
             return LibrettoDatabase.CustomerIntegration.List();
         }
 
-        public Order GetOrderById(string id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderIdentifier"></param>
+        /// <returns></returns>
+        public Order GetOrderById(string orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Lookup(new Guid(id));
+            return LibrettoDatabase.OrderIntegration.Lookup(new Guid(orderIdentifier));
         }
 
-        public List<Order> GetOrdersByUser(string id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerIdentifier"></param>
+        /// <returns></returns>
+        public List<Order> GetOrdersByUser(string customerIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.List(new Guid(id));
+            return LibrettoDatabase.OrderIntegration.List(new Guid(customerIdentifier));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Order> GetOrdersList()
         {
             return LibrettoDatabase.OrderIntegration.List();
         }
 
-        public Purchase GetPurchaseById(string id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseIdentifier"></param>
+        /// <returns></returns>
+        public Purchase GetPurchaseById(string purchaseIdentifier)
         {
-            return LibrettoDatabase.PurchaseIntegration.Lookup(new Guid(id));
+            return LibrettoDatabase.PurchaseIntegration.Lookup(new Guid(purchaseIdentifier));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Purchase> GetPurchasesList()
         {
             return LibrettoDatabase.PurchaseIntegration.List();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginForm"></param>
+        /// <returns></returns>
         public Clerk Login(LoginForm loginForm)
         {
             if (string.IsNullOrEmpty(loginForm?.Email) || string.IsNullOrEmpty(loginForm.Password))
@@ -222,22 +252,42 @@ namespace LibrettoWCF
             return clerkInformation;
         }
 
-        public List<Book> UpdateBook(Book bookInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bookInformation"></param>
+        /// <returns></returns>
+        public Response UpdateBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Update(bookInformation);
         }
 
-        public List<Customer> UpdateCustomer(Customer customerInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerInformation"></param>
+        /// <returns></returns>
+        public Response UpdateCustomer(Customer customerInformation)
         {
             return LibrettoDatabase.CustomerIntegration.Update(customerInformation);
         }
 
-        public List<Order> UpdateOrder(Order orderInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public Response UpdateOrder(Order orderInformation)
         {
             return LibrettoDatabase.OrderIntegration.Update(orderInformation);
         }
 
-        public List<Purchase> UpdatePurchase(Purchase purchaseInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
+        public Response UpdatePurchase(Purchase purchaseInformation)
         {
             return LibrettoDatabase.PurchaseIntegration.Update(purchaseInformation);
         }
