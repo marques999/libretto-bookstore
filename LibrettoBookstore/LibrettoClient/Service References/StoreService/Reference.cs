@@ -58,10 +58,10 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        Libretto.Model.Customer Login(LibrettoWCF.Model.LoginForm loginForm);
+        Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Customer> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
+        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddCustomer", ReplyAction="http://tempuri.org/IStoreService/AddCustomerResponse")]
         string AddCustomer(Libretto.Model.Customer customerInformation);
@@ -231,11 +231,11 @@ namespace Libretto.StoreService {
             return base.Channel.GetCustomerByIdAsync(id);
         }
         
-        public Libretto.Model.Customer Login(LibrettoWCF.Model.LoginForm loginForm) {
+        public Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm) {
             return base.Channel.Login(loginForm);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Customer> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
+        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
             return base.Channel.LoginAsync(loginForm);
         }
         

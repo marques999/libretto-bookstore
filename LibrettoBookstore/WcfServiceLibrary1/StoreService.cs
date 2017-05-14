@@ -191,16 +191,9 @@ namespace LibrettoWCF
             return LibrettoDatabase.PurchaseIntegration.List();
         }
 
-        public Customer Login(LoginForm loginForm)
+        public Clerk Login(LoginForm loginForm)
         {
-            var customerInformation = LibrettoDatabase.CustomerIntegration.LookupByEmail(loginForm.Email);
-
-            if (customerInformation == null)// || loginForm.Password != customerInformation.Password)
-            {
-                return null;
-            }
-
-            return customerInformation;
+            return LibrettoDatabase.ClerkIntegration.LookupByEmail(loginForm.Email);
         }
 
         public List<Book> UpdateBook(Book bookInformation)

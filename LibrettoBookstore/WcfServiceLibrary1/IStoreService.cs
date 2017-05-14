@@ -74,7 +74,7 @@ namespace LibrettoWCF
         /// <param name="loginForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Customer Login(LoginForm loginForm);
+        Clerk Login(LoginForm loginForm);
 
         /// <summary>
         /// 

@@ -10,7 +10,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    internal partial class StoreForm : Form
+    internal sealed partial class StoreForm : Form
     {
         /// <summary>
         /// 
@@ -18,6 +18,7 @@ namespace Libretto.Forms
         public StoreForm()
         {
             InitializeComponent();
+            Text = $@"Libreto Bookstore ({LibrettoClient.Instance.Email})";
             _hasPermission = LibrettoClient.Instance.Permissions == Permissions.Administrator;
         }
 
@@ -75,7 +76,7 @@ namespace Libretto.Forms
                 return;
             }
 
-            var orderInformation = LibrettoClient.Instance.Orders[listItem.Index];
+            var orderInformation = LibrettoClient.Instance.Transactions[listItem.Index] as Order;
 
             if (orderInformation == null)
             {
@@ -132,24 +133,27 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateFilter()
         {
-           transactionList.Items.Clear();
-           transactionList.Items.AddRange(LibrettoClient.Instance.Orders.Where(FilterOrder).Select(ParseTransaction).ToArray());
+            transactionList.Items.Clear();
+            transactionList.Items.AddRange(LibrettoClient.Instance.Transactions.Where(FilterOrder).Select(ParseTransaction).ToArray());
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionInformation"></param>
-        private void InsertOrder(Order transactionInformation)
+        private void InsertOrder(Transaction transactionInformation)
         {
-            LibrettoClient.Instance.Orders.Add(transactionInformation);
+            LibrettoClient.Instance.Transactions.Add(transactionInformation);
             transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 
-
-        private void InsertPurchase(Purchase transactionInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
+        private void InsertPurchase(Transaction transactionInformation)
         {
-            LibrettoClient.Instance.Purchases.Add(transactionInformation);
+            LibrettoClient.Instance.Transactions.Add(transactionInformation);
             transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 

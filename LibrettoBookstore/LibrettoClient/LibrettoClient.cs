@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Libretto.Forms;
 using Libretto.Model;
+using Libretto.StoreService;
 
 namespace Libretto
 {
@@ -12,38 +13,60 @@ namespace Libretto
     /// </summary>
     internal class LibrettoClient
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static LibrettoClient _instance;
 
-        public static StoreService.StoreServiceClient proxy;
+        /// <summary>
+        /// 
+        /// </summary>
+        public static LibrettoClient Instance => _instance ?? (_instance = new LibrettoClient());
 
+        /// <summary>
+        /// 
+        /// </summary>
         private LibrettoClient()
         {
-            Customers = proxy.GetCustomersList();
-            Books = proxy.GetBooksList();
-            Orders = proxy.GetOrdersList();
-            Purchases = proxy.GetPurchasesList();
-
-            
-            foreach(Order b in Orders)
-            {
-                
-            }
+            Proxy = new StoreServiceClient();
+            RefreshBooks();
+            RefreshCustomers();
+            RefreshTransactions();
         }
-
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        private DateTime RandomTimestamp(DateTime start, DateTime end)
+        public void RefreshBooks()
         {
-            return start + new TimeSpan(0, _randomGenerator.Next(0, (int)(end - start).TotalMinutes), 0);
+            Books = Proxy.GetBooksList();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly Random _randomGenerator = new Random();
+        public void RefreshCustomers()
+        {
+            Customers = Proxy.GetCustomersList();
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshTransactions()
+        {
+            Transactions.Clear();
+            Transactions.AddRange(Proxy.GetOrdersList());
+            Transactions.AddRange(Proxy.GetPurchasesList());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StoreServiceClient Proxy
+        {
+            get;
+        }
 
         /// <summary>
         /// 
@@ -51,23 +74,8 @@ namespace Libretto
         public List<Book> Books
         {
             get;
-        } = new List<Book>();
-
-        public List<Purchase> Purchases
-        {
-            get;
-        } = new List<Purchase>();
-
-        public List<Order> Orders
-        {
-            get;
-        } = new List<Order>();
-
-        public List<Transaction> Transactions
-        {
-            get;
             set;
-        } = new List<Transaction>();
+        }
 
         /// <summary>
         /// 
@@ -76,7 +84,15 @@ namespace Libretto
         {
             get;
             set;
-        } = new List<Customer>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Transaction> Transactions
+        {
+            get;
+        } = new List<Transaction>();
 
         /// <summary>
         /// 
@@ -99,10 +115,10 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userEmail"></param>
-        public void Login(string userEmail)
+        /// <param name="clerkInformation"></param>
+        public void Login(Clerk clerkInformation)
         {
-            Email = userEmail;
+            Email = clerkInformation.Email;
             Permissions = Permissions.Administrator;
         }
 
@@ -118,21 +134,9 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private static LibrettoClient _instance;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static LibrettoClient Instance => _instance ?? (_instance = new LibrettoClient());
-
-        /// <summary>
-        /// 
-        /// </summary>
         [STAThread]
         private static void Main()
         {
-            proxy = new StoreService.StoreServiceClient();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
