@@ -54,7 +54,7 @@ namespace Libretto.Forms
             CustomerInformation.Name = nameField.Text.Trim();
             CustomerInformation.Email = emailField.Text.Trim();
             CustomerInformation.Location = locationField.Text.Trim();
-            LibrettoClient.Instance.Proxy.AddCustomer(CustomerInformation);
+            LibrettoClient.Instance.Proxy.InsertCustomer(CustomerInformation);
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace Libretto
         /// </summary>
         public void RefreshBooks()
         {
-            Books = Proxy.GetBooksList();
+            Books = Proxy.ListBooks();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Libretto
         /// </summary>
         public void RefreshCustomers()
         {
-            Customers = Proxy.GetCustomersList();
+            Customers = Proxy.ListCustomers();
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace Libretto
         public void RefreshTransactions()
         {
             Transactions.Clear();
-            Transactions.AddRange(Proxy.GetOrdersList());
-            Transactions.AddRange(Proxy.GetPurchasesList());
+            Transactions.AddRange(Proxy.ListOrders());
+            Transactions.AddRange(Proxy.ListPurchases());
         }
 
         /// <summary>

@@ -67,7 +67,7 @@ namespace Libretto.Forms
             BookInformation.Title = titleField.Text.Trim();
             BookInformation.Stock = Convert.ToInt32(stockField.Value);
             BookInformation.Price = Convert.ToDouble(priceField.Value);
-            LibrettoClient.Instance.Proxy.AddBook(BookInformation);
+            LibrettoClient.Instance.Proxy.InsertBook(BookInformation);
         }
 
         /// <summary>
