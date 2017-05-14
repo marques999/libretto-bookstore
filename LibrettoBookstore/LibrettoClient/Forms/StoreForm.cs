@@ -219,21 +219,22 @@ namespace Libretto.Forms
         {
             var orderForm = new OrderForm();
 
-            if (orderForm.ShowDialog(this) == DialogResult.OK)
+            if (orderForm.ShowDialog(this) != DialogResult.OK)
             {
-                InsertOrder(orderForm.Information);
-
-                Model.OrderForm order = new Model.OrderForm();
-
-                order.bookId = orderForm.Information.BookId.ToString();
-                order.customerId = orderForm.Information.CustomerId.ToString();
-                order.customerName = orderForm.Information.CustomerName;
-                order.bookTitle = orderForm.Information.BookTitle;
-                order.quantity = orderForm.Information.Quantity;
-                order.total = orderForm.Information.Total;
-
-                LibrettoClient.Instance.Proxy.AddOrder(order);
+                return;
             }
+
+            InsertOrder(orderForm.Information);
+
+            LibrettoClient.Instance.Proxy.AddOrder(new OrderTemplate()
+            {
+                bookId = orderForm.Information.BookId.ToString(),
+                customerId = orderForm.Information.CustomerId.ToString(),
+                customerName = orderForm.Information.CustomerName,
+                bookTitle = orderForm.Information.BookTitle,
+                quantity = orderForm.Information.Quantity,
+                total = orderForm.Information.Total
+            });
         }
 
         /// <summary>
@@ -315,21 +316,22 @@ namespace Libretto.Forms
         {
             var purchaseForm = new PurchaseForm();
 
-            if (purchaseForm.ShowDialog(this) == DialogResult.OK)
+            if (purchaseForm.ShowDialog(this) != DialogResult.OK)
             {
-                InsertPurchase(purchaseForm.Information);
-
-                Model.PurchaseTemplate purchase = new Model.PurchaseTemplate();
-
-                purchase.bookId = purchaseForm.Information.BookId.ToString();
-                purchase.customerId = purchaseForm.Information.CustomerId.ToString();
-                purchase.customerName = purchaseForm.Information.CustomerName;
-                purchase.bookTitle = purchaseForm.Information.BookTitle;
-                purchase.quantity = purchaseForm.Information.Quantity;
-                purchase.total = purchaseForm.Information.Total;
-
-                LibrettoClient.Instance.Proxy.AddPurchase(purchase);
+                return;
             }
+
+            InsertPurchase(purchaseForm.Information);
+
+            LibrettoClient.Instance.Proxy.AddPurchase(new OrderTemplate
+            {
+                bookId = purchaseForm.Information.BookId.ToString(),
+                customerId = purchaseForm.Information.CustomerId.ToString(),
+                customerName = purchaseForm.Information.CustomerName,
+                bookTitle = purchaseForm.Information.BookTitle,
+                quantity = purchaseForm.Information.Quantity,
+                total = purchaseForm.Information.Total
+            });
         }
     }
 }

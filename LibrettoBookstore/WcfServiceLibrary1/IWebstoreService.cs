@@ -125,14 +125,14 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerInfromation"></param>
+        /// <param name="customerInformation"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "DELETE",
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "/customers/delete")]
-        List<Customer> DeleteCustomer(Customer customerInfromation);
+        List<Customer> DeleteCustomer(Customer customerInformation);
 
         /// <summary>
         /// 
@@ -186,7 +186,7 @@ namespace LibrettoWCF
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "purchases/add")]
-        string AddPurchase(PurchaseTemplate purchaseInformation);
+        string AddPurchase(OrderTemplate purchaseInformation);
 
         /// <summary>
         /// 
@@ -252,7 +252,7 @@ namespace LibrettoWCF
                     ResponseFormat = WebMessageFormat.Json,
                     BodyStyle = WebMessageBodyStyle.Bare,
                     UriTemplate = "orders/add")]
-        string AddOrder(OrderForm orderInformation);
+        string AddOrder(OrderTemplate orderInformation);
 
         /// <summary>
         /// 

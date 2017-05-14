@@ -2,8 +2,9 @@
 using System.Messaging;
 using System.Collections.Generic;
 
-using Libretto.Messaging;
 using Libretto.Model;
+using Libretto.Messaging;
+using Libretto.Warehouse;
 
 using LibrettoWCF.Model;
 using LibrettoWCF.Database;
@@ -21,7 +22,6 @@ namespace LibrettoWCF
         private MessageQueue InvoiceQueue
         {
             get;
-            set;
         } = MessagingCommon.InitializeInvoiceQueue();
 
         /// <summary>
@@ -55,54 +55,78 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderForm"></param>
         /// <returns></returns>
-        public Response AddOrder(OrderForm orderInformation)
+        public Response AddOrder(OrderTemplate orderForm)
         {
-            var operationResult = LibrettoDatabase.OrderIntegration.Insert(new Order
+            var orderInformation = new Order
             {
-                Quantity = orderInformation.quantity,
-                Total = orderInformation.total,
-                BookId = new Guid(orderInformation.bookId),
-                CustomerId = new Guid(orderInformation.customerId),
-                BookTitle = orderInformation.bookTitle,
-                CustomerName = orderInformation.customerName
-            });
+                Quantity = orderForm.quantity,
+                Total = orderForm.total,
+                BookId = new Guid(orderForm.bookId),
+                CustomerId = new Guid(orderForm.customerId),
+                BookTitle = orderForm.bookTitle,
+                CustomerName = orderForm.customerName
+            };
+
+            var operationResult = LibrettoDatabase.OrderIntegration.Insert(orderInformation);
 
             if (operationResult != Response.Success)
             {
                 return operationResult;
             }
 
-            LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
-            WarehouseQueue.Send(orderInformation);
+            LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
+
+            WarehouseQueue.Send(new WarehouseOrder
+            {
+                Total = orderInformation.Total,
+                Identifier = orderInformation.Id,
+                Status = WarehouseStatus.Pending,
+                Title = orderInformation.BookTitle,
+                Quantity = orderInformation.Quantity,
+                DateCreated = orderInformation.Timestamp,
+                DateModified = orderInformation.StatusTimestamp
+            });
 
             return Response.Success;
         }
 
-        public string AddPurchase(PurchaseTemplate purchaseInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseForm"></param>
+        /// <returns></returns>
+        public Response AddPurchase(OrderTemplate purchaseForm)
         {
-            if (LibrettoDatabase.PurchaseIntegration.Insert(new Purchase
+            var purchaseInformation = new Purchase
             {
-                Quantity = purchaseInformation.quantity,
-                Total = purchaseInformation.total,
-                BookId = new Guid(purchaseInformation.bookId),
-                CustomerId = new Guid(purchaseInformation.customerId),
-                BookTitle = purchaseInformation.bookTitle,
-                CustomerName = purchaseInformation.customerName
-            }))
-            {
-                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(purchaseInformation.bookId), purchaseInformation.quantity);
+                Quantity = purchaseForm.quantity,
+                Total = purchaseForm.total,
+                BookId = new Guid(purchaseForm.bookId),
+                CustomerId = new Guid(purchaseForm.customerId),
+                BookTitle = purchaseForm.bookTitle,
+                CustomerName = purchaseForm.customerName
+            };
 
-                InvoiceQueue.Send(purchaseInformation);
-            }
-            else
+            var operationResult = LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
+
+            if (operationResult != Response.Success)
             {
                 return operationResult;
             }
 
-            LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
-            WarehouseQueue.Send(orderInformation);
+            LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
+
+            InvoiceQueue.Send(new Invoice
+            {
+                Total = purchaseInformation.Total,
+                Identifier = purchaseInformation.Id,
+                Title = purchaseInformation.BookTitle,
+                Quantity = purchaseInformation.Quantity,
+                Timestamp = purchaseInformation.Timestamp,
+                Customer = purchaseInformation.CustomerName
+            });
 
             return Response.Success;
         }
@@ -132,9 +156,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response DeleteOrder(OrderId orderInformation)
+        public Response DeleteOrder(Order orderInformation)
         {
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
+            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderInformation.Id);
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace Libretto.Model
     /// 
     /// </summary>
     [DataContract]
-    public class OrderForm
+    public class OrderTemplate
     {
         /// <summary>
         /// 

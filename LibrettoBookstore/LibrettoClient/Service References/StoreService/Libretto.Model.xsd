@@ -1,36 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Libretto.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Libretto.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="ArrayOfBook">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="tns:Book" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBook" nillable="true" type="tns:ArrayOfBook" />
-  <xs:complexType name="Book">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="ser:guid" />
-      <xs:element minOccurs="0" name="Price" type="xs:double" />
-      <xs:element minOccurs="0" name="Stock" type="xs:int" />
-      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Book" nillable="true" type="tns:Book" />
-  <xs:complexType name="ArrayOfCustomer">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Customer" nillable="true" type="tns:Customer" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfCustomer" nillable="true" type="tns:ArrayOfCustomer" />
-  <xs:complexType name="Customer">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="ser:guid" />
-      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Customer" nillable="true" type="tns:Customer" />
   <xs:complexType name="Clerk">
     <xs:sequence>
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
@@ -48,6 +18,91 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Permissions" nillable="true" type="tns:Permissions" />
+  <xs:complexType name="ArrayOfBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="tns:Book" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBook" nillable="true" type="tns:ArrayOfBook" />
+  <xs:complexType name="Book">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Price" type="xs:double" />
+      <xs:element minOccurs="0" name="Stock" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Book" nillable="true" type="tns:Book" />
+  <xs:simpleType name="Response">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DatabaseError">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Success">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotFound">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BadRequest">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PermissionDenied">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InvalidArguments">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SessionExists">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Response" nillable="true" type="tns:Response" />
+  <xs:complexType name="ArrayOfCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Customer" nillable="true" type="tns:Customer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomer" nillable="true" type="tns:ArrayOfCustomer" />
+  <xs:complexType name="Customer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Customer" nillable="true" type="tns:Customer" />
   <xs:complexType name="ArrayOfPurchase">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Purchase" nillable="true" type="tns:Purchase" />
@@ -75,7 +130,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Transaction" nillable="true" type="tns:Transaction" />
-  <xs:complexType name="PurchaseTemplate">
+  <xs:complexType name="OrderTemplate">
     <xs:sequence>
       <xs:element minOccurs="0" name="bookId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="bookTitle" nillable="true" type="xs:string" />
@@ -85,7 +140,7 @@
       <xs:element minOccurs="0" name="total" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="PurchaseTemplate" nillable="true" type="tns:PurchaseTemplate" />
+  <xs:element name="OrderTemplate" nillable="true" type="tns:OrderTemplate" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
@@ -112,15 +167,4 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Status" nillable="true" type="tns:Status" />
-  <xs:complexType name="OrderForm">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="bookId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="bookTitle" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="customerId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="customerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="quantity" type="xs:int" />
-      <xs:element minOccurs="0" name="total" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="OrderForm" nillable="true" type="tns:OrderForm" />
 </xs:schema>

@@ -1,8 +1,8 @@
-﻿using Libretto.Model;
-using LibrettoWCF.Model;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
+
+using Libretto.Model;
+using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -122,10 +122,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
+        /// <param name="purchaseForm"></param>
         /// <returns></returns>
         [OperationContract]
-        string AddPurchase(PurchaseTemplate purchaseInformation);
+        Response AddPurchase(OrderTemplate purchaseForm);
 
         /// <summary>
         /// 
@@ -171,10 +171,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Response AddOrder(OrderForm orderInformation);
+        Response AddOrder(OrderTemplate orderForm);
 
         /// <summary>
         /// 
@@ -182,7 +182,7 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        Response DeleteOrder(OrderId orderInformation);
+        Response DeleteOrder(Order orderInformation);
 
         /// <summary>
         /// 

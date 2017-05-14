@@ -15,6 +15,12 @@ namespace Libretto.StoreService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="StoreService.IStoreService")]
     public interface IStoreService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
+        Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetBooksList", ReplyAction="http://tempuri.org/IStoreService/GetBooksListResponse")]
         System.Collections.Generic.List<Libretto.Model.Book> GetBooksList();
         
@@ -22,28 +28,28 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> GetBooksListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetBookById", ReplyAction="http://tempuri.org/IStoreService/GetBookByIdResponse")]
-        Libretto.Model.Book GetBookById(string id);
+        Libretto.Model.Book GetBookById(string bookIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetBookById", ReplyAction="http://tempuri.org/IStoreService/GetBookByIdResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Book> GetBookByIdAsync(string id);
+        System.Threading.Tasks.Task<Libretto.Model.Book> GetBookByIdAsync(string bookIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddBook", ReplyAction="http://tempuri.org/IStoreService/AddBookResponse")]
-        System.Collections.Generic.List<Libretto.Model.Book> AddBook(Libretto.Model.Book bookInformation);
+        Libretto.Model.Response AddBook(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddBook", ReplyAction="http://tempuri.org/IStoreService/AddBookResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> AddBookAsync(Libretto.Model.Book bookInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> AddBookAsync(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteBook", ReplyAction="http://tempuri.org/IStoreService/DeleteBookResponse")]
-        System.Collections.Generic.List<Libretto.Model.Book> DeleteBook(Libretto.Model.Book bookInformation);
+        Libretto.Model.Response DeleteBook(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteBook", ReplyAction="http://tempuri.org/IStoreService/DeleteBookResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> DeleteBookAsync(Libretto.Model.Book bookInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> DeleteBookAsync(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateBook", ReplyAction="http://tempuri.org/IStoreService/UpdateBookResponse")]
-        System.Collections.Generic.List<Libretto.Model.Book> UpdateBook(Libretto.Model.Book bookInformation);
+        Libretto.Model.Response UpdateBook(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateBook", ReplyAction="http://tempuri.org/IStoreService/UpdateBookResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> UpdateBookAsync(Libretto.Model.Book bookInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateBookAsync(Libretto.Model.Book bookInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetCustomersList", ReplyAction="http://tempuri.org/IStoreService/GetCustomersListResponse")]
         System.Collections.Generic.List<Libretto.Model.Customer> GetCustomersList();
@@ -52,34 +58,28 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> GetCustomersListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetCustomerById", ReplyAction="http://tempuri.org/IStoreService/GetCustomerByIdResponse")]
-        Libretto.Model.Customer GetCustomerById(string id);
+        Libretto.Model.Customer GetCustomerById(string customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetCustomerById", ReplyAction="http://tempuri.org/IStoreService/GetCustomerByIdResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string id);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
+        System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddCustomer", ReplyAction="http://tempuri.org/IStoreService/AddCustomerResponse")]
-        string AddCustomer(Libretto.Model.Customer customerInformation);
+        Libretto.Model.Response AddCustomer(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddCustomer", ReplyAction="http://tempuri.org/IStoreService/AddCustomerResponse")]
-        System.Threading.Tasks.Task<string> AddCustomerAsync(Libretto.Model.Customer customerInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> AddCustomerAsync(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteCustomer", ReplyAction="http://tempuri.org/IStoreService/DeleteCustomerResponse")]
-        System.Collections.Generic.List<Libretto.Model.Customer> DeleteCustomer(Libretto.Model.Customer customerInfromation);
+        Libretto.Model.Response DeleteCustomer(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteCustomer", ReplyAction="http://tempuri.org/IStoreService/DeleteCustomerResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> DeleteCustomerAsync(Libretto.Model.Customer customerInfromation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> DeleteCustomerAsync(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateCustomer", ReplyAction="http://tempuri.org/IStoreService/UpdateCustomerResponse")]
-        System.Collections.Generic.List<Libretto.Model.Customer> UpdateCustomer(Libretto.Model.Customer customerInformation);
+        Libretto.Model.Response UpdateCustomer(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateCustomer", ReplyAction="http://tempuri.org/IStoreService/UpdateCustomerResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> UpdateCustomerAsync(Libretto.Model.Customer customerInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateCustomerAsync(Libretto.Model.Customer customerInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetPurchasesList", ReplyAction="http://tempuri.org/IStoreService/GetPurchasesListResponse")]
         System.Collections.Generic.List<Libretto.Model.Purchase> GetPurchasesList();
@@ -88,28 +88,28 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> GetPurchasesListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetPurchaseById", ReplyAction="http://tempuri.org/IStoreService/GetPurchaseByIdResponse")]
-        Libretto.Model.Purchase GetPurchaseById(string id);
+        Libretto.Model.Purchase GetPurchaseById(string purchaseIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetPurchaseById", ReplyAction="http://tempuri.org/IStoreService/GetPurchaseByIdResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string id);
+        System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string purchaseIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        string AddPurchase(Libretto.Model.PurchaseTemplate purchaseInformation);
+        Libretto.Model.Response AddPurchase(Libretto.Model.OrderTemplate purchaseForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseTemplate purchaseInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> AddPurchaseAsync(Libretto.Model.OrderTemplate purchaseForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeletePurchase", ReplyAction="http://tempuri.org/IStoreService/DeletePurchaseResponse")]
-        System.Collections.Generic.List<Libretto.Model.Purchase> DeletePurchase(Libretto.Model.Purchase purchaseInformation);
+        Libretto.Model.Response DeletePurchase(Libretto.Model.Purchase purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeletePurchase", ReplyAction="http://tempuri.org/IStoreService/DeletePurchaseResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> DeletePurchaseAsync(Libretto.Model.Purchase purchaseInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> DeletePurchaseAsync(Libretto.Model.Purchase purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdatePurchase", ReplyAction="http://tempuri.org/IStoreService/UpdatePurchaseResponse")]
-        System.Collections.Generic.List<Libretto.Model.Purchase> UpdatePurchase(Libretto.Model.Purchase purchaseInformation);
+        Libretto.Model.Response UpdatePurchase(Libretto.Model.Purchase purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdatePurchase", ReplyAction="http://tempuri.org/IStoreService/UpdatePurchaseResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> UpdatePurchaseAsync(Libretto.Model.Purchase purchaseInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdatePurchaseAsync(Libretto.Model.Purchase purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrdersList", ReplyAction="http://tempuri.org/IStoreService/GetOrdersListResponse")]
         System.Collections.Generic.List<Libretto.Model.Order> GetOrdersList();
@@ -118,34 +118,34 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrderById", ReplyAction="http://tempuri.org/IStoreService/GetOrderByIdResponse")]
-        Libretto.Model.Order GetOrderById(string id);
+        Libretto.Model.Order GetOrderById(string orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrderById", ReplyAction="http://tempuri.org/IStoreService/GetOrderByIdResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Order> GetOrderByIdAsync(string id);
+        System.Threading.Tasks.Task<Libretto.Model.Order> GetOrderByIdAsync(string orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrdersByUser", ReplyAction="http://tempuri.org/IStoreService/GetOrdersByUserResponse")]
-        System.Collections.Generic.List<Libretto.Model.Order> GetOrdersByUser(string id);
+        System.Collections.Generic.List<Libretto.Model.Order> GetOrdersByUser(string customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrdersByUser", ReplyAction="http://tempuri.org/IStoreService/GetOrdersByUserResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersByUserAsync(string id);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersByUserAsync(string customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddOrder", ReplyAction="http://tempuri.org/IStoreService/AddOrderResponse")]
-        string AddOrder(Libretto.Model.OrderForm orderInformation);
+        Libretto.Model.Response AddOrder(Libretto.Model.OrderTemplate orderForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddOrder", ReplyAction="http://tempuri.org/IStoreService/AddOrderResponse")]
-        System.Threading.Tasks.Task<string> AddOrderAsync(Libretto.Model.OrderForm orderInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> AddOrderAsync(Libretto.Model.OrderTemplate orderForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
-        System.Collections.Generic.List<Libretto.Model.Order> DeleteOrder(LibrettoWCF.OrderId orderInformation);
+        Libretto.Model.Response DeleteOrder(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> DeleteOrderAsync(LibrettoWCF.OrderId orderInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> DeleteOrderAsync(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        System.Collections.Generic.List<Libretto.Model.Order> UpdateOrder(Libretto.Model.Order orderInformation);
+        Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> UpdateOrderAsync(Libretto.Model.Order orderInformation);
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -175,6 +175,14 @@ namespace Libretto.StoreService {
                 base(binding, remoteAddress) {
         }
         
+        public Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm) {
+            return base.Channel.Login(loginForm);
+        }
+        
+        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
+            return base.Channel.LoginAsync(loginForm);
+        }
+        
         public System.Collections.Generic.List<Libretto.Model.Book> GetBooksList() {
             return base.Channel.GetBooksList();
         }
@@ -183,35 +191,35 @@ namespace Libretto.StoreService {
             return base.Channel.GetBooksListAsync();
         }
         
-        public Libretto.Model.Book GetBookById(string id) {
-            return base.Channel.GetBookById(id);
+        public Libretto.Model.Book GetBookById(string bookIdentifier) {
+            return base.Channel.GetBookById(bookIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Book> GetBookByIdAsync(string id) {
-            return base.Channel.GetBookByIdAsync(id);
+        public System.Threading.Tasks.Task<Libretto.Model.Book> GetBookByIdAsync(string bookIdentifier) {
+            return base.Channel.GetBookByIdAsync(bookIdentifier);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Book> AddBook(Libretto.Model.Book bookInformation) {
+        public Libretto.Model.Response AddBook(Libretto.Model.Book bookInformation) {
             return base.Channel.AddBook(bookInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> AddBookAsync(Libretto.Model.Book bookInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> AddBookAsync(Libretto.Model.Book bookInformation) {
             return base.Channel.AddBookAsync(bookInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Book> DeleteBook(Libretto.Model.Book bookInformation) {
+        public Libretto.Model.Response DeleteBook(Libretto.Model.Book bookInformation) {
             return base.Channel.DeleteBook(bookInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> DeleteBookAsync(Libretto.Model.Book bookInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> DeleteBookAsync(Libretto.Model.Book bookInformation) {
             return base.Channel.DeleteBookAsync(bookInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Book> UpdateBook(Libretto.Model.Book bookInformation) {
+        public Libretto.Model.Response UpdateBook(Libretto.Model.Book bookInformation) {
             return base.Channel.UpdateBook(bookInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> UpdateBookAsync(Libretto.Model.Book bookInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateBookAsync(Libretto.Model.Book bookInformation) {
             return base.Channel.UpdateBookAsync(bookInformation);
         }
         
@@ -223,43 +231,35 @@ namespace Libretto.StoreService {
             return base.Channel.GetCustomersListAsync();
         }
         
-        public Libretto.Model.Customer GetCustomerById(string id) {
-            return base.Channel.GetCustomerById(id);
+        public Libretto.Model.Customer GetCustomerById(string customerIdentifier) {
+            return base.Channel.GetCustomerById(customerIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string id) {
-            return base.Channel.GetCustomerByIdAsync(id);
+        public System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string customerIdentifier) {
+            return base.Channel.GetCustomerByIdAsync(customerIdentifier);
         }
         
-        public Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm) {
-            return base.Channel.Login(loginForm);
-        }
-        
-        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
-            return base.Channel.LoginAsync(loginForm);
-        }
-        
-        public string AddCustomer(Libretto.Model.Customer customerInformation) {
+        public Libretto.Model.Response AddCustomer(Libretto.Model.Customer customerInformation) {
             return base.Channel.AddCustomer(customerInformation);
         }
         
-        public System.Threading.Tasks.Task<string> AddCustomerAsync(Libretto.Model.Customer customerInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> AddCustomerAsync(Libretto.Model.Customer customerInformation) {
             return base.Channel.AddCustomerAsync(customerInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Customer> DeleteCustomer(Libretto.Model.Customer customerInfromation) {
-            return base.Channel.DeleteCustomer(customerInfromation);
+        public Libretto.Model.Response DeleteCustomer(Libretto.Model.Customer customerInformation) {
+            return base.Channel.DeleteCustomer(customerInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> DeleteCustomerAsync(Libretto.Model.Customer customerInfromation) {
-            return base.Channel.DeleteCustomerAsync(customerInfromation);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> DeleteCustomerAsync(Libretto.Model.Customer customerInformation) {
+            return base.Channel.DeleteCustomerAsync(customerInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Customer> UpdateCustomer(Libretto.Model.Customer customerInformation) {
+        public Libretto.Model.Response UpdateCustomer(Libretto.Model.Customer customerInformation) {
             return base.Channel.UpdateCustomer(customerInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> UpdateCustomerAsync(Libretto.Model.Customer customerInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateCustomerAsync(Libretto.Model.Customer customerInformation) {
             return base.Channel.UpdateCustomerAsync(customerInformation);
         }
         
@@ -271,35 +271,35 @@ namespace Libretto.StoreService {
             return base.Channel.GetPurchasesListAsync();
         }
         
-        public Libretto.Model.Purchase GetPurchaseById(string id) {
-            return base.Channel.GetPurchaseById(id);
+        public Libretto.Model.Purchase GetPurchaseById(string purchaseIdentifier) {
+            return base.Channel.GetPurchaseById(purchaseIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string id) {
-            return base.Channel.GetPurchaseByIdAsync(id);
+        public System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string purchaseIdentifier) {
+            return base.Channel.GetPurchaseByIdAsync(purchaseIdentifier);
         }
         
-        public string AddPurchase(Libretto.Model.PurchaseTemplate purchaseInformation) {
-            return base.Channel.AddPurchase(purchaseInformation);
+        public Libretto.Model.Response AddPurchase(Libretto.Model.OrderTemplate purchaseForm) {
+            return base.Channel.AddPurchase(purchaseForm);
         }
         
-        public System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseTemplate purchaseInformation) {
-            return base.Channel.AddPurchaseAsync(purchaseInformation);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> AddPurchaseAsync(Libretto.Model.OrderTemplate purchaseForm) {
+            return base.Channel.AddPurchaseAsync(purchaseForm);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Purchase> DeletePurchase(Libretto.Model.Purchase purchaseInformation) {
+        public Libretto.Model.Response DeletePurchase(Libretto.Model.Purchase purchaseInformation) {
             return base.Channel.DeletePurchase(purchaseInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> DeletePurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> DeletePurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
             return base.Channel.DeletePurchaseAsync(purchaseInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Purchase> UpdatePurchase(Libretto.Model.Purchase purchaseInformation) {
+        public Libretto.Model.Response UpdatePurchase(Libretto.Model.Purchase purchaseInformation) {
             return base.Channel.UpdatePurchase(purchaseInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> UpdatePurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdatePurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
             return base.Channel.UpdatePurchaseAsync(purchaseInformation);
         }
         
@@ -311,43 +311,43 @@ namespace Libretto.StoreService {
             return base.Channel.GetOrdersListAsync();
         }
         
-        public Libretto.Model.Order GetOrderById(string id) {
-            return base.Channel.GetOrderById(id);
+        public Libretto.Model.Order GetOrderById(string orderIdentifier) {
+            return base.Channel.GetOrderById(orderIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Order> GetOrderByIdAsync(string id) {
-            return base.Channel.GetOrderByIdAsync(id);
+        public System.Threading.Tasks.Task<Libretto.Model.Order> GetOrderByIdAsync(string orderIdentifier) {
+            return base.Channel.GetOrderByIdAsync(orderIdentifier);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Order> GetOrdersByUser(string id) {
-            return base.Channel.GetOrdersByUser(id);
+        public System.Collections.Generic.List<Libretto.Model.Order> GetOrdersByUser(string customerIdentifier) {
+            return base.Channel.GetOrdersByUser(customerIdentifier);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersByUserAsync(string id) {
-            return base.Channel.GetOrdersByUserAsync(id);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersByUserAsync(string customerIdentifier) {
+            return base.Channel.GetOrdersByUserAsync(customerIdentifier);
         }
         
-        public string AddOrder(Libretto.Model.OrderForm orderInformation) {
-            return base.Channel.AddOrder(orderInformation);
+        public Libretto.Model.Response AddOrder(Libretto.Model.OrderTemplate orderForm) {
+            return base.Channel.AddOrder(orderForm);
         }
         
-        public System.Threading.Tasks.Task<string> AddOrderAsync(Libretto.Model.OrderForm orderInformation) {
-            return base.Channel.AddOrderAsync(orderInformation);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> AddOrderAsync(Libretto.Model.OrderTemplate orderForm) {
+            return base.Channel.AddOrderAsync(orderForm);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Order> DeleteOrder(LibrettoWCF.OrderId orderInformation) {
+        public Libretto.Model.Response DeleteOrder(Libretto.Model.Order orderInformation) {
             return base.Channel.DeleteOrder(orderInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> DeleteOrderAsync(LibrettoWCF.OrderId orderInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> DeleteOrderAsync(Libretto.Model.Order orderInformation) {
             return base.Channel.DeleteOrderAsync(orderInformation);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Order> UpdateOrder(Libretto.Model.Order orderInformation) {
+        public Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation) {
             return base.Channel.UpdateOrder(orderInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> UpdateOrderAsync(Libretto.Model.Order orderInformation) {
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation) {
             return base.Channel.UpdateOrderAsync(orderInformation);
         }
     }

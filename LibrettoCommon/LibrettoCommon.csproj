@@ -42,7 +42,8 @@
   <ItemGroup>
     <Compile Include="Model\Clerk.cs" />
     <Compile Include="Model\Invoice.cs" />
-    <Compile Include="Model\OrderForm.cs" />
+    <Compile Include="Model\OrderTemplate.cs" />
+    <Compile Include="Model\Response.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Warehouse\IRemotingService.cs" />
     <Compile Include="Forms\FlatBadge.cs">

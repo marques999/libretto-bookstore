@@ -161,9 +161,6 @@
     <None Include="Service References\StoreService\LibrettoWCF.Model.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\StoreService\LibrettoWCF.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\StoreService\service.wsdl" />
     <None Include="Service References\StoreService\service.xsd">
       <SubType>Designer</SubType>
