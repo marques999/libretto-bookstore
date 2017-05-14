@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messaging\MessageUpdate.cs" />
     <Compile Include="Model\LoginTemplate.cs" />
     <Compile Include="Model\Clerk.cs" />
     <Compile Include="Model\Invoice.cs" />

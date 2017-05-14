@@ -1,4 +1,5 @@
 ﻿using System;
+using Libretto.Model;
 
 namespace Libretto.Warehouse
 {
@@ -10,9 +11,8 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentfiier"></param>
-        /// <param name="transactionTimestamp"></param>
+        /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        bool DispatchOrder(Guid transactionIdentfiier, DateTime transactionTimestamp);
+        Response DispatchOrder(Guid transactionIdentifier);
     }
 }

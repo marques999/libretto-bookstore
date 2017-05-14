@@ -101,7 +101,7 @@ namespace Libretto
         {
             try
             {
-                (_warehouseQueue.EndReceive(receiveCompleted.AsyncResult)?.Body as IMessageSubject)?.Process(this);
+                (_warehouseQueue.EndReceive(receiveCompleted.AsyncResult)?.Body as IMessage)?.Process(this);
             }
             catch (Exception ex)
             {

@@ -11,15 +11,15 @@ namespace Libretto.Model
     {
         [EnumMember]
         [Description("Waiting")]
-        WaitingExpedition,
+        Waiting,
         [EnumMember]
         [Description("Processing")]
-        WaitingDispatch,
+        Processing,
         [EnumMember]
         [Description("Dispatched")]
-        DispatchComplete,
+        Dispatched,
         [EnumMember]
         [Description("Cancelled")]
-        OrderCancelled
+        Cancelled
     }
 }
