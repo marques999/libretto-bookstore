@@ -1,42 +1,63 @@
 ﻿using System;
+using System.Messaging;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Libretto.Messaging;
 using Libretto.Model;
+
 using LibrettoWCF.Model;
 using LibrettoWCF.Database;
-using System.Messaging;
 
 namespace LibrettoWCF
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class StoreService : IStoreService
     {
-
-        private MessageQueue warehouseQ
+        /// <summary>
+        /// 
+        /// </summary>
+        private MessageQueue InvoiceQueue
         {
             get;
             set;
-        } = LibrettoHost.InitializeWarehouseQueue();
+        } = MessagingCommon.InitializeInvoiceQueue();
 
-        private MessageQueue invoiceQ
+        /// <summary>
+        /// 
+        /// </summary>
+        private MessageQueue WarehouseQueue
         {
             get;
-            set;
-        } = LibrettoHost.InitializeInvoiceQueue();
+        } = MessagingCommon.InitializeWarehouseQueue();
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bookInformation"></param>
+        /// <returns></returns>
         public List<Book> AddBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Insert(bookInformation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerInformation"></param>
+        /// <returns></returns>
         public string AddCustomer(Customer customerInformation)
         {
             customerInformation.Id = Guid.NewGuid();
             return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
         public string AddOrder(OrderForm orderInformation)
         {
             if (LibrettoDatabase.OrderIntegration.Insert(new Order
@@ -51,7 +72,7 @@ namespace LibrettoWCF
             {
                 LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
 
-                warehouseQ.Send(orderInformation);
+                WarehouseQueue.Send(orderInformation);
             }
             else
             {
@@ -61,41 +82,80 @@ namespace LibrettoWCF
             return "Ok";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
         public List<Purchase> AddPurchase(Purchase purchaseInformation)
         {
             return LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bookInformation"></param>
+        /// <returns></returns>
         public List<Book> DeleteBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Delete(bookInformation.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerInfromation"></param>
+        /// <returns></returns>
         public List<Customer> DeleteCustomer(Customer customerInfromation)
         {
             return LibrettoDatabase.CustomerIntegration.Delete(customerInfromation.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             return LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
         public List<Purchase> DeletePurchase(Purchase purchaseInformation)
         {
             return LibrettoDatabase.PurchaseIntegration.Delete(purchaseInformation.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Book GetBookById(string id)
         {
             return LibrettoDatabase.BookIntegration.Lookup(new Guid(id));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Book> GetBooksList()
         {
             return LibrettoDatabase.BookIntegration.List();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Customer GetCustomerById(string id)
         {
             return LibrettoDatabase.CustomerIntegration.Lookup(new Guid(id));

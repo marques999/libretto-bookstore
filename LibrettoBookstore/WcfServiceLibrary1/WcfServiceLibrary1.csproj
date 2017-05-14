@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\BookIntegration.cs" />
+    <Compile Include="Database\ClerkIntegration.cs" />
     <Compile Include="Database\CustomerIntegration.cs" />
     <Compile Include="Database\OrderIntegration.cs" />
     <Compile Include="Database\PurchaseIntegration.cs" />

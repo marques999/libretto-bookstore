@@ -34,6 +34,14 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
+        public static ClerkIntegration ClerkIntegration
+        {
+            get;
+        } = new ClerkIntegration(Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static CustomerIntegration CustomerIntegration
         {
             get;
@@ -59,6 +67,15 @@ namespace LibrettoWCF.Database
         /// 
         /// </summary>
         public virtual DbSet<Book> Books
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual DbSet<Clerk> Clerks
         {
             get;
             set;

@@ -15,19 +15,21 @@ namespace LibrettoWCF
     /// </summary>
     public class WebstoreService : IWebstoreService
     {
-
-
-        private MessageQueue warehouseQ
+        /// <summary>
+        /// 
+        /// </summary>
+        private MessageQueue WarehouseQueue
         {
             get;
-            set;
-        } = LibrettoHost.InitializeWarehouseQueue();
+        } = MessagingCommon.InitializeWarehouseQueue();
 
-        private MessageQueue invoiceQ
+        /// <summary>
+        /// 
+        /// </summary>
+        private MessageQueue InvoiceQueue
         {
             get;
-            set;
-        } = LibrettoHost.InitializeInvoiceQueue();
+        } = MessagingCommon.InitializeInvoiceQueue();
 
         /// <summary>
         /// 
@@ -37,7 +39,7 @@ namespace LibrettoWCF
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
-        }   
+        }
 
         /// <summary>
         /// 
@@ -254,7 +256,7 @@ namespace LibrettoWCF
             {
                 LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
 
-                warehouseQ.Send(orderInformation);
+                WarehouseQueue.Send(orderInformation);
             }
             else
             {
