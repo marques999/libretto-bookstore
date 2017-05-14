@@ -5,14 +5,36 @@ using Libretto.Model;
 using Libretto.Warehouse;
 using LibrettoWCF.Database;
 using LibrettoWCF.Tools;
+using System.ServiceModel;
 
 namespace LibrettoWCF
 {
     /// <summary>
     /// 
     /// </summary>
+    /// 
+    public delegate void ChangeUser();
+
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class StoreService : IStoreService
     {
+
+        public static IStoreUpdated Callback;
+        public static ChangeUser changeUser = null;
+
+        public void Unsubscribe()
+        {
+        }
+
+        public void Subscribe()
+        {
+        }
+
+        public static void Notify()
+        {
+            Callback = OperationContext.Current.GetCallbackChannel<IStoreUpdated>();
+            Callback.UserAdded();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -30,7 +52,9 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response AddCustomer(Customer customerInformation)
         {
-            return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
+            Response r = LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
+            Notify();
+            return r;
         }
 
         /// <summary>

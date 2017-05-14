@@ -106,7 +106,6 @@
       <xs:element minOccurs="0" name="Id" type="ser:guid" />
       <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Customer" nillable="true" type="tns:Customer" />
@@ -167,10 +166,10 @@
   <xs:element name="Order" nillable="true" type="tns:Order" />
   <xs:simpleType name="Status">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="WaitingExpedition" />
-      <xs:enumeration value="WaitingDispatch" />
-      <xs:enumeration value="DispatchComplete" />
-      <xs:enumeration value="OrderCancelled" />
+      <xs:enumeration value="Waiting" />
+      <xs:enumeration value="Processing" />
+      <xs:enumeration value="Dispatched" />
+      <xs:enumeration value="Cancelled" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Status" nillable="true" type="tns:Status" />

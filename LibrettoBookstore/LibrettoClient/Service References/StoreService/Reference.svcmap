@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d06c53dc-77c4-489b-a789-9b3e058d5935" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="62512c87-f7ba-4ed5-b7fe-0ff3c55ec64a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -24,10 +24,10 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="bdde525b-80a8-48a2-a4fd-47d9ef9b0453" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a9568212-dba0-490a-bdbb-02a0cde38d44" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="fd43c8ab-ebce-4a33-82f6-b3bc73369b07" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
-    <MetadataFile FileName="Libretto.Model.xsd" MetadataType="Schema" ID="d9836c31-21c3-432e-94f4-956012798a40" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="27eed55b-3b5a-427d-bab0-1494618b03d0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="d80d07ca-aaf2-4150-ac7d-84500b59d480" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e3aa2efc-eb85-4c0e-8c9c-ca9c22a3161d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
+    <MetadataFile FileName="Libretto.Model.xsd" MetadataType="Schema" ID="10b49053-538c-4bba-a546-0026627a9d18" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

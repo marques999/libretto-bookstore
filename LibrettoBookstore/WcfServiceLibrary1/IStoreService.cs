@@ -9,7 +9,7 @@ namespace LibrettoWCF
     /// <summary>
     /// 
     /// </summary>
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(IStoreUpdated))]
     public interface IStoreService
     {
         /// <summary>
@@ -199,5 +199,20 @@ namespace LibrettoWCF
         /// <param name="orderStatus"></param>
         /// <returns></returns>
         Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus);
+
+        [OperationContract]
+        void Subscribe();
+
+        [OperationContract]
+        void Unsubscribe();
+
+    }
+
+    public interface IStoreUpdated
+    {
+
+        [OperationContract]
+        void UserAdded();
+
     }
 }

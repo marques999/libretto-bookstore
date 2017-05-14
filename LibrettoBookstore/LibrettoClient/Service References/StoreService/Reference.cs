@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Libretto.BookstoreService {
+namespace Libretto.StoreService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BookstoreService.IStoreService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="StoreService.IStoreService", CallbackContract=typeof(Libretto.StoreService.IStoreServiceCallback))]
     public interface IStoreService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
@@ -129,11 +129,11 @@ namespace Libretto.BookstoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetOrdersByUser", ReplyAction="http://tempuri.org/IStoreService/GetOrdersByUserResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> GetOrdersByUserAsync(string customerIdentifier);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddOrder", ReplyAction="http://tempuri.org/IStoreService/AddOrderResponse")]
-        Libretto.Model.Response AddOrder(Libretto.Model.OrderTemplate orderForm);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
+        Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddOrder", ReplyAction="http://tempuri.org/IStoreService/AddOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> AddOrderAsync(Libretto.Model.OrderTemplate orderForm);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.OrderTemplate orderForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
         Libretto.Model.Response DeleteOrder(Libretto.Model.Order orderInformation);
@@ -146,33 +146,53 @@ namespace Libretto.BookstoreService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
         System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Subscribe", ReplyAction="http://tempuri.org/IStoreService/SubscribeResponse")]
+        void Subscribe();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Subscribe", ReplyAction="http://tempuri.org/IStoreService/SubscribeResponse")]
+        System.Threading.Tasks.Task SubscribeAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Unsubscribe", ReplyAction="http://tempuri.org/IStoreService/UnsubscribeResponse")]
+        void Unsubscribe();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Unsubscribe", ReplyAction="http://tempuri.org/IStoreService/UnsubscribeResponse")]
+        System.Threading.Tasks.Task UnsubscribeAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IStoreServiceChannel : Libretto.BookstoreService.IStoreService, System.ServiceModel.IClientChannel {
+    public interface IStoreServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UserAdded", ReplyAction="http://tempuri.org/IStoreService/UserAddedResponse")]
+        void UserAdded();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IStoreServiceChannel : Libretto.StoreService.IStoreService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class StoreServiceClient : System.ServiceModel.ClientBase<Libretto.BookstoreService.IStoreService>, Libretto.BookstoreService.IStoreService {
+    public partial class StoreServiceClient : System.ServiceModel.DuplexClientBase<Libretto.StoreService.IStoreService>, Libretto.StoreService.IStoreService {
         
-        public StoreServiceClient() {
+        public StoreServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public StoreServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public StoreServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public StoreServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public StoreServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public StoreServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public StoreServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public StoreServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public StoreServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public Libretto.Model.Clerk Login(Libretto.Model.LoginTemplate loginForm) {
@@ -327,12 +347,12 @@ namespace Libretto.BookstoreService {
             return base.Channel.GetOrdersByUserAsync(customerIdentifier);
         }
         
-        public Libretto.Model.Response AddOrder(Libretto.Model.OrderTemplate orderForm) {
-            return base.Channel.AddOrder(orderForm);
+        public Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm) {
+            return base.Channel.InsertOrder(orderForm);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Response> AddOrderAsync(Libretto.Model.OrderTemplate orderForm) {
-            return base.Channel.AddOrderAsync(orderForm);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.OrderTemplate orderForm) {
+            return base.Channel.InsertOrderAsync(orderForm);
         }
         
         public Libretto.Model.Response DeleteOrder(Libretto.Model.Order orderInformation) {
@@ -349,6 +369,22 @@ namespace Libretto.BookstoreService {
         
         public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation) {
             return base.Channel.UpdateOrderAsync(orderInformation);
+        }
+        
+        public void Subscribe() {
+            base.Channel.Subscribe();
+        }
+        
+        public System.Threading.Tasks.Task SubscribeAsync() {
+            return base.Channel.SubscribeAsync();
+        }
+        
+        public void Unsubscribe() {
+            base.Channel.Unsubscribe();
+        }
+        
+        public System.Threading.Tasks.Task UnsubscribeAsync() {
+            return base.Channel.UnsubscribeAsync();
         }
     }
 }

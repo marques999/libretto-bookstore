@@ -226,7 +226,7 @@ namespace Libretto.Forms
 
             InsertOrder(orderForm.Information);
 
-            LibrettoClient.Instance.Proxy.AddOrder(new OrderTemplate()
+            LibrettoClient.Instance.Proxy.InsertOrder(new OrderTemplate()
             {
                 bookId = orderForm.Information.BookId.ToString(),
                 customerId = orderForm.Information.CustomerId.ToString(),

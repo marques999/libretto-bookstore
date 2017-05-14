@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Libretto.BookstoreService;
 using Libretto.Forms;
 using Libretto.Model;
+using Libretto.StoreService;
+using System.ServiceModel;
 
 namespace Libretto
 {
@@ -27,10 +28,12 @@ namespace Libretto
         /// </summary>
         private LibrettoClient()
         {
-            Proxy = new StoreServiceClient();
+            Proxy = new StoreService.StoreServiceClient(new InstanceContext(new serviceCallbacks()));
             RefreshBooks();
             RefreshCustomers();
             RefreshTransactions();
+
+            Proxy.Open();
         }
 
         /// <summary>
@@ -82,7 +85,7 @@ namespace Libretto
         public List<Book> Books
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>

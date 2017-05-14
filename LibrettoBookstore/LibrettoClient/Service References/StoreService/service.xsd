@@ -259,17 +259,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddOrder">
+  <xs:element name="InsertOrder">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="orderForm" nillable="true" type="q30:OrderTemplate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddOrderResponse">
+  <xs:element name="InsertOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="AddOrderResult" type="q31:Response" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="InsertOrderResult" type="q31:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -299,6 +299,36 @@
       <xs:sequence>
         <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateOrderResult" type="q35:Response" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Subscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubscribeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Unsubscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnsubscribeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UserAdded">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UserAddedResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

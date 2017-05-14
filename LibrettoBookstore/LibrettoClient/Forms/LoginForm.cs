@@ -34,6 +34,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonCancel_Click(object sender, EventArgs args)
         {
+            LibrettoClient.Instance.Proxy.Unsubscribe();
             Application.Exit();
         }
 
