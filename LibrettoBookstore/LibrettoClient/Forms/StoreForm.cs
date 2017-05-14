@@ -170,7 +170,7 @@ namespace Libretto.Forms
         private void UpdateButtons()
         {
             buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1;
-            buttonDelete.Enabled = LibrettoClient.Instance.IsAdministrator() && transactionList.SelectedItems.Count > 0;
+            buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -202,7 +202,8 @@ namespace Libretto.Forms
         {
             customerName.Items.Add("");
             customerName.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
-            buttonDelete.Enabled = buttonManage.Enabled = LibrettoClient.Instance.IsAdministrator();
+            buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
+            buttonManage.Enabled = LibrettoClient.Instance.IsAdministrator();
             dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateToPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();
