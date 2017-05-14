@@ -13,14 +13,20 @@ namespace Libretto
     internal class LibrettoClient
     {
 
-        private static StoreService.StoreServiceClient proxy;
+        public static StoreService.StoreServiceClient proxy;
 
         private LibrettoClient()
         {
-            /*Customers = proxy.GetCustomersList();
+            Customers = proxy.GetCustomersList();
             Books = proxy.GetBooksList();
             Orders = proxy.GetOrdersList();
-            Purchases = proxy.GetPurchasesList();*/
+            Purchases = proxy.GetPurchasesList();
+
+            
+            foreach(Order b in Orders)
+            {
+                
+            }
         }
 
 
@@ -56,6 +62,12 @@ namespace Libretto
         {
             get;
         } = new List<Order>();
+
+        public List<Transaction> Transactions
+        {
+            get;
+            set;
+        } = new List<Transaction>();
 
         /// <summary>
         /// 

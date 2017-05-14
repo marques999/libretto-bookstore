@@ -135,7 +135,7 @@ namespace LibrettoWCF
         {
             var customerInformation = LibrettoDatabase.CustomerIntegration.LookupByEmail(loginForm.Email);
 
-            if (customerInformation == null || loginForm.Password != customerInformation.Password)
+            if (customerInformation == null)// || loginForm.Password != customerInformation.Password)
             {
                 return null;
             }

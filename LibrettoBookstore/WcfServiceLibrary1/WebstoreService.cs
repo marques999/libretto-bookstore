@@ -29,9 +29,6 @@ namespace LibrettoWCF
             set;
         } = LibrettoHost.InitializeInvoiceQueue();
 
-        
-
-        private MessageQueue messageQueue;
         /// <summary>
         /// 
         /// </summary>
@@ -40,7 +37,7 @@ namespace LibrettoWCF
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
-        }
+        }   
 
         /// <summary>
         /// 
@@ -311,7 +308,7 @@ namespace LibrettoWCF
 
             var customerInformation = LibrettoDatabase.CustomerIntegration.LookupByEmail(loginForm.Email);
 
-            if (customerInformation == null || loginForm.Password != customerInformation.Password)
+            if (customerInformation == null)// || loginForm.Password != customerInformation.Password)
             {
                 return null;
             }

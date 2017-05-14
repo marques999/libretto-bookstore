@@ -75,7 +75,7 @@ namespace Libretto.Forms
                 return;
             }
 
-            var orderInformation = LibrettoClient.Instance.Transactions[listItem.Index] as Order;
+            var orderInformation = LibrettoClient.Instance.Orders[listItem.Index];
 
             if (orderInformation == null)
             {
@@ -95,7 +95,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="listItem"></param>
         /// <param name="orderInformation"></param>
-        private void UpdateOrder(ListViewItem listItem, Transaction orderInformation)
+        private void UpdateOrder(ListViewItem listItem, Order orderInformation)
         {
             var previousIndex = listItem.Index;
 
@@ -132,17 +132,24 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateFilter()
         {
-            transactionList.Items.Clear();
-            transactionList.Items.AddRange(LibrettoClient.Instance.Transactions.Where(FilterOrder).Select(ParseTransaction).ToArray());
+           transactionList.Items.Clear();
+           transactionList.Items.AddRange(LibrettoClient.Instance.Orders.Where(FilterOrder).Select(ParseTransaction).ToArray());
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionInformation"></param>
-        private void InsertOrder(Transaction transactionInformation)
+        private void InsertOrder(Order transactionInformation)
         {
-            LibrettoClient.Instance.Transactions.Add(transactionInformation);
+            LibrettoClient.Instance.Orders.Add(transactionInformation);
+            transactionList.Items.Add(ParseTransaction(transactionInformation));
+        }
+
+
+        private void InsertPurchase(Purchase transactionInformation)
+        {
+            LibrettoClient.Instance.Purchases.Add(transactionInformation);
             transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 
@@ -300,7 +307,7 @@ namespace Libretto.Forms
 
             if (purchaseForm.ShowDialog(this) == DialogResult.OK)
             {
-                InsertOrder(purchaseForm.Information);
+                InsertPurchase(purchaseForm.Information);
             }
         }
     }
