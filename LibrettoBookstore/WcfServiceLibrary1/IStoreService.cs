@@ -147,14 +147,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        List<Order> ListOrdersByUser(string customerIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
