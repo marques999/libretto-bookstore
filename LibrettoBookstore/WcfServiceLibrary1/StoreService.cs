@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Libretto.Messaging;
 using Libretto.Model;
 using Libretto.Warehouse;
+
 using LibrettoWCF.Database;
 using LibrettoWCF.Tools;
 
@@ -28,7 +29,7 @@ namespace LibrettoWCF
 
             var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(loginForm.Email);
 
-            if (clerkInformation == null || clerkInformation.Password != loginForm.Password)
+            if (clerkInformation == null || PasswordUtilities.Verify(loginForm.Password, clerkInformation.Password) == false)
             {
                 return null;
             }

@@ -5,6 +5,7 @@ using System.ServiceModel.Web;
 using Libretto.Model;
 using Libretto.Warehouse;
 using LibrettoWCF.Database;
+using LibrettoWCF.Tools;
 
 namespace LibrettoWCF
 {
@@ -54,6 +55,7 @@ namespace LibrettoWCF
         {
             setCrossOrigin();
             customerInformation.Id = Guid.NewGuid();
+            customerInformation.Password = PasswordUtilities.Hash(customerInformation.Password);
             return LibrettoDatabase.CustomerIntegration.Insert(customerInformation) == Response.Success ? "Ok" : "ERROR";
         }
 
@@ -329,7 +331,7 @@ namespace LibrettoWCF
 
             var customerInformation = LibrettoDatabase.CustomerIntegration.LookupByEmail(loginForm.Email);
 
-            if (customerInformation == null)// || loginForm.Password != customerInformation.Password)
+            if (customerInformation == null)// || PasswordUtilities.Verify(loginForm.Password, customerInformation.Password) == false)
             {
                 return null;
             }
