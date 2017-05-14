@@ -223,6 +223,17 @@ namespace Libretto.Forms
             if (orderForm.ShowDialog(this) == DialogResult.OK)
             {
                 InsertOrder(orderForm.Information);
+
+                Model.OrderForm order = new Model.OrderForm();
+
+                order.bookId = orderForm.Information.BookId.ToString();
+                order.customerId = orderForm.Information.CustomerId.ToString();
+                order.customerName = orderForm.Information.CustomerName;
+                order.bookTitle = orderForm.Information.BookTitle;
+                order.quantity = orderForm.Information.Quantity;
+                order.total = orderForm.Information.Total;
+
+                LibrettoClient.proxy.AddOrder(order);
             }
         }
 
@@ -308,6 +319,17 @@ namespace Libretto.Forms
             if (purchaseForm.ShowDialog(this) == DialogResult.OK)
             {
                 InsertPurchase(purchaseForm.Information);
+
+                Model.PurchaseForm purchase = new Model.PurchaseForm();
+
+                purchase.bookId = purchaseForm.Information.BookId.ToString();
+                purchase.customerId = purchaseForm.Information.CustomerId.ToString();
+                purchase.customerName = purchaseForm.Information.CustomerName;
+                purchase.bookTitle = purchaseForm.Information.BookTitle;
+                purchase.quantity = purchaseForm.Information.Quantity;
+                purchase.total = purchaseForm.Information.Total;
+
+                LibrettoClient.proxy.AddPurchase(purchase);
             }
         }
     }

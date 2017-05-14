@@ -114,7 +114,7 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        List<Purchase> AddPurchase(Purchase purchaseInformation);
+        string AddPurchase(PurchaseForm purchaseInformation);
 
         /// <summary>
         /// 

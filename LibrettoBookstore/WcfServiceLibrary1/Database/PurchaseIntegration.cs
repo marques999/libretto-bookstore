@@ -51,17 +51,17 @@ namespace LibrettoWCF.Database
             return _context.Purchases.ToList();
         }
 
-        /*public Dictionary<Guid, Purchase> List()
+        public List<Purchase> List(Guid id)
         {
-            return _context.Purchases.ToDictionary(transactionInformation => transactionInformation.Id, transactionInformation => transactionInformation);
-        }*/
+            return _context.Purchases.Where(elem => elem.CustomerId == id).ToList();
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public List<Purchase> Insert(Purchase purchaseInformation)
+        public bool Insert(Purchase purchaseInformation)
         {
             try
             {
@@ -70,10 +70,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return null;
+                return false;
             }
 
-            return _context.Purchases.ToList();
+            return true;
         }
 
         /// <summary>

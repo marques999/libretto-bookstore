@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b37f5d61-be2b-4c72-84c5-3c6b7e44a2a1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ed686256-fa76-4ca9-bb7d-65fa0972a0ad" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -24,12 +24,12 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="abfd25b9-d782-4441-b794-c8d45b050a98" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="9b28460d-030b-4b56-9ac4-e0ec4c95f144" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a079910f-cebc-4e92-8695-93088519b41f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
-    <MetadataFile FileName="Libretto.Model.xsd" MetadataType="Schema" ID="daf97b69-e133-4638-a7c8-92fc6559420f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
-    <MetadataFile FileName="LibrettoWCF.Model.xsd" MetadataType="Schema" ID="da8c90a9-e2be-4673-8bc4-8af4bcb9f8c0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
-    <MetadataFile FileName="LibrettoWCF.xsd" MetadataType="Schema" ID="d23e2859-ce8b-4b30-a43a-56f8cf53987f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e2e14e3d-e33f-4db5-ab25-db1ea9d243b5" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ef5a5dde-15d9-466d-af13-ce8992563069" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a9d42193-a941-40ee-8f65-b7c874265aac" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="Libretto.Model.xsd" MetadataType="Schema" ID="fce764b1-2e29-46f8-9a1c-94f10f528fce" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="LibrettoWCF.Model.xsd" MetadataType="Schema" ID="95abba74-9995-45fe-9d89-b6a6cc60a066" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
+    <MetadataFile FileName="LibrettoWCF.xsd" MetadataType="Schema" ID="df85372f-f5e5-4671-94eb-ff4440c4cf51" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/ServiceHost/StoreService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

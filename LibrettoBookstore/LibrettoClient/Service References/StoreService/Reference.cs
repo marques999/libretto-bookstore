@@ -94,10 +94,10 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        System.Collections.Generic.List<Libretto.Model.Purchase> AddPurchase(Libretto.Model.Purchase purchaseInformation);
+        string AddPurchase(Libretto.Model.PurchaseForm purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> AddPurchaseAsync(Libretto.Model.Purchase purchaseInformation);
+        System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseForm purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeletePurchase", ReplyAction="http://tempuri.org/IStoreService/DeletePurchaseResponse")]
         System.Collections.Generic.List<Libretto.Model.Purchase> DeletePurchase(Libretto.Model.Purchase purchaseInformation);
@@ -279,11 +279,11 @@ namespace Libretto.StoreService {
             return base.Channel.GetPurchaseByIdAsync(id);
         }
         
-        public System.Collections.Generic.List<Libretto.Model.Purchase> AddPurchase(Libretto.Model.Purchase purchaseInformation) {
+        public string AddPurchase(Libretto.Model.PurchaseForm purchaseInformation) {
             return base.Channel.AddPurchase(purchaseInformation);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> AddPurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
+        public System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseForm purchaseInformation) {
             return base.Channel.AddPurchaseAsync(purchaseInformation);
         }
         

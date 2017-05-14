@@ -170,6 +170,12 @@ namespace LibrettoWCF
                     UriTemplate = "purchase/{id}")]
         Purchase GetPurchaseById(string id);
 
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+                    ResponseFormat = WebMessageFormat.Json,
+                    UriTemplate = "purchase/user/{id}")]
+        List<Purchase> GetPurchasesByUser(string id);
+
         /// <summary>
         /// 
         /// </summary>
@@ -179,8 +185,8 @@ namespace LibrettoWCF
         [WebInvoke(Method = "POST",
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/purchases/add")]
-        List<Purchase> AddPurchase(Purchase purchaseInformation);
+                   UriTemplate = "purchases/add")]
+        string AddPurchase(PurchaseForm purchaseInformation);
 
         /// <summary>
         /// 
@@ -188,11 +194,11 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        [WebInvoke(Method = "DELETE",
+        [WebInvoke(Method = "POST",
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/purchases/delete")]
-        List<Purchase> DeletePurchase(Purchase purchaseInformation);
+                   UriTemplate = "purchases/delete")]
+        List<Purchase> DeletePurchase(PurchaseId purchaseInformation);
 
         /// <summary>
         /// 
@@ -278,6 +284,20 @@ namespace LibrettoWCF
     /// </summary>
     [DataContract]
     public class OrderId
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public string Id
+        {
+            get;
+            set;
+        }
+    }
+
+    [DataContract]
+    public class PurchaseId
     {
         /// <summary>
         /// 

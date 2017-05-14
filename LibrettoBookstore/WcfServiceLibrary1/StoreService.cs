@@ -61,9 +61,28 @@ namespace LibrettoWCF
             return "Ok";
         }
 
-        public List<Purchase> AddPurchase(Purchase purchaseInformation)
+        public string AddPurchase(PurchaseForm purchaseInformation)
         {
-            return LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
+            if (LibrettoDatabase.PurchaseIntegration.Insert(new Purchase
+            {
+                Quantity = purchaseInformation.quantity,
+                Total = purchaseInformation.total,
+                BookId = new Guid(purchaseInformation.bookId),
+                CustomerId = new Guid(purchaseInformation.customerId),
+                BookTitle = purchaseInformation.bookTitle,
+                CustomerName = purchaseInformation.customerName
+            }))
+            {
+                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(purchaseInformation.bookId), purchaseInformation.quantity);
+
+                invoiceQ.Send(purchaseInformation);
+            }
+            else
+            {
+                return "ERROR";
+            }
+
+            return "Ok";
         }
 
         public List<Book> DeleteBook(Book bookInformation)

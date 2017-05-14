@@ -77,10 +77,30 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public List<Purchase> AddPurchase(Purchase purchaseInformation)
+        public string AddPurchase(PurchaseForm purchaseInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
+
+            if (LibrettoDatabase.PurchaseIntegration.Insert(new Purchase
+            {
+                Quantity = purchaseInformation.quantity,
+                Total = purchaseInformation.total,
+                BookId = new Guid(purchaseInformation.bookId),
+                CustomerId = new Guid(purchaseInformation.customerId),
+                BookTitle = purchaseInformation.bookTitle,
+                CustomerName = purchaseInformation.customerName
+            }))
+            {
+                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(purchaseInformation.bookId), purchaseInformation.quantity);
+
+                invoiceQ.Send(purchaseInformation);
+            }
+            else
+            {
+                return "ERROR";
+            }
+
+            return "Ok";
         }
 
         /// <summary>
@@ -110,10 +130,10 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public List<Purchase> DeletePurchase(Purchase purchaseInformation)
+        public List<Purchase> DeletePurchase(PurchaseId purchaseInformation)
         {
             setCrossOrigin();
-            return LibrettoDatabase.PurchaseIntegration.Delete(purchaseInformation.Id);
+            return LibrettoDatabase.PurchaseIntegration.Delete(new Guid(purchaseInformation.Id));
         }
 
         /// <summary>
@@ -275,6 +295,12 @@ namespace LibrettoWCF
             return LibrettoDatabase.OrderIntegration.List(new Guid(id));
         }
 
+        public List<Purchase> GetPurchasesByUser(string id)
+        {
+            setCrossOrigin();
+            return LibrettoDatabase.PurchaseIntegration.List(new Guid(id));
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -315,5 +341,7 @@ namespace LibrettoWCF
 
             return customerInformation;
         }
+
+        
     }
 }
