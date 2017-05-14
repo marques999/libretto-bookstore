@@ -174,7 +174,7 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        Response UpdateOrder(Order orderInformation);
+        Response UpdateQuantity(Order orderInformation);
 
         /// <summary>
         /// 
@@ -182,6 +182,6 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <param name="orderStatus"></param>
         /// <returns></returns>
-        Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus);
+        Response UpdateStatus(Guid orderIdentifier, Status orderStatus);
     }
 }

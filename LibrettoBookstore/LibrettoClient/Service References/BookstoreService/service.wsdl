@@ -144,11 +144,11 @@
   <wsdl:message name="IStoreService_DeleteOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteOrderResponse" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateOrder_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateOrder" />
+  <wsdl:message name="IStoreService_UpdateQuantity_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateQuantity" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateOrder_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateOrderResponse" />
+  <wsdl:message name="IStoreService_UpdateQuantity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateQuantityResponse" />
   </wsdl:message>
   <wsdl:portType name="IStoreService">
     <wsdl:operation name="Login">
@@ -223,9 +223,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/DeleteOrder" message="tns:IStoreService_DeleteOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/DeleteOrderResponse" message="tns:IStoreService_DeleteOrder_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UpdateOrder">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateOrder" message="tns:IStoreService_UpdateOrder_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateOrderResponse" message="tns:IStoreService_UpdateOrder_OutputMessage" />
+    <wsdl:operation name="UpdateQuantity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateQuantity" message="tns:IStoreService_UpdateQuantity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateQuantityResponse" message="tns:IStoreService_UpdateQuantity_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="TcpEndpoint" type="tns:IStoreService">
@@ -393,8 +393,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateOrder">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateOrder" style="document" />
+    <wsdl:operation name="UpdateQuantity">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateQuantity" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

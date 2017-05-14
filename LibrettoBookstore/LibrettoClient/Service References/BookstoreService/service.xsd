@@ -246,17 +246,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateOrder">
+  <xs:element name="UpdateQuantity">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="orderInformation" nillable="true" type="q33:Order" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateOrderResponse">
+  <xs:element name="UpdateQuantityResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateOrderResult" type="q34:Response" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateQuantityResult" type="q34:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

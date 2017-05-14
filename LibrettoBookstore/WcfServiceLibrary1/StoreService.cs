@@ -264,7 +264,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response UpdateOrder(Order orderInformation)
+        public Response UpdateQuantity(Order orderInformation)
         {
             var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderInformation.Id);
 
@@ -299,7 +299,7 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <param name="orderStatus"></param>
         /// <returns></returns>
-        public Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus)
+        public Response UpdateStatus(Guid orderIdentifier, Status orderStatus)
         {
             var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
 

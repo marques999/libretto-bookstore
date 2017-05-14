@@ -123,11 +123,11 @@ namespace Libretto.BookstoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
         System.Threading.Tasks.Task<Libretto.Model.Response> DeleteOrderAsync(Libretto.Model.Order orderInformation);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
+        Libretto.Model.Response UpdateQuantity(Libretto.Model.Order orderInformation);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(Libretto.Model.Order orderInformation);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -301,12 +301,12 @@ namespace Libretto.BookstoreService {
             return base.Channel.DeleteOrderAsync(orderInformation);
         }
         
-        public Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation) {
-            return base.Channel.UpdateOrder(orderInformation);
+        public Libretto.Model.Response UpdateQuantity(Libretto.Model.Order orderInformation) {
+            return base.Channel.UpdateQuantity(orderInformation);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation) {
-            return base.Channel.UpdateOrderAsync(orderInformation);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(Libretto.Model.Order orderInformation) {
+            return base.Channel.UpdateQuantityAsync(orderInformation);
         }
     }
 }

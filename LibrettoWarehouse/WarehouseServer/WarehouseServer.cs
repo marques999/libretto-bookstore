@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Xml.Serialization;
 
 using Libretto.Messaging;
+using Libretto.Model;
 using Libretto.Properties;
 using Libretto.Warehouse;
 
@@ -164,6 +165,30 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="messageUpdate"></param>
+        public void UpdateOrder(MessageUpdate messageUpdate)
+        {
+            try
+            {
+                LogMessage(Resources.MessagingUpdateOrder, messageUpdate.Identifier, messageUpdate.Quantity, messageUpdate.Total);
+
+                if (_orders.Update(messageUpdate.Identifier, messageUpdate.Quantity, messageUpdate.Total) == false)
+                {
+                    return;
+                }
+
+                OnRefresh?.Invoke(_orders.Orders);
+                SerializeTransactions();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="messageCancel"></param>
         public void CancelOrder(MessageCancel messageCancel)
         {
@@ -207,7 +232,7 @@ namespace Libretto
 
                 LogMessage(Resources.RemotingDispatchOrder, transactionIdentifier, transactionTimestamp);
 
-                if (_bookstore.DispatchOrder(transactionIdentifier, transactionTimestamp) == false)
+                if (_bookstore.DispatchOrder(transactionIdentifier) != Response.Success)
                 {
                     return false;
                 }
