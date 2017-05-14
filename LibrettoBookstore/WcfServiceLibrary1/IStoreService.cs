@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 using Libretto.Model;
@@ -173,7 +174,7 @@ namespace LibrettoWCF
         /// <param name="orderForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Response AddOrder(OrderTemplate orderForm);
+        Response InsertOrder(OrderTemplate orderForm);
 
         /// <summary>
         /// 
@@ -190,5 +191,13 @@ namespace LibrettoWCF
         /// <returns></returns>
         [OperationContract]
         Response UpdateOrder(Order orderInformation);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderIdentifier"></param>
+        /// <param name="orderStatus"></param>
+        /// <returns></returns>
+        Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus);
     }
 }

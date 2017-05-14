@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Messaging;
 using System.Collections.Generic;
 using System.ServiceModel.Web;
 
 using Libretto.Model;
-using Libretto.Messaging;
 using Libretto.Warehouse;
-
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF
@@ -16,22 +13,6 @@ namespace LibrettoWCF
     /// </summary>
     public class WebstoreService : IWebstoreService
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private MessageQueue WarehouseQueue
-        {
-            get;
-        } = MessagingCommon.InitializeWarehouseQueue();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private MessageQueue InvoiceQueue
-        {
-            get;
-        } = MessagingCommon.InitializeInvoiceQueue();
-
         /// <summary>
         /// 
         /// </summary>
@@ -97,7 +78,7 @@ namespace LibrettoWCF
 
             if (LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation) == Response.Success)
             {
-                InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
+                LibrettoHost.InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
                 LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
             }
             else
@@ -285,7 +266,7 @@ namespace LibrettoWCF
 
             if (LibrettoDatabase.OrderIntegration.Insert(orderInformation) == Response.Success)
             {
-                WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
+                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
                 LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.Id, orderInformation.Quantity);
             }
             else
@@ -321,7 +302,7 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             setCrossOrigin();
-            LibrettoDatabase.OrderIntegration.CancelOrder(new Guid(orderInformation.Id));
+            LibrettoDatabase.OrderIntegration.UpdateStatus(new Guid(orderInformation.Id), new DateTime(), Status.Cancelled);
             return LibrettoDatabase.OrderIntegration.List();
         }
 

@@ -202,7 +202,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void StatusWaiting_CheckedChanged(object sender, EventArgs args)
         {
-            Information.Status = Status.WaitingExpedition;
+            Information.Status = Status.Waiting;
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void StatusProcessing_CheckedChanged(object sender, EventArgs args)
         {
-            Information.Status = Status.WaitingDispatch;
+            Information.Status = Status.Processing;
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Libretto.Forms
         /// <param name="e"></param>
         private void StatusDispatched_CheckedChanged(object sender, EventArgs e)
         {
-            Information.Status = Status.DispatchComplete;
+            Information.Status = Status.Dispatched;
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
 EndProject
@@ -11,11 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoClient", "LibrettoC
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoWCF", "WcfServiceLibrary1\LibrettoWCF.csproj", "{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoHost", "LibrettoHost\LibrettoHost.csproj", "{A9522D5A-4A55-4C6F-BFAF-B6B1C1FBE4C3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E} = {E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +30,6 @@ Global
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9522D5A-4A55-4C6F-BFAF-B6B1C1FBE4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9522D5A-4A55-4C6F-BFAF-B6B1C1FBE4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9522D5A-4A55-4C6F-BFAF-B6B1C1FBE4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9522D5A-4A55-4C6F-BFAF-B6B1C1FBE4C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

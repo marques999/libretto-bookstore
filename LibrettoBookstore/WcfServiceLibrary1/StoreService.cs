@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Messaging;
 using System.Collections.Generic;
-
-using Libretto.Model;
 using Libretto.Messaging;
+using Libretto.Model;
 using Libretto.Warehouse;
-
 using LibrettoWCF.Database;
+using LibrettoWCF.Tools;
 
 namespace LibrettoWCF
 {
@@ -15,22 +13,6 @@ namespace LibrettoWCF
     /// </summary>
     public class StoreService : IStoreService
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private MessageQueue InvoiceQueue
-        {
-            get;
-        } = MessagingCommon.InitializeInvoiceQueue();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private MessageQueue WarehouseQueue
-        {
-            get;
-        } = MessagingCommon.InitializeWarehouseQueue();
-
         /// <summary>
         /// 
         /// </summary>
@@ -56,7 +38,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderForm"></param>
         /// <returns></returns>
-        public Response AddOrder(OrderTemplate orderForm)
+        public Response InsertOrder(OrderTemplate orderForm)
         {
             var orderInformation = new Order
             {
@@ -75,7 +57,7 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
-            WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
+            LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
 
             return Response.Success;
@@ -105,7 +87,7 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
-            InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
+            LibrettoHost.InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
 
             return Response.Success;
@@ -286,7 +268,71 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response UpdateOrder(Order orderInformation)
         {
-            return LibrettoDatabase.OrderIntegration.Update(orderInformation, true);
+            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderInformation.Id);
+
+            if (beforeUpdate == null)
+            {
+                return Response.NotFound;
+            }
+
+            if (beforeUpdate.Quantity == orderInformation.Quantity && Math.Abs(beforeUpdate.Total - orderInformation.Total) < 1e-6)
+            {
+                return Response.Success;
+            }
+
+            var operationResult = LibrettoDatabase.OrderIntegration.Update(orderInformation, true);
+
+            if (operationResult == Response.Success)
+            {
+                LibrettoHost.WarehouseQueue.Send(new MessageUpdate
+                {
+                    Total = orderInformation.Total,
+                    Identifier = orderInformation.Id,
+                    Quantity = orderInformation.Quantity
+                });
+            }
+
+            return operationResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderIdentifier"></param>
+        /// <param name="orderStatus"></param>
+        /// <returns></returns>
+        public Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus)
+        {
+            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
+
+            if (beforeUpdate == null)
+            {
+                return Response.NotFound;
+            }
+
+            if (beforeUpdate.Status == orderStatus)
+            {
+                return Response.Success;
+            }
+
+            var orderTimestamp = new DateTime();
+            var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(orderIdentifier, orderTimestamp, orderStatus);
+
+            if (operationResult != Response.Success)
+            {
+                return operationResult;
+            }
+
+            if (orderStatus == Status.Cancelled)
+            {
+                LibrettoHost.WarehouseQueue.Send(new MessageCancel
+                {
+                    Timestamp = orderTimestamp,
+                    Identifier = orderIdentifier
+                });
+            }
+
+            return EmailClient.Instance.SendEmail(LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier));
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Net.Mail;
 
 using Libretto;
 using Libretto.Model;
+using LibrettoWCF.Database;
 
 namespace LibrettoWCF.Tools
 {
@@ -65,7 +66,7 @@ namespace LibrettoWCF.Tools
         /// <param name="customerInformation"></param>
         /// <param name="emailSubject"></param>
         /// <param name="emailBody"></param>
-        public void Send(Customer customerInformation, string emailSubject, string emailBody)
+        private bool Send(Customer customerInformation, string emailSubject, string emailBody)
         {
             try
             {
@@ -79,10 +80,35 @@ namespace LibrettoWCF.Tools
                     To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
                 }, customerInformation.Id);
             }
-            catch (SmtpException ex)
+            catch (Exception ex)
             {
-                Console.Write(ex.Message);
+                System.Diagnostics.Debug.Print(ex.StackTrace);
+                return false;
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public Response SendEmail(Order orderInformation)
+        {
+            if (orderInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
+
+            if (customerInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            return EmailClient.Instance.Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.BadRequest;
         }
     }
 }

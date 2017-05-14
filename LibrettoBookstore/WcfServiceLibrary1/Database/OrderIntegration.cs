@@ -113,37 +113,10 @@ namespace LibrettoWCF.Database
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        public Response DispatchOrder(Guid transactionIdentifier)
-        {
-            return UpdateStatus(transactionIdentifier, Status.WaitingDispatch);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        public Response ExecuteOrder(Guid transactionIdentifier)
-        {
-            return UpdateStatus(transactionIdentifier, Status.DispatchComplete);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        /// <returns></returns>
-        public Response CancelOrder(Guid transactionIdentifier)
-        {
-            return UpdateStatus(transactionIdentifier, Status.OrderCancelled);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="transactionTimestamp"></param>
         /// <param name="transactionStatus"></param>
         /// <returns></returns>
-        private Response UpdateStatus(Guid transactionIdentifier, Status transactionStatus)
+        public Response UpdateStatus(Guid transactionIdentifier, DateTime transactionTimestamp, Status transactionStatus)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
 
@@ -153,7 +126,7 @@ namespace LibrettoWCF.Database
             }
 
             sqlEntity.Status = transactionStatus;
-            sqlEntity.StatusTimestamp = new DateTime();
+            sqlEntity.StatusTimestamp = transactionTimestamp;
 
             try
             {
@@ -182,7 +155,7 @@ namespace LibrettoWCF.Database
                 return Response.NotFound;
             }
 
-            if (!hasPermissions && sqlEntity.Status != Status.WaitingDispatch)
+            if (!hasPermissions && sqlEntity.Status != Status.Processing)
             {
                 return Response.PermissionDenied;
             }
