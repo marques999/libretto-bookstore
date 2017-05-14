@@ -98,10 +98,13 @@ namespace LibrettoWCF
             }
             else
             {
-                return "ERROR";
+                return operationResult;
             }
 
-            return "Ok";
+            LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderInformation.bookId), orderInformation.quantity);
+            WarehouseQueue.Send(orderInformation);
+
+            return Response.Success;
         }
 
         /// <summary>

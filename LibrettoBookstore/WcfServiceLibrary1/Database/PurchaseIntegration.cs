@@ -82,7 +82,7 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
-        public bool Insert(Purchase purchaseInformation)
+        public Response Insert(Purchase purchaseInformation)
         {
             try
             {
@@ -91,10 +91,10 @@ namespace LibrettoWCF.Database
             }
             catch
             {
-                return false;
+                return Response.DatabaseError;
             }
 
-            return true;
+            return Response.Success;
         }
 
         /// <summary>
