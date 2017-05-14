@@ -28,10 +28,10 @@ namespace Libretto.BookstoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Book>> ListBooksAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupBook", ReplyAction="http://tempuri.org/IStoreService/LookupBookResponse")]
-        Libretto.Model.Book LookupBook(string bookIdentifier);
+        Libretto.Model.Book LookupBook(System.Guid bookIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupBook", ReplyAction="http://tempuri.org/IStoreService/LookupBookResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Book> LookupBookAsync(string bookIdentifier);
+        System.Threading.Tasks.Task<Libretto.Model.Book> LookupBookAsync(System.Guid bookIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertBook", ReplyAction="http://tempuri.org/IStoreService/InsertBookResponse")]
         Libretto.Model.Response InsertBook(Libretto.Model.Book bookInformation);
@@ -58,10 +58,10 @@ namespace Libretto.BookstoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Customer>> ListCustomersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupCustomer", ReplyAction="http://tempuri.org/IStoreService/LookupCustomerResponse")]
-        Libretto.Model.Customer LookupCustomer(string customerIdentifier);
+        Libretto.Model.Customer LookupCustomer(System.Guid customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupCustomer", ReplyAction="http://tempuri.org/IStoreService/LookupCustomerResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Customer> LookupCustomerAsync(string customerIdentifier);
+        System.Threading.Tasks.Task<Libretto.Model.Customer> LookupCustomerAsync(System.Guid customerIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertCustomer", ReplyAction="http://tempuri.org/IStoreService/InsertCustomerResponse")]
         Libretto.Model.Response InsertCustomer(Libretto.Model.Customer customerInformation);
@@ -76,10 +76,10 @@ namespace Libretto.BookstoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> ListPurchasesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupPurchase", ReplyAction="http://tempuri.org/IStoreService/LookupPurchaseResponse")]
-        Libretto.Model.Purchase LookupPurchase(string purchaseIdentifier);
+        Libretto.Model.Purchase LookupPurchase(System.Guid purchaseIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupPurchase", ReplyAction="http://tempuri.org/IStoreService/LookupPurchaseResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(string purchaseIdentifier);
+        System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(System.Guid purchaseIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertPurchase", ReplyAction="http://tempuri.org/IStoreService/InsertPurchaseResponse")]
         Libretto.Model.Response InsertPurchase(Libretto.Model.OrderTemplate purchaseForm);
@@ -106,10 +106,10 @@ namespace Libretto.BookstoreService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> ListOrdersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupOrder", ReplyAction="http://tempuri.org/IStoreService/LookupOrderResponse")]
-        Libretto.Model.Order LookupOrder(string orderIdentifier);
+        Libretto.Model.Order LookupOrder(System.Guid orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupOrder", ReplyAction="http://tempuri.org/IStoreService/LookupOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(string orderIdentifier);
+        System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(System.Guid orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
         Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm);
@@ -173,11 +173,11 @@ namespace Libretto.BookstoreService {
             return base.Channel.ListBooksAsync();
         }
         
-        public Libretto.Model.Book LookupBook(string bookIdentifier) {
+        public Libretto.Model.Book LookupBook(System.Guid bookIdentifier) {
             return base.Channel.LookupBook(bookIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Book> LookupBookAsync(string bookIdentifier) {
+        public System.Threading.Tasks.Task<Libretto.Model.Book> LookupBookAsync(System.Guid bookIdentifier) {
             return base.Channel.LookupBookAsync(bookIdentifier);
         }
         
@@ -213,11 +213,11 @@ namespace Libretto.BookstoreService {
             return base.Channel.ListCustomersAsync();
         }
         
-        public Libretto.Model.Customer LookupCustomer(string customerIdentifier) {
+        public Libretto.Model.Customer LookupCustomer(System.Guid customerIdentifier) {
             return base.Channel.LookupCustomer(customerIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Customer> LookupCustomerAsync(string customerIdentifier) {
+        public System.Threading.Tasks.Task<Libretto.Model.Customer> LookupCustomerAsync(System.Guid customerIdentifier) {
             return base.Channel.LookupCustomerAsync(customerIdentifier);
         }
         
@@ -237,11 +237,11 @@ namespace Libretto.BookstoreService {
             return base.Channel.ListPurchasesAsync();
         }
         
-        public Libretto.Model.Purchase LookupPurchase(string purchaseIdentifier) {
+        public Libretto.Model.Purchase LookupPurchase(System.Guid purchaseIdentifier) {
             return base.Channel.LookupPurchase(purchaseIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(string purchaseIdentifier) {
+        public System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(System.Guid purchaseIdentifier) {
             return base.Channel.LookupPurchaseAsync(purchaseIdentifier);
         }
         
@@ -277,11 +277,11 @@ namespace Libretto.BookstoreService {
             return base.Channel.ListOrdersAsync();
         }
         
-        public Libretto.Model.Order LookupOrder(string orderIdentifier) {
+        public Libretto.Model.Order LookupOrder(System.Guid orderIdentifier) {
             return base.Channel.LookupOrder(orderIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(string orderIdentifier) {
+        public System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(System.Guid orderIdentifier) {
             return base.Channel.LookupOrderAsync(orderIdentifier);
         }
         

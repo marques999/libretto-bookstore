@@ -55,9 +55,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        public Book LookupBook(string bookIdentifier)
+        public Book LookupBook(Guid bookIdentifier)
         {
-            return LibrettoDatabase.BookIntegration.Lookup(new Guid(bookIdentifier));
+            return LibrettoDatabase.BookIntegration.Lookup(bookIdentifier);
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
-        public Customer LookupCustomer(string customerIdentifier)
+        public Customer LookupCustomer(Guid customerIdentifier)
         {
-            return LibrettoDatabase.CustomerIntegration.Lookup(new Guid(customerIdentifier));
+            return LibrettoDatabase.CustomerIntegration.Lookup(customerIdentifier);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
-        public Purchase LookupPurchase(string purchaseIdentifier)
+        public Purchase LookupPurchase(Guid purchaseIdentifier)
         {
-            return LibrettoDatabase.PurchaseIntegration.Lookup(new Guid(purchaseIdentifier));
+            return LibrettoDatabase.PurchaseIntegration.Lookup(purchaseIdentifier);
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Order LookupOrder(string orderIdentifier)
+        public Order LookupOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Lookup(new Guid(orderIdentifier));
+            return LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
         }
 
         /// <summary>

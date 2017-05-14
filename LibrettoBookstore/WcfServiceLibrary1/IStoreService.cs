@@ -37,7 +37,7 @@ namespace LibrettoWCF
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Book LookupBook(string bookIdentifier);
+        Book LookupBook(Guid bookIdentifier);
 
         /// <summary>
         /// 
@@ -80,7 +80,7 @@ namespace LibrettoWCF
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Customer LookupCustomer(string customerIdentifier);
+        Customer LookupCustomer(Guid customerIdentifier);
 
         /// <summary>
         /// 
@@ -107,7 +107,7 @@ namespace LibrettoWCF
         /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Purchase LookupPurchase(string purchaseIdentifier);
+        Purchase LookupPurchase(Guid purchaseIdentifier);
 
         /// <summary>
         /// 
@@ -150,7 +150,7 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Order LookupOrder(string orderIdentifier);
+        Order LookupOrder(Guid orderIdentifier);
 
         /// <summary>
         /// 
