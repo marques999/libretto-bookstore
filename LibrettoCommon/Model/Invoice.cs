@@ -68,5 +68,23 @@ namespace Libretto.Model
             get;
             set;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
+        public static Invoice FromPurchase(Purchase purchaseInformation)
+        {
+            return new Invoice
+            {
+                Total = purchaseInformation.Total,
+                Identifier = purchaseInformation.Id,
+                Title = purchaseInformation.BookTitle,
+                Quantity = purchaseInformation.Quantity,
+                Timestamp = purchaseInformation.Timestamp,
+                Customer = purchaseInformation.CustomerName
+            };
+        }
     }
 }

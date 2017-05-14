@@ -5,7 +5,7 @@ using System.ServiceModel.Web;
 
 using Libretto.Model;
 using Libretto.Messaging;
-
+using Libretto.Warehouse;
 using LibrettoWCF.Model;
 using LibrettoWCF.Database;
 
@@ -79,24 +79,26 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
+        /// <param name="purchaseForm"></param>
         /// <returns></returns>
-        public string AddPurchase(OrderTemplate purchaseInformation)
+        public string AddPurchase(OrderTemplate purchaseForm)
         {
             setCrossOrigin();
 
-            if (LibrettoDatabase.PurchaseIntegration.Insert(new Purchase
+            var purchaseInformation = new Purchase
             {
-                Quantity = purchaseInformation.quantity,
-                Total = purchaseInformation.total,
-                BookId = new Guid(purchaseInformation.bookId),
-                CustomerId = new Guid(purchaseInformation.customerId),
-                BookTitle = purchaseInformation.bookTitle,
-                CustomerName = purchaseInformation.customerName
-            }) == Response.Success)
+                Quantity = purchaseForm.quantity,
+                Total = purchaseForm.total,
+                BookId = new Guid(purchaseForm.bookId),
+                CustomerId = new Guid(purchaseForm.customerId),
+                BookTitle = purchaseForm.bookTitle,
+                CustomerName = purchaseForm.customerName
+            };
+
+            if (LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation) == Response.Success)
             {
-                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(purchaseInformation.bookId), purchaseInformation.quantity);
-                InvoiceQueue.Send(purchaseInformation);
+                InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
+                LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
             }
             else
             {
@@ -283,8 +285,8 @@ namespace LibrettoWCF
 
             if (LibrettoDatabase.OrderIntegration.Insert(orderInformation) == Response.Success)
             {
-                LibrettoDatabase.BookIntegration.UpdateStock(new Guid(orderForm.bookId), orderForm.quantity);
-                WarehouseQueue.Send(orderInformation);
+                WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
+                LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.Id, orderInformation.Quantity);
             }
             else
             {

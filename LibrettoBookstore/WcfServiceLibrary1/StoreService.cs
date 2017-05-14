@@ -76,18 +76,8 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
+            WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
-
-            WarehouseQueue.Send(new WarehouseOrder
-            {
-                Total = orderInformation.Total,
-                Identifier = orderInformation.Id,
-                Status = WarehouseStatus.Pending,
-                Title = orderInformation.BookTitle,
-                Quantity = orderInformation.Quantity,
-                DateCreated = orderInformation.Timestamp,
-                DateModified = orderInformation.StatusTimestamp
-            });
 
             return Response.Success;
         }
@@ -116,17 +106,8 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
+            InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
-
-            InvoiceQueue.Send(new Invoice
-            {
-                Total = purchaseInformation.Total,
-                Identifier = purchaseInformation.Id,
-                Title = purchaseInformation.BookTitle,
-                Quantity = purchaseInformation.Quantity,
-                Timestamp = purchaseInformation.Timestamp,
-                Customer = purchaseInformation.CustomerName
-            });
 
             return Response.Success;
         }

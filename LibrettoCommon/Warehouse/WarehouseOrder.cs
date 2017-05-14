@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using Libretto.Messaging;
+using Libretto.Model;
 
 namespace Libretto.Warehouse
 {
@@ -87,6 +88,25 @@ namespace Libretto.Warehouse
         public void Process(IMessageVisitor messageVisitor)
         {
             messageVisitor.InsertOrder(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public static WarehouseOrder FromOrder(Order orderInformation)
+        {
+            return new WarehouseOrder
+            {
+                Total = orderInformation.Total,
+                Identifier = orderInformation.Id,
+                Status = WarehouseStatus.Pending,
+                Title = orderInformation.BookTitle,
+                Quantity = orderInformation.Quantity,
+                DateCreated = orderInformation.Timestamp,
+                DateModified = orderInformation.StatusTimestamp
+            };
         }
     }
 }

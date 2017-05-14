@@ -179,14 +179,14 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
+        /// <param name="purchaseForm"></param>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "POST",
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "purchases/add")]
-        string AddPurchase(OrderTemplate purchaseInformation);
+        string AddPurchase(OrderTemplate purchaseForm);
 
         /// <summary>
         /// 
