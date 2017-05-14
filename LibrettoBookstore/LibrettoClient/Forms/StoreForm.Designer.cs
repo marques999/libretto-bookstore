@@ -9,7 +9,7 @@ namespace Libretto.Forms
     /// <summary>
     ///
     /// </summary>
-    internal partial class StoreForm
+    internal sealed partial class StoreForm
     {
         /// <summary>
         ///

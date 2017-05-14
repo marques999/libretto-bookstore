@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -53,14 +54,7 @@ namespace Libretto.Forms
             CustomerInformation.Name = nameField.Text.Trim();
             CustomerInformation.Email = emailField.Text.Trim();
             CustomerInformation.Location = locationField.Text.Trim();
-
-            Customer c = new Customer();
-
-            c.Name = CustomerInformation.Name;
-            c.Email = CustomerInformation.Email;
-            c.Location = CustomerInformation.Location;
-
-            LibrettoClient.proxy.AddCustomer(c);
+            LibrettoClient.Instance.Proxy.AddCustomer(CustomerInformation);
         }
 
         /// <summary>

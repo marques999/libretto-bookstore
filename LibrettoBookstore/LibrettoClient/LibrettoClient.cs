@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Libretto.Forms;
 using Libretto.Model;
+using Libretto.StoreService;
 
 namespace Libretto
 {
@@ -12,109 +13,6 @@ namespace Libretto
     /// </summary>
     internal class LibrettoClient
     {
-
-        public static StoreService.StoreServiceClient proxy;
-
-        private LibrettoClient()
-        {
-            Customers = proxy.GetCustomersList();
-            Books = proxy.GetBooksList();
-            Orders = proxy.GetOrdersList();
-            Purchases = proxy.GetPurchasesList();
-
-            
-            foreach(Order b in Orders)
-            {
-                
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private DateTime RandomTimestamp(DateTime start, DateTime end)
-        {
-            return start + new TimeSpan(0, _randomGenerator.Next(0, (int)(end - start).TotalMinutes), 0);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly Random _randomGenerator = new Random();
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Book> Books
-        {
-            get;
-        } = new List<Book>();
-
-        public List<Purchase> Purchases
-        {
-            get;
-        } = new List<Purchase>();
-
-        public List<Order> Orders
-        {
-            get;
-        } = new List<Order>();
-
-        public List<Transaction> Transactions
-        {
-            get;
-            set;
-        } = new List<Transaction>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Customer> Customers
-        {
-            get;
-            set;
-        } = new List<Customer>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Email
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Permissions Permissions
-        {
-            get;
-            private set;
-        } = Permissions.None;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userEmail"></param>
-        public void Login(string userEmail)
-        {
-            Email = userEmail;
-            Permissions = Permissions.Administrator;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Logout()
-        {
-            Email = null;
-            Permissions = Permissions.None;
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -128,11 +26,115 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        private LibrettoClient()
+        {
+            Proxy = new StoreServiceClient();
+            RefreshBooks();
+            RefreshCustomers();
+            RefreshTransactions();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshBooks()
+        {
+            Books = Proxy.GetBooksList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshCustomers()
+        {
+            Customers = Proxy.GetCustomersList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshTransactions()
+        {
+            Transactions.Clear();
+            Transactions.AddRange(Proxy.GetOrdersList());
+            Transactions.AddRange(Proxy.GetPurchasesList());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Clerk Session
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StoreServiceClient Proxy
+        {
+            get;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Book> Books
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Customer> Customers
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<Transaction> Transactions
+        {
+            get;
+        } = new List<Transaction>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAdministrator()
+        {
+            return Session?.Permissions == Permissions.Administrator;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clerkInformation"></param>
+        public void Login(Clerk clerkInformation)
+        {
+            Session = clerkInformation;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Logout()
+        {
+            Session = null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [STAThread]
         private static void Main()
         {
-            proxy = new StoreService.StoreServiceClient();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());

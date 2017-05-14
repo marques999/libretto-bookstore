@@ -31,6 +31,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Customer" nillable="true" type="tns:Customer" />
+  <xs:complexType name="Clerk">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Permissions" type="tns:Permissions" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Clerk" nillable="true" type="tns:Clerk" />
+  <xs:simpleType name="Permissions">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Clerk" />
+      <xs:enumeration value="Administrator" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Permissions" nillable="true" type="tns:Permissions" />
   <xs:complexType name="ArrayOfPurchase">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Purchase" nillable="true" type="tns:Purchase" />
@@ -58,7 +75,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Transaction" nillable="true" type="tns:Transaction" />
-  <xs:complexType name="PurchaseForm">
+  <xs:complexType name="PurchaseTemplate">
     <xs:sequence>
       <xs:element minOccurs="0" name="bookId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="bookTitle" nillable="true" type="xs:string" />
@@ -68,7 +85,7 @@
       <xs:element minOccurs="0" name="total" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="PurchaseForm" nillable="true" type="tns:PurchaseForm" />
+  <xs:element name="PurchaseTemplate" nillable="true" type="tns:PurchaseTemplate" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using Libretto.Properties;
 
 namespace Libretto.Forms
@@ -18,28 +19,12 @@ namespace Libretto.Forms
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private bool ValidateLogin()
-        {
-            return emailField.Text == @"admin@libretto.pt" && passwordField.Text == @"changemeplease";
-        }
-
-        /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
         private bool ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(emailField.Text) || string.IsNullOrWhiteSpace(passwordField.Text))
-            {
-                return false;
-            }
-
-            LibrettoClient.Instance.Login(emailField.Text);
-
-            return true;
+            return string.IsNullOrWhiteSpace(emailField.Text) == false && string.IsNullOrWhiteSpace(passwordField.Text) == false;
         }
 
         /// <summary>
@@ -59,9 +44,16 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonValidate_Click(object sender, EventArgs args)
         {
-            if (ValidateLogin())
+            var clerkInformation = LibrettoClient.Instance.Proxy.Login(new LibrettoWCF.Model.LoginForm
+            {
+                Email = emailField.Text.Trim(),
+                Password = passwordField.Text.Trim()
+            });
+
+            if (clerkInformation != null)
             {
                 Hide();
+                LibrettoClient.Instance.Login(clerkInformation);
                 new StoreForm().ShowDialog();
                 Show();
             }

@@ -186,7 +186,7 @@ namespace LibrettoWCF
                    ResponseFormat = WebMessageFormat.Json,
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "purchases/add")]
-        string AddPurchase(PurchaseForm purchaseInformation);
+        string AddPurchase(PurchaseTemplate purchaseInformation);
 
         /// <summary>
         /// 

@@ -10,16 +10,10 @@ namespace Libretto.Model
     public enum Permissions
     {
         [EnumMember]
-        [Description("None")]
-        None,
-        [EnumMember]
         [Description("Clerk")]
-        Clerk,
-        [EnumMember]
-        [Description("Customer")]
-        Customer,
+        Clerk = 0,
         [EnumMember]
         [Description("Administrator")]
-        Administrator
+        Administrator = 1
     }
 }

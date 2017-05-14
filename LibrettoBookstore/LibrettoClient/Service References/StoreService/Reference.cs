@@ -58,10 +58,10 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<Libretto.Model.Customer> GetCustomerByIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        Libretto.Model.Customer Login(LibrettoWCF.Model.LoginForm loginForm);
+        Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Customer> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
+        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddCustomer", ReplyAction="http://tempuri.org/IStoreService/AddCustomerResponse")]
         string AddCustomer(Libretto.Model.Customer customerInformation);
@@ -94,10 +94,10 @@ namespace Libretto.StoreService {
         System.Threading.Tasks.Task<Libretto.Model.Purchase> GetPurchaseByIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        string AddPurchase(Libretto.Model.PurchaseForm purchaseInformation);
+        string AddPurchase(Libretto.Model.PurchaseTemplate purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/AddPurchase", ReplyAction="http://tempuri.org/IStoreService/AddPurchaseResponse")]
-        System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseForm purchaseInformation);
+        System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseTemplate purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeletePurchase", ReplyAction="http://tempuri.org/IStoreService/DeletePurchaseResponse")]
         System.Collections.Generic.List<Libretto.Model.Purchase> DeletePurchase(Libretto.Model.Purchase purchaseInformation);
@@ -231,11 +231,11 @@ namespace Libretto.StoreService {
             return base.Channel.GetCustomerByIdAsync(id);
         }
         
-        public Libretto.Model.Customer Login(LibrettoWCF.Model.LoginForm loginForm) {
+        public Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm) {
             return base.Channel.Login(loginForm);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Customer> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
+        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
             return base.Channel.LoginAsync(loginForm);
         }
         
@@ -279,11 +279,11 @@ namespace Libretto.StoreService {
             return base.Channel.GetPurchaseByIdAsync(id);
         }
         
-        public string AddPurchase(Libretto.Model.PurchaseForm purchaseInformation) {
+        public string AddPurchase(Libretto.Model.PurchaseTemplate purchaseInformation) {
             return base.Channel.AddPurchase(purchaseInformation);
         }
         
-        public System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseForm purchaseInformation) {
+        public System.Threading.Tasks.Task<string> AddPurchaseAsync(Libretto.Model.PurchaseTemplate purchaseInformation) {
             return base.Channel.AddPurchaseAsync(purchaseInformation);
         }
         

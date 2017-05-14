@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -64,16 +65,9 @@ namespace Libretto.Forms
         private void ButtonConfirm_Click(object sender, EventArgs args)
         {
             BookInformation.Title = titleField.Text.Trim();
-            BookInformation.Price = Convert.ToDouble(priceField.Value);
             BookInformation.Stock = Convert.ToInt32(stockField.Value);
-
-            Book book = new Book();
-
-            book.Title = BookInformation.Title;
-            book.Stock = BookInformation.Stock;
-            book.Price = BookInformation.Price;
-
-            LibrettoClient.proxy.AddBook(book);
+            BookInformation.Price = Convert.ToDouble(priceField.Value);
+            LibrettoClient.Instance.Proxy.AddBook(BookInformation);
         }
 
         /// <summary>

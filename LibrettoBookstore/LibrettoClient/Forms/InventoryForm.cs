@@ -26,6 +26,7 @@ namespace Libretto.Forms
         private void RefreshBooks()
         {
             listView.Items.Clear();
+            LibrettoClient.Instance.RefreshBooks();
             listView.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
         }
 

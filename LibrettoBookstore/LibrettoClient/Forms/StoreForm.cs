@@ -10,7 +10,7 @@ namespace Libretto.Forms
     /// <summary>
     /// 
     /// </summary>
-    internal partial class StoreForm : Form
+    internal sealed partial class StoreForm : Form
     {
         /// <summary>
         /// 
@@ -18,7 +18,7 @@ namespace Libretto.Forms
         public StoreForm()
         {
             InitializeComponent();
-            _hasPermission = LibrettoClient.Instance.Permissions == Permissions.Administrator;
+            Text = $@"Libreto Bookstore ({LibrettoClient.Instance.Session.Name})";
         }
 
         /// <summary>
@@ -59,11 +59,6 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        private readonly bool _hasPermission;
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void ButtonUpdate_Click(object sender, EventArgs args)
@@ -75,7 +70,7 @@ namespace Libretto.Forms
                 return;
             }
 
-            var orderInformation = LibrettoClient.Instance.Orders[listItem.Index];
+            var orderInformation = LibrettoClient.Instance.Transactions[listItem.Index] as Order;
 
             if (orderInformation == null)
             {
@@ -132,24 +127,27 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateFilter()
         {
-           transactionList.Items.Clear();
-           transactionList.Items.AddRange(LibrettoClient.Instance.Orders.Where(FilterOrder).Select(ParseTransaction).ToArray());
+            transactionList.Items.Clear();
+            transactionList.Items.AddRange(LibrettoClient.Instance.Transactions.Where(FilterOrder).Select(ParseTransaction).ToArray());
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionInformation"></param>
-        private void InsertOrder(Order transactionInformation)
+        private void InsertOrder(Transaction transactionInformation)
         {
-            LibrettoClient.Instance.Orders.Add(transactionInformation);
+            LibrettoClient.Instance.Transactions.Add(transactionInformation);
             transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 
-
-        private void InsertPurchase(Purchase transactionInformation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
+        private void InsertPurchase(Transaction transactionInformation)
         {
-            LibrettoClient.Instance.Purchases.Add(transactionInformation);
+            LibrettoClient.Instance.Transactions.Add(transactionInformation);
             transactionList.Items.Add(ParseTransaction(transactionInformation));
         }
 
@@ -172,7 +170,7 @@ namespace Libretto.Forms
         private void UpdateButtons()
         {
             buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1;
-            buttonDelete.Enabled = _hasPermission && transactionList.SelectedItems.Count > 0;
+            buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -204,7 +202,8 @@ namespace Libretto.Forms
         {
             customerName.Items.Add("");
             customerName.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
-            buttonDelete.Enabled = buttonManage.Enabled = _hasPermission;
+            buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
+            buttonManage.Enabled = LibrettoClient.Instance.IsAdministrator();
             dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dateToPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
             UpdateButtons();
@@ -233,7 +232,7 @@ namespace Libretto.Forms
                 order.quantity = orderForm.Information.Quantity;
                 order.total = orderForm.Information.Total;
 
-                LibrettoClient.proxy.AddOrder(order);
+                LibrettoClient.Instance.Proxy.AddOrder(order);
             }
         }
 
@@ -320,7 +319,7 @@ namespace Libretto.Forms
             {
                 InsertPurchase(purchaseForm.Information);
 
-                Model.PurchaseForm purchase = new Model.PurchaseForm();
+                Model.PurchaseTemplate purchase = new Model.PurchaseTemplate();
 
                 purchase.bookId = purchaseForm.Information.BookId.ToString();
                 purchase.customerId = purchaseForm.Information.CustomerId.ToString();
@@ -329,7 +328,7 @@ namespace Libretto.Forms
                 purchase.quantity = purchaseForm.Information.Quantity;
                 purchase.total = purchaseForm.Information.Total;
 
-                LibrettoClient.proxy.AddPurchase(purchase);
+                LibrettoClient.Instance.Proxy.AddPurchase(purchase);
             }
         }
     }

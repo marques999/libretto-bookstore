@@ -1,18 +1,21 @@
 ﻿using Libretto.Model;
 using LibrettoWCF.Model;
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibrettoWCF
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ServiceContract]
     public interface IStoreService
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         List<Book> GetBooksList();
 
@@ -65,8 +68,14 @@ namespace LibrettoWCF
         [OperationContract]
         Customer GetCustomerById(string id);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginForm"></param>
+        /// <returns></returns>
         [OperationContract]
-        Customer Login(LoginForm loginForm);
+        Clerk Login(LoginForm loginForm);
+
         /// <summary>
         /// 
         /// </summary>
@@ -114,7 +123,7 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        string AddPurchase(PurchaseForm purchaseInformation);
+        string AddPurchase(PurchaseTemplate purchaseInformation);
 
         /// <summary>
         /// 
@@ -149,6 +158,11 @@ namespace LibrettoWCF
         [OperationContract]
         Order GetOrderById(string id);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [OperationContract]
         List<Order> GetOrdersByUser(string id);
 

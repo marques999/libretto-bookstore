@@ -135,6 +135,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\DataSources\Libretto.Model.Book.datasource" />
+    <None Include="Properties\DataSources\Libretto.Model.Clerk.datasource" />
     <None Include="Properties\DataSources\Libretto.Model.Customer.datasource" />
     <None Include="Properties\DataSources\Libretto.Model.Order.datasource" />
     <None Include="Properties\DataSources\Libretto.Model.Purchase.datasource" />
