@@ -33,7 +33,6 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/LibrettoWCF.Model" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Libretto.Model" />
     </xsd:schema>
   </wsdl:types>
@@ -463,9 +462,9 @@
   </wsdl:binding>
   <wsdl:service name="StoreService">
     <wsdl:port name="TcpEndpoint" binding="tns:TcpEndpoint">
-      <soap12:address location="net.tcp://localhost:9000/TestServiceHost/StockService" />
+      <soap12:address location="net.tcp://localhost:9000/LibrettoBookstore" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:9000/TestServiceHost/StockService</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:9000/LibrettoBookstore</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>MARQUES-PC\MARQUES</Upn>
         </Identity>

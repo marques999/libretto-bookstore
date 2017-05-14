@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\LoginTemplate.cs" />
     <Compile Include="Model\Clerk.cs" />
     <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\OrderTemplate.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\IMessageVisitor.cs" />
     <Compile Include="Messaging\MessagingCommon.cs" />
-    <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Permissions.cs" />

@@ -4,7 +4,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 
 using Libretto.Model;
-using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -109,7 +108,7 @@ namespace LibrettoWCF
         [WebInvoke(Method = "POST",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "auth/login")]
-        Customer Login(LoginForm loginForm);
+        Customer Login(LoginTemplate loginForm);
         /// <summary>
         /// 
         /// </summary>

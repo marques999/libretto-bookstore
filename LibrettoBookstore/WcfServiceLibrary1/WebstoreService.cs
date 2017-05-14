@@ -6,7 +6,7 @@ using System.ServiceModel.Web;
 using Libretto.Model;
 using Libretto.Messaging;
 using Libretto.Warehouse;
-using LibrettoWCF.Model;
+
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF
@@ -321,7 +321,7 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             setCrossOrigin();
-            LibrettoDatabase.OrderIntegration.DeleteOrder(new Guid(orderInformation.Id));
+            LibrettoDatabase.OrderIntegration.CancelOrder(new Guid(orderInformation.Id));
             return LibrettoDatabase.OrderIntegration.List();
         }
 
@@ -333,7 +333,7 @@ namespace LibrettoWCF
         public List<Order> UpdateOrder(Order orderInformation)
         {
             setCrossOrigin();
-            LibrettoDatabase.OrderIntegration.Update(orderInformation);
+            LibrettoDatabase.OrderIntegration.Update(orderInformation, false);
             return LibrettoDatabase.OrderIntegration.List();
         }
 
@@ -342,7 +342,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="loginForm"></param>
         /// <returns></returns>
-        public Customer Login(LoginForm loginForm)
+        public Customer Login(LoginTemplate loginForm)
         {
             setCrossOrigin();
 

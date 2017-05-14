@@ -6,7 +6,6 @@ using Libretto.Model;
 using Libretto.Messaging;
 using Libretto.Warehouse;
 
-using LibrettoWCF.Model;
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF
@@ -243,7 +242,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="loginForm"></param>
         /// <returns></returns>
-        public Clerk Login(LoginForm loginForm)
+        public Clerk Login(LoginTemplate loginForm)
         {
             if (string.IsNullOrEmpty(loginForm?.Email) || string.IsNullOrEmpty(loginForm.Password))
             {
@@ -287,7 +286,7 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response UpdateOrder(Order orderInformation)
         {
-            return LibrettoDatabase.OrderIntegration.Update(orderInformation);
+            return LibrettoDatabase.OrderIntegration.Update(orderInformation, true);
         }
 
         /// <summary>

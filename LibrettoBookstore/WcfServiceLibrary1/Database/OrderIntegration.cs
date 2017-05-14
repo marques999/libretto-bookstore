@@ -113,31 +113,28 @@ namespace LibrettoWCF.Database
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionTimestamp"></param>
-        public Response DispatchOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response DispatchOrder(Guid transactionIdentifier)
         {
-            return UpdateStatus(transactionIdentifier, Status.WaitingDispatch, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.WaitingDispatch);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionTimestamp"></param>
-        public Response ExecuteOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response ExecuteOrder(Guid transactionIdentifier)
         {
-            return UpdateStatus(transactionIdentifier, Status.DispatchComplete, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.DispatchComplete);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        public Response CancelOrder(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public Response CancelOrder(Guid transactionIdentifier)
         {
-            return UpdateStatus(transactionIdentifier, Status.OrderCancelled, transactionTimestamp);
+            return UpdateStatus(transactionIdentifier, Status.OrderCancelled);
         }
 
         /// <summary>
@@ -145,9 +142,8 @@ namespace LibrettoWCF.Database
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <param name="transactionStatus"></param>
-        /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        private Response UpdateStatus(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
+        private Response UpdateStatus(Guid transactionIdentifier, Status transactionStatus)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
 
@@ -157,7 +153,7 @@ namespace LibrettoWCF.Database
             }
 
             sqlEntity.Status = transactionStatus;
-            sqlEntity.StatusTimestamp = transactionTimestamp;
+            sqlEntity.StatusTimestamp = new DateTime();
 
             try
             {
@@ -175,14 +171,20 @@ namespace LibrettoWCF.Database
         /// 
         /// </summary>
         /// <param name="orderInformation"></param>
+        /// <param name="hasPermissions"></param>
         /// <returns></returns>
-        public Response Update(Order orderInformation)
+        public Response Update(Order orderInformation, bool hasPermissions)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousOrder => previousOrder.Id == orderInformation.Id);
 
             if (sqlEntity == null)
             {
                 return Response.NotFound;
+            }
+
+            if (!hasPermissions && sqlEntity.Status != Status.WaitingDispatch)
+            {
+                return Response.PermissionDenied;
             }
 
             sqlEntity.Total = orderInformation.Total;

@@ -8,18 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Libretto.StoreService {
+namespace Libretto.BookstoreService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="StoreService.IStoreService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BookstoreService.IStoreService")]
     public interface IStoreService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm);
+        Libretto.Model.Clerk Login(Libretto.Model.LoginTemplate loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Login", ReplyAction="http://tempuri.org/IStoreService/LoginResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm);
+        System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(Libretto.Model.LoginTemplate loginForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/GetBooksList", ReplyAction="http://tempuri.org/IStoreService/GetBooksListResponse")]
         System.Collections.Generic.List<Libretto.Model.Book> GetBooksList();
@@ -149,12 +149,12 @@ namespace Libretto.StoreService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IStoreServiceChannel : Libretto.StoreService.IStoreService, System.ServiceModel.IClientChannel {
+    public interface IStoreServiceChannel : Libretto.BookstoreService.IStoreService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class StoreServiceClient : System.ServiceModel.ClientBase<Libretto.StoreService.IStoreService>, Libretto.StoreService.IStoreService {
+    public partial class StoreServiceClient : System.ServiceModel.ClientBase<Libretto.BookstoreService.IStoreService>, Libretto.BookstoreService.IStoreService {
         
         public StoreServiceClient() {
         }
@@ -175,11 +175,11 @@ namespace Libretto.StoreService {
                 base(binding, remoteAddress) {
         }
         
-        public Libretto.Model.Clerk Login(LibrettoWCF.Model.LoginForm loginForm) {
+        public Libretto.Model.Clerk Login(Libretto.Model.LoginTemplate loginForm) {
             return base.Channel.Login(loginForm);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(LibrettoWCF.Model.LoginForm loginForm) {
+        public System.Threading.Tasks.Task<Libretto.Model.Clerk> LoginAsync(Libretto.Model.LoginTemplate loginForm) {
             return base.Channel.LoginAsync(loginForm);
         }
         

@@ -38,7 +38,6 @@
     <ApplicationIcon>Resources\librettoIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibrettoWCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -92,12 +91,7 @@
     <Compile Include="Forms\StoreForm.Designer.cs">
       <DependentUpon>StoreForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service References\InterfaceProvider\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\StoreService\Reference.cs">
+    <Compile Include="Service References\BookstoreService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -148,24 +142,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\InterfaceProvider\service.wsdl" />
-    <None Include="Service References\InterfaceProvider\service.xsd">
+    <None Include="Service References\BookstoreService\Libretto.Model.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\InterfaceProvider\service1.xsd">
+    <None Include="Service References\BookstoreService\service.wsdl" />
+    <None Include="Service References\BookstoreService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\StoreService\Libretto.Model.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\StoreService\LibrettoWCF.Model.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\StoreService\service.wsdl" />
-    <None Include="Service References\StoreService\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\StoreService\service1.xsd">
+    <None Include="Service References\BookstoreService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -173,10 +157,6 @@
     <ProjectReference Include="..\..\LibrettoCommon\LibrettoCommon.csproj">
       <Project>{cf64510b-78ec-4d27-badf-65d9c392c7bb}</Project>
       <Name>LibrettoCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WcfServiceLibrary1\WcfServiceLibrary1.csproj">
-      <Project>{E2481F58-9BB4-45B4-BE0A-34587EE0AA1E}</Project>
-      <Name>WcfServiceLibrary1</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -186,29 +166,16 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\InterfaceProvider\" />
-    <WCFMetadataStorage Include="Service References\StoreService\" />
+    <WCFMetadataStorage Include="Service References\BookstoreService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\InterfaceProvider\configuration91.svcinfo" />
+    <None Include="Service References\BookstoreService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\InterfaceProvider\configuration.svcinfo" />
+    <None Include="Service References\BookstoreService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\InterfaceProvider\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\StoreService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\StoreService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\StoreService\Reference.svcmap">
+    <None Include="Service References\BookstoreService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

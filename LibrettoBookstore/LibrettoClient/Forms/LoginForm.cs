@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using Libretto.Model;
 using Libretto.Properties;
 
 namespace Libretto.Forms
@@ -44,7 +44,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonValidate_Click(object sender, EventArgs args)
         {
-            var clerkInformation = LibrettoClient.Instance.Proxy.Login(new LibrettoWCF.Model.LoginForm
+            var clerkInformation = LibrettoClient.Instance.Proxy.Login(new LoginTemplate
             {
                 Email = emailField.Text.Trim(),
                 Password = passwordField.Text.Trim()

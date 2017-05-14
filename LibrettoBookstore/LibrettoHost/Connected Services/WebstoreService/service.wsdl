@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WebstoreService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Libretto.Model" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/LibrettoWCF" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWebstoreService_GetOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOptions" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetBooksList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBooksList" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetBooksList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBooksListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetBookById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookById" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetBookById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBook" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBook" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBook" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetCustomersList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomersList" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetCustomersList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomersListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetCustomerById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerById" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetCustomerById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomer" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCustomer" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCustomer" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchasesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchasesList" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchasesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchasesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchaseById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchaseById" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchaseById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchaseByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchasesByUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchasesByUser" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetPurchasesByUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPurchasesByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddPurchase_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPurchase" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddPurchase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeletePurchase_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePurchase" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeletePurchase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdatePurchase_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePurchase" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdatePurchase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrdersList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersList" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrdersList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrderById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderById" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrderById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrdersByUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersByUser" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_GetOrdersByUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrder" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_AddOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteOrder" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_DeleteOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IWebstoreService_UpdateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWebstoreService">
+    <wsdl:operation name="GetOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetOptions" message="tns:IWebstoreService_GetOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetOptionsResponse" message="tns:IWebstoreService_GetOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBooksList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetBooksList" message="tns:IWebstoreService_GetBooksList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetBooksListResponse" message="tns:IWebstoreService_GetBooksList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBookById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetBookById" message="tns:IWebstoreService_GetBookById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetBookByIdResponse" message="tns:IWebstoreService_GetBookById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/AddBook" message="tns:IWebstoreService_AddBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/AddBookResponse" message="tns:IWebstoreService_AddBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/DeleteBook" message="tns:IWebstoreService_DeleteBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/DeleteBookResponse" message="tns:IWebstoreService_DeleteBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/UpdateBook" message="tns:IWebstoreService_UpdateBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/UpdateBookResponse" message="tns:IWebstoreService_UpdateBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomersList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetCustomersList" message="tns:IWebstoreService_GetCustomersList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetCustomersListResponse" message="tns:IWebstoreService_GetCustomersList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetCustomerById" message="tns:IWebstoreService_GetCustomerById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetCustomerByIdResponse" message="tns:IWebstoreService_GetCustomerById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/Login" message="tns:IWebstoreService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/LoginResponse" message="tns:IWebstoreService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/AddCustomer" message="tns:IWebstoreService_AddCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/AddCustomerResponse" message="tns:IWebstoreService_AddCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/DeleteCustomer" message="tns:IWebstoreService_DeleteCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/DeleteCustomerResponse" message="tns:IWebstoreService_DeleteCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCustomer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/UpdateCustomer" message="tns:IWebstoreService_UpdateCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/UpdateCustomerResponse" message="tns:IWebstoreService_UpdateCustomer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchasesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchasesList" message="tns:IWebstoreService_GetPurchasesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchasesListResponse" message="tns:IWebstoreService_GetPurchasesList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchaseById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchaseById" message="tns:IWebstoreService_GetPurchaseById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchaseByIdResponse" message="tns:IWebstoreService_GetPurchaseById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPurchasesByUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchasesByUser" message="tns:IWebstoreService_GetPurchasesByUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetPurchasesByUserResponse" message="tns:IWebstoreService_GetPurchasesByUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPurchase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/AddPurchase" message="tns:IWebstoreService_AddPurchase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/AddPurchaseResponse" message="tns:IWebstoreService_AddPurchase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePurchase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/DeletePurchase" message="tns:IWebstoreService_DeletePurchase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/DeletePurchaseResponse" message="tns:IWebstoreService_DeletePurchase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePurchase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/UpdatePurchase" message="tns:IWebstoreService_UpdatePurchase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/UpdatePurchaseResponse" message="tns:IWebstoreService_UpdatePurchase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetOrdersList" message="tns:IWebstoreService_GetOrdersList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetOrdersListResponse" message="tns:IWebstoreService_GetOrdersList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetOrderById" message="tns:IWebstoreService_GetOrderById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetOrderByIdResponse" message="tns:IWebstoreService_GetOrderById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersByUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/GetOrdersByUser" message="tns:IWebstoreService_GetOrdersByUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/GetOrdersByUserResponse" message="tns:IWebstoreService_GetOrdersByUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/AddOrder" message="tns:IWebstoreService_AddOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/AddOrderResponse" message="tns:IWebstoreService_AddOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/DeleteOrder" message="tns:IWebstoreService_DeleteOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/DeleteOrderResponse" message="tns:IWebstoreService_DeleteOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebstoreService/UpdateOrder" message="tns:IWebstoreService_UpdateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebstoreService/UpdateOrderResponse" message="tns:IWebstoreService_UpdateOrder_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="WebstoreService" />
+</wsdl:definitions>

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using Libretto.BookstoreService;
 using Libretto.Forms;
 using Libretto.Model;
-using Libretto.StoreService;
 
 namespace Libretto
 {

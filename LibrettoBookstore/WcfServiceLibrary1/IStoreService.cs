@@ -2,7 +2,6 @@
 using System.ServiceModel;
 
 using Libretto.Model;
-using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -18,7 +17,7 @@ namespace LibrettoWCF
         /// <param name="loginForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Clerk Login(LoginForm loginForm);
+        Clerk Login(LoginTemplate loginForm);
 
         //----------------------------------------------------------------------------------------------
 

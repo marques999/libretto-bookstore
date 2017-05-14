@@ -1,12 +1,12 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LibrettoWCF.Model
+namespace Libretto.Model
 {
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public class LoginForm
+    public class LoginTemplate
     {
         /// <summary>
         /// 
