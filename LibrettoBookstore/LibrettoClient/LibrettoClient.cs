@@ -32,8 +32,6 @@ namespace Libretto
             RefreshBooks();
             RefreshCustomers();
             RefreshTransactions();
-
-            Proxy.Open();
         }
 
         /// <summary>

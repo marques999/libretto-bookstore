@@ -147,10 +147,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\StoreService\service.wsdl" />
-    <None Include="Service References\StoreService\service.xsd">
+    <None Include="Service References\StoreService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\StoreService\service1.xsd">
+    <None Include="Service References\StoreService\service2.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
