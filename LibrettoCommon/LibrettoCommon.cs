@@ -18,7 +18,7 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string EmailPassword = "tdin1617-g10";
+        public static readonly string EmailPassword = "feupTDIN1617";
 
         /// <summary>
         /// 
