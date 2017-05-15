@@ -28,7 +28,7 @@ namespace Libretto
         /// </summary>
         private LibrettoClient()
         {
-            Proxy = new StoreService.StoreServiceClient(new InstanceContext(new serviceCallbacks()));
+            Proxy = new StoreService.StoreServiceClient(new InstanceContext(new ServiceCallbacks()));
             RefreshBooks();
             RefreshCustomers();
             RefreshTransactions();

@@ -25,7 +25,7 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="27eed55b-3b5a-427d-bab0-1494618b03d0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="d80d07ca-aaf2-4150-ac7d-84500b59d480" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="5a371fa1-6a19-4b6e-a902-9ed7c4159e7f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e3aa2efc-eb85-4c0e-8c9c-ca9c22a3161d" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
     <MetadataFile FileName="Libretto.Model.xsd" MetadataType="Schema" ID="10b49053-538c-4bba-a546-0026627a9d18" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/LibrettoBookstore/mex" />
   </Metadata>

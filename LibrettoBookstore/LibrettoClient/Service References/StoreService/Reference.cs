@@ -115,12 +115,6 @@ namespace Libretto.StoreService {
         Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
-<<<<<<< HEAD:LibrettoBookstore/LibrettoClient/Service References/StoreService/Reference.cs
-        Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
-=======
->>>>>>> 7baa485b476ca61fb5e81481f5c34d1353b5a2d4:LibrettoBookstore/LibrettoClient/Service References/BookstoreService/Reference.cs
         System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.OrderTemplate orderForm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
@@ -132,9 +126,8 @@ namespace Libretto.StoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
         Libretto.Model.Response UpdateQuantity(Libretto.Model.Order orderInformation);
         
-<<<<<<< HEAD:LibrettoBookstore/LibrettoClient/Service References/StoreService/Reference.cs
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Subscribe", ReplyAction="http://tempuri.org/IStoreService/SubscribeResponse")]
         void Subscribe();
@@ -154,10 +147,6 @@ namespace Libretto.StoreService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UserAdded", ReplyAction="http://tempuri.org/IStoreService/UserAddedResponse")]
         void UserAdded();
-=======
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(Libretto.Model.Order orderInformation);
->>>>>>> 7baa485b476ca61fb5e81481f5c34d1353b5a2d4:LibrettoBookstore/LibrettoClient/Service References/BookstoreService/Reference.cs
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
