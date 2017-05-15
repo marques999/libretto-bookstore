@@ -66,7 +66,7 @@ namespace LibrettoWCF.Tools
         /// <param name="customerInformation"></param>
         /// <param name="emailSubject"></param>
         /// <param name="emailBody"></param>
-        private bool Send(Customer customerInformation, string emailSubject, string emailBody)
+        public bool Send(Customer customerInformation, string emailSubject, string emailBody)
         {
             try
             {
