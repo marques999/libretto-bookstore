@@ -51,9 +51,6 @@ namespace Libretto.Model
             set;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [DataMember, Required]
         public string Password
         {
