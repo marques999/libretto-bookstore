@@ -61,6 +61,15 @@ namespace LibrettoWCF.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatal: Application initialization failed, press any key to exit....
+        /// </summary>
+        internal static string ExceptionCaught {
+            get {
+                return ResourceManager.GetString("ExceptionCaught", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CREATE DATABASE LibrettoDatabase
         ///ON PRIMARY (
         ///    NAME = LibrettoDatabase,
@@ -76,6 +85,39 @@ namespace LibrettoWCF.Properties {
         internal static string GenerateDatabase {
             get {
                 return ResourceManager.GetString("GenerateDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    _ _ _              _   _        
+        ///  | (_) |__  _ __ ___| |_| |_ ___  
+        ///  | | | &apos;_ \| &apos;__/ _ \ __| __/ _ \ 
+        ///  | | | |_) | | |  __/ |_| || (_) |
+        ///  |_|_|_.__/|_|  \___|\__|\__\___/
+        ///  =========== bookstore ===========
+        ///.
+        /// </summary>
+        internal static string Header {
+            get {
+                return ResourceManager.GetString("Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [{0}] {1}.
+        /// </summary>
+        internal static string LogFormat {
+            get {
+                return ResourceManager.GetString("LogFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Libretto Bookstore.
+        /// </summary>
+        internal static string WindowTitle {
+            get {
+                return ResourceManager.GetString("WindowTitle", resourceCulture);
             }
         }
     }

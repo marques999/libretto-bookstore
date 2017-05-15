@@ -20,14 +20,16 @@ namespace LibrettoWCF
         [OperationContract]
         Clerk Login(LoginTemplate loginForm);
 
-        //----------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------+
+         | BOOKS                                                             |
+         +-------------------------------------------------------------------*/
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Book> GetBooksList();
+        List<Book> ListBooks();
 
         /// <summary>
         /// 
@@ -35,7 +37,7 @@ namespace LibrettoWCF
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Book GetBookById(string bookIdentifier);
+        Book LookupBook(Guid bookIdentifier);
 
         /// <summary>
         /// 
@@ -43,7 +45,7 @@ namespace LibrettoWCF
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        Response AddBook(Book bookInformation);
+        Response InsertBook(Book bookInformation);
 
         /// <summary>
         /// 
@@ -61,14 +63,16 @@ namespace LibrettoWCF
         [OperationContract]
         Response UpdateBook(Book bookInformation);
 
-        //----------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------+
+         | CUSTOMERS                                                         |
+         +-------------------------------------------------------------------*/
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Customer> GetCustomersList();
+        List<Customer> ListCustomers();
 
         /// <summary>
         /// 
@@ -76,7 +80,7 @@ namespace LibrettoWCF
         /// <param name="customerIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Customer GetCustomerById(string customerIdentifier);
+        Customer LookupCustomer(Guid customerIdentifier);
 
         /// <summary>
         /// 
@@ -84,32 +88,18 @@ namespace LibrettoWCF
         /// <param name="customerInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        Response AddCustomer(Customer customerInformation);
+        Response InsertCustomer(Customer customerInformation);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Response DeleteCustomer(Customer customerInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Response UpdateCustomer(Customer customerInformation);
-
-        //---------------------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------+
+         | PURCHASES                                                         |
+         +-------------------------------------------------------------------*/
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Purchase> GetPurchasesList();
+        List<Purchase> ListPurchases();
 
         /// <summary>
         /// 
@@ -117,7 +107,7 @@ namespace LibrettoWCF
         /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Purchase GetPurchaseById(string purchaseIdentifier);
+        Purchase LookupPurchase(Guid purchaseIdentifier);
 
         /// <summary>
         /// 
@@ -125,7 +115,7 @@ namespace LibrettoWCF
         /// <param name="purchaseForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Response AddPurchase(OrderTemplate purchaseForm);
+        Response InsertPurchase(OrderTemplate purchaseForm);
 
         /// <summary>
         /// 
@@ -143,14 +133,16 @@ namespace LibrettoWCF
         [OperationContract]
         Response UpdatePurchase(Purchase purchaseInformation);
 
-        //---------------------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------+
+         | ORDERS                                                            |
+         +-------------------------------------------------------------------*/
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        List<Order> GetOrdersList();
+        List<Order> ListOrders();
 
         /// <summary>
         /// 
@@ -158,15 +150,7 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Order GetOrderById(string orderIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        List<Order> GetOrdersByUser(string customerIdentifier);
+        Order LookupOrder(Guid orderIdentifier);
 
         /// <summary>
         /// 
@@ -190,7 +174,7 @@ namespace LibrettoWCF
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         [OperationContract]
-        Response UpdateOrder(Order orderInformation);
+        Response UpdateQuantity(Order orderInformation);
 
         /// <summary>
         /// 
@@ -206,6 +190,8 @@ namespace LibrettoWCF
         [OperationContract]
         void Unsubscribe();
 
+
+        Response UpdateStatus(Guid orderIdentifier, Status orderStatus);
     }
 
     public interface IStoreUpdated
@@ -214,5 +200,6 @@ namespace LibrettoWCF
         [OperationContract]
         void UserAdded();
 
+        
     }
 }

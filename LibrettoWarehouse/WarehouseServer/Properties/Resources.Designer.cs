@@ -130,6 +130,15 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Messaging: UpdateOrder(&quot;{0}&quot;, &quot;{1:D}&quot;, &quot;{2:D}&quot;).
+        /// </summary>
+        internal static string MessagingUpdateOrder {
+            get {
+                return ResourceManager.GetString("MessagingUpdateOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remoting: DispatchOrder(&quot;{0}&quot;, &quot;{1:F}&quot;).
         /// </summary>
         internal static string RemotingDispatchOrder {

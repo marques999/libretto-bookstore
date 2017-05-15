@@ -94,7 +94,17 @@ namespace LibrettoWCF.Tools
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response SendEmail(Order orderInformation)
+        public Response InsertOrder(Order orderInformation)
+        {
+            return Response.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public Response UpdateStatus(Order orderInformation)
         {
             if (orderInformation == null)
             {
