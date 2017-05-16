@@ -34,14 +34,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Book LookupBook(Guid bookIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         [OperationContract]
@@ -50,10 +42,9 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookInformation"></param>
+        /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        [OperationContract]
-        Response DeleteBook(Book bookInformation);
+        Response DeleteBook(Guid bookIdentifier);
 
         /// <summary>
         /// 
@@ -77,14 +68,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Customer LookupCustomer(Guid customerIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
         [OperationContract]
@@ -104,14 +87,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Purchase LookupPurchase(Guid purchaseIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="purchaseForm"></param>
         /// <returns></returns>
         [OperationContract]
@@ -120,18 +95,10 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
+        /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Response DeletePurchase(Purchase purchaseInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Response UpdatePurchase(Purchase purchaseInformation);
+        Response DeletePurchase(Guid purchaseIdentifier);
 
         /*-------------------------------------------------------------------+
          | ORDERS                                                            |
@@ -147,14 +114,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <returns></returns>
-        [OperationContract]
-        Order LookupOrder(Guid orderIdentifier);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="orderForm"></param>
         /// <returns></returns>
         [OperationContract]
@@ -163,18 +122,20 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Response DeleteOrder(Order orderInformation);
+        Response DeleteOrder(Guid orderIdentifier);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
+        /// <param name="orderQuantity"></param>
+        /// <param name="orderTotal"></param>
         /// <returns></returns>
         [OperationContract]
-        Response UpdateQuantity(Order orderInformation);
+        Response UpdateQuantity(Guid orderIdentifier, int orderQuantity, double orderTotal);
 
         /// <summary>
         /// 

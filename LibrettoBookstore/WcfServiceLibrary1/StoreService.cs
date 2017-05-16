@@ -78,16 +78,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookIdentifier"></param>
-        /// <returns></returns>
-        public Book LookupBook(Guid bookIdentifier)
-        {
-            return LibrettoDatabase.BookIntegration.Lookup(bookIdentifier);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         public Response InsertBook(Book bookInformation)
@@ -98,11 +88,11 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bookInformation"></param>
+        /// <param name="bookIdentifier"></param>
         /// <returns></returns>
-        public Response DeleteBook(Book bookInformation)
+        public Response DeleteBook(Guid bookIdentifier)
         {
-            return LibrettoDatabase.BookIntegration.Delete(bookInformation.Id);
+            return LibrettoDatabase.BookIntegration.Delete(bookIdentifier);
         }
 
         /// <summary>
@@ -131,16 +121,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <returns></returns>
-        public Customer LookupCustomer(Guid customerIdentifier)
-        {
-            return LibrettoDatabase.CustomerIntegration.Lookup(customerIdentifier);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
         public Response InsertCustomer(Customer customerInformation)
@@ -159,16 +139,6 @@ namespace LibrettoWCF
         public List<Purchase> ListPurchases()
         {
             return LibrettoDatabase.PurchaseIntegration.List();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseIdentifier"></param>
-        /// <returns></returns>
-        public Purchase LookupPurchase(Guid purchaseIdentifier)
-        {
-            return LibrettoDatabase.PurchaseIntegration.Lookup(purchaseIdentifier);
         }
 
         /// <summary>
@@ -204,21 +174,11 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
+        /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
-        public Response DeletePurchase(Purchase purchaseInformation)
+        public Response DeletePurchase(Guid purchaseIdentifier)
         {
-            return LibrettoDatabase.PurchaseIntegration.Delete(purchaseInformation.Id);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        /// <returns></returns>
-        public Response UpdatePurchase(Purchase purchaseInformation)
-        {
-            return LibrettoDatabase.PurchaseIntegration.Update(purchaseInformation);
+            return LibrettoDatabase.PurchaseIntegration.Delete(purchaseIdentifier);
         }
 
         /*-------------------------------------------------------------------+
@@ -232,16 +192,6 @@ namespace LibrettoWCF
         public List<Order> ListOrders()
         {
             return LibrettoDatabase.OrderIntegration.List();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <returns></returns>
-        public Order LookupOrder(Guid orderIdentifier)
-        {
-            return LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
         }
 
         /// <summary>
@@ -277,41 +227,43 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Response DeleteOrder(Order orderInformation)
+        public Response DeleteOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderInformation.Id);
+            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
+        /// <param name="orderQuantity"></param>
+        /// <param name="orderTotal"></param>
         /// <returns></returns>
-        public Response UpdateQuantity(Order orderInformation)
+        public Response UpdateQuantity(Guid orderIdentifier, int orderQuantity, double orderTotal)
         {
-            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderInformation.Id);
+            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
 
             if (beforeUpdate == null)
             {
                 return Response.NotFound;
             }
 
-            if (beforeUpdate.Quantity == orderInformation.Quantity && Math.Abs(beforeUpdate.Total - orderInformation.Total) < 1e-6)
+            if (beforeUpdate.Quantity == orderQuantity && Math.Abs(beforeUpdate.Total - orderTotal) < 1e-6)
             {
                 return Response.Success;
             }
 
-            var operationResult = LibrettoDatabase.OrderIntegration.Update(orderInformation, true);
+            var operationResult = LibrettoDatabase.OrderIntegration.Update(orderIdentifier, orderQuantity, orderTotal, true);
 
             if (operationResult == Response.Success)
             {
                 LibrettoHost.WarehouseQueue.Send(new MessageUpdate
                 {
-                    Total = orderInformation.Total,
-                    Identifier = orderInformation.Id,
-                    Quantity = orderInformation.Quantity
+                    Total = orderTotal,
+                    Quantity = orderQuantity,
+                    Identifier = orderIdentifier
                 });
             }
 

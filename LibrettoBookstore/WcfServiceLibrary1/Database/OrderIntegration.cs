@@ -143,12 +143,14 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
+        /// <param name="orderQuantity"></param>
+        /// <param name="orderTotal"></param>
         /// <param name="hasPermissions"></param>
         /// <returns></returns>
-        public Response Update(Order orderInformation, bool hasPermissions)
+        public Response Update(Guid orderIdentifier, int orderQuantity, double orderTotal, bool hasPermissions)
         {
-            var sqlEntity = _context.Orders.SingleOrDefault(previousOrder => previousOrder.Id == orderInformation.Id);
+            var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
             if (sqlEntity == null)
             {
@@ -160,8 +162,8 @@ namespace LibrettoWCF.Database
                 return Response.PermissionDenied;
             }
 
-            sqlEntity.Total = orderInformation.Total;
-            sqlEntity.Quantity = orderInformation.Quantity;
+            sqlEntity.Total = orderTotal;
+            sqlEntity.Quantity = orderQuantity;
 
             try
             {

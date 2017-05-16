@@ -145,14 +145,14 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionInformation"></param>
-        public void InsertOrder(WarehouseOrder transactionInformation)
+        /// <param name="warehouseOrder"></param>
+        public void InsertOrder(WarehouseOrder warehouseOrder)
         {
             try
             {
-                LogMessage(Resources.MessagingInsertOrder, transactionInformation.Identifier, transactionInformation.Title, transactionInformation.DateCreated);
-                transactionInformation.Status = WarehouseStatus.Pending;
-                _orders.Insert(transactionInformation);
+                LogMessage(Resources.MessagingInsertOrder, warehouseOrder.Identifier, warehouseOrder.Title, warehouseOrder.DateCreated);
+                warehouseOrder.Status = WarehouseStatus.Pending;
+                _orders.Insert(warehouseOrder);
                 OnRefresh?.Invoke(_orders.Orders);
                 SerializeTransactions();
             }

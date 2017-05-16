@@ -94,6 +94,7 @@ namespace LibrettoWCF
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Clear();
             Console.WriteLine(Resources.Header);
+
             try
             {
                 Bookstore.Open();

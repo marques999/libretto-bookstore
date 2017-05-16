@@ -22,7 +22,7 @@ namespace Libretto.Messaging
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="messageInsert"></param>
-        void InsertOrder(WarehouseOrder messageInsert);
+        /// <param name="warehouseOrder"></param>
+        void InsertOrder(WarehouseOrder warehouseOrder);
     }
 }
