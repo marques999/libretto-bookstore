@@ -224,17 +224,28 @@ namespace Libretto.Forms
                 return;
             }
 
-            InsertOrder(orderForm.Information);
+            var orderInformation = orderForm.Information;
 
-            LibrettoClient.Instance.Proxy.InsertOrder(new OrderTemplate()
+            if (orderInformation == null)
             {
-                bookId = orderForm.Information.BookId.ToString(),
-                customerId = orderForm.Information.CustomerId.ToString(),
-                customerName = orderForm.Information.CustomerName,
-                bookTitle = orderForm.Information.BookTitle,
-                quantity = orderForm.Information.Quantity,
-                total = orderForm.Information.Total
-            });
+                return;
+            }
+
+            var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
+
+            if (operationResult == Response.Success)
+            {
+                var validatedOrder = LibrettoClient.Instance.Proxy.LookupOrder(orderInformation.Id);
+
+                if (validatedOrder != null)
+                {
+                    InsertOrder(validatedOrder);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -321,17 +332,28 @@ namespace Libretto.Forms
                 return;
             }
 
-            InsertPurchase(purchaseForm.Information);
+            var purchaseInformation = purchaseForm.Information;
 
-            LibrettoClient.Instance.Proxy.InsertPurchase(new OrderTemplate
+            if (purchaseInformation == null)
             {
-                bookId = purchaseForm.Information.BookId.ToString(),
-                customerId = purchaseForm.Information.CustomerId.ToString(),
-                customerName = purchaseForm.Information.CustomerName,
-                bookTitle = purchaseForm.Information.BookTitle,
-                quantity = purchaseForm.Information.Quantity,
-                total = purchaseForm.Information.Total
-            });
+                return;
+            }
+
+            var operationResult = LibrettoClient.Instance.Proxy.InsertPurchase(purchaseInformation);
+
+            if (operationResult == Response.Success)
+            {
+                var validatedPurchase = LibrettoClient.Instance.Proxy.LookupPurchase(purchaseInformation.Id);
+
+                if (validatedPurchase != null)
+                {
+                    InsertPurchase(validatedPurchase);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

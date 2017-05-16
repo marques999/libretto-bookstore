@@ -517,7 +517,6 @@ namespace Libretto.Forms
             buttonConfirm.Size = new Size(128, 24);
             buttonConfirm.TabIndex = 0;
             buttonConfirm.Text = "Confirm";
-            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // buttonPanel
             //

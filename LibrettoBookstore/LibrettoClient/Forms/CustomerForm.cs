@@ -21,7 +21,7 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        public Customer CustomerInformation
+        public Customer Information
         {
             get;
         } = new Customer();
@@ -51,10 +51,10 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonConfirm_Click(object sender, EventArgs args)
         {
-            CustomerInformation.Name = nameField.Text.Trim();
-            CustomerInformation.Email = emailField.Text.Trim();
-            CustomerInformation.Location = locationField.Text.Trim();
-            LibrettoClient.Instance.Proxy.InsertCustomer(CustomerInformation);
+            Information.Name = nameField.Text.Trim();
+            Information.Email = emailField.Text.Trim();
+            Information.Location = locationField.Text.Trim();
+            LibrettoClient.Instance.Proxy.InsertCustomer(Information);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Libretto.Forms
         private void CustomerForm_Load(object sender, EventArgs args)
         {
             buttonConfirm.Enabled = ValidateForm();
-            guidField.Text = LibrettoCommon.FormatGuid(CustomerInformation.Id);
+            guidField.Text = LibrettoCommon.FormatGuid(Information.Id);
         }
 
         /// <summary>

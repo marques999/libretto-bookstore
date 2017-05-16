@@ -87,10 +87,18 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseForm"></param>
+        /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Response InsertPurchase(OrderTemplate purchaseForm);
+        Purchase LookupPurchase(Guid purchaseIdentifier);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Response InsertPurchase(Purchase purchaseInformation);
 
         /// <summary>
         /// 
@@ -114,10 +122,18 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderForm"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
         [OperationContract]
-        Response InsertOrder(OrderTemplate orderForm);
+        Order LookupOrder(Guid orderIdentifier);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Response InsertOrder(Order orderInformation);
 
         /// <summary>
         /// 
@@ -159,6 +175,9 @@ namespace LibrettoWCF
         void Unsubscribe();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IStoreUpdated
     {
         /// <summary>

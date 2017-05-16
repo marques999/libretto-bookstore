@@ -410,6 +410,44 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="TcpEndpoint_LookupPurchase_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="TcpEndpoint_LookupPurchase_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="TcpEndpoint_InsertPurchase_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -506,6 +544,44 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="TcpEndpoint_ListOrders_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="TcpEndpoint_LookupOrder_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="TcpEndpoint_LookupOrder_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -845,6 +921,12 @@
   <wsdl:message name="IStoreService_ListPurchases_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListPurchasesResponse" />
   </wsdl:message>
+  <wsdl:message name="IStoreService_LookupPurchase_InputMessage">
+    <wsdl:part name="parameters" element="tns:LookupPurchase" />
+  </wsdl:message>
+  <wsdl:message name="IStoreService_LookupPurchase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LookupPurchaseResponse" />
+  </wsdl:message>
   <wsdl:message name="IStoreService_InsertPurchase_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertPurchase" />
   </wsdl:message>
@@ -862,6 +944,12 @@
   </wsdl:message>
   <wsdl:message name="IStoreService_ListOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStoreService_LookupOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:LookupOrder" />
+  </wsdl:message>
+  <wsdl:message name="IStoreService_LookupOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LookupOrderResponse" />
   </wsdl:message>
   <wsdl:message name="IStoreService_InsertOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertOrder" />
@@ -938,6 +1026,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/ListPurchases" message="tns:IStoreService_ListPurchases_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/ListPurchasesResponse" message="tns:IStoreService_ListPurchases_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="LookupPurchase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/LookupPurchase" message="tns:IStoreService_LookupPurchase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/LookupPurchaseResponse" message="tns:IStoreService_LookupPurchase_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InsertPurchase">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/InsertPurchase" message="tns:IStoreService_InsertPurchase_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/InsertPurchaseResponse" message="tns:IStoreService_InsertPurchase_OutputMessage" />
@@ -949,6 +1041,10 @@
     <wsdl:operation name="ListOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/ListOrders" message="tns:IStoreService_ListOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/ListOrdersResponse" message="tns:IStoreService_ListOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LookupOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/LookupOrder" message="tns:IStoreService_LookupOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/LookupOrderResponse" message="tns:IStoreService_LookupOrder_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="InsertOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/InsertOrder" message="tns:IStoreService_InsertOrder_InputMessage" />
@@ -1070,6 +1166,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="LookupPurchase">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/LookupPurchase" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#TcpEndpoint_LookupPurchase_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#TcpEndpoint_LookupPurchase_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertPurchase">
       <soap12:operation soapAction="http://tempuri.org/IStoreService/InsertPurchase" style="document" />
       <wsdl:input>
@@ -1100,6 +1207,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#TcpEndpoint_ListOrders_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LookupOrder">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/LookupOrder" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#TcpEndpoint_LookupOrder_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#TcpEndpoint_LookupOrder_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

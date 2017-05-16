@@ -63,11 +63,17 @@ namespace Libretto.StoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/ListPurchases", ReplyAction="http://tempuri.org/IStoreService/ListPurchasesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Purchase>> ListPurchasesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertPurchase", ReplyAction="http://tempuri.org/IStoreService/InsertPurchaseResponse")]
-        Libretto.Model.Response InsertPurchase(Libretto.Model.OrderTemplate purchaseForm);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupPurchase", ReplyAction="http://tempuri.org/IStoreService/LookupPurchaseResponse")]
+        Libretto.Model.Purchase LookupPurchase(System.Guid purchaseIdentifier);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupPurchase", ReplyAction="http://tempuri.org/IStoreService/LookupPurchaseResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(System.Guid purchaseIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertPurchase", ReplyAction="http://tempuri.org/IStoreService/InsertPurchaseResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> InsertPurchaseAsync(Libretto.Model.OrderTemplate purchaseForm);
+        Libretto.Model.Response InsertPurchase(Libretto.Model.Purchase purchaseInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertPurchase", ReplyAction="http://tempuri.org/IStoreService/InsertPurchaseResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> InsertPurchaseAsync(Libretto.Model.Purchase purchaseInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeletePurchase", ReplyAction="http://tempuri.org/IStoreService/DeletePurchaseResponse")]
         Libretto.Model.Response DeletePurchase(System.Guid purchaseIdentifier);
@@ -81,11 +87,17 @@ namespace Libretto.StoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/ListOrders", ReplyAction="http://tempuri.org/IStoreService/ListOrdersResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Libretto.Model.Order>> ListOrdersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
-        Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupOrder", ReplyAction="http://tempuri.org/IStoreService/LookupOrderResponse")]
+        Libretto.Model.Order LookupOrder(System.Guid orderIdentifier);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/LookupOrder", ReplyAction="http://tempuri.org/IStoreService/LookupOrderResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(System.Guid orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.OrderTemplate orderForm);
+        Libretto.Model.Response InsertOrder(Libretto.Model.Order orderInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
         Libretto.Model.Response DeleteOrder(System.Guid orderIdentifier);
@@ -217,12 +229,20 @@ namespace Libretto.StoreService {
             return base.Channel.ListPurchasesAsync();
         }
         
-        public Libretto.Model.Response InsertPurchase(Libretto.Model.OrderTemplate purchaseForm) {
-            return base.Channel.InsertPurchase(purchaseForm);
+        public Libretto.Model.Purchase LookupPurchase(System.Guid purchaseIdentifier) {
+            return base.Channel.LookupPurchase(purchaseIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Response> InsertPurchaseAsync(Libretto.Model.OrderTemplate purchaseForm) {
-            return base.Channel.InsertPurchaseAsync(purchaseForm);
+        public System.Threading.Tasks.Task<Libretto.Model.Purchase> LookupPurchaseAsync(System.Guid purchaseIdentifier) {
+            return base.Channel.LookupPurchaseAsync(purchaseIdentifier);
+        }
+        
+        public Libretto.Model.Response InsertPurchase(Libretto.Model.Purchase purchaseInformation) {
+            return base.Channel.InsertPurchase(purchaseInformation);
+        }
+        
+        public System.Threading.Tasks.Task<Libretto.Model.Response> InsertPurchaseAsync(Libretto.Model.Purchase purchaseInformation) {
+            return base.Channel.InsertPurchaseAsync(purchaseInformation);
         }
         
         public Libretto.Model.Response DeletePurchase(System.Guid purchaseIdentifier) {
@@ -241,12 +261,20 @@ namespace Libretto.StoreService {
             return base.Channel.ListOrdersAsync();
         }
         
-        public Libretto.Model.Response InsertOrder(Libretto.Model.OrderTemplate orderForm) {
-            return base.Channel.InsertOrder(orderForm);
+        public Libretto.Model.Order LookupOrder(System.Guid orderIdentifier) {
+            return base.Channel.LookupOrder(orderIdentifier);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.OrderTemplate orderForm) {
-            return base.Channel.InsertOrderAsync(orderForm);
+        public System.Threading.Tasks.Task<Libretto.Model.Order> LookupOrderAsync(System.Guid orderIdentifier) {
+            return base.Channel.LookupOrderAsync(orderIdentifier);
+        }
+        
+        public Libretto.Model.Response InsertOrder(Libretto.Model.Order orderInformation) {
+            return base.Channel.InsertOrder(orderInformation);
+        }
+        
+        public System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.Order orderInformation) {
+            return base.Channel.InsertOrderAsync(orderInformation);
         }
         
         public Libretto.Model.Response DeleteOrder(System.Guid orderIdentifier) {

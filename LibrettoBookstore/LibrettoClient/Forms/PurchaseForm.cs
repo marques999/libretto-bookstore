@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -21,20 +22,15 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        public Purchase Information
-        {
-            get;
-        } = new Purchase();
-
-        /// <summary>
-        /// 
-        /// </summary>
         private Book _bookInformation;
 
         /// <summary>
         /// 
         /// </summary>
-        private Customer _customerInformation;
+        public Purchase Information
+        {
+            get;
+        } = new Purchase();
 
         /// <summary>
         /// 
@@ -72,11 +68,11 @@ namespace Libretto.Forms
             _bookInformation = bookInformation;
             purchaseQuantity.Minimum = 1;
             purchaseQuantity.Maximum = bookInformation.Stock;
-            Information.BookTitle = bookInformation.Title;
             Information.BookId = bookInformation.Id;
+            Information.BookTitle = bookInformation.Title;
             bookStock.Text = Convert.ToString(bookInformation.Stock);
-            bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
             bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Id);
+            bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
             UpdateQuantity(purchaseQuantity.Value);
         }
 
@@ -86,9 +82,8 @@ namespace Libretto.Forms
         /// <param name="customerInformation"></param>
         private void UpdateCustomer(Customer customerInformation)
         {
-            _customerInformation = customerInformation;
-            Information.CustomerName = _customerInformation.Name;
-            Information.CustomerId = _customerInformation.Id;
+            Information.CustomerId = customerInformation.Id;
+            Information.CustomerName = customerInformation.Name;
             customerEmail.Text = customerInformation.Email;
             customerLocation.Text = customerInformation.Location;
             customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Id);
@@ -115,16 +110,6 @@ namespace Libretto.Forms
         private void PurchaseQuantity_Scroll(object sender, EventArgs args)
         {
             UpdateQuantity(purchaseQuantity.Value);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonConfirm_Click(object sender, EventArgs args)
-        {
-            Information.Timestamp = DateTime.Now;
         }
 
         /// <summary>
@@ -167,16 +152,25 @@ namespace Libretto.Forms
                 return;
             }
 
-            var customerInformation = customerForm.CustomerInformation;
+            var customerInformation = customerForm.Information;
 
             if (customerInformation == null)
             {
                 return;
             }
 
-            LibrettoClient.Instance.Customers.Add(customerInformation);
-            customerName.Items.Add(customerInformation.Name);
-            customerName.SelectedIndex = customerName.Items.Count - 1;
+            var operationResult = LibrettoClient.Instance.Proxy.InsertCustomer(customerInformation);
+
+            if (operationResult == Response.Success)
+            {
+                LibrettoClient.Instance.Customers.Add(customerInformation);
+                customerName.Items.Add(customerInformation.Name);
+                customerName.SelectedIndex = customerName.Items.Count - 1;
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

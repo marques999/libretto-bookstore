@@ -578,18 +578,16 @@ namespace Libretto.Forms
             buttonCancel.Size = new Size(128, 24);
             buttonCancel.TabIndex = 1;
             buttonCancel.Text = "Cancel";
-            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // buttonConfirm
             //
-            buttonConfirm.DialogResult = DialogResult.Cancel;
+            buttonConfirm.DialogResult = DialogResult.OK;
             buttonConfirm.Location = new Point(360, 5);
             buttonConfirm.Margin = new Padding(0, 3, 2, 3);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(128, 24);
             buttonConfirm.TabIndex = 0;
             buttonConfirm.Text = "Confirm";
-            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // orderLabel
             //

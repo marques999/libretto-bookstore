@@ -3,7 +3,6 @@ using System.Linq;
 using System.Messaging;
 using System.ServiceModel;
 
-using Libretto;
 using Libretto.Messaging;
 using Libretto.Model;
 using Libretto.Warehouse;

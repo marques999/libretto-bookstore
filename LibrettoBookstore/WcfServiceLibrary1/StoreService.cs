@@ -141,20 +141,22 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseForm"></param>
         /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response InsertPurchase(OrderTemplate purchaseForm)
+        public Purchase LookupPurchase(Guid purchaseIdentifier)
         {
-            var purchaseInformation = new Purchase
-            {
-                Quantity = purchaseForm.quantity,
-                Total = purchaseForm.total,
-                BookId = new Guid(purchaseForm.bookId),
-                CustomerId = new Guid(purchaseForm.customerId),
-                BookTitle = purchaseForm.bookTitle,
-                CustomerName = purchaseForm.customerName
-            };
+            return LibrettoDatabase.PurchaseIntegration.Lookup(purchaseIdentifier);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
+        public Response InsertPurchase(Purchase purchaseInformation)
+        {
+            purchaseInformation.Timestamp = DateTime.Now;
 
             var operationResult = LibrettoDatabase.PurchaseIntegration.Insert(purchaseInformation);
 
@@ -197,20 +199,22 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderForm"></param>
         /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response InsertOrder(OrderTemplate orderForm)
+        public Order LookupOrder(Guid orderIdentifier)
         {
-            var orderInformation = new Order
-            {
-                Quantity = orderForm.quantity,
-                Total = orderForm.total,
-                BookId = new Guid(orderForm.bookId),
-                CustomerId = new Guid(orderForm.customerId),
-                BookTitle = orderForm.bookTitle,
-                CustomerName = orderForm.customerName
-            };
+            return LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
+        public Response InsertOrder(Order orderInformation)
+        {
+            orderInformation.Timestamp = DateTime.Now;
 
             var operationResult = LibrettoDatabase.OrderIntegration.Insert(orderInformation);
 

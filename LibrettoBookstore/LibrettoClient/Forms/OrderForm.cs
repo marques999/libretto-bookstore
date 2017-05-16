@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+
 using Libretto.Model;
 
 namespace Libretto.Forms
@@ -16,7 +17,6 @@ namespace Libretto.Forms
         public OrderForm()
         {
             InitializeComponent();
-            Information = new Order();
         }
 
         /// <summary>
@@ -33,20 +33,15 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        public Order Information
-        {
-            get;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         private Book _bookInformation;
 
         /// <summary>
         /// 
         /// </summary>
-        private Customer _customerInformation;
+        public Order Information
+        {
+            get;
+        } = new Order();
 
         /// <summary>
         /// 
@@ -73,29 +68,6 @@ namespace Libretto.Forms
 
             orderQuantity.Enabled = booksList.Length > 0;
             buttonConfirm.Enabled = orderQuantity.Enabled && customersList.Length > 0;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonConfirm_Click(object sender, EventArgs args)
-        {
-            Information.Timestamp = DateTime.Now;
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void ButtonCancel_Click(object sender, EventArgs args)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
 
         /// <summary>
@@ -157,12 +129,11 @@ namespace Libretto.Forms
         /// <param name="customerInformation"></param>
         private void UpdateCustomer(Customer customerInformation)
         {
-            _customerInformation = customerInformation;
-            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Id);
+            Information.CustomerId = customerInformation.Id;
+            Information.CustomerName = customerInformation.Name;
             customerEmail.Text = customerInformation.Email;
             customerLocation.Text = customerInformation.Location;
-            Information.CustomerName = _customerInformation.Name;
-            Information.CustomerId = _customerInformation.Id;
+            customerGuid.Text = LibrettoCommon.FormatGuid(customerInformation.Id);
         }
 
         /// <summary>
@@ -239,16 +210,25 @@ namespace Libretto.Forms
                 return;
             }
 
-            var customerInformation = customerForm.CustomerInformation;
+            var customerInformation = customerForm.Information;
 
             if (customerInformation == null)
             {
                 return;
             }
 
-            LibrettoClient.Instance.Customers.Add(customerInformation);
-            customerName.Items.Add(customerInformation.Name);
-            customerName.SelectedIndex = customerName.Items.Count - 1;
+            var operationResult = LibrettoClient.Instance.Proxy.InsertCustomer(customerInformation);
+
+            if (operationResult == Response.Success)
+            {
+                LibrettoClient.Instance.Customers.Add(customerInformation);
+                customerName.Items.Add(customerInformation.Name);
+                customerName.SelectedIndex = customerName.Items.Count - 1;
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
