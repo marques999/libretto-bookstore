@@ -47,18 +47,17 @@ namespace LibrettoWCF.Authentication
         {
             if (evaluationContext.Properties.TryGetValue("Identities", out object obj) == false)
             {
-                throw new Exception("No Identity found");
+                return null;
             }
 
             var identities = obj as IList<IIdentity>;
 
             if (identities == null || identities.Count < 1)
             {
-                throw new Exception("No Identity found");
+                return null;
             }
 
             return identities[0];
         }
-
     }
 }

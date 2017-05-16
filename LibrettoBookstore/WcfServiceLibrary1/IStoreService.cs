@@ -15,10 +15,9 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="loginForm"></param>
         /// <returns></returns>
         [OperationContract]
-        Clerk Login(LoginTemplate loginForm);
+        Clerk Profile();
 
         /*-------------------------------------------------------------------+
          | BOOKS                                                             |

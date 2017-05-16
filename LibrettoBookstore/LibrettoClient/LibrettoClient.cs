@@ -11,7 +11,7 @@ namespace Libretto
     /// <summary>
     /// 
     /// </summary>
-    internal class LibrettoClient
+    internal class LibrettoClient : IStoreServiceCallback
     {
         /// <summary>
         /// 
@@ -28,10 +28,7 @@ namespace Libretto
         /// </summary>
         private LibrettoClient()
         {
-            Proxy = new StoreService.StoreServiceClient(new InstanceContext(new ServiceCallbacks()));
-            RefreshBooks();
-            RefreshCustomers();
-            RefreshTransactions();
+            Proxy = new StoreServiceClient(new InstanceContext(this));
         }
 
         /// <summary>
@@ -75,6 +72,7 @@ namespace Libretto
         public StoreServiceClient Proxy
         {
             get;
+            private set;
         }
 
         /// <summary>
@@ -83,7 +81,7 @@ namespace Libretto
         public List<Book> Books
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -115,10 +113,42 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="clerkInformation"></param>
-        public void Login(Clerk clerkInformation)
+        /// <param name="loginForm"></param>
+        /// <returns></returns>
+        public bool Login(LoginTemplate loginForm)
         {
-            Session = clerkInformation;
+            if (Proxy.ClientCredentials == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                Proxy.ClientCredentials.UserName.UserName = loginForm.Email;
+                Proxy.ClientCredentials.UserName.Password = loginForm.Password;
+
+                var clerkInformation = Proxy.Profile();
+
+                if (clerkInformation != null)
+                {
+                    Session = clerkInformation;
+                }
+                else
+                {
+                    return false;
+                }
+
+                RefreshBooks();
+                RefreshCustomers();
+                RefreshTransactions();
+                SubscribeNotifications();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -127,6 +157,7 @@ namespace Libretto
         public void Logout()
         {
             Session = null;
+            ResetProxy();
         }
 
         /// <summary>
@@ -138,6 +169,49 @@ namespace Libretto
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UserAdded()
+        {
+            System.Diagnostics.Debug.Print("Hello World!");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ResetProxy()
+        {
+            if (Proxy.State == CommunicationState.Opened)
+            {
+                Proxy.Close();
+            }
+
+            Proxy = new StoreServiceClient(new InstanceContext(this));
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SubscribeNotifications()
+        {
+            if (Proxy.State == CommunicationState.Opened)
+            {
+                Proxy.Subscribe();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UnsubscribeNotifications()
+        {
+            if (Proxy.State == CommunicationState.Opened)
+            {
+                Proxy.Unsubscribe();
+            }
         }
     }
 }

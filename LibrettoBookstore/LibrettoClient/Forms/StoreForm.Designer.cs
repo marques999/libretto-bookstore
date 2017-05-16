@@ -495,6 +495,7 @@ namespace Libretto.Forms
             this.Name = "StoreForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Libretto Bookstore";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StoreForm_FormClosed);
             this.Load += new System.EventHandler(this.StoreForm_Load);
             this.customerLayout.ResumeLayout(false);
             this.formPanel.ResumeLayout(false);

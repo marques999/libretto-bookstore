@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
+using System.ServiceModel;
 
 using Libretto.Messaging;
 using Libretto.Model;
@@ -7,7 +9,6 @@ using Libretto.Warehouse;
 
 using LibrettoWCF.Database;
 using LibrettoWCF.Tools;
-using System.ServiceModel;
 
 namespace LibrettoWCF
 {
@@ -37,26 +38,15 @@ namespace LibrettoWCF
             Callback = OperationContext.Current.GetCallbackChannel<IStoreUpdated>();
             Callback.UserAdded();
         }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="loginForm"></param>
         /// <returns></returns>
-        public Clerk Login(LoginTemplate loginForm)
+        public Clerk Profile()
         {
-            if (string.IsNullOrEmpty(loginForm?.Email) || string.IsNullOrEmpty(loginForm.Password))
-            {
-                return null;
-            }
-
-            var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(loginForm.Email);
-
-            if (clerkInformation == null || PasswordUtilities.Verify(loginForm.Password, clerkInformation.Password) == false)
-            {
-                return null;
-            }
-
-            return clerkInformation;
+            var identity = ServiceSecurityContext.Current.PrimaryIdentity;
+            return identity == null ? null : LibrettoDatabase.ClerkIntegration.LookupByEmail(identity.Name);
         }
 
         /*-------------------------------------------------------------------+
@@ -67,6 +57,7 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public List<Book> ListBooks()
         {
             /*Response r = LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
@@ -80,6 +71,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public Response InsertBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Insert(bookInformation);
@@ -90,6 +82,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public Response DeleteBook(Guid bookIdentifier)
         {
             return LibrettoDatabase.BookIntegration.Delete(bookIdentifier);
@@ -100,6 +93,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public Response UpdateBook(Book bookInformation)
         {
             return LibrettoDatabase.BookIntegration.Update(bookInformation);
@@ -113,6 +107,7 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public List<Customer> ListCustomers()
         {
             return LibrettoDatabase.CustomerIntegration.List();
@@ -123,6 +118,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="customerInformation"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response InsertCustomer(Customer customerInformation)
         {
             return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
@@ -136,6 +132,7 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public List<Purchase> ListPurchases()
         {
             return LibrettoDatabase.PurchaseIntegration.List();
@@ -146,6 +143,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseForm"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response InsertPurchase(OrderTemplate purchaseForm)
         {
             var purchaseInformation = new Purchase
@@ -176,6 +174,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="purchaseIdentifier"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response DeletePurchase(Guid purchaseIdentifier)
         {
             return LibrettoDatabase.PurchaseIntegration.Delete(purchaseIdentifier);
@@ -189,6 +188,7 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public List<Order> ListOrders()
         {
             return LibrettoDatabase.OrderIntegration.List();
@@ -199,6 +199,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderForm"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response InsertOrder(OrderTemplate orderForm)
         {
             var orderInformation = new Order
@@ -229,6 +230,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="orderIdentifier"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public Response DeleteOrder(Guid orderIdentifier)
         {
             return LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
@@ -241,6 +243,7 @@ namespace LibrettoWCF
         /// <param name="orderQuantity"></param>
         /// <param name="orderTotal"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response UpdateQuantity(Guid orderIdentifier, int orderQuantity, double orderTotal)
         {
             var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
@@ -276,6 +279,7 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <param name="orderStatus"></param>
         /// <returns></returns>
+        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response UpdateStatus(Guid orderIdentifier, Status orderStatus)
         {
             var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using Libretto.Model;
 using Libretto.Properties;
 
@@ -34,7 +35,7 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonCancel_Click(object sender, EventArgs args)
         {
-            LibrettoClient.Instance.Proxy.Unsubscribe();
+            LibrettoClient.Instance.UnsubscribeNotifications();
             Application.Exit();
         }
 
@@ -45,21 +46,19 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonValidate_Click(object sender, EventArgs args)
         {
-            var clerkInformation = LibrettoClient.Instance.Proxy.Login(new LoginTemplate
+            if (LibrettoClient.Instance.Login(new LoginTemplate
             {
                 Email = emailField.Text.Trim(),
                 Password = passwordField.Text.Trim()
-            });
-
-            if (clerkInformation != null)
+            }))
             {
                 Hide();
-                LibrettoClient.Instance.Login(clerkInformation);
                 new StoreForm().ShowDialog();
                 Show();
             }
             else
             {
+                LibrettoClient.Instance.ResetProxy();
                 MessageBox.Show(this, Resources.AuthenticationFailed, Resources.AuthenticationFailed_Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

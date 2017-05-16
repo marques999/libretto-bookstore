@@ -54,6 +54,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -62,6 +63,9 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\ClerkValidator.cs" />
+    <Compile Include="Authentication\AuthorizationPolicy.cs" />
+    <Compile Include="Authentication\CustomPrincipal.cs" />
     <Compile Include="Database\BookIntegration.cs" />
     <Compile Include="Database\ClerkIntegration.cs" />
     <Compile Include="Database\CustomerIntegration.cs" />

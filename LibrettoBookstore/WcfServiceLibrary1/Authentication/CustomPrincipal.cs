@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading;
+using Libretto.Model;
+using LibrettoWCF.Database;
 
 namespace LibrettoWCF.Authentication
 {
@@ -12,13 +14,19 @@ namespace LibrettoWCF.Authentication
     /// </summary>
     public class CustomPrincipal : IPrincipal
     {
-        private string[] _roles;
-        private static SqlConnection _connection;
-
-        public CustomPrincipal(IIdentity ident)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userIdentity"></param>
+        public CustomPrincipal(IIdentity userIdentity)
         {
-            Identity = ident;
+            Identity = userIdentity;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string[] _roles;
 
         /// <summary>
         /// 
@@ -36,12 +44,15 @@ namespace LibrettoWCF.Authentication
         /// <summary>
         /// 
         /// </summary>
-        // return all roles
         public string[] Roles
         {
             get
             {
-                EnsureRoles();
+                if (_roles == null)
+                {
+                    EnsureRoles();
+                }
+
                 return _roles;
             }
         }
@@ -53,31 +64,47 @@ namespace LibrettoWCF.Authentication
         /// <returns></returns>
         public bool IsInRole(string role)
         {
-            EnsureRoles();
+            if (role == null)
+            {
+                return false;
+            }
+
+            if (_roles == null)
+            {
+                EnsureRoles();
+            }
+
             return _roles.Any(rl => rl == role);
         }
 
-        // read Role of user from database
+        /// <summary>
+        /// 
+        /// </summary>
         protected virtual void EnsureRoles()
         {
-            _roles = IsAdmin(Identity.Name) ? new[] { "Administrator" } : new[] { "User" };
-            Console.WriteLine("User: {0} Role: {1}", Identity.Name, _roles[0]);
-        }
+            var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(Identity.Name);
 
-        private static bool IsAdmin(string email)
-        {
-            if (_connection == null)
+            if (clerkInformation == null)
             {
-                (_connection = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString)).Open();
+                _roles = new[]
+                {
+                    Permissions.None.ToString()
+                };
             }
-
-            var sqlCommand = new SqlCommand("SELECT id FROM Administrators WHERE email = @email", _connection);
-
-            sqlCommand.Parameters.AddWithValue("@email", email);
-
-            using (var myReader = sqlCommand.ExecuteReader())
+            else if (clerkInformation.Permissions == Permissions.Administrator)
             {
-                return myReader.Read();
+                _roles = new[]
+                {
+                    Permissions.Clerk.ToString(),
+                    Permissions.Administrator.ToString()
+                };
+            }
+            else
+            {
+                _roles = new[]
+                {
+                    Permissions.Clerk.ToString()
+                };
             }
         }
     }

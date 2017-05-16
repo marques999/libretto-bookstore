@@ -14,6 +14,9 @@ namespace Libretto.Model
         Clerk = 0,
         [EnumMember]
         [Description("Administrator")]
-        Administrator = 1
+        Administrator = 1,
+        [EnumMember]
+        [Description("None")]
+        None = 2
     }
 }

@@ -333,5 +333,15 @@ namespace Libretto.Forms
                 total = purchaseForm.Information.Total
             });
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StoreForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            LibrettoClient.Instance.Logout();
+        }
     }
 }
