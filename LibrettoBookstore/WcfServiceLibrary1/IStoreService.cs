@@ -43,6 +43,7 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="bookIdentifier"></param>
         /// <returns></returns>
+        [OperationContract]
         Response DeleteBook(Guid bookIdentifier);
 
         /// <summary>
@@ -142,6 +143,7 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <param name="orderStatus"></param>
         /// <returns></returns>
+        [OperationContract]
         Response UpdateStatus(Guid orderIdentifier, Status orderStatus);
 
         /// <summary>

@@ -39,6 +39,7 @@ namespace Libretto.Forms
         {
             return new ListViewItem(LibrettoCommon.FormatGuid(bookInformation.Id))
             {
+                Tag = bookInformation,
                 SubItems =
                 {
                     bookInformation.Title,
@@ -56,17 +57,29 @@ namespace Libretto.Forms
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
             var listItem = listView.SelectedItems[0];
+            var bookInformation = listItem?.Tag as Book;
 
-            if (listItem == null || listItem.Index < 0)
+            if (bookInformation == null)
             {
                 return;
             }
 
-            var bookForm = new BookForm(LibrettoClient.Instance.Books[listItem.Index]);
+            var bookForm = new BookForm(bookInformation);
 
-            if (bookForm.ShowDialog(this) == DialogResult.OK)
+            if (bookForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            var operationResult = LibrettoClient.Instance.Proxy.UpdateBook(bookForm.BookInformation);
+
+            if (operationResult == Response.Success)
             {
                 UpdateBook(listItem, bookForm.BookInformation);
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -84,42 +97,24 @@ namespace Libretto.Forms
 
             foreach (ListViewItem listItem in listView.SelectedItems)
             {
-                if (listItem == null || listItem.Index < 0)
+                var bookInformation = listItem?.Tag as Book;
+
+                if (bookInformation == null)
                 {
                     continue;
                 }
 
-                LibrettoClient.Instance.Books.RemoveAt(listItem.Index);
-                listView.Items.Remove(listItem);
-            }
-        }
+                var operationResult = LibrettoClient.Instance.Proxy.DeleteBook(bookInformation.Id);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookInformation"></param>
-        private delegate void BookInsertHandler(Book bookInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="listItem"></param>
-        /// <param name="bookInformation"></param>
-        private delegate void BookUpdateHandler(ListViewItem listItem, Book bookInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookInformation"></param>
-        private void OnInsert(Book bookInformation)
-        {
-            if (InvokeRequired)
-            {
-                BeginInvoke(new BookInsertHandler(InsertBook), bookInformation);
-            }
-            else
-            {
-                InsertBook(bookInformation);
+                if (operationResult == Response.Success)
+                {
+                    listView.Items.Remove(listItem);
+                    LibrettoClient.Instance.Books.Remove(bookInformation);
+                }
+                else
+                {
+                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -131,23 +126,6 @@ namespace Libretto.Forms
         {
             LibrettoClient.Instance.Books.Add(bookInfomation);
             listView.Items.Add(ParseBook(bookInfomation));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="listItem"></param>
-        /// <param name="bookInformation"></param>
-        private void OnUpdate(ListViewItem listItem, Book bookInformation)
-        {
-            if (InvokeRequired)
-            {
-                BeginInvoke(new BookUpdateHandler(UpdateBook), listItem, bookInformation);
-            }
-            else
-            {
-                UpdateBook(listItem, bookInformation);
-            }
         }
 
         /// <summary>
@@ -206,9 +184,20 @@ namespace Libretto.Forms
         {
             var bookForm = new BookForm();
 
-            if (bookForm.ShowDialog(this) == DialogResult.OK)
+            if (bookForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            var operationResult = LibrettoClient.Instance.Proxy.InsertBook(bookForm.BookInformation);
+
+            if (operationResult == Response.Success)
             {
                 InsertBook(bookForm.BookInformation);
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -115,8 +115,12 @@ namespace LibrettoWCF.Database
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().Property(e => e.Title).IsUnicode(false);
+            modelBuilder.Entity<Clerk>().Property(e => e.Name).IsUnicode(false);
+            modelBuilder.Entity<Clerk>().Property(e => e.Email).IsUnicode(false);
+            modelBuilder.Entity<Clerk>().Property(e => e.Password).IsUnicode(false);
             modelBuilder.Entity<Customer>().Property(e => e.Name).IsUnicode(false);
             modelBuilder.Entity<Customer>().Property(e => e.Email).IsUnicode(false);
+            modelBuilder.Entity<Customer>().Property(e => e.Password).IsUnicode(false);
             modelBuilder.Entity<Customer>().Property(e => e.Location).IsUnicode(false);
             modelBuilder.Entity<Purchase>().Property(e => e.BookTitle).IsFixedLength();
             modelBuilder.Entity<Purchase>().Property(e => e.CustomerName).IsFixedLength();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 using Libretto.Model;
@@ -144,7 +145,7 @@ namespace LibrettoWCF.Database
             sqlEntity.Price = bookInformation.Price;
             sqlEntity.Stock = bookInformation.Stock;
             sqlEntity.Title = bookInformation.Title;
-
+  
             try
             {
                 _context.SaveChanges();
@@ -166,6 +167,8 @@ namespace LibrettoWCF.Database
         {
             var sqlEntity = _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
 
+            System.Diagnostics.Debug.Print(bookIdentifier.ToString("B"));
+
             if (sqlEntity == null)
             {
                 return Response.NotFound;
@@ -176,8 +179,9 @@ namespace LibrettoWCF.Database
                 _context.Books.Remove(sqlEntity);
                 _context.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 
