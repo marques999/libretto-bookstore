@@ -309,10 +309,5 @@ namespace LibrettoWCF
 
             return EmailClient.Instance.UpdateStatus(LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier));
         }
-
-        public Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

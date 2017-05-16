@@ -143,24 +143,27 @@ namespace LibrettoWCF
         /// <param name="orderIdentifier"></param>
         /// <param name="orderStatus"></param>
         /// <returns></returns>
-        Response UpdateOrderStatus(Guid orderIdentifier, Status orderStatus);
+        Response UpdateStatus(Guid orderIdentifier, Status orderStatus);
 
+        /// <summary>
+        /// 
+        /// </summary>
         [OperationContract]
         void Subscribe();
 
+        /// <summary>
+        /// 
+        /// </summary>
         [OperationContract]
         void Unsubscribe();
-
-
-        Response UpdateStatus(Guid orderIdentifier, Status orderStatus);
     }
 
     public interface IStoreUpdated
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
         [OperationContract]
         void UserAdded();
-
-        
     }
 }
