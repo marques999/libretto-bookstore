@@ -156,26 +156,6 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionInformation"></param>
-        private void InsertOrder(Transaction transactionInformation)
-        {
-            LibrettoClient.Instance.Transactions.Add(transactionInformation);
-            transactionList.Items.Add(ParseTransaction(transactionInformation));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionInformation"></param>
-        private void InsertPurchase(Transaction transactionInformation)
-        {
-            LibrettoClient.Instance.Transactions.Add(transactionInformation);
-            transactionList.Items.Add(ParseTransaction(transactionInformation));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
         private bool FilterOrder(Transaction orderInformation)
@@ -191,7 +171,7 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1;
+            buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1 && transactionList.SelectedItems[0].Tag is Order;
             buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
         }
 
@@ -259,10 +239,13 @@ namespace Libretto.Forms
             {
                 var validatedOrder = LibrettoClient.Instance.Proxy.LookupOrder(orderInformation.Id);
 
-                if (validatedOrder != null)
+                if (validatedOrder == null)
                 {
-                    InsertOrder(validatedOrder);
+                    return;
                 }
+
+                LibrettoClient.Instance.Transactions.Add(validatedOrder);
+                transactionList.Items.Add(ParseTransaction(validatedOrder));
             }
             else
             {
@@ -367,10 +350,13 @@ namespace Libretto.Forms
             {
                 var validatedPurchase = LibrettoClient.Instance.Proxy.LookupPurchase(purchaseInformation.Id);
 
-                if (validatedPurchase != null)
+                if (validatedPurchase == null) 
                 {
-                    InsertPurchase(validatedPurchase);
+                    return;
                 }
+
+                LibrettoClient.Instance.Transactions.Add(validatedPurchase);
+                transactionList.Items.Add(ParseTransaction(validatedPurchase));
             }
             else
             {
