@@ -45,7 +45,9 @@ namespace Libretto.Forms
 
             foreach (ListViewItem listItem in transactionList.SelectedItems)
             {
-                if (!(listItem?.Tag is Transaction transactionInformation))
+                var transactionInformation = listItem?.Tag as Transaction;
+
+                if (transactionInformation == null)
                 {
                     continue;
                 }
@@ -81,8 +83,9 @@ namespace Libretto.Forms
         private void ButtonUpdate_Click(object sender, EventArgs args)
         {
             var listItem = transactionList.SelectedItems[0];
+            var orderInformation = listItem?.Tag as Order;
 
-            if (!(listItem?.Tag is Order orderInformation))
+            if (orderInformation == null)
             {
                 return;
             }
@@ -111,7 +114,7 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="listItem"></param>
         /// <param name="orderInformation"></param>
-        private void UpdateOrder(ListViewItem listItem, Order orderInformation)
+        private void UpdateOrder(ListViewItem listItem, Transaction orderInformation)
         {
             var previousIndex = listItem.Index;
 
@@ -350,7 +353,7 @@ namespace Libretto.Forms
             {
                 var validatedPurchase = LibrettoClient.Instance.Proxy.LookupPurchase(purchaseInformation.Id);
 
-                if (validatedPurchase == null) 
+                if (validatedPurchase == null)
                 {
                     return;
                 }
