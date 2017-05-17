@@ -57,6 +57,11 @@ namespace LibrettoWCF.Database
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<Purchase> List(Guid id)
         {
             return _context.Purchases.Where(elem => elem.CustomerId == id).ToList();

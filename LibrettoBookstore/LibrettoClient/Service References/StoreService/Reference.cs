@@ -127,8 +127,21 @@ namespace Libretto.StoreService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IStoreServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UserAdded", ReplyAction="http://tempuri.org/IStoreService/UserAddedResponse")]
-        void UserAdded();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnRegisterCustomer")]
+        void OnRegisterCustomer(Libretto.Model.Customer customerInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnRegisterTransaction")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Order))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Purchase))]
+        void OnRegisterTransaction(Libretto.Model.Transaction purchaseInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnUpdateTransaction")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Order))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Purchase))]
+        void OnUpdateTransaction(Libretto.Model.Transaction purchaseInformation);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnDeleteTransaction")]
+        void OnDeleteTransaction(System.Guid transactionIdentifier);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

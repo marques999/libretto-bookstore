@@ -156,14 +156,6 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public void UserAdded()
-        {
-            System.Diagnostics.Debug.Print("Hello World!");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void ResetProxy()
         {
             if (Proxy.State == CommunicationState.Opened)
@@ -173,7 +165,7 @@ namespace Libretto
 
             Proxy = new StoreServiceClient(new InstanceContext(this));
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -194,6 +186,42 @@ namespace Libretto
             {
                 Proxy.Unsubscribe();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerInformation"></param>
+        public void OnRegisterCustomer(Customer customerInformation)
+        {
+            MessageBox.Show("OnRegisterCustomer()");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        public void OnRegisterTransaction(Transaction purchaseInformation)
+        {
+            System.Diagnostics.Debug.Print("OnRegisterTransaction()");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="purchaseInformation"></param>
+        public void OnUpdateTransaction(Transaction purchaseInformation)
+        {
+            System.Diagnostics.Debug.Print("OnUpdateTransaction()");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        public void OnDeleteTransaction(Guid transactionIdentifier)
+        {
+            System.Diagnostics.Debug.Print("OnDeleteTransaction()");
         }
     }
 }

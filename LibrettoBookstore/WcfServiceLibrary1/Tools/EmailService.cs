@@ -118,7 +118,7 @@ namespace LibrettoWCF.Tools
                 return Response.NotFound;
             }
 
-            return EmailClient.Instance.Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.BadRequest;
+            return Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.BadRequest;
         }
     }
 }

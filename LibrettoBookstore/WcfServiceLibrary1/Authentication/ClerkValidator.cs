@@ -24,12 +24,12 @@ namespace LibrettoWCF.Authentication
                 throw new FaultException("Username or password not specified.");
             }
 
-            var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(userEmail);
+            var clerkInformation = LibrettoDatabase.ClerkIntegration.Lookup(userEmail);
 
             if (string.IsNullOrEmpty(clerkInformation?.Password))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Credentials ({0}, {1}) not accepted.", userEmail, userPassword);
+                Console.WriteLine(@"Credentials ({0}, {1}) not accepted.", userEmail, userPassword);
                 Console.ForegroundColor = ConsoleColor.White;
                 throw new FaultException("Unknown username or password.");
             }
@@ -37,13 +37,13 @@ namespace LibrettoWCF.Authentication
             if (PasswordUtilities.Verify(userPassword, clerkInformation.Password))
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Credentials ({0}, {1}) accepted.", userEmail, userPassword);
+                Console.WriteLine(@"Credentials ({0}, {1}) accepted.", userEmail, userPassword);
                 Console.ForegroundColor = ConsoleColor.White;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Credentials ({0}, {1}) not accepted.", userEmail, userPassword);
+                Console.WriteLine(@"Credentials ({0}, {1}) not accepted.", userEmail, userPassword);
                 Console.ForegroundColor = ConsoleColor.White;
                 throw new FaultException("Unknown username or password.");
             }

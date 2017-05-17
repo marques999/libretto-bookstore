@@ -71,6 +71,7 @@
     <Compile Include="Database\CustomerIntegration.cs" />
     <Compile Include="Database\OrderIntegration.cs" />
     <Compile Include="Database\PurchaseIntegration.cs" />
+    <Compile Include="IStoreCallbacks.cs" />
     <Compile Include="IStoreService.cs" />
     <Compile Include="IWebstoreService.cs" />
     <Compile Include="Database\LibrettoDatabase.cs" />

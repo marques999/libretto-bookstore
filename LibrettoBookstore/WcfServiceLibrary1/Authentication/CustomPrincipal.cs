@@ -1,10 +1,9 @@
-﻿using System;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Principal;
 using System.Threading;
+
 using Libretto.Model;
+
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF.Authentication
@@ -26,15 +25,15 @@ namespace LibrettoWCF.Authentication
         /// <summary>
         /// 
         /// </summary>
-        private string[] _roles;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public IIdentity Identity
         {
             get;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string[] _roles;
 
         /// <summary>
         /// 
@@ -82,7 +81,7 @@ namespace LibrettoWCF.Authentication
         /// </summary>
         protected virtual void EnsureRoles()
         {
-            var clerkInformation = LibrettoDatabase.ClerkIntegration.LookupByEmail(Identity.Name);
+            var clerkInformation = LibrettoDatabase.ClerkIntegration.Lookup(Identity.Name);
 
             if (clerkInformation == null)
             {

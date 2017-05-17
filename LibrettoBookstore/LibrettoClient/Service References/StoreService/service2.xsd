@@ -236,14 +236,32 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="UserAdded">
+  <xs:element name="OnRegisterCustomer">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="customerInformation" nillable="true" type="q28:Customer" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UserAddedResponse">
+  <xs:element name="OnRegisterTransaction">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="purchaseInformation" nillable="true" type="q29:Transaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnUpdateTransaction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="purchaseInformation" nillable="true" type="q30:Transaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnDeleteTransaction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="transactionIdentifier" type="q31:guid" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

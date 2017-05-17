@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.ServiceModel.Web;
 
 using Libretto.Model;
@@ -13,6 +14,7 @@ namespace LibrettoWCF
     /// <summary>
     /// 
     /// </summary>
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class WebstoreService : IWebstoreService
     {
         /// <summary>

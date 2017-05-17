@@ -15,28 +15,34 @@ namespace LibrettoWCF
     /// <summary>
     /// 
     /// </summary>
-    /// 
-    public delegate void ChangeUser();
-
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class StoreService : IStoreService
     {
-
-        public static IStoreUpdated Callback;
-        public static ChangeUser changeUser = null;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Unsubscribe()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Subscribe()
         {
         }
 
-        public static void Notify()
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IStoreCallbacks _callback;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StoreService()
         {
-            Callback = OperationContext.Current.GetCallbackChannel<IStoreUpdated>();
-            Callback.UserAdded();
+            _callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
         }
 
         /// <summary>
@@ -46,7 +52,7 @@ namespace LibrettoWCF
         public Clerk Profile()
         {
             var identity = ServiceSecurityContext.Current.PrimaryIdentity;
-            return identity == null ? null : LibrettoDatabase.ClerkIntegration.LookupByEmail(identity.Name);
+            return identity == null ? null : LibrettoDatabase.ClerkIntegration.Lookup(identity.Name);
         }
 
         /*-------------------------------------------------------------------+
@@ -60,9 +66,6 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public List<Book> ListBooks()
         {
-            /*Response r = LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
-            Notify();
-            return r;*/
             return LibrettoDatabase.BookIntegration.List();
         }
 
@@ -121,7 +124,14 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response InsertCustomer(Customer customerInformation)
         {
-            return LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
+            var operationResult = LibrettoDatabase.CustomerIntegration.Insert(customerInformation);
+
+            if (operationResult == Response.Success)
+            {
+                //_callback.OnRegisterCustomer(customerInformation);
+            }
+
+            return operationResult;
         }
 
         /*-------------------------------------------------------------------+
@@ -165,6 +175,7 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
+            //_callback.OnRegisterTransaction(purchaseInformation);
             LibrettoHost.InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
 
@@ -179,7 +190,14 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response DeletePurchase(Guid purchaseIdentifier)
         {
-            return LibrettoDatabase.PurchaseIntegration.Delete(purchaseIdentifier);
+            var operationResult = LibrettoDatabase.PurchaseIntegration.Delete(purchaseIdentifier);
+
+            if (operationResult == Response.Success)
+            {
+                //_callback.OnDeleteTransaction(purchaseIdentifier);
+            }
+
+            return operationResult;
         }
 
         /*-------------------------------------------------------------------+
@@ -223,6 +241,7 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
+            //_callback.OnRegisterTransaction(orderInformation);
             LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
 
@@ -237,7 +256,14 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public Response DeleteOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
+            var operationResult = LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
+
+            if (operationResult == Response.Success)
+            {
+                _callback.OnDeleteTransaction(orderIdentifier);
+            }
+
+            return operationResult;
         }
 
         /// <summary>
@@ -273,12 +299,14 @@ namespace LibrettoWCF
                 {
                     Identifier = orderInformation.Id,
                     Timestamp = orderInformation.StatusTimestamp
-                });  
+                });
             }
             else
             {
-                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));   
+                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
             }
+
+            //_callback.OnUpdateTransaction(orderInformation);
 
             return orderExists.Status == orderInformation.Status ? Response.Success : EmailClient.Instance.NotifyUpdate(orderInformation);
         }

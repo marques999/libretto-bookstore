@@ -9,7 +9,7 @@ namespace LibrettoWCF
     /// <summary>
     /// 
     /// </summary>
-    [ServiceContract(CallbackContract = typeof(IStoreUpdated))]
+    [ServiceContract(CallbackContract = typeof(IStoreCallbacks))]
     public interface IStoreService
     {
         /// <summary>
@@ -162,17 +162,5 @@ namespace LibrettoWCF
         /// </summary>
         [OperationContract]
         void Unsubscribe();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IStoreUpdated
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [OperationContract]
-        void UserAdded();
     }
 }
