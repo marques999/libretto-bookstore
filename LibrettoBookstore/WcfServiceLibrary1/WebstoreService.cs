@@ -322,7 +322,7 @@ namespace LibrettoWCF
         public List<Order> UpdateOrder(Order orderInformation)
         {
             SetDefaultHeaders();
-            LibrettoDatabase.OrderIntegration.Update(orderInformation.Id, orderInformation.Quantity, orderInformation.Total, false);
+            LibrettoDatabase.OrderIntegration.UpdateQuantity(orderInformation.Id, orderInformation.Quantity, orderInformation.Total);
             return LibrettoDatabase.OrderIntegration.List();
         }
 

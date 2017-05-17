@@ -202,34 +202,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateQuantity">
+  <xs:element name="UpdateOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="orderIdentifier" type="q26:guid" />
-        <xs:element minOccurs="0" name="orderQuantity" type="xs:int" />
-        <xs:element minOccurs="0" name="orderTotal" type="xs:double" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="orderInformation" nillable="true" type="q26:Order" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateQuantityResponse">
+  <xs:element name="UpdateOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateQuantityResult" type="q27:Response" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UpdateStatus">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="orderIdentifier" type="q28:guid" />
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="orderStatus" type="q29:Status" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UpdateStatusResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateStatusResult" type="q30:Response" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="UpdateOrderResult" type="q27:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

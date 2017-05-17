@@ -94,7 +94,7 @@ namespace LibrettoWCF.Tools
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response InsertOrder(Order orderInformation)
+        public Response NotifyInsert(Order orderInformation)
         {
             return Response.Success;
         }
@@ -104,7 +104,7 @@ namespace LibrettoWCF.Tools
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response UpdateStatus(Order orderInformation)
+        public Response NotifyUpdate(Order orderInformation)
         {
             if (orderInformation == null)
             {

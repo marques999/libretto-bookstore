@@ -105,17 +105,11 @@ namespace Libretto.StoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
         System.Threading.Tasks.Task<Libretto.Model.Response> DeleteOrderAsync(System.Guid orderIdentifier);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
-        Libretto.Model.Response UpdateQuantity(System.Guid orderIdentifier, int orderQuantity, double orderTotal);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
+        Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateQuantity", ReplyAction="http://tempuri.org/IStoreService/UpdateQuantityResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(System.Guid orderIdentifier, int orderQuantity, double orderTotal);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateStatus", ReplyAction="http://tempuri.org/IStoreService/UpdateStatusResponse")]
-        Libretto.Model.Response UpdateStatus(System.Guid orderIdentifier, Libretto.Model.Status orderStatus);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateStatus", ReplyAction="http://tempuri.org/IStoreService/UpdateStatusResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateStatusAsync(System.Guid orderIdentifier, Libretto.Model.Status orderStatus);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/Subscribe", ReplyAction="http://tempuri.org/IStoreService/SubscribeResponse")]
         void Subscribe();
@@ -285,20 +279,12 @@ namespace Libretto.StoreService {
             return base.Channel.DeleteOrderAsync(orderIdentifier);
         }
         
-        public Libretto.Model.Response UpdateQuantity(System.Guid orderIdentifier, int orderQuantity, double orderTotal) {
-            return base.Channel.UpdateQuantity(orderIdentifier, orderQuantity, orderTotal);
+        public Libretto.Model.Response UpdateOrder(Libretto.Model.Order orderInformation) {
+            return base.Channel.UpdateOrder(orderInformation);
         }
         
-        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateQuantityAsync(System.Guid orderIdentifier, int orderQuantity, double orderTotal) {
-            return base.Channel.UpdateQuantityAsync(orderIdentifier, orderQuantity, orderTotal);
-        }
-        
-        public Libretto.Model.Response UpdateStatus(System.Guid orderIdentifier, Libretto.Model.Status orderStatus) {
-            return base.Channel.UpdateStatus(orderIdentifier, orderStatus);
-        }
-        
-        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateStatusAsync(System.Guid orderIdentifier, Libretto.Model.Status orderStatus) {
-            return base.Channel.UpdateStatusAsync(orderIdentifier, orderStatus);
+        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(Libretto.Model.Order orderInformation) {
+            return base.Channel.UpdateOrderAsync(orderInformation);
         }
         
         public void Subscribe() {

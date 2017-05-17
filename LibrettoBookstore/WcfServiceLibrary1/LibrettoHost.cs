@@ -57,7 +57,7 @@ namespace LibrettoWCF
         public Response DispatchOrder(Guid transactionIdentifier)
         {
             var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, new DateTime(), Status.Processing);
-            return operationResult == Response.Success ? EmailClient.Instance.UpdateStatus(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
+            return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
         }
 
         /// <summary>

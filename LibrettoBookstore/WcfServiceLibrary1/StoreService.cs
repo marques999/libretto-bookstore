@@ -226,7 +226,7 @@ namespace LibrettoWCF
             LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
             LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
 
-            return EmailClient.Instance.InsertOrder(orderInformation);
+            return EmailClient.Instance.NotifyInsert(orderInformation);
         }
 
         /// <summary>
@@ -243,79 +243,44 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderQuantity"></param>
-        /// <param name="orderTotal"></param>
+        /// <param name="orderInformation"></param>
         /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response UpdateQuantity(Guid orderIdentifier, int orderQuantity, double orderTotal)
+        public Response UpdateOrder(Order orderInformation)
         {
-            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
+            var orderExists = LibrettoDatabase.OrderIntegration.Lookup(orderInformation.Id);
 
-            if (beforeUpdate == null)
+            if (orderExists == null)
             {
                 return Response.NotFound;
             }
 
-            if (beforeUpdate.Quantity == orderQuantity && Math.Abs(beforeUpdate.Total - orderTotal) < 1e-6)
+            if (orderInformation.Status == Status.Cancelled)
             {
-                return Response.Success;
+                orderInformation.StatusTimestamp = DateTime.Now;
             }
 
-            var operationResult = LibrettoDatabase.OrderIntegration.Update(orderIdentifier, orderQuantity, orderTotal, true);
-
-            if (operationResult == Response.Success)
-            {
-                LibrettoHost.WarehouseQueue.Send(new MessageUpdate
-                {
-                    Total = orderTotal,
-                    Quantity = orderQuantity,
-                    Identifier = orderIdentifier
-                });
-            }
-
-            return operationResult;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderStatus"></param>
-        /// <returns></returns>
-        [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response UpdateStatus(Guid orderIdentifier, Status orderStatus)
-        {
-            var beforeUpdate = LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier);
-
-            if (beforeUpdate == null)
-            {
-                return Response.NotFound;
-            }
-
-            if (beforeUpdate.Status == orderStatus)
-            {
-                return Response.Success;
-            }
-
-            var orderTimestamp = new DateTime();
-            var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(orderIdentifier, orderTimestamp, orderStatus);
+            var operationResult = LibrettoDatabase.OrderIntegration.Update(orderInformation);
 
             if (operationResult != Response.Success)
             {
                 return operationResult;
             }
 
-            if (orderStatus == Status.Cancelled)
+            if (orderInformation.Status == Status.Cancelled)
             {
                 LibrettoHost.WarehouseQueue.Send(new MessageCancel
                 {
-                    Timestamp = orderTimestamp,
-                    Identifier = orderIdentifier
-                });
+                    Identifier = orderInformation.Id,
+                    Timestamp = orderInformation.StatusTimestamp
+                });  
+            }
+            else
+            {
+                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));   
             }
 
-            return EmailClient.Instance.UpdateStatus(LibrettoDatabase.OrderIntegration.Lookup(orderIdentifier));
+            return orderExists.Status == orderInformation.Status ? Response.Success : EmailClient.Instance.NotifyUpdate(orderInformation);
         }
     }
 }

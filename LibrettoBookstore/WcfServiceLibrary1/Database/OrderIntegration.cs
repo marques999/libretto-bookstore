@@ -143,12 +143,51 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public Response Update(Order orderInformation)
+        {
+            var sqlEntity = _context.Orders.SingleOrDefault(previousInformation => orderInformation.Id == previousInformation.Id);
+
+            if (sqlEntity == null)
+            {
+                return Response.NotFound;
+            }
+
+            if (sqlEntity.Status != Status.Waiting)
+            {
+                return Response.PermissionDenied;
+            }
+
+            sqlEntity.Status = orderInformation.Status;
+            sqlEntity.BookId = orderInformation.BookId;
+            sqlEntity.BookTitle = orderInformation.BookTitle;
+            sqlEntity.CustomerId = orderInformation.CustomerId;
+            sqlEntity.CustomerName = orderInformation.CustomerName;
+            sqlEntity.Quantity = orderInformation.Quantity;
+            sqlEntity.Total = orderInformation.Total;
+            sqlEntity.StatusTimestamp = DateTime.Now;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return Response.DatabaseError;
+            }
+
+            return Response.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="orderIdentifier"></param>
         /// <param name="orderQuantity"></param>
         /// <param name="orderTotal"></param>
-        /// <param name="hasPermissions"></param>
         /// <returns></returns>
-        public Response Update(Guid orderIdentifier, int orderQuantity, double orderTotal, bool hasPermissions)
+        public Response UpdateQuantity(Guid orderIdentifier, int orderQuantity, double orderTotal)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
@@ -157,7 +196,7 @@ namespace LibrettoWCF.Database
                 return Response.NotFound;
             }
 
-            if (!hasPermissions && sqlEntity.Status != Status.Processing)
+            if (sqlEntity.Status != Status.Processing)
             {
                 return Response.PermissionDenied;
             }

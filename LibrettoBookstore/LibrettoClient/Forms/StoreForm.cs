@@ -36,7 +36,6 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-
         private void ButtonDelete_Click(object sender, EventArgs args)
         {
             if (MessageBox.Show(this, Resources.DeleteOrder, Resources.DeleteOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
@@ -46,13 +45,31 @@ namespace Libretto.Forms
 
             foreach (ListViewItem listItem in transactionList.SelectedItems)
             {
-                if (listItem == null || listItem.Index < 0)
+                if (!(listItem?.Tag is Transaction transactionInformation))
                 {
                     continue;
                 }
 
-                LibrettoClient.Instance.Transactions.RemoveAt(listItem.Index);
-                transactionList.Items.Remove(listItem);
+                Response operationResult;
+
+                if (transactionInformation is Order)
+                {
+                    operationResult = LibrettoClient.Instance.Proxy.DeleteOrder(transactionInformation.Id);
+                }
+                else
+                {
+                    operationResult = LibrettoClient.Instance.Proxy.DeletePurchase(transactionInformation.Id);
+                }
+
+                if (operationResult == Response.Success)
+                {
+                    LibrettoClient.Instance.Transactions.RemoveAt(listItem.Index);
+                    transactionList.Items.Remove(listItem);
+                }
+                else
+                {
+                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -65,23 +82,27 @@ namespace Libretto.Forms
         {
             var listItem = transactionList.SelectedItems[0];
 
-            if (listItem == null || listItem.Index < 0)
-            {
-                return;
-            }
-
-            var orderInformation = LibrettoClient.Instance.Transactions[listItem.Index] as Order;
-
-            if (orderInformation == null)
+            if (!(listItem?.Tag is Order orderInformation))
             {
                 return;
             }
 
             var orderForm = new OrderForm(orderInformation);
 
-            if (orderForm.ShowDialog(this) == DialogResult.OK)
+            if (orderForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            var operationResult = LibrettoClient.Instance.Proxy.UpdateOrder(orderForm.Information);
+
+            if (operationResult == Response.Success)
             {
                 UpdateOrder(listItem, orderForm.Information);
+            }
+            else
+            {
+                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -111,6 +132,7 @@ namespace Libretto.Forms
         {
             return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
             {
+                Tag = transactionInformation,
                 SubItems =
                 {
                     transactionInformation.BookTitle,

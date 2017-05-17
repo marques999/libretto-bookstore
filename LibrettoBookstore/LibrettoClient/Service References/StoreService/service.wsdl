@@ -676,7 +676,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_UpdateQuantity_Input_policy">
+  <wsp:Policy wsu:Id="TcpEndpoint_UpdateOrder_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -695,45 +695,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_UpdateQuantity_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_UpdateStatus_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_UpdateStatus_output_policy">
+  <wsp:Policy wsu:Id="TcpEndpoint_UpdateOrder_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -963,17 +925,11 @@
   <wsdl:message name="IStoreService_DeleteOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteOrderResponse" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateQuantity_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateQuantity" />
+  <wsdl:message name="IStoreService_UpdateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrder" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateQuantity_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateQuantityResponse" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateStatus_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateStatus" />
-  </wsdl:message>
-  <wsdl:message name="IStoreService_UpdateStatus_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateStatusResponse" />
+  <wsdl:message name="IStoreService_UpdateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderResponse" />
   </wsdl:message>
   <wsdl:message name="IStoreService_Subscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Subscribe" />
@@ -1054,13 +1010,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/DeleteOrder" message="tns:IStoreService_DeleteOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/DeleteOrderResponse" message="tns:IStoreService_DeleteOrder_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UpdateQuantity">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateQuantity" message="tns:IStoreService_UpdateQuantity_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateQuantityResponse" message="tns:IStoreService_UpdateQuantity_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateStatus">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateStatus" message="tns:IStoreService_UpdateStatus_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateStatusResponse" message="tns:IStoreService_UpdateStatus_OutputMessage" />
+    <wsdl:operation name="UpdateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/UpdateOrder" message="tns:IStoreService_UpdateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/UpdateOrderResponse" message="tns:IStoreService_UpdateOrder_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/Subscribe" message="tns:IStoreService_Subscribe_InputMessage" />
@@ -1243,25 +1195,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateQuantity">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateQuantity" style="document" />
+    <wsdl:operation name="UpdateOrder">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateOrder" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#TcpEndpoint_UpdateQuantity_Input_policy" />
+        <wsp:PolicyReference URI="#TcpEndpoint_UpdateOrder_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#TcpEndpoint_UpdateQuantity_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateStatus">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/UpdateStatus" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#TcpEndpoint_UpdateStatus_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#TcpEndpoint_UpdateStatus_output_policy" />
+        <wsp:PolicyReference URI="#TcpEndpoint_UpdateOrder_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
