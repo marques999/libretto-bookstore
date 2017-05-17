@@ -27,21 +27,6 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public int Count()
-        {
-            try
-            {
-                return _context.Orders.Count();
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
         public Order Lookup(Guid transactionIdentifier)

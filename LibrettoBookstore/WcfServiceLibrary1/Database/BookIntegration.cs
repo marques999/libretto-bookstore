@@ -27,21 +27,6 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public int Count()
-        {
-            try
-            {
-                return _context.Books.Count();
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public List<Book> List()
         {
@@ -144,7 +129,7 @@ namespace LibrettoWCF.Database
             sqlEntity.Price = bookInformation.Price;
             sqlEntity.Stock = bookInformation.Stock;
             sqlEntity.Title = bookInformation.Title;
-  
+
             try
             {
                 _context.SaveChanges();

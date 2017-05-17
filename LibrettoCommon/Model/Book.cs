@@ -15,7 +15,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlElement("Identifier")]
+        [DataMember, Required, XmlElement("Identifier")]
         public Guid Id
         {
             get;
@@ -25,7 +25,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember, XmlElement("Title"), Required]
+        [DataMember, Required, XmlElement("Title")]
         public string Title
         {
             get;

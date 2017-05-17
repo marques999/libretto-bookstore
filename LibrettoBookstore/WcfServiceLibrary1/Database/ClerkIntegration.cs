@@ -27,21 +27,6 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public int Count()
-        {
-            try
-            {
-                return _context.Customers.Count();
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public List<Clerk> List()
         {

@@ -605,7 +605,6 @@ namespace Libretto.Forms
             Controls.Add(formPanel1);
             Name = "OrderForm";
             Text = "Place Order";
-            Load += new EventHandler(OrderForm_Load);
             formPanel1.ResumeLayout(false);
             formPanel1.PerformLayout();
             bookPanel.ResumeLayout(false);

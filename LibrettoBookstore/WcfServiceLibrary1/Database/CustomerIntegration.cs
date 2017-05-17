@@ -27,21 +27,6 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public int Count()
-        {
-            try
-            {
-                return _context.Customers.Count();
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public List<Customer> List()
         {
@@ -101,9 +86,8 @@ namespace LibrettoWCF.Database
                 _context.Customers.Add(customerInformation);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 
@@ -132,9 +116,8 @@ namespace LibrettoWCF.Database
             {
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 
@@ -160,9 +143,8 @@ namespace LibrettoWCF.Database
                 _context.Customers.Remove(sqlEntity);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 

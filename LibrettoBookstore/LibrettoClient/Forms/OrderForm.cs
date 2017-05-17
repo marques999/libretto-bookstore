@@ -18,6 +18,7 @@ namespace Libretto.Forms
         public OrderForm()
         {
             InitializeComponent();
+            InitializeForm();
         }
 
         /// <summary>
@@ -27,12 +28,29 @@ namespace Libretto.Forms
         public OrderForm(Order orderInformation)
         {
             InitializeComponent();
+            InitializeForm();
             Text = @"Update Order";
             Information = orderInformation;
+            orderQuantity.Value = orderInformation.Quantity;
+
+            var customerIndex = Customers.FindIndex(customerInformation => customerInformation.Id == orderInformation.CustomerId);
+
+            if (customerIndex >= 0)
+            {
+                customerName.SelectedIndex = customerIndex;
+                UpdateCustomer(Customers[customerIndex]);
+            }
+
+            var bookIndex = LibrettoClient.Instance.Books.FindIndex(bookInformation => bookInformation.Id == orderInformation.BookId);
+
+            if (bookIndex < 0)
+            {
+                return;
+            }
+
+            bookTitle.SelectedIndex = bookIndex;
+            UpdateBook(LibrettoClient.Instance.Books[bookIndex]);
             ToggleRadio((int)orderInformation.Status);
-            UpdateBook(LibrettoClient.Instance.Books.SingleOrDefault(bookInformation => bookInformation.Id == orderInformation.BookId));
-            UpdateCustomer(Customers.SingleOrDefault(customerInformation => customerInformation.Id == orderInformation.CustomerId));
-            UpdateStock(orderInformation.Quantity);
         }
 
         /// <summary>
@@ -70,9 +88,7 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void OrderForm_Load(object sender, EventArgs args)
+        private void InitializeForm()
         {
             var customersList = Customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
 
@@ -170,8 +186,8 @@ namespace Libretto.Forms
             bookGuid.Text = LibrettoCommon.FormatGuid(bookInformation.Id);
             bookStock.Text = Convert.ToString(bookInformation.Stock);
             bookPrice.Text = LibrettoCommon.FormatDecimal(bookInformation.Price);
-            Information.BookTitle = _bookInformation.Title;
-            Information.BookId = _bookInformation.Id;
+            Information.BookTitle = bookInformation.Title;
+            Information.BookId = bookInformation.Id;
             UpdateStock(orderQuantity.Value);
         }
 

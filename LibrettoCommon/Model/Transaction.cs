@@ -14,7 +14,7 @@ namespace Libretto.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataMember]
+        [DataMember, Required]
         public Guid Id
         {
             get;
