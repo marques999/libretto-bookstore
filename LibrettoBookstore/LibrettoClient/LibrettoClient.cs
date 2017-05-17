@@ -42,14 +42,6 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        public void RefreshCustomers()
-        {
-            Customers = Proxy.ListCustomers();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void RefreshTransactions()
         {
             Transactions.Clear();
@@ -79,15 +71,6 @@ namespace Libretto
         /// 
         /// </summary>
         public List<Book> Books
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Customer> Customers
         {
             get;
             private set;
@@ -139,7 +122,6 @@ namespace Libretto
                 }
 
                 RefreshBooks();
-                RefreshCustomers();
                 RefreshTransactions();
                 SubscribeNotifications();
 

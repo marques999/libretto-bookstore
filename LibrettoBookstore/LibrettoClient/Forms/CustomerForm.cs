@@ -21,15 +21,15 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        public Customer Information
-        {
-            get;
-        } = new Customer();
+        private int _separatorCount;
 
         /// <summary>
         /// 
         /// </summary>
-        private int _separatorCount;
+        public Customer Information
+        {
+            get;
+        } = new Customer();
 
         /// <summary>
         ///
@@ -54,7 +54,6 @@ namespace Libretto.Forms
             Information.Name = nameField.Text.Trim();
             Information.Email = emailField.Text.Trim();
             Information.Location = locationField.Text.Trim();
-            LibrettoClient.Instance.Proxy.InsertCustomer(Information);
         }
 
         /// <summary>

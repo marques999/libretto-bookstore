@@ -101,8 +101,9 @@ namespace LibrettoWCF.Database
                 _context.Customers.Add(customerInformation);
                 _context.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 
@@ -131,8 +132,9 @@ namespace LibrettoWCF.Database
             {
                 _context.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 
@@ -158,8 +160,9 @@ namespace LibrettoWCF.Database
                 _context.Customers.Remove(sqlEntity);
                 _context.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 using Libretto.Model;
@@ -179,9 +178,8 @@ namespace LibrettoWCF.Database
                 _context.Books.Remove(sqlEntity);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.Print(ex.InnerException.InnerException.Message);
                 return Response.DatabaseError;
             }
 

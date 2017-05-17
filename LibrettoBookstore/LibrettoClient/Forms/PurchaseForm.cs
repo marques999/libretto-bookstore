@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -27,6 +28,11 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
+        private List<Customer> _customers;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Purchase Information
         {
             get;
@@ -39,7 +45,9 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void PurchaseForm_Load(object sender, EventArgs args)
         {
-            var customersList = LibrettoClient.Instance.Customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
+            _customers = LibrettoClient.Instance.Proxy.ListCustomers();
+
+            var customersList = _customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
 
             if (customersList.Length > 0)
             {
@@ -134,7 +142,7 @@ namespace Libretto.Forms
         {
             if (customerName.SelectedIndex >= 0)
             {
-                UpdateCustomer(LibrettoClient.Instance.Customers[customerName.SelectedIndex]);
+                UpdateCustomer(_customers[customerName.SelectedIndex]);
             }
         }
 
@@ -163,7 +171,7 @@ namespace Libretto.Forms
 
             if (operationResult == Response.Success)
             {
-                LibrettoClient.Instance.Customers.Add(customerInformation);
+                _customers.Add(customerInformation);
                 customerName.Items.Add(customerInformation.Name);
                 customerName.SelectedIndex = customerName.Items.Count - 1;
             }

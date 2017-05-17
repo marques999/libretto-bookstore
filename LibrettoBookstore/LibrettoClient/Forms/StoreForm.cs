@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -30,6 +31,14 @@ namespace Libretto.Forms
         {
             Close();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<Customer> Customers
+        {
+            get;
+        } = LibrettoClient.Instance.Proxy.ListCustomers();
 
         /// <summary>
         /// 
@@ -206,7 +215,7 @@ namespace Libretto.Forms
         private void StoreForm_Load(object sender, EventArgs args)
         {
             customerName.Items.Add("");
-            customerName.Items.AddRange(LibrettoClient.Instance.Customers.Select(c => c.Name).ToArray<object>());
+            customerName.Items.AddRange(Customers.Select(c => c.Name).ToArray<object>());
             buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
             buttonManage.Enabled = LibrettoClient.Instance.IsAdministrator();
             dateFromPicker.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);

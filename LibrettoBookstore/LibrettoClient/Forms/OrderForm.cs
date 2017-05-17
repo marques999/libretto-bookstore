@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,18 +23,30 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="information"></param>
-        public OrderForm(Order information)
+        /// <param name="orderInformation"></param>
+        public OrderForm(Order orderInformation)
         {
             InitializeComponent();
             Text = @"Update Order";
-            Information = information;
+            Information = orderInformation;
+            ToggleRadio((int)orderInformation.Status);
+            UpdateBook(LibrettoClient.Instance.Books.SingleOrDefault(bookInformation => bookInformation.Id == orderInformation.BookId));
+            UpdateCustomer(Customers.SingleOrDefault(customerInformation => customerInformation.Id == orderInformation.CustomerId));
+            UpdateStock(orderInformation.Quantity);
         }
 
         /// <summary>
         /// 
         /// </summary>
         private Book _bookInformation;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<Customer> Customers
+        {
+            get;
+        } = LibrettoClient.Instance.Proxy.ListCustomers();
 
         /// <summary>
         /// 
@@ -46,11 +59,22 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="radioChecked"></param>
+        private void ToggleRadio(int radioChecked)
+        {
+            statusWaiting.Checked = radioChecked == 0;
+            statusProcessing.Checked = radioChecked == 1;
+            statusDispatched.Checked = radioChecked == 2;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         private void OrderForm_Load(object sender, EventArgs args)
         {
-            var customersList = LibrettoClient.Instance.Customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
+            var customersList = Customers.Select(customerInformation => customerInformation.Name).ToArray<object>();
 
             if (customersList.Length > 0)
             {
@@ -119,7 +143,7 @@ namespace Libretto.Forms
 
             if (customerIndex >= 0)
             {
-                UpdateCustomer(LibrettoClient.Instance.Customers[customerName.SelectedIndex]);
+                UpdateCustomer(Customers[customerName.SelectedIndex]);
             }
         }
 
@@ -221,7 +245,7 @@ namespace Libretto.Forms
 
             if (operationResult == Response.Success)
             {
-                LibrettoClient.Instance.Customers.Add(customerInformation);
+                Customers.Add(customerInformation);
                 customerName.Items.Add(customerInformation.Name);
                 customerName.SelectedIndex = customerName.Items.Count - 1;
             }
