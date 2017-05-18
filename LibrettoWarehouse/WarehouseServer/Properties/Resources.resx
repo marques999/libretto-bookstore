@@ -175,6 +175,6 @@
     <value>Remoting: Subscribed remote object {0}!</value>
   </data>
   <data name="MessagingUpdateOrder" xml:space="preserve">
-    <value>Messaging: UpdateOrder("{0}", "{1:D}", "{2:D}")</value>
+    <value>Messaging: UpdateOrder("{0}", "{1}", "{2}")</value>
   </data>
 </root>

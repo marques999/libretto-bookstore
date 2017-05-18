@@ -6,6 +6,7 @@ using System.Messaging;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Serialization.Formatters;
 using System.Xml.Serialization;
 
 using Libretto.Messaging;
@@ -60,7 +61,7 @@ namespace Libretto
                 {"port", WarehouseCommon.WarehousePort}
             }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider
             {
-                TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
+                TypeFilterLevel = TypeFilterLevel.Full
             }), false);
 
             LogMessage(Resources.RemotingRegisterService, nameof(IRemotingService));
