@@ -18,12 +18,17 @@ namespace Libretto
     /// <summary>
     /// 
     /// </summary>
-    public class WarehouseServer : MarshalByRefObject, IWarehouseService, IMessageVisitor
+    public class WarehouseServer : MarshalByRefObject, IMessageVisitor, IWarehouseService
     {
         /// <summary>
         /// 
         /// </summary>
-        public event TransactionHandler OnRefresh;
+        public event WarehouseDeleteHandler OnDelete;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event WarehouseUpsertHandler OnUpsert;
 
         /// <summary>
         /// 
@@ -150,10 +155,11 @@ namespace Libretto
         {
             try
             {
+                warehouseOrder.DateCreated = DateTime.Now;
+                warehouseOrder.DateModified = warehouseOrder.DateCreated;
                 LogMessage(Resources.MessagingInsertOrder, warehouseOrder.Identifier, warehouseOrder.Title, warehouseOrder.DateCreated);
-                warehouseOrder.Status = WarehouseStatus.Pending;
                 _orders.Insert(warehouseOrder);
-                OnRefresh?.Invoke(_orders.Orders);
+                OnUpsert?.Invoke(warehouseOrder);
                 SerializeTransactions();
             }
             catch (Exception ex)
@@ -172,12 +178,14 @@ namespace Libretto
             {
                 LogMessage(Resources.MessagingUpdateOrder, messageUpdate.Identifier, messageUpdate.Quantity, messageUpdate.Total);
 
-                if (_orders.Update(messageUpdate.Identifier, messageUpdate.Quantity, messageUpdate.Total) == false)
+                var orderInformation = _orders.Update(messageUpdate.Identifier, messageUpdate.Quantity, messageUpdate.Total);
+
+                if (orderInformation == null)
                 {
                     return;
                 }
 
-                OnRefresh?.Invoke(_orders.Orders);
+                OnUpsert?.Invoke(orderInformation);
                 SerializeTransactions();
             }
             catch (Exception ex)
@@ -194,15 +202,15 @@ namespace Libretto
         {
             try
             {
-                LogMessage(Resources.MessagingCancelOrder, messageCancel.Identifier, messageCancel.Timestamp);
+                LogMessage(Resources.MessagingCancelOrder, messageCancel.Identifier);
 
-                if (_orders.Cancel(messageCancel.Identifier, messageCancel.Timestamp) == false)
+                if (_orders.Delete(messageCancel.Identifier) == false)
                 {
                     return;
                 }
 
                 SerializeTransactions();
-                OnRefresh?.Invoke(_orders.Orders);
+                OnDelete?.Invoke(messageCancel.Identifier);
             }
             catch (Exception ex)
             {
@@ -237,13 +245,12 @@ namespace Libretto
                     return false;
                 }
 
-                if (_orders.Dispatch(transactionIdentifier, transactionTimestamp) == false)
+                if (_orders.Delete(transactionIdentifier) == false)
                 {
                     return false;
                 }
 
                 SerializeTransactions();
-                OnRefresh?.Invoke(_orders.Orders);
 
                 return true;
             }

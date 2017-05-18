@@ -6,8 +6,14 @@ namespace Libretto.Warehouse
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public delegate void TransactionHandler(List<WarehouseOrder> transactionInformation);
+    /// <param name="warehouseOrder"></param>
+    public delegate void WarehouseUpsertHandler(WarehouseOrder warehouseOrder);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="transactionIdentifier"></param>
+    public delegate void WarehouseDeleteHandler(Guid transactionIdentifier);
 
     /// <summary>
     ///
@@ -17,7 +23,12 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        event TransactionHandler OnRefresh;
+        event WarehouseDeleteHandler OnDelete;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event WarehouseUpsertHandler OnUpsert;
 
         /// <summary>
         /// 
