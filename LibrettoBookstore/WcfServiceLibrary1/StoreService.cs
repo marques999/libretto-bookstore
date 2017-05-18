@@ -297,8 +297,7 @@ namespace LibrettoWCF
             {
                 LibrettoHost.WarehouseQueue.Send(new MessageCancel
                 {
-                    Identifier = orderInformation.Id,
-                    Timestamp = orderInformation.StatusTimestamp
+                    Identifier = orderInformation.Id
                 });
             }
             else
