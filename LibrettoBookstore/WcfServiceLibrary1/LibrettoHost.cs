@@ -9,6 +9,10 @@ using Libretto.Warehouse;
 using LibrettoWCF.Database;
 using LibrettoWCF.Properties;
 using LibrettoWCF.Tools;
+using System.Runtime.Remoting.Channels;
+using System.Collections;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels.Tcp;
 
 namespace LibrettoWCF
 {
@@ -56,8 +60,17 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response DispatchOrder(Guid transactionIdentifier)
         {
-            var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, new DateTime(), Status.Processing);
-            return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
+            try
+            {
+                Console.WriteLine(transactionIdentifier);
+                var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);
+                return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return new Response();           
         }
 
         /// <summary>
@@ -81,6 +94,20 @@ namespace LibrettoWCF
             Console.WriteLine(Resources.LogFormat, DateTime.Now.ToLongTimeString(), string.Format(messageFormat, messageParams));
         }
 
+        public LibrettoHost()
+        {
+            ChannelServices.RegisterChannel(new TcpChannel(new Hashtable
+            {
+                {"port", WarehouseCommon.BookstorePort}
+            }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider
+            {
+                TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
+            }), false);
+            RemotingConfiguration.RegisterActivatedServiceType(typeof(IRemotingService));
+            RemotingConfiguration.RegisterActivatedServiceType(typeof(LibrettoHost));
+            RemotingServices.Marshal(this, WarehouseCommon.BookstoreEndpoint);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -96,6 +123,7 @@ namespace LibrettoWCF
 
             try
             {
+                new LibrettoHost();
                 Bookstore.Open();
                 LogMessage("IStoreService running on port {0:D}...", Bookstore.BaseAddresses.FirstOrDefault()?.Port);
                 Webstore.Open();
@@ -112,6 +140,6 @@ namespace LibrettoWCF
                 Console.ForegroundColor = ConsoleColor.Red;
                 LogMessage(Resources.ExceptionCaught);
             }
-        }
+        }        
     }
 }

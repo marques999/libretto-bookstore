@@ -243,7 +243,7 @@ namespace Libretto.Forms
             if (orderInformation == null)
             {
                 return;
-            }
+            }  
 
             var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
 

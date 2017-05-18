@@ -136,6 +136,14 @@ namespace Libretto.Forms
             orderTotal.Text = LibrettoCommon.FormatDecimal(purchaseTotal);
             Information.Quantity = numberUnits;
             Information.Total = purchaseTotal;
+            if(remainingUnits >= 0)
+            {
+                Information.Status = Status.Processing;
+            }
+            else
+            {
+                Information.Status = Status.Waiting;
+            }
         }
 
         /// <summary>

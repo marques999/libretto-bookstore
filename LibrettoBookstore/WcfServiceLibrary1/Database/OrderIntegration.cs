@@ -101,7 +101,7 @@ namespace LibrettoWCF.Database
         /// <param name="transactionTimestamp"></param>
         /// <param name="transactionStatus"></param>
         /// <returns></returns>
-        public Response UpdateStatus(Guid transactionIdentifier, DateTime transactionTimestamp, Status transactionStatus)
+        public Response UpdateStatus(Guid transactionIdentifier, Status transactionStatus)
         {
             var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
 
@@ -111,17 +111,17 @@ namespace LibrettoWCF.Database
             }
 
             sqlEntity.Status = transactionStatus;
-            sqlEntity.StatusTimestamp = transactionTimestamp;
+            sqlEntity.StatusTimestamp = DateTime.Now;
 
             try
             {
                 _context.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e);
                 return Response.DatabaseError;
             }
-
             return Response.Success;
         }
 

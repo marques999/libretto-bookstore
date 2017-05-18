@@ -241,9 +241,17 @@ namespace LibrettoWCF
                 return operationResult;
             }
 
-            //_callback.OnRegisterTransaction(orderInformation);
-            LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
-            LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
+
+            if (orderInformation.Status == Status.Waiting)
+            {
+                //_callback.OnRegisterTransaction(orderInformation);
+                orderInformation.Quantity += 10;
+                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));              
+            }
+            else
+            {
+                LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, orderInformation.Quantity);
+            }
 
             return EmailClient.Instance.NotifyInsert(orderInformation);
         }

@@ -312,7 +312,7 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             SetDefaultHeaders();
-            LibrettoDatabase.OrderIntegration.UpdateStatus(new Guid(orderInformation.Id), new DateTime(), Status.Cancelled);
+            LibrettoDatabase.OrderIntegration.UpdateStatus(new Guid(orderInformation.Id), Status.Cancelled);
             return LibrettoDatabase.OrderIntegration.List();
         }
 
