@@ -179,6 +179,7 @@ namespace Libretto
                 Name = LibrettoCommon.FormatGuid(transactionInformation.Identifier),
                 SubItems =
                 {
+                    LibrettoCommon.FormatGuid(transactionInformation.Identifier),
                     transactionInformation.Title,
                     Convert.ToString(transactionInformation.Quantity),
                     LibrettoCommon.FormatCurrency(transactionInformation.Total),

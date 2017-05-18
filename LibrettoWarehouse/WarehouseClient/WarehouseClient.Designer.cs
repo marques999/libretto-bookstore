@@ -46,10 +46,11 @@ namespace Libretto
             dateFromPicker = new DateTimePicker();
             dateUntilPicker = new DateTimePicker();
             filterPanel = new Panel();
-            filterLabel = new Libretto.Forms.FlatHeader();
+            filterLabel = new FlatHeader();
             transactionsLayout = new Panel();
             listView = new ListView();
             columnDate = new ColumnHeader();
+            columnIdentifier = new ColumnHeader();
             columnTitle = new ColumnHeader();
             columnQuantity = new ColumnHeader();
             columnTotal = new ColumnHeader();
@@ -120,7 +121,7 @@ namespace Libretto
             filterTitle.Name = "filterTitle";
             filterTitle.Size = new Size(259, 21);
             filterTitle.TabIndex = 3;
-            filterTitle.SelectedIndexChanged += new System.EventHandler(ComboCustomer_SelectedIndexChanged);
+            filterTitle.SelectedIndexChanged += new EventHandler(ComboCustomer_SelectedIndexChanged);
             // 
             // filterDateFrom
             // 
@@ -148,8 +149,8 @@ namespace Libretto
             dateFromPicker.Name = "dateFromPicker";
             dateFromPicker.ShowCheckBox = true;
             dateFromPicker.Size = new Size(308, 20);
-            dateFromPicker.TabIndex = 7;
-            dateFromPicker.ValueChanged += new System.EventHandler(DateFromPicker_ValueChanged);
+            dateFromPicker.TabIndex = 5;
+            dateFromPicker.ValueChanged += new EventHandler(DateFromPicker_ValueChanged);
             // 
             // dateUntilPicker
             // 
@@ -159,8 +160,8 @@ namespace Libretto
             dateUntilPicker.Name = "dateUntilPicker";
             dateUntilPicker.ShowCheckBox = true;
             dateUntilPicker.Size = new Size(308, 20);
-            dateUntilPicker.TabIndex = 8;
-            dateUntilPicker.ValueChanged += new System.EventHandler(DateToPicker_ValueChanged);
+            dateUntilPicker.TabIndex = 6;
+            dateUntilPicker.ValueChanged += new EventHandler(DateToPicker_ValueChanged);
             // 
             // filterPanel
             // 
@@ -193,7 +194,7 @@ namespace Libretto
             // listView
             // 
             listView.BackColor = SystemColors.ControlLight;
-            listView.Columns.AddRange(new ColumnHeader[] { columnDate, columnTitle, columnQuantity, columnTotal, columnLast});
+            listView.Columns.AddRange(new ColumnHeader[] { columnDate, columnIdentifier, columnTitle, columnQuantity, columnTotal, columnLast });
             listView.Dock = DockStyle.Fill;
             listView.FullRowSelect = true;
             listView.GridLines = true;
@@ -201,9 +202,9 @@ namespace Libretto
             listView.MultiSelect = false;
             listView.Name = "listView";
             listView.Size = new Size(696, 395);
-            listView.TabIndex = 7;
+            listView.TabIndex = 4;
             listView.View = View.Details;
-            listView.SelectedIndexChanged += new System.EventHandler(ListView_SelectedIndexChanged);
+            listView.SelectedIndexChanged += new EventHandler(ListView_SelectedIndexChanged);
             listView.MouseDoubleClick += new MouseEventHandler(ListView_DoubleClicked);
             // 
             // columnDate
@@ -211,8 +212,10 @@ namespace Libretto
             columnDate.Text = "Date Issued";
             columnDate.TextAlign = HorizontalAlignment.Center;
             columnDate.Width = 100;
+            columnIdentifier.Text = "Identifier";
+            columnIdentifier.Width = 232;
             columnTitle.Text = "Title";
-            columnTitle.Width = 268;
+            columnTitle.Width = 116;
             columnQuantity.Text = "Quantity";
             columnQuantity.TextAlign = HorizontalAlignment.Center;
             columnQuantity.Width = 64;
@@ -258,30 +261,30 @@ namespace Libretto
             buttonRefresh.Margin = new Padding(2, 3, 2, 3);
             buttonRefresh.Name = "buttonRefresh";
             buttonRefresh.Size = new Size(416, 32);
-            buttonRefresh.TabIndex = 1;
+            buttonRefresh.TabIndex = 2;
             buttonRefresh.Text = "Refresh";
-            buttonRefresh.Click += new System.EventHandler(ButtonRefresh_Click);
+            buttonRefresh.Click += new EventHandler(ButtonRefresh_Click);
             // 
             // buttonLogout
             // 
             buttonLogout.DialogResult = DialogResult.Cancel;
-            buttonLogout.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            buttonLogout.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonLogout.Location = new Point(560, 0);
             buttonLogout.Margin = new Padding(2, 3, 0, 3);
             buttonLogout.Name = "buttonLogout";
             buttonLogout.Size = new Size(140, 32);
-            buttonLogout.TabIndex = 2;
+            buttonLogout.TabIndex = 3;
             buttonLogout.Text = "Exit";
-            buttonLogout.Click += new System.EventHandler(ButtonLogout_Click);
+            buttonLogout.Click += new EventHandler(ButtonLogout_Click);
             // 
             // buttonSatisfy
             // 
-            buttonSatisfy.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            buttonSatisfy.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buttonSatisfy.Location = new Point(4, 0);
             buttonSatisfy.Margin = new Padding(0, 3, 2, 3);
             buttonSatisfy.Name = "buttonSatisfy";
             buttonSatisfy.Size = new Size(140, 32);
-            buttonSatisfy.TabIndex = 0;
+            buttonSatisfy.TabIndex = 1;
             buttonSatisfy.Text = "Satisfy Order";
             buttonSatisfy.Click += new EventHandler(ButtonSatisfy_Click);
             // 
@@ -300,7 +303,7 @@ namespace Libretto
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Libretto Warehouse";
             FormClosing += new FormClosingEventHandler(WarehouseForm_FormClosing);
-            Load += new System.EventHandler(WarehouseClient_Load);
+            Load += new EventHandler(WarehouseClient_Load);
             filterLayout.ResumeLayout(false);
             formPanel.ResumeLayout(false);
             formPanel.PerformLayout();
@@ -321,11 +324,12 @@ namespace Libretto
         private Panel transactionsPanel;
         private FlatHeader transactionsLabel;
         private ColumnHeader columnDate;
-        private ColumnHeader columnTitle;
         private ColumnHeader columnLast;
-        private ListView listView;
-        private ColumnHeader columnQuantity;
+        private ColumnHeader columnTitle;
         private ColumnHeader columnTotal;
+        private ColumnHeader columnQuantity;
+        private ColumnHeader columnIdentifier;
+        private ListView listView;
         private Panel buttonPanel;
         private FlatButton buttonLogout;
         private FlatButton buttonSatisfy;

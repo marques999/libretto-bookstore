@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Messaging;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Serialization.Formatters;
 using System.ServiceModel;
 
 using Libretto.Messaging;
@@ -10,10 +15,6 @@ using Libretto.Warehouse;
 using LibrettoWCF.Database;
 using LibrettoWCF.Properties;
 using LibrettoWCF.Tools;
-using System.Runtime.Remoting.Channels;
-using System.Collections;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels.Tcp;
 
 namespace LibrettoWCF
 {
@@ -64,27 +65,30 @@ namespace LibrettoWCF
             try
             {
                 Console.WriteLine(transactionIdentifier);
-                //  var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);               
+            
                 var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);
-                if(operationResult != Response.Success)
+
+                if (operationResult != Response.Success)
                 {
                     return operationResult;
                 }
 
-                Order order = LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier);
+                var order = LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier);
+
                 if (order == null)
                 {
                     return Response.NotFound;
                 }
 
                 operationResult = LibrettoDatabase.BookIntegration.UpdateStock(order.BookId, -10);
+
                 return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            return Response.DatabaseError;           
+            return Response.DatabaseError;
         }
 
         /// <summary>
@@ -108,17 +112,12 @@ namespace LibrettoWCF
             Console.WriteLine(Resources.LogFormat, DateTime.Now.ToLongTimeString(), string.Format(messageFormat, messageParams));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public LibrettoHost()
         {
-            ChannelServices.RegisterChannel(new TcpChannel(new Hashtable
-            {
-                {"port", WarehouseCommon.BookstorePort}
-            }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider
-            {
-                TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
-            }), false);
             RemotingConfiguration.RegisterActivatedServiceType(typeof(IRemotingService));
-            RemotingConfiguration.RegisterActivatedServiceType(typeof(LibrettoHost));
             RemotingServices.Marshal(this, WarehouseCommon.BookstoreEndpoint);
         }
 
@@ -134,6 +133,14 @@ namespace LibrettoWCF
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Clear();
             Console.WriteLine(Resources.Header);
+
+            ChannelServices.RegisterChannel(new TcpChannel(new Hashtable
+            {
+                {"port", WarehouseCommon.BookstorePort}
+            }, new BinaryClientFormatterSinkProvider(), new BinaryServerFormatterSinkProvider
+            {
+                TypeFilterLevel = TypeFilterLevel.Full
+            }), false);
 
             try
             {
@@ -154,6 +161,6 @@ namespace LibrettoWCF
                 Console.ForegroundColor = ConsoleColor.Red;
                 LogMessage(Resources.ExceptionCaught);
             }
-        }        
+        }
     }
 }
