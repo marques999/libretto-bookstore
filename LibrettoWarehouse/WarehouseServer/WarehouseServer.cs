@@ -236,9 +236,7 @@ namespace Libretto
         {
             try
             {
-                var transactionTimestamp = DateTime.Now;
-
-                LogMessage(Resources.RemotingDispatchOrder, transactionIdentifier, transactionTimestamp);
+                LogMessage(Resources.RemotingDispatchOrder, transactionIdentifier);
 
                 if (_bookstore.DispatchOrder(transactionIdentifier) != Response.Success)
                 {
@@ -251,6 +249,7 @@ namespace Libretto
                 }
 
                 SerializeTransactions();
+                OnDelete?.Invoke(transactionIdentifier);
 
                 return true;
             }
