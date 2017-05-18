@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseServer", "Warehous
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrettoCommon", "..\LibrettoCommon\LibrettoCommon.csproj", "{CF64510B-78EC-4D27-BADF-65D9C392C7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseTest", "WarehouseTest\WarehouseTest.csproj", "{A189C5CA-A606-4C32-8748-788277CBA281}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF64510B-78EC-4D27-BADF-65D9C392C7BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A189C5CA-A606-4C32-8748-788277CBA281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A189C5CA-A606-4C32-8748-788277CBA281}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A189C5CA-A606-4C32-8748-788277CBA281}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A189C5CA-A606-4C32-8748-788277CBA281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
