@@ -244,9 +244,15 @@ namespace LibrettoWCF
 
             if (orderInformation.Status == Status.Waiting)
             {
-                //_callback.OnRegisterTransaction(orderInformation);
-                orderInformation.Quantity += 10;
-                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));              
+                LibrettoHost.WarehouseQueue.Send(new WarehouseOrder
+                {
+                    Total = orderInformation.Total,
+                    Identifier = orderInformation.Id,
+                    Title = orderInformation.BookTitle,
+                    Quantity = orderInformation.Quantity + 10,
+                    DateCreated = orderInformation.Timestamp,
+                    DateModified = orderInformation.StatusTimestamp
+                });
             }
             else
             {
