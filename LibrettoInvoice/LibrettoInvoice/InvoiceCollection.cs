@@ -11,7 +11,7 @@ namespace Libretto
     /// 
     /// </summary>
     [Serializable, XmlRoot("Invoices")]
-    public class InvoiceCollection
+    internal class InvoiceCollection
     {
         /// <summary>
         /// 

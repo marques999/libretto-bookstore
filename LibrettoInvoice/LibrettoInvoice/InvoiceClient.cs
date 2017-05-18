@@ -95,16 +95,18 @@ namespace Libretto
         /// <param name="purchaseInformation"></param>
         private void OnInsert(Invoice purchaseInformation)
         {
-            if (purchaseInformation != null)
+            if (purchaseInformation == null)
             {
-                if (InvokeRequired)
-                {
-                    BeginInvoke(new ReceiveHandler(OnInsertAux), purchaseInformation, true);
-                }
-                else
-                {
-                    OnInsertAux(purchaseInformation, true);
-                }
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new ReceiveHandler(OnInsertAux), purchaseInformation, true);
+            }
+            else
+            {
+                OnInsertAux(purchaseInformation, true);
             }
         }
 
@@ -127,7 +129,10 @@ namespace Libretto
 
             listView.Items.Add(new ListViewItem(purchaseTimestamp)
             {
-                SubItems = { purchaseIdentifier }
+                SubItems =
+                {
+                    purchaseIdentifier
+                }
             });
         }
 
