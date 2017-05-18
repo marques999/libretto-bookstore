@@ -205,12 +205,11 @@ namespace Libretto
             {
                 LogMessage(Resources.MessagingCancelOrder, messageCancel.Identifier);
 
-                if (_orders.Delete(messageCancel.Identifier) == false)
+                if (_orders.Delete(messageCancel.Identifier))
                 {
-                    return;
+                    SerializeTransactions();
                 }
 
-                SerializeTransactions();
                 OnDelete?.Invoke(messageCancel.Identifier);
             }
             catch (Exception ex)
@@ -244,12 +243,11 @@ namespace Libretto
                     return false;
                 }
 
-                if (_orders.Delete(transactionIdentifier) == false)
+                if (_orders.Delete(transactionIdentifier))
                 {
-                    return false;
+                    SerializeTransactions();
                 }
 
-                SerializeTransactions();
                 OnDelete?.Invoke(transactionIdentifier);
 
                 return true;

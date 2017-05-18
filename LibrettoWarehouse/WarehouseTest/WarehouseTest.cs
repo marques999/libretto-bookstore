@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Messaging;
 
 using Libretto.Messaging;
 using Libretto.Warehouse;
@@ -14,17 +13,16 @@ namespace WarehouseTest
         /// <summary>
         /// 
         /// </summary>
-        private static readonly MessageQueue WarehouseQueue = MessagingCommon.InitializeWarehouseQueue();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             var orderGuid = Guid.NewGuid();
+            var warehouseQueue = MessagingCommon.InitializeWarehouseQueue();
 
-            WarehouseQueue.Send(new WarehouseOrder
+            Console.Write("Testing WarehouseOrder (<Enter> to continue)...");
+            Console.ReadLine();
+
+            warehouseQueue.Send(new WarehouseOrder
             {
                 Quantity = 100,
                 Total = 1234.0,
@@ -34,14 +32,20 @@ namespace WarehouseTest
                 DateModified = DateTime.Now
             });
 
-            WarehouseQueue.Send(new MessageUpdate
+            Console.Write("Testing MessageUpdate (<Enter> to continue)...");
+            Console.ReadLine();
+
+            warehouseQueue.Send(new MessageUpdate
             {
                 Quantity = 200,
                 Total = 2468.0,
                 Identifier = orderGuid
             });
 
-            WarehouseQueue.Send(new MessageCancel
+            Console.Write("Testing MessageCancel (<Enter> to continue)...");
+            Console.ReadLine();
+
+            warehouseQueue.Send(new MessageCancel
             {
                 Identifier = orderGuid
             });

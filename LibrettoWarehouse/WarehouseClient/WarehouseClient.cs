@@ -141,7 +141,7 @@ namespace Libretto
         /// </summary>
         private void UpdateFilter(bool refreshBooks)
         {
-            if (_transactions.Count < 1)
+            if (refreshBooks == false && _transactions.Count < 1)
             {
                 return;
             }
