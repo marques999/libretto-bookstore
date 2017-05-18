@@ -36,7 +36,7 @@ namespace Libretto.Warehouse
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

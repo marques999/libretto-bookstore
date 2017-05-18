@@ -16,7 +16,7 @@ namespace Libretto.Warehouse
     public delegate void WarehouseDeleteHandler(Guid transactionIdentifier);
 
     /// <summary>
-    ///
+    /// 
     /// </summary>
     public interface IWarehouseService
     {
