@@ -3,6 +3,7 @@ using System.Net.Mail;
 
 using Libretto;
 using Libretto.Model;
+
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF.Tools

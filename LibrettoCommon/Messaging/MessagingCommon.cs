@@ -55,7 +55,6 @@ namespace Libretto.Messaging
                 typeof(WarehouseOrder),
                 typeof(MessageCancel),
                 typeof(MessageUpdate)
-
             });
 
             return messageQueue;

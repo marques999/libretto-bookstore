@@ -133,7 +133,7 @@
     <value>[{0}] {1}</value>
   </data>
   <data name="MessagingCancelOrder" xml:space="preserve">
-    <value>Messaging: CancelOrder("{0}, {1:F}")</value>
+    <value>Messaging: CancelOrder("{0}")</value>
   </data>
   <data name="MessagingInitialize" xml:space="preserve">
     <value>Messaging: Initializing private queue ({0})...</value>
@@ -148,7 +148,7 @@
     <value>Remoting: Service running ({0})</value>
   </data>
   <data name="RemotingDispatchOrder" xml:space="preserve">
-    <value>Remoting: DispatchOrder("{0}", "{1:F}")</value>
+    <value>Remoting: DispatchOrder("{0}")</value>
   </data>
   <data name="SerializationRead" xml:space="preserve">
     <value>XmlSerializer: Reading {0}...</value>

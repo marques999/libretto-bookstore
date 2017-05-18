@@ -15,15 +15,6 @@ namespace Libretto
         public InvoiceForm(Invoice invoiceInformation)
         {
             InitializeComponent();
-            ParseInvoice(invoiceInformation);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="invoiceInformation"></param>
-        private void ParseInvoice(Invoice invoiceInformation)
-        {
             invoiceTitle.Text = invoiceInformation.Title;
             invoiceCustomer.Text = invoiceInformation.Customer;
             purchaseDate.Text = invoiceInformation.Timestamp.ToString("F");

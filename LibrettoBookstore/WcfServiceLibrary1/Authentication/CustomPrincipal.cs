@@ -63,7 +63,7 @@ namespace LibrettoWCF.Authentication
         /// <returns></returns>
         public bool IsInRole(string role)
         {
-            if (role == null)
+            if (string.IsNullOrEmpty(role))
             {
                 return false;
             }

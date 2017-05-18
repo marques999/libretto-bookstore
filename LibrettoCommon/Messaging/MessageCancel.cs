@@ -22,16 +22,6 @@ namespace Libretto.Messaging
         /// <summary>
         /// 
         /// </summary>
-        [XmlElement("Timestamp")]
-        public DateTime Timestamp
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="messageVisitor"></param>
         public void Process(IMessageVisitor messageVisitor)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Libretto.Warehouse
 {
@@ -11,18 +10,33 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        public event TransactionHandler OnRefresh;
+        public event WarehouseDeleteHandler OnDelete;
 
         /// <summary>
         /// 
         /// </summary>
-        public void Refresh(List<WarehouseOrder> transactionInformation)
+        /// <param name="transactionIdentifier"></param>
+        public void Delete(Guid transactionIdentifier)
         {
-            OnRefresh?.Invoke(transactionInformation);
+            OnDelete?.Invoke(transactionIdentifier);
         }
 
         /// <summary>
-        ///
+        /// 
+        /// </summary>
+        public event WarehouseUpsertHandler OnUpsert;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="warehouseOrder"></param>
+        public void Upsert(WarehouseOrder warehouseOrder)
+        {
+            OnUpsert?.Invoke(warehouseOrder);
+        }
+
+        /// <summary>
+        /// 
         /// </summary>
         /// <returns></returns>
         public override object InitializeLifetimeService()

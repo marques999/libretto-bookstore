@@ -81,7 +81,6 @@
     <Compile Include="Warehouse\IWarehouseService.cs" />
     <Compile Include="Warehouse\WarehouseIntermediate.cs" />
     <Compile Include="Warehouse\WarehouseOrder.cs" />
-    <Compile Include="Warehouse\WarehouseStatus.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

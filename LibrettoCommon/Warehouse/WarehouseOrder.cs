@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+
 using Libretto.Messaging;
 using Libretto.Model;
 
@@ -54,16 +55,6 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        [XmlElement("Status")]
-        public WarehouseStatus Status
-        {
-            get;
-            set;
-        } = WarehouseStatus.Pending;
-
-        /// <summary>
-        /// 
-        /// </summary>
         [XmlElement("DateCreated")]
         public DateTime DateCreated
         {
@@ -101,7 +92,6 @@ namespace Libretto.Warehouse
             {
                 Total = orderInformation.Total,
                 Identifier = orderInformation.Id,
-                Status = WarehouseStatus.Pending,
                 Title = orderInformation.BookTitle,
                 Quantity = orderInformation.Quantity,
                 DateCreated = orderInformation.Timestamp,

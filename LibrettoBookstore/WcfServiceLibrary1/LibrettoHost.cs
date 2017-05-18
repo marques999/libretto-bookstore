@@ -6,6 +6,7 @@ using System.ServiceModel;
 using Libretto.Messaging;
 using Libretto.Model;
 using Libretto.Warehouse;
+
 using LibrettoWCF.Database;
 using LibrettoWCF.Properties;
 using LibrettoWCF.Tools;

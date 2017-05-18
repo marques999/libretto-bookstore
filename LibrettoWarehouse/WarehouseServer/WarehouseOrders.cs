@@ -36,64 +36,33 @@ namespace Libretto
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionTimestamp"></param>
-        /// <returns></returns>
-        public bool Dispatch(Guid transactionIdentifier, DateTime transactionTimestamp)
-        {
-            var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
-
-            if (transactionInformation == null || transactionInformation.Status != WarehouseStatus.Pending)
-            {
-                return false;
-            }
-
-            transactionInformation.Status = WarehouseStatus.Dispatched;
-            transactionInformation.DateModified = transactionTimestamp;
-
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
         /// <param name="orderQuantity"></param>
         /// <param name="orderTotal"></param>
         /// <returns></returns>
-        public bool Update(Guid transactionIdentifier, int orderQuantity, double orderTotal)
+        public WarehouseOrder Update(Guid transactionIdentifier, int orderQuantity, double orderTotal)
         {
             var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
 
-            if (transactionInformation == null || (transactionInformation.Quantity == orderQuantity && transactionInformation.Total == orderTotal))
+            if (transactionInformation == null)
             {
-                return false;
+                return null;
             }
 
-            transactionInformation.Quantity = orderQuantity;
             transactionInformation.Total = orderTotal;
+            transactionInformation.Quantity = orderQuantity;
+            transactionInformation.DateModified = DateTime.Now;
 
-            return true;
+            return transactionInformation;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionTimestamp"></param>
         /// <returns></returns>
-        public bool Cancel(Guid transactionIdentifier, DateTime transactionTimestamp)
+        public bool Delete(Guid transactionIdentifier)
         {
-            var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
-
-            if (transactionInformation == null || transactionInformation.Status != WarehouseStatus.Pending)
-            {
-                return false;
-            }
-
-            transactionInformation.Status = WarehouseStatus.Cancelled;
-            transactionInformation.DateModified = transactionTimestamp;
-
-            return true;
+            return Orders.RemoveAll(orderInformation => orderInformation.Identifier == transactionIdentifier) > 0;
         }
 
         /// <summary>

@@ -22,12 +22,12 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private List<WarehouseOrder> _transactions = new List<WarehouseOrder>();
+        private readonly WarehouseIntermediate _warehouseIntermediate = new WarehouseIntermediate();
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly WarehouseIntermediate _warehouseIntermediate = new WarehouseIntermediate();
+        private readonly Dictionary<Guid, WarehouseOrder> _transactions = new Dictionary<Guid, WarehouseOrder>();
 
         /// <summary>
         /// 
@@ -35,35 +35,81 @@ namespace Libretto
         public WarehouseClient()
         {
             InitializeComponent();
-            _warehouseIntermediate.OnRefresh += OnRefresh;
+            _warehouseIntermediate.OnDelete += OnDelete;
+            _warehouseIntermediate.OnUpsert += OnUpsert;
             _warehouse = (IWarehouseService)RemotingServices.Connect(typeof(IWarehouseService), WarehouseCommon.WarehouseAddress);
-            _warehouse.OnRefresh += _warehouseIntermediate.Refresh;
+            _warehouse.OnDelete += _warehouseIntermediate.Delete;
+            _warehouse.OnUpsert += _warehouseIntermediate.Upsert;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void OnRefresh(List<WarehouseOrder> transactionInformation)
+        /// <param name="transactionInformation"></param>
+        private void OnUpsert(WarehouseOrder transactionInformation)
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new TransactionHandler(RefreshOrders), transactionInformation);
+                BeginInvoke(new WarehouseUpsertHandler(UpsertOrder), transactionInformation);
             }
             else
             {
-                RefreshOrders(transactionInformation);
+                UpsertOrder(transactionInformation);
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        private void OnDelete(Guid transactionIdentifier)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new WarehouseDeleteHandler(DeleteOrder), transactionIdentifier);
+            }
+            else
+            {
+                DeleteOrder(transactionIdentifier);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpsertOrder(WarehouseOrder transactionInformation)
+        {
+            _transactions.Remove(transactionInformation.Identifier);
+            _transactions.Add(transactionInformation.Identifier, transactionInformation);
+            ResetWindow();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        private void DeleteOrder(Guid transactionIdentifier)
+        {
+            _transactions.Remove(transactionIdentifier);
+            ResetWindow();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
         private void RefreshOrders(List<WarehouseOrder> transactionInformation)
         {
-            _transactions = transactionInformation;
-            checkPending.Checked = true;
-            checkCancelled.Checked = false;
-            checkDispatched.Checked = false;
+            _transactions.Clear();
+            transactionInformation.ForEach(warehouseOrder => _transactions.Add(warehouseOrder.Identifier, warehouseOrder));
+            ResetWindow();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ResetWindow()
+        {
             filterTitle.Items.Clear();
             filterTitle.Items.Add("");
             filterTitle.SelectedIndex = 0;
@@ -89,7 +135,7 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private void UpdateFilter(bool reorderCustomers)
+        private void UpdateFilter(bool refreshBooks)
         {
             if (_transactions.Count < 1)
             {
@@ -97,11 +143,11 @@ namespace Libretto
             }
 
             listView.Items.Clear();
-            listView.Items.AddRange(_transactions.Where(FilterOrder).Select(ParseTransaction).ToArray());
+            listView.Items.AddRange(_transactions.Values.Where(FilterOrder).Select(ParseTransaction).ToArray());
 
-            if (reorderCustomers)
+            if (refreshBooks)
             {
-                filterTitle.Items.AddRange(_transactions.Select(transactionInformation => transactionInformation.Title).Distinct().OrderBy(bookTitle => bookTitle).ToArray<object>());
+                filterTitle.Items.AddRange(_transactions.Values.Select(transactionInformation => transactionInformation.Title).Distinct().OrderBy(bookTitle => bookTitle).ToArray<object>());
             }
         }
 
@@ -112,14 +158,9 @@ namespace Libretto
         /// <returns></returns>
         private bool FilterOrder(WarehouseOrder orderInformation)
         {
-            var bookTitle = filterTitle.Text;
-            var orderTimestamp = orderInformation.DateCreated;
-            return (orderInformation.Status == WarehouseStatus.Pending && checkPending.Checked
-                || orderInformation.Status == WarehouseStatus.Dispatched && checkDispatched.Checked
-                || orderInformation.Status == WarehouseStatus.Cancelled && checkCancelled.Checked)
-                && (string.IsNullOrEmpty(bookTitle) || bookTitle == orderInformation.Title)
-                && (dateFromPicker.Checked == false || orderTimestamp > dateFromPicker.Value)
-                && (dateUntilPicker.Checked == false || orderTimestamp < dateUntilPicker.Value);
+            return (string.IsNullOrEmpty(filterTitle.Text) || filterTitle.Text == orderInformation.Title)
+                && (dateFromPicker.Checked == false || orderInformation.DateCreated > dateFromPicker.Value)
+                && (dateUntilPicker.Checked == false || orderInformation.DateCreated < dateUntilPicker.Value);
         }
 
         /// <summary>
@@ -137,7 +178,6 @@ namespace Libretto
                     transactionInformation.Title,
                     Convert.ToString(transactionInformation.Quantity),
                     LibrettoCommon.FormatCurrency(transactionInformation.Total),
-                    transactionInformation.Status.ToString(),
                     LibrettoCommon.FormatDate(transactionInformation.DateModified),
                 }
             };
@@ -148,7 +188,7 @@ namespace Libretto
         /// </summary>
         private void UpdateButtons()
         {
-            buttonSatisfy.Enabled = listView.SelectedItems.Count > 0 && listView.SelectedItems[0].SubItems[4].Text == @"Pending";
+            buttonSatisfy.Enabled = listView.SelectedItems.Count > 0;
         }
 
         /// <summary>
@@ -245,36 +285,6 @@ namespace Libretto
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void CheckPending_CheckedChanged(object sender, EventArgs args)
-        {
-            UpdateFilter(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void CheckDispatched_CheckedChanged(object sender, EventArgs args)
-        {
-            UpdateFilter(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void CheckCancelled_CheckedChanged(object sender, EventArgs args)
-        {
-            UpdateFilter(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         private void ComboCustomer_SelectedIndexChanged(object sender, EventArgs args)
         {
             UpdateFilter(false);
@@ -287,7 +297,8 @@ namespace Libretto
         /// <param name="e"></param>
         private void WarehouseForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _warehouse.OnRefresh -= _warehouseIntermediate.Refresh;
+            _warehouse.OnDelete -= _warehouseIntermediate.Delete;
+            _warehouse.OnUpsert -= _warehouseIntermediate.Upsert;
         }
 
         /// <summary>
