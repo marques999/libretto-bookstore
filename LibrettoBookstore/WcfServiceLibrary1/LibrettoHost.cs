@@ -64,14 +64,27 @@ namespace LibrettoWCF
             try
             {
                 Console.WriteLine(transactionIdentifier);
+                //  var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);               
                 var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);
+                if(operationResult != Response.Success)
+                {
+                    return operationResult;
+                }
+
+                Order order = LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier);
+                if (order == null)
+                {
+                    return Response.NotFound;
+                }
+
+                operationResult = LibrettoDatabase.BookIntegration.UpdateStock(order.BookId, -10);
                 return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            return new Response();           
+            return Response.DatabaseError;           
         }
 
         /// <summary>
