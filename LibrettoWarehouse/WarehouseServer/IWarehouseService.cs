@@ -16,7 +16,7 @@ namespace Libretto
         /// </summary>
         /// <param name="orderIdentifier"></param>
         [OperationContract(IsOneWay = true)]
-        void CancelOrder(Guid orderIdentifier);
+        void DeleteOrder(Guid orderIdentifier);
 
         /// <summary>
         /// 
@@ -24,14 +24,5 @@ namespace Libretto
         /// <param name="warehouseOrder"></param>
         [OperationContract(IsOneWay = true)]
         void InsertOrder(WarehouseOrder warehouseOrder);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderQuantity"></param>
-        /// <param name="orderTotal"></param>
-        [OperationContract(IsOneWay = true)]
-        void UpdateOrder(Guid orderIdentifier, int orderQuantity, double orderTotal);
     }
 }

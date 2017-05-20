@@ -13,6 +13,23 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="orderIdentifier"></param>
+        public void DeleteOrder(Guid orderIdentifier)
+        {
+            try
+            {
+                WarehouseLogger.LogMessage(Resources.MessagingCancelOrder, orderIdentifier);
+                WarehouseServer.DeleteOrder(orderIdentifier);
+            }
+            catch (Exception ex)
+            {
+                WarehouseLogger.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="warehouseOrder"></param>
         public void InsertOrder(WarehouseOrder warehouseOrder)
         {
@@ -22,42 +39,6 @@ namespace Libretto
                 warehouseOrder.DateModified = warehouseOrder.DateCreated;
                 WarehouseLogger.LogMessage(Resources.MessagingInsertOrder, warehouseOrder.Identifier, warehouseOrder.Title, warehouseOrder.DateCreated);
                 WarehouseServer.InsertOrder(warehouseOrder);
-            }
-            catch (Exception ex)
-            {
-                WarehouseLogger.LogException(ex);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderQuantity"></param>
-        /// <param name="orderTotal"></param>
-        public void UpdateOrder(Guid orderIdentifier, int orderQuantity, double orderTotal)
-        {
-            try
-            {
-                WarehouseLogger.LogMessage(Resources.MessagingUpdateOrder, orderIdentifier, orderQuantity, orderTotal);
-                WarehouseServer.UpdateOrder(orderIdentifier, orderQuantity, orderTotal);
-            }
-            catch (Exception ex)
-            {
-                WarehouseLogger.LogException(ex);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
-        public void CancelOrder(Guid orderIdentifier)
-        {
-            try
-            {
-                WarehouseLogger.LogMessage(Resources.MessagingCancelOrder, orderIdentifier);
-                WarehouseServer.DeleteOrder(orderIdentifier);
             }
             catch (Exception ex)
             {

@@ -21,6 +21,8 @@ namespace Libretto.Model
         [EnumMember]
         InvalidArguments = 4,
         [EnumMember]
-        SessionExists = 5
+        SessionExists = 5,
+        [EnumMember]
+        EmailFailure = 6
     }
 }
