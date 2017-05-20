@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExceptionCaught" xml:space="preserve">
+    <value>Fatal: Application initialization failed, press any key to exit...</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>   _ _ _              _   _        
-  | (_) |__  _ __ ___| |_| |_ ___  
-  | | | '_ \| '__/ _ \ __| __/ _ \ 
+  | (_) |__  _ __ ___| |_| |_ ___
+  | | | '_ \| '__/ _ \ __| __/ _ \
   | | | |_) | | |  __/ |_| || (_) |
   |_|_|_.__/|_|  \___|\__|\__\___/
   =========== warehouse ===========
 </value>
-  </data>
-  <data name="WindowTitle" xml:space="preserve">
-    <value>Libretto Warehouse</value>
   </data>
   <data name="LogFormat" xml:space="preserve">
     <value>[{0}] {1}</value>
@@ -144,17 +144,17 @@
   <data name="MessagingRunning" xml:space="preserve">
     <value>Messaging: Service running and receiving messages asynchronously.</value>
   </data>
-  <data name="RemotingInitialized" xml:space="preserve">
-    <value>Remoting: Service running ({0})</value>
+  <data name="MessagingUpdateOrder" xml:space="preserve">
+    <value>Messaging: UpdateOrder("{0}", "{1}", "{2}")</value>
   </data>
   <data name="RemotingDispatchOrder" xml:space="preserve">
     <value>Remoting: DispatchOrder("{0}")</value>
   </data>
-  <data name="SerializationRead" xml:space="preserve">
-    <value>XmlSerializer: Reading {0}...</value>
+  <data name="RemotingEstablish" xml:space="preserve">
+    <value>Remoting: Establishing connection with {0} ({1})...</value>
   </data>
-  <data name="SerializationWrite" xml:space="preserve">
-    <value>XmlSerializer: Writing {0}...</value>
+  <data name="RemotingInitialized" xml:space="preserve">
+    <value>Remoting: Service running ({0})</value>
   </data>
   <data name="RemotingMarshalService" xml:space="preserve">
     <value>Remoting: Marshalling "{0}" singleton object...</value>
@@ -162,19 +162,19 @@
   <data name="RemotingRegisterService" xml:space="preserve">
     <value>Remoting: Registering activated service "{0}"...</value>
   </data>
-  <data name="SerializationDone" xml:space="preserve">
-    <value>XmlSerializer: Success! Found {0:D} records for "{1}".</value>
-  </data>
-  <data name="ExceptionCaught" xml:space="preserve">
-    <value>Fatal: Application initialization failed, press any key to exit...</value>
-  </data>
-  <data name="RemotingEstablish" xml:space="preserve">
-    <value>Remoting: Establishing connection with {0} ({1})...</value>
-  </data>
   <data name="RemotingSubscribed" xml:space="preserve">
     <value>Remoting: Subscribed remote object {0}!</value>
   </data>
-  <data name="MessagingUpdateOrder" xml:space="preserve">
-    <value>Messaging: UpdateOrder("{0}", "{1}", "{2}")</value>
+  <data name="SerializationDone" xml:space="preserve">
+    <value>XmlSerializer: Success! Found {0:D} records for "{1}".</value>
+  </data>
+  <data name="SerializationRead" xml:space="preserve">
+    <value>XmlSerializer: Reading {0}...</value>
+  </data>
+  <data name="SerializationWrite" xml:space="preserve">
+    <value>XmlSerializer: Writing {0}...</value>
+  </data>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>Libretto Warehouse</value>
   </data>
 </root>

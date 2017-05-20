@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-using Libretto.Messaging;
 using Libretto.Model;
 
 namespace Libretto.Warehouse
@@ -10,7 +9,7 @@ namespace Libretto.Warehouse
     /// 
     /// </summary>
     [Serializable]
-    public class WarehouseOrder : IMessage
+    public class WarehouseOrder
     {
         /// <summary>
         /// 
@@ -71,15 +70,6 @@ namespace Libretto.Warehouse
             get;
             set;
         } = DateTime.Now;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="messageVisitor"></param>
-        public void Process(IMessageVisitor messageVisitor)
-        {
-            messageVisitor.InsertOrder(this);
-        }
 
         /// <summary>
         /// 

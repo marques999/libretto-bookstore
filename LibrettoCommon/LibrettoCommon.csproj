@@ -40,14 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Messaging\MessageUpdate.cs" />
     <Compile Include="Model\LoginTemplate.cs" />
     <Compile Include="Model\Clerk.cs" />
     <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\OrderTemplate.cs" />
     <Compile Include="Model\Response.cs" />
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="Warehouse\IRemotingService.cs" />
+    <Compile Include="Warehouse\IBookstoreRemoting.cs" />
     <Compile Include="Forms\FlatBadge.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -65,9 +64,7 @@
     </Compile>
     <Compile Include="EnumExtension.cs" />
     <Compile Include="LibrettoCommon.cs" />
-    <Compile Include="Messaging\IMessage.cs" />
-    <Compile Include="Messaging\IMessageVisitor.cs" />
-    <Compile Include="Messaging\MessagingCommon.cs" />
+    <Compile Include="MessagingCommon.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Permissions.cs" />
@@ -76,9 +73,8 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Messaging\MessageCancel.cs" />
     <Compile Include="Warehouse\WarehouseCommon.cs" />
-    <Compile Include="Warehouse\IWarehouseService.cs" />
+    <Compile Include="Warehouse\IWarehouseRemoting.cs" />
     <Compile Include="Warehouse\WarehouseIntermediate.cs" />
     <Compile Include="Warehouse\WarehouseOrder.cs" />
   </ItemGroup>

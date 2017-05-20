@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Security.Permissions;
 using System.ServiceModel;
 
-using Libretto.Messaging;
 using Libretto.Model;
 using Libretto.Warehouse;
 
@@ -244,7 +243,7 @@ namespace LibrettoWCF
 
             if (orderInformation.Status == Status.Waiting)
             {
-                LibrettoHost.WarehouseQueue.Send(new WarehouseOrder
+                LibrettoHost.WarehouseService.InsertOrder(new WarehouseOrder
                 {
                     Total = orderInformation.Total,
                     Identifier = orderInformation.Id,
@@ -272,12 +271,15 @@ namespace LibrettoWCF
         {
             var operationResult = LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
 
-            if (operationResult == Response.Success)
+            if (operationResult != Response.Success)
             {
-                _callback.OnDeleteTransaction(orderIdentifier);
+                return operationResult;
             }
 
-            return operationResult;
+            //_callback.OnDeleteTransaction(orderIdentifier);
+            LibrettoHost.WarehouseService.CancelOrder(orderIdentifier);
+
+            return Response.Success;
         }
 
         /// <summary>
@@ -309,14 +311,11 @@ namespace LibrettoWCF
 
             if (orderInformation.Status == Status.Cancelled)
             {
-                LibrettoHost.WarehouseQueue.Send(new MessageCancel
-                {
-                    Identifier = orderInformation.Id
-                });
+                LibrettoHost.WarehouseService.CancelOrder(orderInformation.Id);
             }
             else
             {
-                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
+                LibrettoHost.WarehouseService.UpdateOrder(orderInformation.Id, orderInformation.Quantity, orderInformation.Total);
             }
 
             //_callback.OnUpdateTransaction(orderInformation);

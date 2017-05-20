@@ -4,7 +4,6 @@ using System.Messaging;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-using Libretto.Messaging;
 using Libretto.Model;
 
 namespace Libretto

@@ -71,8 +71,8 @@ namespace Libretto.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to    _ _ _              _   _        
-        ///  | (_) |__  _ __ ___| |_| |_ ___  
-        ///  | | | &apos;_ \| &apos;__/ _ \ __| __/ _ \ 
+        ///  | (_) |__  _ __ ___| |_| |_ ___
+        ///  | | | &apos;_ \| &apos;__/ _ \ __| __/ _ \
         ///  | | | |_) | | |  __/ |_| || (_) |
         ///  |_|_|_.__/|_|  \___|\__|\__\___/
         ///  =========== warehouse ===========
@@ -94,7 +94,7 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Messaging: CancelOrder(&quot;{0}, {1:F}&quot;).
+        ///   Looks up a localized string similar to Messaging: CancelOrder(&quot;{0}&quot;).
         /// </summary>
         internal static string MessagingCancelOrder {
             get {
@@ -130,7 +130,7 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Messaging: UpdateOrder(&quot;{0}&quot;, &quot;{1:D}&quot;, &quot;{2:D}&quot;).
+        ///   Looks up a localized string similar to Messaging: UpdateOrder(&quot;{0}&quot;, &quot;{1}&quot;, &quot;{2}&quot;).
         /// </summary>
         internal static string MessagingUpdateOrder {
             get {
@@ -139,7 +139,7 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remoting: DispatchOrder(&quot;{0}&quot;, &quot;{1:F}&quot;).
+        ///   Looks up a localized string similar to Remoting: DispatchOrder(&quot;{0}&quot;).
         /// </summary>
         internal static string RemotingDispatchOrder {
             get {

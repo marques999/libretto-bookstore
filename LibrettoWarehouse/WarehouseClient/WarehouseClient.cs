@@ -21,7 +21,7 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private readonly IWarehouseService _warehouse;
+        private readonly IWarehouseRemoting _warehouse;
 
         /// <summary>
         /// 
@@ -41,7 +41,7 @@ namespace Libretto
             InitializeComponent();
             _warehouseIntermediate.OnDelete += OnDelete;
             _warehouseIntermediate.OnUpsert += OnUpsert;
-            _warehouse = (IWarehouseService)RemotingServices.Connect(typeof(IWarehouseService), WarehouseCommon.WarehouseAddress);
+            _warehouse = (IWarehouseRemoting)RemotingServices.Connect(typeof(IWarehouseRemoting), WarehouseCommon.WarehouseAddress);
             _warehouse.OnDelete += _warehouseIntermediate.Delete;
             _warehouse.OnUpsert += _warehouseIntermediate.Upsert;
         }
@@ -323,7 +323,7 @@ namespace Libretto
                 TypeFilterLevel = TypeFilterLevel.Full
             }), false);
 
-            RemotingConfiguration.RegisterActivatedServiceType(typeof(IWarehouseService));
+            RemotingConfiguration.RegisterActivatedServiceType(typeof(IWarehouseRemoting));
             Application.Run(new WarehouseClient());
         }
     }

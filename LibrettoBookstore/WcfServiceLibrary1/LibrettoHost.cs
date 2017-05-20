@@ -8,20 +8,18 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Serialization.Formatters;
 using System.ServiceModel;
 
-using Libretto.Messaging;
-using Libretto.Model;
+using Libretto;
 using Libretto.Warehouse;
 
-using LibrettoWCF.Database;
 using LibrettoWCF.Properties;
-using LibrettoWCF.Tools;
+using LibrettoWCF.WarehouseReference;
 
 namespace LibrettoWCF
 {
     /// <summary>
     /// 
     /// </summary>
-    public class LibrettoHost : MarshalByRefObject, IRemotingService
+    public class LibrettoHost
     {
         /// <summary>
         /// 
@@ -42,14 +40,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        public static MessageQueue WarehouseQueue
-        {
-            get;
-        } = MessagingCommon.InitializeWarehouseQueue();
-
-        /// <summary>
-        /// 
-        /// </summary>
         public static MessageQueue InvoiceQueue
         {
             get;
@@ -58,38 +48,12 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        /// <returns></returns>
-        public Response DispatchOrder(Guid transactionIdentifier)
-        {
-            try
-            {
-                Console.WriteLine(transactionIdentifier);
-            
-                var operationResult = LibrettoDatabase.OrderIntegration.UpdateStatus(transactionIdentifier, Status.Processing);
+        private static WarehouseServiceClient _warehouseProxy;
 
-                if (operationResult != Response.Success)
-                {
-                    return operationResult;
-                }
-
-                var order = LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier);
-
-                if (order == null)
-                {
-                    return Response.NotFound;
-                }
-
-                operationResult = LibrettoDatabase.BookIntegration.UpdateStock(order.BookId, -10);
-
-                return operationResult == Response.Success ? EmailClient.Instance.NotifyUpdate(LibrettoDatabase.OrderIntegration.Lookup(transactionIdentifier)) : operationResult;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return Response.DatabaseError;
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static WarehouseServiceClient WarehouseService => _warehouseProxy ?? (_warehouseProxy = new WarehouseServiceClient());
 
         /// <summary>
         /// 
@@ -115,15 +79,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        public LibrettoHost()
-        {
-            RemotingConfiguration.RegisterActivatedServiceType(typeof(IRemotingService));
-            RemotingServices.Marshal(this, WarehouseCommon.BookstoreEndpoint);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
@@ -144,8 +99,9 @@ namespace LibrettoWCF
 
             try
             {
-                new LibrettoHost();
                 Bookstore.Open();
+                RemotingConfiguration.RegisterActivatedServiceType(typeof(IBookstoreRemoting));
+                RemotingServices.Marshal(new BookstoreRemoting(), WarehouseCommon.BookstoreEndpoint);
                 LogMessage("IStoreService running on port {0:D}...", Bookstore.BaseAddresses.FirstOrDefault()?.Port);
                 Webstore.Open();
                 LogMessage("IWebstoreService running on port {0:D}...", Webstore.BaseAddresses.FirstOrDefault()?.Port);

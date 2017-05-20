@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Libretto.Warehouse" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Libretto.Warehouse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="WarehouseOrder">
+    <xs:sequence>
+      <xs:element name="_x003C_DateCreated_x003E_k__BackingField" type="xs:dateTime" />
+      <xs:element name="_x003C_DateModified_x003E_k__BackingField" type="xs:dateTime" />
+      <xs:element name="_x003C_Identifier_x003E_k__BackingField" type="ser:guid" />
+      <xs:element name="_x003C_Quantity_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_Title_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element name="_x003C_Total_x003E_k__BackingField" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WarehouseOrder" nillable="true" type="tns:WarehouseOrder" />
+</xs:schema>

@@ -276,7 +276,7 @@ namespace LibrettoWCF
 
             if (LibrettoDatabase.OrderIntegration.Insert(orderInformation) == Response.Success)
             {
-                LibrettoHost.WarehouseQueue.Send(WarehouseOrder.FromOrder(orderInformation));
+                LibrettoHost.WarehouseService.InsertOrder(WarehouseOrder.FromOrder(orderInformation));
                 LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.Id, orderInformation.Quantity);
             }
             else
@@ -312,6 +312,7 @@ namespace LibrettoWCF
         public List<Order> DeleteOrder(OrderId orderInformation)
         {
             SetDefaultHeaders();
+            LibrettoHost.WarehouseService.CancelOrder(Guid.Parse(orderInformation.Id));
             LibrettoDatabase.OrderIntegration.UpdateStatus(new Guid(orderInformation.Id), Status.Cancelled);
             return LibrettoDatabase.OrderIntegration.List();
         }
@@ -324,6 +325,7 @@ namespace LibrettoWCF
         public List<Order> UpdateOrder(Order orderInformation)
         {
             SetDefaultHeaders();
+            LibrettoHost.WarehouseService.UpdateOrder(orderInformation.Id, orderInformation.Quantity, orderInformation.Total);
             LibrettoDatabase.OrderIntegration.UpdateQuantity(orderInformation.Id, orderInformation.Quantity, orderInformation.Total);
             return LibrettoDatabase.OrderIntegration.List();
         }
