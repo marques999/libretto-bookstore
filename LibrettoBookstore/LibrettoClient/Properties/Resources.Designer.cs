@@ -79,6 +79,24 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to cancel the selected customer order(s)..
+        /// </summary>
+        internal static string CancelOrder {
+            get {
+                return ResourceManager.GetString("CancelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel Order(s).
+        /// </summary>
+        internal static string CancelOrder_Title {
+            get {
+                return ResourceManager.GetString("CancelOrder_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please confirm that you want to remove the selected book(s) from the system..
         /// </summary>
         internal static string DeleteBook {

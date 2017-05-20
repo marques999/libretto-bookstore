@@ -64,7 +64,7 @@ namespace Libretto.Forms
             this.buttonLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonRegister = new Libretto.Forms.FlatButton();
             this.buttonOrder = new Libretto.Forms.FlatButton();
-            this.buttonUpdate = new Libretto.Forms.FlatButton();
+            this.buttonCancel = new Libretto.Forms.FlatButton();
             this.buttonDelete = new Libretto.Forms.FlatButton();
             this.buttonManage = new Libretto.Forms.FlatButton();
             this.buttonLogout = new Libretto.Forms.FlatButton();
@@ -386,7 +386,7 @@ namespace Libretto.Forms
             // 
             this.buttonLayout.Controls.Add(this.buttonRegister);
             this.buttonLayout.Controls.Add(this.buttonOrder);
-            this.buttonLayout.Controls.Add(this.buttonUpdate);
+            this.buttonLayout.Controls.Add(this.buttonCancel);
             this.buttonLayout.Controls.Add(this.buttonDelete);
             this.buttonLayout.Controls.Add(this.buttonManage);
             this.buttonLayout.Controls.Add(this.buttonLogout);
@@ -424,19 +424,19 @@ namespace Libretto.Forms
             this.buttonOrder.UseVisualStyleBackColor = false;
             this.buttonOrder.Click += new System.EventHandler(this.ButtonOrder_Click);
             // 
-            // buttonUpdate
+            // buttonCancel
             // 
-            this.buttonUpdate.AutoSize = true;
-            this.buttonUpdate.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonUpdate.Location = new System.Drawing.Point(248, 3);
-            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(105, 28);
-            this.buttonUpdate.TabIndex = 2;
-            this.buttonUpdate.Text = "Update";
-            this.buttonUpdate.UseVisualStyleBackColor = false;
-            this.buttonUpdate.Click += new System.EventHandler(this.ButtonUpdate_Click);
+            this.buttonCancel.AutoSize = true;
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.Location = new System.Drawing.Point(248, 3);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(105, 28);
+            this.buttonCancel.TabIndex = 2;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonDelete
             // 
@@ -534,7 +534,7 @@ namespace Libretto.Forms
         private Panel buttonPanel;
         private FlowLayoutPanel buttonLayout;
         private FlatButton buttonOrder;
-        private FlatButton buttonUpdate;
+        private FlatButton buttonCancel;
         private FlatButton buttonDelete;
         private FlatButton buttonManage;
         private FlatButton buttonLogout;

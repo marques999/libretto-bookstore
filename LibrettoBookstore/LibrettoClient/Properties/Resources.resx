@@ -139,4 +139,10 @@
   <data name="DeleteBook_Title" xml:space="preserve">
     <value>Remove Book</value>
   </data>
+  <data name="CancelOrder" xml:space="preserve">
+    <value>Please confirm that you want to cancel the selected customer order(s).</value>
+  </data>
+  <data name="CancelOrder_Title" xml:space="preserve">
+    <value>Cancel Order(s)</value>
+  </data>
 </root>

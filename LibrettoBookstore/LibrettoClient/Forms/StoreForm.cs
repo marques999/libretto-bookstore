@@ -35,7 +35,7 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        private List<Customer> Customers
+        private IEnumerable<Customer> Customers
         {
             get;
         } = LibrettoClient.Instance.Proxy.ListCustomers();
@@ -89,49 +89,42 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ButtonUpdate_Click(object sender, EventArgs args)
+        private void ButtonCancel_Click(object sender, EventArgs args)
         {
-            var listItem = transactionList.SelectedItems[0];
-            var orderInformation = listItem?.Tag as Order;
-
-            if (orderInformation == null)
+            if (MessageBox.Show(this, Resources.CancelOrder, Resources.CancelOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             {
                 return;
             }
 
-            var orderForm = new OrderForm(orderInformation);
-
-            if (orderForm.ShowDialog(this) != DialogResult.OK)
+            foreach (ListViewItem listItem in transactionList.SelectedItems)
             {
-                return;
-            }
+                var orderInformation = listItem?.Tag as Order;
 
-            var operationResult = LibrettoClient.Instance.Proxy.UpdateOrder(orderForm.Information);
+                if (orderInformation == null)
+                {
+                    return;
+                }
 
-            if (operationResult == Response.Success)
-            {
-                UpdateOrder(listItem, orderForm.Information);
-            }
-            else
-            {
-                MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+                var operationResult = LibrettoClient.Instance.Proxy.CancelOrder(orderInformation.Id);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="listItem"></param>
-        /// <param name="orderInformation"></param>
-        private void UpdateOrder(ListViewItem listItem, Transaction orderInformation)
-        {
-            var previousIndex = listItem.Index;
+                if (operationResult == Response.Success)
+                {
+                    var previousIndex = listItem.Index;
 
-            transactionList.Items.Remove(listItem);
+                    transactionList.Items.Remove(listItem);
 
-            if (previousIndex >= 0)
-            {
-                transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
+                    if (previousIndex < 0)
+                    {
+                        return;
+                    }
+
+                    orderInformation.Status = Status.Cancelled;
+                    transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
+                }
+                else
+                {
+                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -183,8 +176,8 @@ namespace Libretto.Forms
         /// </summary>
         private void UpdateButtons()
         {
-            buttonUpdate.Enabled = transactionList.SelectedItems.Count == 1 && transactionList.SelectedItems[0].Tag is Order;
             buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
+            buttonCancel.Enabled = buttonDelete.Enabled && transactionList.SelectedItems[0].Tag is Order;
         }
 
         /// <summary>
@@ -243,7 +236,7 @@ namespace Libretto.Forms
             if (orderInformation == null)
             {
                 return;
-            }  
+            }
 
             var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
 
@@ -272,7 +265,12 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void OrdersList_DoubleClicked(object sender, MouseEventArgs args)
         {
-            ButtonUpdate_Click(sender, args);
+            switch (transactionList.SelectedItems[0]?.Tag)
+            {
+                case Order orderInformation:
+                    new OrderForm(orderInformation).ShowDialog(this);
+                    break;
+            }
         }
 
         /// <summary>

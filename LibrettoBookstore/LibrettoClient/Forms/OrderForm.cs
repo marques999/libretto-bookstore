@@ -49,8 +49,11 @@ namespace Libretto.Forms
             }
 
             bookTitle.SelectedIndex = bookIndex;
+            bookTitle.Enabled = false;
+            customerName.Enabled = false;
+            orderQuantity.Enabled = false;
+            customerNameButton.Enabled = false;
             UpdateBook(LibrettoClient.Instance.Books[bookIndex]);
-            ToggleRadio((int)orderInformation.Status);
         }
 
         /// <summary>
@@ -73,17 +76,6 @@ namespace Libretto.Forms
         {
             get;
         } = new Order();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="radioChecked"></param>
-        private void ToggleRadio(int radioChecked)
-        {
-            statusWaiting.Checked = radioChecked == 0;
-            statusProcessing.Checked = radioChecked == 1;
-            statusDispatched.Checked = radioChecked == 2;
-        }
 
         /// <summary>
         /// 
@@ -119,39 +111,41 @@ namespace Libretto.Forms
             orderQuantityInfo.Text = Convert.ToString(numberUnits);
 
             var remainingUnits = _bookInformation.Stock - numberUnits;
-            var purchaseTotal = _bookInformation.Price * numberUnits;
-
-            if (remainingUnits < 0)
+           
+            if (Information.Status == Status.Processing)
+            {           
+                statusProcessing.Checked = true;
+                bookStock.Text = Convert.ToString(remainingUnits);
+            }
+            else if (remainingUnits < 0)
             {
                 statusWaiting.Checked = true;
+                bookStock.Text = @"10";
+                Information.Status = Status.Waiting;
             }
             else
             {
-                statusProcessing.Checked = true;
+                statusDispatched.Checked = true;
+                bookStock.Text = Convert.ToString(remainingUnits);
+                Information.Status = Status.Dispatched;
             }
 
-            statusWaiting.Enabled = remainingUnits < 0;
-            statusProcessing.Enabled = statusDispatched.Enabled = !statusWaiting.Enabled;
-            bookStock.Text = Convert.ToString(remainingUnits);
+            var purchaseTotal = _bookInformation.Price * numberUnits;
+
+            statusWaiting.Enabled = Information.Status == Status.Waiting;
+            statusProcessing.Enabled = Information.Status == Status.Processing;
+            statusDispatched.Enabled = Information.Status != Status.Waiting;
             orderTotal.Text = LibrettoCommon.FormatDecimal(purchaseTotal);
             Information.Quantity = numberUnits;
             Information.Total = purchaseTotal;
-            if(remainingUnits >= 0)
-            {
-                Information.Status = Status.Processing;
-            }
-            else
-            {
-                Information.Status = Status.Waiting;
-            }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OrderQuantity_Scroll(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void OrderQuantity_Scroll(object sender, EventArgs args)
         {
             UpdateStock(orderQuantity.Value);
         }
@@ -238,8 +232,8 @@ namespace Libretto.Forms
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StatusDispatched_CheckedChanged(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void StatusDispatched_CheckedChanged(object sender, EventArgs args)
         {
             Information.Status = Status.Dispatched;
         }

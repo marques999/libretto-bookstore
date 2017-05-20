@@ -18,7 +18,7 @@ namespace Libretto.Model
         {
             get;
             set;
-        } = Status.Processing;
+        } = Status.Dispatched;
 
         /// <summary>
         /// 
@@ -30,7 +30,7 @@ namespace Libretto.Model
             set;
         } = DateTime.Now;
 
-                /// <summary>
+        /// <summary>
         /// 
         /// </summary>
         [NotMapped]
@@ -45,7 +45,7 @@ namespace Libretto.Model
         /// <returns></returns>
         public override bool Filter(bool waitingChecked, bool processingChecked, bool dispatchedChecked)
         {
-            return Status == Status.Waiting && waitingChecked || Status == Status.Processing && processingChecked || Status == Status.Dispatched && dispatchedChecked;
+            return Status == Status.Cancelled || Status == Status.Waiting && waitingChecked || Status == Status.Processing && processingChecked || Status == Status.Dispatched && dispatchedChecked;
         }
     }
 }
