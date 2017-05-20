@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
 using Libretto.Model;
+
+using LibrettoWCF.Model;
 
 namespace LibrettoWCF
 {
@@ -20,8 +21,6 @@ namespace LibrettoWCF
         [OperationContract]
         [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
         string GetOptions();
-
-        //----------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// 
@@ -44,43 +43,6 @@ namespace LibrettoWCF
                    ResponseFormat = WebMessageFormat.Json,
                    UriTemplate = "book/{id}")]
         Book GetBookById(string id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/books/add")]
-        List<Book> AddBook(Book bookInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "DELETE",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/books/delete")]
-        List<Book> DeleteBook(Book bookInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bookInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "PUT",
-                   ResponseFormat = WebMessageFormat.Json,
-                   UriTemplate = "/books/update")]
-        List<Book> UpdateBook(Book bookInformation);
-
-        // ----------------------------------------------------------------------------------------------
 
         /// <summary>
         /// 
@@ -130,32 +92,6 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "DELETE",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/customers/delete")]
-        List<Customer> DeleteCustomer(Customer customerInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "PUT",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/customers/update")]
-        List<Customer> UpdateCustomer(Customer customerInformation);
-
-        //---------------------------------------------------------------------------------------------------------
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -175,6 +111,11 @@ namespace LibrettoWCF
                     UriTemplate = "purchase/{id}")]
         Purchase GetPurchaseById(string id);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [OperationContract]
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
@@ -192,32 +133,6 @@ namespace LibrettoWCF
                    BodyStyle = WebMessageBodyStyle.Bare,
                    UriTemplate = "purchases/add")]
         string AddPurchase(OrderTemplate purchaseForm);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "purchases/delete")]
-        List<Purchase> DeletePurchase(PurchaseId purchaseInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "PUT",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/purchases/update")]
-        List<Purchase> UpdatePurchase(Purchase purchaseInformation);
-
-        //---------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// 
@@ -275,51 +190,5 @@ namespace LibrettoWCF
                     BodyStyle = WebMessageBodyStyle.Bare,
                     UriTemplate = "orders/delete")]
         List<Order> DeleteOrder(OrderId orderInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderInformation"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [WebInvoke(Method = "PUT",
-                   ResponseFormat = WebMessageFormat.Json,
-                   BodyStyle = WebMessageBodyStyle.Bare,
-                   UriTemplate = "/orders/update")]
-        List<Order> UpdateOrder(Order orderInformation);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [DataContract]
-    public class OrderId
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public string Id
-        {
-            get;
-            set;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [DataContract]
-    public class PurchaseId
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public string Id
-        {
-            get;
-            set;
-        }
     }
 }

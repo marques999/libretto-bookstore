@@ -15,23 +15,17 @@ namespace LibrettoWCF.WarehouseReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WarehouseReference.IWarehouseService")]
     public interface IWarehouseService {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/CancelOrder")]
-        void CancelOrder(System.Guid orderIdentifier);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/DeleteOrder")]
+        void DeleteOrder(System.Guid orderIdentifier);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/CancelOrder")]
-        System.Threading.Tasks.Task CancelOrderAsync(System.Guid orderIdentifier);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/DeleteOrder")]
+        System.Threading.Tasks.Task DeleteOrderAsync(System.Guid orderIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/InsertOrder")]
         void InsertOrder(Libretto.Warehouse.WarehouseOrder warehouseOrder);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/InsertOrder")]
         System.Threading.Tasks.Task InsertOrderAsync(Libretto.Warehouse.WarehouseOrder warehouseOrder);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/UpdateOrder")]
-        void UpdateOrder(System.Guid orderIdentifier, int orderQuantity, double orderTotal);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWarehouseService/UpdateOrder")]
-        System.Threading.Tasks.Task UpdateOrderAsync(System.Guid orderIdentifier, int orderQuantity, double orderTotal);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -61,12 +55,12 @@ namespace LibrettoWCF.WarehouseReference {
                 base(binding, remoteAddress) {
         }
         
-        public void CancelOrder(System.Guid orderIdentifier) {
-            base.Channel.CancelOrder(orderIdentifier);
+        public void DeleteOrder(System.Guid orderIdentifier) {
+            base.Channel.DeleteOrder(orderIdentifier);
         }
         
-        public System.Threading.Tasks.Task CancelOrderAsync(System.Guid orderIdentifier) {
-            return base.Channel.CancelOrderAsync(orderIdentifier);
+        public System.Threading.Tasks.Task DeleteOrderAsync(System.Guid orderIdentifier) {
+            return base.Channel.DeleteOrderAsync(orderIdentifier);
         }
         
         public void InsertOrder(Libretto.Warehouse.WarehouseOrder warehouseOrder) {
@@ -75,14 +69,6 @@ namespace LibrettoWCF.WarehouseReference {
         
         public System.Threading.Tasks.Task InsertOrderAsync(Libretto.Warehouse.WarehouseOrder warehouseOrder) {
             return base.Channel.InsertOrderAsync(warehouseOrder);
-        }
-        
-        public void UpdateOrder(System.Guid orderIdentifier, int orderQuantity, double orderTotal) {
-            base.Channel.UpdateOrder(orderIdentifier, orderQuantity, orderTotal);
-        }
-        
-        public System.Threading.Tasks.Task UpdateOrderAsync(System.Guid orderIdentifier, int orderQuantity, double orderTotal) {
-            return base.Channel.UpdateOrderAsync(orderIdentifier, orderQuantity, orderTotal);
         }
     }
 }

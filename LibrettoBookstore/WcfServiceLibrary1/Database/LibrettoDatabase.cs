@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 
 using Libretto.Model;
+
 using LibrettoWCF.Properties;
 
 namespace LibrettoWCF.Database
@@ -93,7 +94,7 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public virtual DbSet<Purchase> Purchases
+        public virtual DbSet<Order> Orders
         {
             get;
             set;
@@ -102,7 +103,7 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        public virtual DbSet<Order> Orders
+        public virtual DbSet<Purchase> Purchases
         {
             get;
             set;

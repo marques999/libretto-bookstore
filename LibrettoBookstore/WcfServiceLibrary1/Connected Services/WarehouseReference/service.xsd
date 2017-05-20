@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/Libretto.Warehouse" />
-  <xs:element name="CancelOrder">
+  <xs:element name="DeleteOrder">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="orderIdentifier" type="q1:guid" />
@@ -13,15 +13,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Libretto.Warehouse" minOccurs="0" name="warehouseOrder" nillable="true" type="q2:WarehouseOrder" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UpdateOrder">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="orderIdentifier" type="q3:guid" />
-        <xs:element minOccurs="0" name="orderQuantity" type="xs:int" />
-        <xs:element minOccurs="0" name="orderTotal" type="xs:double" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

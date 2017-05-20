@@ -15,43 +15,31 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Libretto.Warehouse" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IWarehouseService_CancelOrder_InputMessage">
-    <wsdl:part name="parameters" element="tns:CancelOrder" />
+  <wsdl:message name="IWarehouseService_DeleteOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteOrder" />
   </wsdl:message>
   <wsdl:message name="IWarehouseService_InsertOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertOrder" />
   </wsdl:message>
-  <wsdl:message name="IWarehouseService_UpdateOrder_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateOrder" />
-  </wsdl:message>
   <wsdl:portType name="IWarehouseService">
-    <wsdl:operation name="CancelOrder">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWarehouseService/CancelOrder" message="tns:IWarehouseService_CancelOrder_InputMessage" />
+    <wsdl:operation name="DeleteOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWarehouseService/DeleteOrder" message="tns:IWarehouseService_DeleteOrder_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="InsertOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IWarehouseService/InsertOrder" message="tns:IWarehouseService_InsertOrder_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateOrder">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWarehouseService/UpdateOrder" message="tns:IWarehouseService_UpdateOrder_InputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetMsmqBinding_IWarehouseService" type="tns:IWarehouseService">
     <wsp:PolicyReference URI="#NetMsmqBinding_IWarehouseService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/msmq" />
-    <wsdl:operation name="CancelOrder">
-      <soap12:operation soapAction="http://tempuri.org/IWarehouseService/CancelOrder" style="document" />
+    <wsdl:operation name="DeleteOrder">
+      <soap12:operation soapAction="http://tempuri.org/IWarehouseService/DeleteOrder" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="InsertOrder">
       <soap12:operation soapAction="http://tempuri.org/IWarehouseService/InsertOrder" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateOrder">
-      <soap12:operation soapAction="http://tempuri.org/IWarehouseService/UpdateOrder" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

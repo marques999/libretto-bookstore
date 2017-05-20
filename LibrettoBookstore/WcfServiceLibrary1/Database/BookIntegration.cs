@@ -85,24 +85,17 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response UpdateStock(Guid bookIdentifier, int quantity)
         {
-            var bookInformation = _context.Books.SingleOrDefault(bookInfo => bookInfo.Id == bookIdentifier);
-
-            if (bookInformation == null)
-            {
-                return Response.NotFound;
-            }
-
             try
             {
-                if (bookInformation.Stock >= quantity)
+                var bookInformation = _context.Books.SingleOrDefault(bookInfo => bookInfo.Id == bookIdentifier);
+
+                if (bookInformation == null)
                 {
-                    bookInformation.Stock -= quantity;
-                    _context.SaveChanges();
+                    return Response.NotFound;
                 }
-                else
-                {
-                    return Response.InvalidArguments;
-                }
+
+                bookInformation.Stock -= quantity;
+                _context.SaveChanges();
             }
             catch
             {
@@ -119,19 +112,18 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Update(Book bookInformation)
         {
-            var sqlEntity = _context.Books.SingleOrDefault(previousBook => previousBook.Id == bookInformation.Id);
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
-            sqlEntity.Price = bookInformation.Price;
-            sqlEntity.Stock = bookInformation.Stock;
-            sqlEntity.Title = bookInformation.Title;
-
             try
             {
+                var sqlEntity = _context.Books.SingleOrDefault(previousBook => previousBook.Id == bookInformation.Id);
+
+                if (sqlEntity == null)
+                {
+                    return Response.NotFound;
+                }
+
+                sqlEntity.Price = bookInformation.Price;
+                sqlEntity.Stock = bookInformation.Stock;
+                sqlEntity.Title = bookInformation.Title;
                 _context.SaveChanges();
             }
             catch
@@ -149,17 +141,17 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Delete(Guid bookIdentifier)
         {
-            var sqlEntity = _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
-
-            System.Diagnostics.Debug.Print(bookIdentifier.ToString("B"));
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
             try
             {
+                var sqlEntity = _context.Books.SingleOrDefault(bookInformation => bookInformation.Id == bookIdentifier);
+
+                System.Diagnostics.Debug.Print(bookIdentifier.ToString("B"));
+
+                if (sqlEntity == null)
+                {
+                    return Response.NotFound;
+                }
+
                 _context.Books.Remove(sqlEntity);
                 _context.SaveChanges();
             }

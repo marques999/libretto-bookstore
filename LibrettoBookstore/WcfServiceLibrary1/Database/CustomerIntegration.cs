@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Libretto.Model;
+using LibrettoWCF.Tools;
 
 namespace LibrettoWCF.Database
 {
@@ -83,6 +84,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (string.IsNullOrEmpty(customerInformation.Password) == false)
+                {
+                    customerInformation.Password = PasswordUtilities.Hash(customerInformation.Password);
+                }
+
                 _context.Customers.Add(customerInformation);
                 _context.SaveChanges();
             }
@@ -101,26 +107,6 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Update(Customer customerInformation)
         {
-            var sqlEntity = _context.Customers.SingleOrDefault(previousCustomer => previousCustomer.Id == customerInformation.Id);
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
-            sqlEntity.Name = customerInformation.Name;
-            sqlEntity.Email = customerInformation.Email;
-            sqlEntity.Location = customerInformation.Location;
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return Response.DatabaseError;
-            }
-
             return Response.Success;
         }
 
@@ -131,23 +117,6 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Delete(Guid customerIdentifier)
         {
-            var sqlEntity = _context.Customers.SingleOrDefault(customerInformation => customerInformation.Id == customerIdentifier);
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
-            try
-            {
-                _context.Customers.Remove(sqlEntity);
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return Response.DatabaseError;
-            }
-
             return Response.Success;
         }
     }

@@ -60,11 +60,11 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
-        public List<Purchase> List(Guid id)
+        public List<Purchase> List(Guid transactionIdentifier)
         {
-            return _context.Purchases.Where(elem => elem.CustomerId == id).ToList();
+            return _context.Purchases.Where(purchaseInformation => purchaseInformation.CustomerId == transactionIdentifier).ToList();
         }
 
         /// <summary>
@@ -76,15 +76,17 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                purchaseInformation.Timestamp = DateTime.Now;
                 _context.Purchases.Add(purchaseInformation);
                 _context.SaveChanges();
+                LibrettoHost.InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
             }
             catch
             {
                 return Response.DatabaseError;
             }
 
-            return Response.Success;
+            return LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
         }
 
         /// <summary>
@@ -94,25 +96,6 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Update(Purchase purchaseInformation)
         {
-            var sqlEntity = _context.Purchases.SingleOrDefault(previousPurchase => previousPurchase.Id == purchaseInformation.Id);
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
-            sqlEntity.Total = purchaseInformation.Total;
-            sqlEntity.Quantity = purchaseInformation.Quantity;
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return Response.DatabaseError;
-            }
-
             return Response.Success;
         }
 
@@ -123,15 +106,15 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Response Delete(Guid transactionIdentifier)
         {
-            var sqlEntity = _context.Purchases.SingleOrDefault(purchaseInformation => purchaseInformation.Id == transactionIdentifier);
-
-            if (sqlEntity == null)
-            {
-                return Response.NotFound;
-            }
-
             try
             {
+                var sqlEntity = _context.Purchases.SingleOrDefault(purchaseInformation => purchaseInformation.Id == transactionIdentifier);
+
+                if (sqlEntity == null)
+                {
+                    return Response.NotFound;
+                }
+
                 _context.Purchases.Remove(sqlEntity);
                 _context.SaveChanges();
             }

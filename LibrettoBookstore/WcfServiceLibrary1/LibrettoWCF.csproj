@@ -84,6 +84,8 @@
     <Compile Include="IWebstoreService.cs" />
     <Compile Include="Database\LibrettoDatabase.cs" />
     <Compile Include="LibrettoHost.cs" />
+    <Compile Include="Model\OrderId.cs" />
+    <Compile Include="Model\PurchaseId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -107,7 +109,9 @@
     <None Include="Connected Services\WarehouseReference\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LibrettoCommon\LibrettoCommon.csproj">
