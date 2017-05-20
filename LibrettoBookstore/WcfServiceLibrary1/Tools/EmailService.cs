@@ -67,6 +67,7 @@ namespace LibrettoWCF.Tools
         /// <param name="customerInformation"></param>
         /// <param name="emailSubject"></param>
         /// <param name="emailBody"></param>
+        /// <returns></returns>
         public bool Send(Customer customerInformation, string emailSubject, string emailBody)
         {
             try
@@ -81,9 +82,8 @@ namespace LibrettoWCF.Tools
                     To = { new MailAddress(customerInformation.Email, customerInformation.Name) }
                 }, customerInformation.Id);
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.Print(ex.StackTrace);
                 return false;
             }
 
@@ -105,13 +105,18 @@ namespace LibrettoWCF.Tools
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
+        public Response NotifyCancel(Order orderInformation)
+        {
+            return Response.Success;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
         public Response NotifyUpdate(Order orderInformation)
         {
-            if (orderInformation == null)
-            {
-                return Response.NotFound;
-            }
-
             var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
 
             if (customerInformation == null)
@@ -119,7 +124,7 @@ namespace LibrettoWCF.Tools
                 return Response.NotFound;
             }
 
-            return Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.BadRequest;
+            return Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.EmailFailure;
         }
     }
 }

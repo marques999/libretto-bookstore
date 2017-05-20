@@ -13,7 +13,15 @@ namespace LibrettoWCF.Tools
         /// 
         /// </summary>
         public const int SaltBytes = 24;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const int HashBytes = 18;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const int Pbkdf2Iterations = 64000;
 
         /// <summary>
