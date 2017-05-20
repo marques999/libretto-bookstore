@@ -6,72 +6,63 @@
       <Title>Dummy Book I</Title>
       <Quantity>10</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-05-16T18:49:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3308424+01:00</DateModified>
+      <Timestamp>2017-05-16T18:49:00</Timestamp>
     </Order>
     <Order>
       <Identifier>c7cc5d2e-14e3-4672-ad77-4d05fc94ba22</Identifier>
       <Title>Dummy Book A</Title>
       <Quantity>5</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-04-15T17:11:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-05-15T17:11:00</Timestamp>
     </Order>
     <Order>
       <Identifier>3dee75d9-add1-463a-8df2-8846b55aa551</Identifier>
       <Title>Dummy Book D</Title>
       <Quantity>8</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-04-05T16:29:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-05-05T16:29:00</Timestamp>
     </Order>
     <Order>
       <Identifier>bf26e5fc-5dba-4969-b8ea-8635ddfecbb0</Identifier>
       <Title>Dummy Book F</Title>
       <Quantity>12</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-04-21T18:39:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-04-21T18:39:00</Timestamp>
     </Order>
     <Order>
       <Identifier>0e48499c-708a-466e-8d69-52d67fa23368</Identifier>
       <Title>Dummy Book H</Title>
       <Quantity>34</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-05-06T00:12:00</DateCreated>
-      <DateModified>2017-05-12T17:36:51.4268971+01:00</DateModified>
+      <Timestamp>2017-05-06T00:12:00</Timestamp>
     </Order>
     <Order>
       <Identifier>db145a99-5483-480c-b631-36d703806b04</Identifier>
       <Title>Dummy Book C</Title>
       <Quantity>25</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-04-26T12:19:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-04-26T12:19:00</Timestamp>
     </Order>
     <Order>
       <Identifier>63641205-1527-4e44-8943-fdb4041ee31b</Identifier>
       <Title>Dummy Book B</Title>
       <Quantity>2</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-04-05T11:33:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-05-05T11:33:00</Timestamp>
     </Order>
     <Order>
       <Identifier>5d8b1093-ba17-4b03-852a-d36fcc82bd59</Identifier>
       <Title>Dummy Book H</Title>
       <Quantity>3</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-05-04T15:20:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-05-04T15:20:00</Timestamp>
     </Order>
     <Order>
       <Identifier>a641f70e-9884-4de9-829e-97c223e813b2</Identifier>
       <Title>Dummy Book A</Title>
       <Quantity>6</Quantity>
       <Total>0</Total>
-      <DateCreated>2017-05-19T13:07:00</DateCreated>
-      <DateModified>2017-05-11T19:57:25.3328472+01:00</DateModified>
+      <Timestamp>2017-05-19T13:07:00</Timestamp>
     </Order>
   </OrderList>
 </Warehouse>
