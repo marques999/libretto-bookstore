@@ -3,10 +3,9 @@
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="WarehouseOrder">
     <xs:sequence>
-      <xs:element name="_x003C_DateCreated_x003E_k__BackingField" type="xs:dateTime" />
-      <xs:element name="_x003C_DateModified_x003E_k__BackingField" type="xs:dateTime" />
       <xs:element name="_x003C_Identifier_x003E_k__BackingField" type="ser:guid" />
       <xs:element name="_x003C_Quantity_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_Timestamp_x003E_k__BackingField" type="xs:dateTime" />
       <xs:element name="_x003C_Title_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_Total_x003E_k__BackingField" type="xs:double" />
     </xs:sequence>

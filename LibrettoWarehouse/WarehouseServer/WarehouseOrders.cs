@@ -36,29 +36,6 @@ namespace Libretto
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        /// <param name="orderQuantity"></param>
-        /// <param name="orderTotal"></param>
-        /// <returns></returns>
-        public WarehouseOrder Update(Guid transactionIdentifier, int orderQuantity, double orderTotal)
-        {
-            var transactionInformation = Orders.Find(orderInformation => orderInformation.Identifier == transactionIdentifier);
-
-            if (transactionInformation == null)
-            {
-                return null;
-            }
-
-            transactionInformation.Total = orderTotal;
-            transactionInformation.Quantity = orderQuantity;
-            transactionInformation.DateModified = DateTime.Now;
-
-            return transactionInformation;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
         /// <returns></returns>
         public bool Delete(Guid transactionIdentifier)
         {

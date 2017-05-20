@@ -72,25 +72,6 @@ namespace Libretto
         /// 
         /// </summary>
         /// <param name="orderIdentifier"></param>
-        /// <param name="orderQuantity"></param>
-        /// <param name="orderTotal"></param>
-        public static void UpdateOrder(Guid orderIdentifier, int orderQuantity, double orderTotal)
-        {
-            var orderInformation = _orders.Update(orderIdentifier, orderQuantity, orderTotal);
-
-            if (orderInformation == null)
-            {
-                return;
-            }
-
-            _warehouseRemoting.InvokeUpsert(orderInformation);
-            SerializeTransactions();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="orderIdentifier"></param>
         public static void DeleteOrder(Guid orderIdentifier)
         {
             if (_orders.Delete(orderIdentifier))

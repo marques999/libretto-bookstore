@@ -163,8 +163,8 @@ namespace Libretto
         private bool FilterOrder(WarehouseOrder orderInformation)
         {
             return (string.IsNullOrEmpty(filterTitle.Text) || filterTitle.Text == orderInformation.Title)
-                && (dateFromPicker.Checked == false || orderInformation.DateCreated > dateFromPicker.Value)
-                && (dateUntilPicker.Checked == false || orderInformation.DateCreated < dateUntilPicker.Value);
+                && (dateFromPicker.Checked == false || orderInformation.Timestamp > dateFromPicker.Value)
+                && (dateUntilPicker.Checked == false || orderInformation.Timestamp < dateUntilPicker.Value);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Libretto
         /// <returns></returns>
         private static ListViewItem ParseTransaction(WarehouseOrder transactionInformation)
         {
-            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.DateCreated))
+            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
             {
                 Name = LibrettoCommon.FormatGuid(transactionInformation.Identifier),
                 SubItems =
@@ -182,8 +182,7 @@ namespace Libretto
                     LibrettoCommon.FormatGuid(transactionInformation.Identifier),
                     transactionInformation.Title,
                     Convert.ToString(transactionInformation.Quantity),
-                    LibrettoCommon.FormatCurrency(transactionInformation.Total),
-                    LibrettoCommon.FormatDate(transactionInformation.DateModified),
+                    LibrettoCommon.FormatCurrency(transactionInformation.Total)
                 }
             };
         }

@@ -54,7 +54,6 @@ namespace Libretto
             columnTitle = new ColumnHeader();
             columnQuantity = new ColumnHeader();
             columnTotal = new ColumnHeader();
-            columnLast = new ColumnHeader();
             transactionsPanel = new Panel();
             transactionsLabel = new FlatHeader();
             buttonPanel = new Panel();
@@ -194,7 +193,7 @@ namespace Libretto
             // listView
             // 
             listView.BackColor = SystemColors.ControlLight;
-            listView.Columns.AddRange(new ColumnHeader[] { columnDate, columnIdentifier, columnTitle, columnQuantity, columnTotal, columnLast });
+            listView.Columns.AddRange(new ColumnHeader[] { columnDate, columnIdentifier, columnTitle, columnQuantity, columnTotal });
             listView.Dock = DockStyle.Fill;
             listView.FullRowSelect = true;
             listView.GridLines = true;
@@ -213,18 +212,15 @@ namespace Libretto
             columnDate.TextAlign = HorizontalAlignment.Center;
             columnDate.Width = 100;
             columnIdentifier.Text = "Identifier";
-            columnIdentifier.Width = 232;
+            columnIdentifier.Width = 240;
             columnTitle.Text = "Title";
-            columnTitle.Width = 116;
+            columnTitle.Width = 168;
             columnQuantity.Text = "Quantity";
             columnQuantity.TextAlign = HorizontalAlignment.Center;
             columnQuantity.Width = 64;
             columnTotal.Text = "Total";
             columnTotal.TextAlign = HorizontalAlignment.Center;
             columnTotal.Width = 80;
-            columnLast.Text = "Last Update";
-            columnLast.TextAlign = HorizontalAlignment.Center;
-            columnLast.Width = 100;
             // 
             // transactionsPanel
             // 
@@ -324,7 +320,6 @@ namespace Libretto
         private Panel transactionsPanel;
         private FlatHeader transactionsLabel;
         private ColumnHeader columnDate;
-        private ColumnHeader columnLast;
         private ColumnHeader columnTitle;
         private ColumnHeader columnTotal;
         private ColumnHeader columnQuantity;

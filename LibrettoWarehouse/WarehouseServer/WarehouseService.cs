@@ -35,9 +35,7 @@ namespace Libretto
         {
             try
             {
-                warehouseOrder.DateCreated = DateTime.Now;
-                warehouseOrder.DateModified = warehouseOrder.DateCreated;
-                WarehouseLogger.LogMessage(Resources.MessagingInsertOrder, warehouseOrder.Identifier, warehouseOrder.Title, warehouseOrder.DateCreated);
+                WarehouseLogger.LogMessage(Resources.MessagingInsertOrder, warehouseOrder.Identifier, warehouseOrder.Title, warehouseOrder.Timestamp);
                 WarehouseServer.InsertOrder(warehouseOrder);
             }
             catch (Exception ex)

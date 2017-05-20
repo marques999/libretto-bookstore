@@ -4,6 +4,7 @@ using System.Linq;
 
 using Libretto.Model;
 using Libretto.Warehouse;
+
 using LibrettoWCF.Tools;
 
 namespace LibrettoWCF.Database
@@ -110,15 +111,7 @@ namespace LibrettoWCF.Database
 
                 if (transactionInformation.Status == Status.Waiting)
                 {
-                    LibrettoHost.WarehouseService.InsertOrder(new WarehouseOrder
-                    {
-                        Total = transactionInformation.Total,
-                        Identifier = transactionInformation.Id,
-                        Title = transactionInformation.BookTitle,
-                        Quantity = transactionInformation.Quantity + 10,
-                        DateCreated = transactionInformation.Timestamp,
-                        DateModified = transactionInformation.StatusTimestamp
-                    });
+                    LibrettoHost.WarehouseService.InsertOrder(WarehouseOrder.FromOrder(transactionInformation));
                 }
                 else
                 {
@@ -151,10 +144,11 @@ namespace LibrettoWCF.Database
 
                 if (sqlEntity.Status == Status.Cancelled)
                 {
-                    return Response.Success;
+                    return Response.BadRequest;
                 }
 
                 var currentTimestamp = DateTime.Now;
+                var deleteOrder = sqlEntity.Status == Status.Waiting;
                 var dayStart = sqlEntity.StatusTimestamp.AddHours(-sqlEntity.StatusTimestamp.Hour);
 
                 if (sqlEntity.Status != Status.Waiting && currentTimestamp >= dayStart)
@@ -166,7 +160,7 @@ namespace LibrettoWCF.Database
                 sqlEntity.StatusTimestamp = DateTime.Now;
                 _context.SaveChanges();
 
-                if (sqlEntity.Status == Status.Waiting)
+                if (deleteOrder)
                 {
                     LibrettoHost.WarehouseService.DeleteOrder(transactionIdentifier);
                 }
@@ -199,7 +193,7 @@ namespace LibrettoWCF.Database
 
                 if (sqlEntity.Status == transactionStatus)
                 {
-                    return Response.Success;
+                    return Response.BadRequest;
                 }
 
                 if (transactionStatus < sqlEntity.Status || transactionStatus == Status.Cancelled || sqlEntity.Status > Status.Processing)

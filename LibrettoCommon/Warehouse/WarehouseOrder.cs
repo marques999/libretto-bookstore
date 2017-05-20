@@ -54,18 +54,8 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        [XmlElement("DateCreated")]
-        public DateTime DateCreated
-        {
-            get;
-            set;
-        } = DateTime.Now;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [XmlElement("DateModified")]
-        public DateTime DateModified
+        [XmlElement("Timestamp")]
+        public DateTime Timestamp
         {
             get;
             set;
@@ -84,8 +74,7 @@ namespace Libretto.Warehouse
                 Identifier = orderInformation.Id,
                 Title = orderInformation.BookTitle,
                 Quantity = orderInformation.Quantity,
-                DateCreated = orderInformation.Timestamp,
-                DateModified = orderInformation.StatusTimestamp
+                Timestamp = orderInformation.Timestamp,
             };
         }
     }
