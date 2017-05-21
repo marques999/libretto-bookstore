@@ -18,7 +18,7 @@ namespace LibrettoWCF.Tools
         /// </summary>
         private EmailClient()
         {
-            _smtp = new SmtpClient("smtp.gmail.com", 587)
+            _smtp = new SmtpClient(LibrettoCommon.SmtpServer, 587)
             {
                 EnableSsl = true,
                 UseDefaultCredentials = false,
@@ -29,20 +29,7 @@ namespace LibrettoWCF.Tools
 
             _smtp.SendCompleted += (sender, args) =>
             {
-                var emailData = args.UserState as MailMessage;
-
-                if (emailData == null)
-                {
-                    Console.WriteLine(@"[Mailer] Received wrong format!");
-                }
-                else if (args.Error == null)
-                {
-                    Console.WriteLine(@"[Mailer] Email successfully sended!");
-                }
-                else
-                {
-                    Console.WriteLine(@"[Mailer] Error while sending email...");
-                }
+                Console.WriteLine(args.Error == null ? @"[Mailer] Email successfully sent!" : @"[Mailer] Error sending email...");
             };
         }
 
@@ -97,7 +84,23 @@ namespace LibrettoWCF.Tools
         /// <returns></returns>
         public Response NotifyInsert(Order orderInformation)
         {
-            return Response.Success;
+            var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
+
+            if (customerInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            return Send(customerInformation, $"Order {orderInformation.Id:B}", $@"
+BookId: {orderInformation.BookId}
+BookTitle: {orderInformation.BookId}
+CustomerId: {orderInformation.CustomerId}
+CustomerName: {orderInformation.CustomerName}
+Quantity: {orderInformation.Quantity}
+Total: {LibrettoCommon.FormatCurrency(orderInformation.Total)}
+Timestamp: {LibrettoCommon.FormatDate(orderInformation.Timestamp)}
+Status: {orderInformation.Status.GetDescription()}
+StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}") ? Response.Success : Response.EmailFailure;
         }
 
         /// <summary>
@@ -107,7 +110,18 @@ namespace LibrettoWCF.Tools
         /// <returns></returns>
         public Response NotifyCancel(Order orderInformation)
         {
-            return Response.Success;
+            var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
+
+            if (customerInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            return Send(
+                customerInformation,
+                $"Order {orderInformation.Id:B} Status: Cancelled",
+                $"StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}"
+            ) ? Response.Success : Response.EmailFailure;
         }
 
         /// <summary>
@@ -124,7 +138,11 @@ namespace LibrettoWCF.Tools
                 return Response.NotFound;
             }
 
-            return Send(customerInformation, $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}", "qwerty") ? Response.Success : Response.EmailFailure;
+            return Send(
+                customerInformation,
+                $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}",
+                $"StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}"
+            ) ? Response.Success : Response.EmailFailure;
         }
     }
 }

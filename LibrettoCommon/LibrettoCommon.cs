@@ -18,6 +18,11 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
+        public static readonly string SmtpServer = "smtp.gmail.com";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string EmailPassword = "feupTDIN1617";
 
         /// <summary>
