@@ -276,18 +276,18 @@ namespace Libretto.Forms
             columnDate.Text = "Date";
             columnDate.Width = 100;
             columnTitle.Text = "Title";
-            columnTitle.Width = 200;
+            columnTitle.Width = 182;
             columnCustomer.Text = "Customer";
-            columnCustomer.Width = 150;
+            columnCustomer.Width = 130;
             columnQuantity.Text = "Quantity";
             columnQuantity.TextAlign = HorizontalAlignment.Center;
-            columnQuantity.Width = 64;
+            columnQuantity.Width = 60;
             columnTotal.Text = "Total";
             columnTotal.TextAlign = HorizontalAlignment.Center;
             columnTotal.Width = 80;
             columnStatus.Text = "Status";
             columnStatus.TextAlign = HorizontalAlignment.Center;
-            columnStatus.Width = 96;
+            columnStatus.Width = 140;
             //
             // ordersPanel
             //

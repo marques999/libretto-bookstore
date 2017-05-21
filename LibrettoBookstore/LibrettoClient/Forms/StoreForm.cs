@@ -133,6 +133,27 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
+        private static ListViewItem ParseTransaction(Order transactionInformation)
+        {
+            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
+            {
+                Tag = transactionInformation,
+                SubItems =
+                {
+                    transactionInformation.BookTitle,
+                    transactionInformation.CustomerName,
+                    Convert.ToString(transactionInformation.Quantity),
+                    LibrettoCommon.FormatCurrency(transactionInformation.Total),
+                    $"{transactionInformation.Description} ({transactionInformation.StatusTimestamp.ToShortDateString()})"
+                }
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
+        /// <returns></returns>
         private static ListViewItem ParseTransaction(Transaction transactionInformation)
         {
             return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
