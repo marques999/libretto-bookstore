@@ -27,9 +27,10 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ButtonLogout_Click(object sender, EventArgs args)
+        private void ButtonRefresh_Click(object sender, EventArgs args)
         {
-            Close();
+            LibrettoClient.Instance.RefreshTransactions();
+            UpdateFilter();
         }
 
         /// <summary>
