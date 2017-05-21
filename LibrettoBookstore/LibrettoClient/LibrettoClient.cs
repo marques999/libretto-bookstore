@@ -192,10 +192,19 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerInformation"></param>
-        public void OnRegisterCustomer(Customer customerInformation)
+        /// <param name="transactionIdentifier"></param>
+        public void OnCancelOrder(Guid transactionIdentifier)
         {
-            System.Diagnostics.Debug.Print("OnRegisterCustomer()");
+            System.Diagnostics.Debug.Print("OnCancelOrder()");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        public void OnDispatchOrder(Guid transactionIdentifier)
+        {
+            System.Diagnostics.Debug.Print("OnDispatchOrder()");
         }
 
         /// <summary>
@@ -206,23 +215,5 @@ namespace Libretto
         {
             System.Diagnostics.Debug.Print("OnRegisterTransaction()");
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        public void OnUpdateTransaction(Transaction purchaseInformation)
-        {
-            System.Diagnostics.Debug.Print("OnUpdateTransaction()");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        public void OnDeleteTransaction(Guid transactionIdentifier)
-        {
-            System.Diagnostics.Debug.Print("OnDeleteTransaction()");
-        }        
     }
 }

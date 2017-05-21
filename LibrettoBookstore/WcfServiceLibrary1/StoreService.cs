@@ -47,11 +47,11 @@ namespace LibrettoWCF
             }
         }
 
-        public static void NotifyTransaction(Transaction transactionId)
+        public static void NotifyDispatchOrder(Guid transactionId)
         {
             subscribers.ForEach(delegate (IStoreCallbacks callback) {
                 if (((ICommunicationObject)callback).State == CommunicationState.Opened)
-                    callback.OnUpdateTransaction(transactionId);
+                    callback.OnDispatchOrder(transactionId);
                 else
                     subscribers.Remove(callback);
             });
@@ -231,7 +231,7 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response DeleteOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
+            return LibrettoDatabase.OrderIntegration.Delete(orderIdentifier);
         }
 
         /// <summary>
@@ -249,12 +249,11 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <param name="orderIdentifier"></param>
-        /// <param name="orderStatus"></param>
         /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response UpdateOrder(Guid orderIdentifier, Status orderStatus)
+        public Response DispatchOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Update(orderIdentifier, orderStatus, DateTime.Now);
+            return LibrettoDatabase.OrderIntegration.Dispatch(orderIdentifier);
         }
     }
 }

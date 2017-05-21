@@ -149,16 +149,15 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderInformation"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        [OperationContract] Response InsertOrder(Order orderInformation);
+        [OperationContract] Response DispatchOrder(Guid orderIdentifier);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderIdentifier"></param>
-        /// <param name="orderTimestamp"></param>
+        /// <param name="orderInformation"></param>
         /// <returns></returns>
-        [OperationContract] Response UpdateOrder(Guid orderIdentifier, Status orderTimestamp);
+        [OperationContract] Response InsertOrder(Order orderInformation);
     }
 }

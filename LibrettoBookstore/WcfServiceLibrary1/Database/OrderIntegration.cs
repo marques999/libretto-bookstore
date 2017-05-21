@@ -30,13 +30,13 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Order Lookup(Guid transactionIdentifier)
+        public Order Lookup(Guid orderIdentifier)
         {
             try
             {
-                return _context.Orders.SingleOrDefault(transactionInformation => transactionInformation.Id == transactionIdentifier);
+                return _context.Orders.SingleOrDefault(transactionInformation => transactionInformation.Id == orderIdentifier);
             }
             catch
             {
@@ -63,13 +63,13 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public List<Order> List(Guid transactionIdentifier)
+        public List<Order> List(Guid orderIdentifier)
         {
             try
             {
-                return _context.Orders.Where(orderInformation => orderInformation.CustomerId == transactionIdentifier).ToList();
+                return _context.Orders.Where(orderInformation => orderInformation.CustomerId == orderIdentifier).ToList();
             }
             catch
             {
@@ -80,45 +80,50 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionInformation"></param>
+        /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response Insert(Order transactionInformation)
+        public Response Insert(Order orderInformation)
         {
             try
             {
-                var bookInformation = LibrettoDatabase.BookIntegration.Lookup(transactionInformation.BookId);
+                if (orderInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
+                var bookInformation = LibrettoDatabase.BookIntegration.Lookup(orderInformation.BookId);
 
                 if (bookInformation == null)
                 {
                     return Response.NotFound;
                 }
 
-                transactionInformation.Timestamp = DateTime.Now;
+                orderInformation.Timestamp = DateTime.Now;
 
-                if (transactionInformation.Quantity > bookInformation.Stock)
+                if (orderInformation.Quantity > bookInformation.Stock)
                 {
-                    transactionInformation.Status = Status.Waiting;
-                    transactionInformation.StatusTimestamp = transactionInformation.Timestamp;
+                    orderInformation.Status = Status.Waiting;
+                    orderInformation.StatusTimestamp = orderInformation.Timestamp;
                 }
                 else
                 {
-                    transactionInformation.Status = Status.Dispatched;
-                    transactionInformation.StatusTimestamp = DateTime.Now.AddDays(1);
+                    orderInformation.Status = Status.Dispatched;
+                    orderInformation.StatusTimestamp = DateTime.Now.AddDays(1);
                 }
 
-                _context.Orders.Add(transactionInformation);
+                _context.Orders.Add(orderInformation);
                 _context.SaveChanges();
 
-                if (transactionInformation.Status == Status.Waiting)
+                if (orderInformation.Status == Status.Waiting)
                 {
-                    LibrettoHost.WarehouseService.InsertOrder(WarehouseOrder.FromOrder(transactionInformation));
+                    LibrettoHost.WarehouseService.InsertOrder(WarehouseOrder.FromOrder(orderInformation));
                 }
                 else
                 {
-                    LibrettoDatabase.BookIntegration.UpdateStock(transactionInformation.BookId, transactionInformation.Quantity);
+                    LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, -orderInformation.Quantity);
                 }
 
-                return EmailClient.Instance.NotifyInsert(transactionInformation);
+                return EmailClient.Instance.NotifyInsert(orderInformation);
             }
             catch
             {
@@ -129,40 +134,37 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Response Cancel(Guid transactionIdentifier)
+        public Response Cancel(Guid orderIdentifier)
         {
             try
             {
-                var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == transactionIdentifier);
+                var sqlEntity = _context.Orders.SingleOrDefault(previousTransaction => previousTransaction.Id == orderIdentifier);
 
                 if (sqlEntity == null)
                 {
                     return Response.NotFound;
                 }
 
-                if (sqlEntity.Status == Status.Cancelled)
+                if (sqlEntity.Status > Status.Pending)
                 {
                     return Response.BadRequest;
                 }
 
-                var currentTimestamp = DateTime.Now;
-                var deleteOrder = sqlEntity.Status == Status.Waiting;
-                var dayStart = sqlEntity.StatusTimestamp.AddHours(-sqlEntity.StatusTimestamp.Hour);
-
-                if (sqlEntity.Status != Status.Waiting && currentTimestamp >= dayStart)
-                {
-                    return Response.BadRequest;
-                }
+                var statusWaiting = sqlEntity.Status == Status.Waiting;
 
                 sqlEntity.Status = Status.Cancelled;
                 sqlEntity.StatusTimestamp = DateTime.Now;
                 _context.SaveChanges();
 
-                if (deleteOrder)
+                if (statusWaiting)
                 {
-                    LibrettoHost.WarehouseService.DeleteOrder(transactionIdentifier);
+                    LibrettoHost.WarehouseService.DeleteOrder(orderIdentifier);
+                }
+                else if (LibrettoDatabase.BookIntegration.UpdateStock(sqlEntity.BookId, 10 + sqlEntity.Quantity) != Response.Success)
+                {
+                    return Response.DatabaseError;
                 }
 
                 return EmailClient.Instance.NotifyCancel(sqlEntity);
@@ -176,46 +178,29 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        /// <param name="transactionStatus"></param>
-        /// <param name="transactionTimestamp"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Response Update(Guid transactionIdentifier, Status transactionStatus, DateTime transactionTimestamp)
+        public Response Satisfy(Guid orderIdentifier)
         {
             try
             {
-                var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == transactionIdentifier);
+                var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
                 if (sqlEntity == null)
                 {
                     return Response.NotFound;
                 }
 
-                if (sqlEntity.Status == transactionStatus)
+                if (sqlEntity.Status != Status.Waiting)
                 {
                     return Response.BadRequest;
                 }
 
-                if (transactionStatus < sqlEntity.Status || transactionStatus == Status.Cancelled || sqlEntity.Status > Status.Processing)
-                {
-                    return Response.BadRequest;
-                }
-
-                sqlEntity.Status = transactionStatus;
-                sqlEntity.StatusTimestamp = transactionTimestamp;
+                sqlEntity.Status = Status.Pending;
+                sqlEntity.StatusTimestamp = DateTime.Now.AddDays(2);
                 _context.SaveChanges();
 
-                if (transactionStatus != Status.Waiting)
-                {
-                    LibrettoHost.WarehouseService.DeleteOrder(transactionIdentifier);
-                }
-
-                if (transactionStatus == Status.Processing && LibrettoDatabase.BookIntegration.UpdateStock(sqlEntity.BookId, -10) != Response.Success)
-                {
-                    return Response.DatabaseError;
-                }
-
-                return EmailClient.Instance.NotifyUpdate(sqlEntity);
+                return EmailClient.Instance.NotifyPending(sqlEntity);
             }
             catch
             {
@@ -226,13 +211,51 @@ namespace LibrettoWCF.Database
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Response DeleteOrder(Guid transactionIdentifier)
+        public Response Dispatch(Guid orderIdentifier)
         {
             try
             {
-                var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == transactionIdentifier);
+                var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
+
+                if (sqlEntity == null)
+                {
+                    return Response.NotFound;
+                }
+
+                if (sqlEntity.Status != Status.Pending)
+                {
+                    return Response.BadRequest;
+                }
+
+                sqlEntity.Status = Status.Dispatched;
+                sqlEntity.StatusTimestamp = DateTime.Now;
+                _context.SaveChanges();
+
+                if (LibrettoDatabase.BookIntegration.UpdateStock(sqlEntity.BookId, 10) != Response.Success)
+                {
+                    return Response.DatabaseError;
+                }
+
+                return EmailClient.Instance.NotifyDispatch(sqlEntity);
+            }
+            catch
+            {
+                return Response.DatabaseError;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderIdentifier"></param>
+        /// <returns></returns>
+        public Response Delete(Guid orderIdentifier)
+        {
+            try
+            {
+                var sqlEntity = _context.Orders.SingleOrDefault(orderInformation => orderInformation.Id == orderIdentifier);
 
                 if (sqlEntity == null)
                 {
@@ -244,7 +267,7 @@ namespace LibrettoWCF.Database
 
                 if (sqlEntity.Status == Status.Waiting)
                 {
-                    LibrettoHost.WarehouseService.DeleteOrder(transactionIdentifier);
+                    LibrettoHost.WarehouseService.DeleteOrder(orderIdentifier);
                 }
 
                 return EmailClient.Instance.NotifyCancel(sqlEntity);

@@ -117,37 +117,32 @@ namespace Libretto.StoreService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DeleteOrder", ReplyAction="http://tempuri.org/IStoreService/DeleteOrderResponse")]
         System.Threading.Tasks.Task<Libretto.Model.Response> DeleteOrderAsync(System.Guid orderIdentifier);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DispatchOrder", ReplyAction="http://tempuri.org/IStoreService/DispatchOrderResponse")]
+        Libretto.Model.Response DispatchOrder(System.Guid orderIdentifier);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/DispatchOrder", ReplyAction="http://tempuri.org/IStoreService/DispatchOrderResponse")]
+        System.Threading.Tasks.Task<Libretto.Model.Response> DispatchOrderAsync(System.Guid orderIdentifier);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
         Libretto.Model.Response InsertOrder(Libretto.Model.Order orderInformation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/InsertOrder", ReplyAction="http://tempuri.org/IStoreService/InsertOrderResponse")]
         System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.Order orderInformation);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        Libretto.Model.Response UpdateOrder(System.Guid orderIdentifier, Libretto.Model.Status orderTimestamp);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStoreService/UpdateOrder", ReplyAction="http://tempuri.org/IStoreService/UpdateOrderResponse")]
-        System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(System.Guid orderIdentifier, Libretto.Model.Status orderTimestamp);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IStoreServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnRegisterCustomer")]
-        void OnRegisterCustomer(Libretto.Model.Customer customerInformation);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnCancelOrder")]
+        void OnCancelOrder(System.Guid transactionIdentifier);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnDispatchOrder")]
+        void OnDispatchOrder(System.Guid transactionIdentifier);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnRegisterTransaction")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Order))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Purchase))]
         void OnRegisterTransaction(Libretto.Model.Transaction purchaseInformation);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnUpdateTransaction")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Order))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Libretto.Model.Purchase))]
-        void OnUpdateTransaction(Libretto.Model.Transaction purchaseInformation);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IStoreService/OnDeleteTransaction")]
-        void OnDeleteTransaction(System.Guid transactionIdentifier);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -314,20 +309,20 @@ namespace Libretto.StoreService {
             return base.Channel.DeleteOrderAsync(orderIdentifier);
         }
         
+        public Libretto.Model.Response DispatchOrder(System.Guid orderIdentifier) {
+            return base.Channel.DispatchOrder(orderIdentifier);
+        }
+        
+        public System.Threading.Tasks.Task<Libretto.Model.Response> DispatchOrderAsync(System.Guid orderIdentifier) {
+            return base.Channel.DispatchOrderAsync(orderIdentifier);
+        }
+        
         public Libretto.Model.Response InsertOrder(Libretto.Model.Order orderInformation) {
             return base.Channel.InsertOrder(orderInformation);
         }
         
         public System.Threading.Tasks.Task<Libretto.Model.Response> InsertOrderAsync(Libretto.Model.Order orderInformation) {
             return base.Channel.InsertOrderAsync(orderInformation);
-        }
-        
-        public Libretto.Model.Response UpdateOrder(System.Guid orderIdentifier, Libretto.Model.Status orderTimestamp) {
-            return base.Channel.UpdateOrder(orderIdentifier, orderTimestamp);
-        }
-        
-        public System.Threading.Tasks.Task<Libretto.Model.Response> UpdateOrderAsync(System.Guid orderIdentifier, Libretto.Model.Status orderTimestamp) {
-            return base.Channel.UpdateOrderAsync(orderIdentifier, orderTimestamp);
         }
     }
 }

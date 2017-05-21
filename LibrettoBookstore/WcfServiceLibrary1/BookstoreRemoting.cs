@@ -15,11 +15,16 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        public Response DispatchOrder(Guid transactionIdentifier)
+        public Response DispatchOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Update(transactionIdentifier, Status.Processing, DateTime.Now.AddDays(2));
+            Response res = LibrettoDatabase.OrderIntegration.Satisfy(orderIdentifier);
+            if (res == Response.Success)
+            {
+                StoreService.NotifyDispatchOrder(orderIdentifier);
+            }
+            return res;
         }
     }
 }

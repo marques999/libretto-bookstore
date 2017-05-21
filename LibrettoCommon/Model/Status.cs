@@ -13,8 +13,8 @@ namespace Libretto.Model
         [Description("Waiting")]
         Waiting,
         [EnumMember]
-        [Description("Processing")]
-        Processing,
+        [Description("Pending")]
+        Pending,
         [EnumMember]
         [Description("Dispatched")]
         Dispatched,

@@ -27,9 +27,10 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void ButtonLogout_Click(object sender, EventArgs args)
+        private void ButtonRefresh_Click(object sender, EventArgs args)
         {
-            Close();
+            LibrettoClient.Instance.RefreshTransactions();
+            UpdateFilter();
         }
 
         /// <summary>
@@ -91,62 +92,28 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonCancel_Click(object sender, EventArgs args)
         {
-            if (MessageBox.Show(this, Resources.CancelOrder, Resources.CancelOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            if (transactionList.SelectedItems.Count == 1)
             {
-                return;
-            }
+                var orderInformation = transactionList.SelectedItems[0].Tag as Order;
 
-            foreach (ListViewItem listItem in transactionList.SelectedItems)
-            {
-                var orderInformation = listItem?.Tag as Order;
-
-                if (orderInformation == null)
+                if (orderInformation == null || orderInformation.Status >= Status.Dispatched)
                 {
                     return;
                 }
 
-                var operationResult = LibrettoClient.Instance.Proxy.CancelOrder(orderInformation.Id);
-
-                if (operationResult == Response.Success)
+                if (orderInformation.Status == Status.Pending)
                 {
-                    var previousIndex = listItem.Index;
-
-                    transactionList.Items.Remove(listItem);
-
-                    if (previousIndex < 0)
-                    {
-                        return;
-                    }
-
-                    orderInformation.Status = Status.Cancelled;
-                    transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
+                    DispatchOrder();
                 }
                 else
                 {
-                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CancelOrder();
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionInformation"></param>
-        /// <returns></returns>
-        private static ListViewItem ParseTransaction(Order transactionInformation)
-        {
-            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
+            else
             {
-                Tag = transactionInformation,
-                SubItems =
-                {
-                    transactionInformation.BookTitle,
-                    transactionInformation.CustomerName,
-                    Convert.ToString(transactionInformation.Quantity),
-                    LibrettoCommon.FormatCurrency(transactionInformation.Total),
-                    $"{transactionInformation.Description} ({transactionInformation.StatusTimestamp.ToShortDateString()})"
-                }
-            };
+                CancelOrder();
+            }
         }
 
         /// <summary>
@@ -198,7 +165,24 @@ namespace Libretto.Forms
         private void UpdateButtons()
         {
             buttonDelete.Enabled = transactionList.SelectedItems.Count > 0;
-            buttonCancel.Enabled = buttonDelete.Enabled && transactionList.SelectedItems[0].Tag is Order;
+
+            if (transactionList.SelectedItems.Count == 1)
+            {
+                var orderInformation = transactionList.SelectedItems[0].Tag as Order;
+
+                if (orderInformation == null)
+                {
+                    return;
+                }
+
+                buttonCancel.Enabled = orderInformation.Status < Status.Dispatched;
+                buttonCancel.Text = orderInformation.Status == Status.Pending ? @"Dispatch Order" : @"Cancel Order";
+            }
+            else
+            {
+                buttonCancel.Enabled = false;
+                buttonCancel.Text = @"Cancel Order";
+            }
         }
 
         /// <summary>
@@ -253,12 +237,6 @@ namespace Libretto.Forms
             }
 
             var orderInformation = orderForm.Information;
-
-            if (orderInformation == null)
-            {
-                return;
-            }
-
             var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
 
             if (operationResult == Response.Success)
@@ -270,6 +248,7 @@ namespace Libretto.Forms
                     return;
                 }
 
+                LibrettoClient.Instance.RefreshBooks();
                 LibrettoClient.Instance.Transactions.Add(validatedOrder);
                 transactionList.Items.Add(ParseTransaction(validatedOrder));
             }
@@ -286,12 +265,83 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void OrdersList_DoubleClicked(object sender, MouseEventArgs args)
         {
-            switch (transactionList.SelectedItems[0]?.Tag)
+            DispatchOrder();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void CancelOrder()
+        {
+            if (MessageBox.Show(this, Resources.CancelOrder, Resources.CancelOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             {
-                case Order orderInformation:
-                    new OrderForm(orderInformation).ShowDialog(this);
-                    break;
+                return;
             }
+
+            foreach (ListViewItem listItem in transactionList.SelectedItems)
+            {
+                var orderInformation = listItem?.Tag as Order;
+
+                if (orderInformation == null)
+                {
+                    return;
+                }
+
+                var operationResult = LibrettoClient.Instance.Proxy.CancelOrder(orderInformation.Id);
+
+                if (operationResult == Response.Success)
+                {
+                    var previousIndex = listItem.Index;
+
+                    transactionList.Items.Remove(listItem);
+
+                    if (previousIndex < 0)
+                    {
+                        return;
+                    }
+
+                    orderInformation.Status = Status.Cancelled;
+                    transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
+                }
+                else
+                {
+                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DispatchOrder()
+        {
+            var listItem = transactionList.SelectedItems[0];
+            var orderInformation = listItem?.Tag as Order;
+
+            if (orderInformation == null)
+            {
+                return;
+            }
+
+            var orderForm = new OrderForm(orderInformation);
+
+            if (orderForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            var previousIndex = listItem.Index;
+
+            transactionList.Items.Remove(listItem);
+
+            if (previousIndex < 0)
+            {
+                return;
+            }
+
+            orderInformation.Status = Status.Dispatched;
+            orderInformation.StatusTimestamp = DateTime.Now;
+            transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
         }
 
         /// <summary>
@@ -369,12 +419,6 @@ namespace Libretto.Forms
             }
 
             var purchaseInformation = purchaseForm.Information;
-
-            if (purchaseInformation == null)
-            {
-                return;
-            }
-
             var operationResult = LibrettoClient.Instance.Proxy.InsertPurchase(purchaseInformation);
 
             if (operationResult == Response.Success)
@@ -386,6 +430,7 @@ namespace Libretto.Forms
                     return;
                 }
 
+                LibrettoClient.Instance.RefreshBooks();
                 LibrettoClient.Instance.Transactions.Add(validatedPurchase);
                 transactionList.Items.Add(ParseTransaction(validatedPurchase));
             }
@@ -399,8 +444,8 @@ namespace Libretto.Forms
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StoreForm_FormClosed(object sender, FormClosedEventArgs e)
+        /// <param name="args"></param>
+        private void StoreForm_FormClosed(object sender, FormClosedEventArgs args)
         {
             LibrettoClient.Instance.Logout();
         }

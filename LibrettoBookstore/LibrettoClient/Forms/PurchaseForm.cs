@@ -161,12 +161,6 @@ namespace Libretto.Forms
             }
 
             var customerInformation = customerForm.Information;
-
-            if (customerInformation == null)
-            {
-                return;
-            }
-
             var operationResult = LibrettoClient.Instance.Proxy.InsertCustomer(customerInformation);
 
             if (operationResult == Response.Success)

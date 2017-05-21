@@ -32,7 +32,7 @@ namespace LibrettoWCF.Database
         {
             try
             {
-                return _context.Clerks.SingleOrDefault(clerkInformation => clerkInformation.Email == clerkEmail);
+                return string.IsNullOrEmpty(clerkEmail) ? null : _context.Clerks.SingleOrDefault(clerkInformation => clerkInformation.Email == clerkEmail);
             }
             catch
             {
@@ -47,7 +47,7 @@ namespace LibrettoWCF.Database
         /// <returns></returns>
         public Clerk Lookup(IIdentity clerkIdentity)
         {
-            return string.IsNullOrEmpty(clerkIdentity?.Name) ? null : Lookup(clerkIdentity.Name);
+            return clerkIdentity == null ? null : Lookup(clerkIdentity.Name);
         }
     }
 }

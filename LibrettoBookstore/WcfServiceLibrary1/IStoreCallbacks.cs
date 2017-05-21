@@ -14,9 +14,16 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="customerInformation"></param>
+        /// <param name="transactionIdentifier"></param>
         [OperationContract(IsOneWay = true)]
-        void OnRegisterCustomer(Customer customerInformation);
+        void OnCancelOrder(Guid transactionIdentifier);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        [OperationContract(IsOneWay = true)]
+        void OnDispatchOrder(Guid transactionIdentifier);
 
         /// <summary>
         /// 
@@ -24,19 +31,5 @@ namespace LibrettoWCF
         /// <param name="purchaseInformation"></param>
         [OperationContract(IsOneWay = true)]
         void OnRegisterTransaction(Transaction purchaseInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        [OperationContract(IsOneWay = true)]
-        void OnUpdateTransaction(Transaction purchaseInformation);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        [OperationContract(IsOneWay = true)]
-        void OnDeleteTransaction(Guid transactionIdentifier);
     }
 }

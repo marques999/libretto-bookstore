@@ -68,7 +68,7 @@ namespace Libretto.Forms
             buttonCancel = new FlatButton();
             buttonDelete = new FlatButton();
             buttonManage = new FlatButton();
-            buttonLogout = new FlatButton();
+            buttonRefresh = new FlatButton();
             customerLayout.SuspendLayout();
             formPanel.SuspendLayout();
             statusPanel.SuspendLayout();
@@ -323,7 +323,7 @@ namespace Libretto.Forms
             buttonLayout.Controls.Add(buttonCancel);
             buttonLayout.Controls.Add(buttonDelete);
             buttonLayout.Controls.Add(buttonManage);
-            buttonLayout.Controls.Add(buttonLogout);
+            buttonLayout.Controls.Add(buttonRefresh);
             buttonLayout.Dock = DockStyle.Fill;
             buttonLayout.Location = new Point(4, 4);
             buttonLayout.Name = "buttonLayout";
@@ -356,7 +356,7 @@ namespace Libretto.Forms
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(105, 28);
             buttonCancel.TabIndex = 2;
-            buttonCancel.Text = "Cancel";
+            buttonCancel.Text = "Cancel Order";
             buttonCancel.Click += new EventHandler(ButtonCancel_Click);
             //
             // buttonDelete
@@ -379,16 +379,16 @@ namespace Libretto.Forms
             buttonManage.Text = "Manage Books";
             buttonManage.Click += new EventHandler(ButtonManage_Click);
             //
-            // buttonLogout
+            // buttonRefresh
             //
-            buttonLogout.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonLogout.Location = new Point(590, 3);
-            buttonLogout.Margin = new Padding(2, 3, 0, 3);
-            buttonLogout.Name = "buttonLogout";
-            buttonLogout.Size = new Size(105, 28);
-            buttonLogout.TabIndex = 5;
-            buttonLogout.Text = "Logout";
-            buttonLogout.Click += new EventHandler(ButtonLogout_Click);
+            buttonRefresh.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonRefresh.Location = new Point(590, 3);
+            buttonRefresh.Margin = new Padding(2, 3, 0, 3);
+            buttonRefresh.Name = "buttonRefresh";
+            buttonRefresh.Size = new Size(105, 28);
+            buttonRefresh.TabIndex = 5;
+            buttonRefresh.Text = "Refresh";
+            buttonRefresh.Click += new EventHandler(ButtonRefresh_Click);
             //
             // StoreForm
             //
@@ -444,7 +444,7 @@ namespace Libretto.Forms
         private FlatButton buttonCancel;
         private FlatButton buttonDelete;
         private FlatButton buttonManage;
-        private FlatButton buttonLogout;
+        private FlatButton buttonRefresh;
         private ListView transactionList;
         private ColumnHeader columnDate;
         private ColumnHeader columnTitle;
