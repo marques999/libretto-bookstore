@@ -68,7 +68,7 @@ namespace LibrettoWCF.Database
         {
             try
             {
-                return _context.Customers.SingleOrDefault(customerInformation => customerInformation.Email == customerEmail);
+                return string.IsNullOrEmpty(customerEmail) ? null : _context.Customers.SingleOrDefault(customerInformation => customerInformation.Email == customerEmail);
             }
             catch
             {
@@ -85,6 +85,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (customerInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
                 if (string.IsNullOrEmpty(customerInformation.Password) == false)
                 {
                     customerInformation.Password = PasswordUtilities.Hash(customerInformation.Password);
@@ -98,26 +103,6 @@ namespace LibrettoWCF.Database
                 return Response.DatabaseError;
             }
 
-            return Response.Success;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerInformation"></param>
-        /// <returns></returns>
-        public Response Update(Customer customerInformation)
-        {
-            return Response.Success;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="customerIdentifier"></param>
-        /// <returns></returns>
-        public Response Delete(Guid customerIdentifier)
-        {
             return Response.Success;
         }
     }

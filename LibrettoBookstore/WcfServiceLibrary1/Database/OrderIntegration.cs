@@ -86,6 +86,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (orderInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
                 var bookInformation = LibrettoDatabase.BookIntegration.Lookup(orderInformation.BookId);
 
                 if (bookInformation == null)

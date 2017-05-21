@@ -66,6 +66,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (bookInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
                 _context.Books.Add(bookInformation);
                 _context.SaveChanges();
             }
@@ -114,6 +119,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (bookInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
                 var sqlEntity = _context.Books.SingleOrDefault(previousBook => previousBook.Id == bookInformation.Id);
 
                 if (sqlEntity == null)

@@ -76,6 +76,11 @@ namespace LibrettoWCF.Database
         {
             try
             {
+                if (purchaseInformation == null)
+                {
+                    return Response.InvalidArguments;
+                }
+
                 purchaseInformation.Timestamp = DateTime.Now;
                 _context.Purchases.Add(purchaseInformation);
                 _context.SaveChanges();
@@ -87,16 +92,6 @@ namespace LibrettoWCF.Database
             }
 
             return LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, -purchaseInformation.Quantity);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="purchaseInformation"></param>
-        /// <returns></returns>
-        public Response Update(Purchase purchaseInformation)
-        {
-            return Response.Success;
         }
 
         /// <summary>

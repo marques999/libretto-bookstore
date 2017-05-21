@@ -233,12 +233,6 @@ namespace Libretto.Forms
             }
 
             var orderInformation = orderForm.Information;
-
-            if (orderInformation == null)
-            {
-                return;
-            }
-
             var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
 
             if (operationResult == Response.Success)
@@ -371,12 +365,6 @@ namespace Libretto.Forms
             }
 
             var purchaseInformation = purchaseForm.Information;
-
-            if (purchaseInformation == null)
-            {
-                return;
-            }
-
             var operationResult = LibrettoClient.Instance.Proxy.InsertPurchase(purchaseInformation);
 
             if (operationResult == Response.Success)
