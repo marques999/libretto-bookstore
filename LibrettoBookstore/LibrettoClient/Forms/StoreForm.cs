@@ -162,7 +162,7 @@ namespace Libretto.Forms
         /// <returns></returns>
         private bool FilterOrder(Transaction orderInformation)
         {
-            return orderInformation.Filter(checkWaiting.Checked, checkProcessing.Checked, checkDispatched.Checked)
+            return orderInformation.Filter(checkWaiting.Checked, checkPending.Checked, checkDispatched.Checked)
                 && (string.IsNullOrEmpty(customerName.Text) || customerName.Text == orderInformation.CustomerName)
                 && (dateFromPicker.Checked == false || orderInformation.Timestamp > dateFromPicker.Value)
                 && (dateToPicker.Checked == false || orderInformation.Timestamp < dateToPicker.Value);
