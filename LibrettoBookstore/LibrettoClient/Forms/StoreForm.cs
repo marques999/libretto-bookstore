@@ -270,6 +270,7 @@ namespace Libretto.Forms
                     return;
                 }
 
+                LibrettoClient.Instance.RefreshBooks();
                 LibrettoClient.Instance.Transactions.Add(validatedOrder);
                 transactionList.Items.Add(ParseTransaction(validatedOrder));
             }
@@ -288,9 +289,9 @@ namespace Libretto.Forms
         {
             switch (transactionList.SelectedItems[0]?.Tag)
             {
-                case Order orderInformation:
-                    new OrderForm(orderInformation).ShowDialog(this);
-                    break;
+            case Order orderInformation:
+                new OrderForm(orderInformation).ShowDialog(this);
+                break;
             }
         }
 
@@ -386,6 +387,7 @@ namespace Libretto.Forms
                     return;
                 }
 
+                LibrettoClient.Instance.RefreshBooks();
                 LibrettoClient.Instance.Transactions.Add(validatedPurchase);
                 transactionList.Items.Add(ParseTransaction(validatedPurchase));
             }

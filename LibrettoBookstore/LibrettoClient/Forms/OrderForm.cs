@@ -115,23 +115,23 @@ namespace Libretto.Forms
             if (Information.Status == Status.Processing)
             {
                 statusProcessing.Checked = true;
-                bookStock.Text = Convert.ToString(remainingUnits);
+                remainingUnits = _bookInformation.Stock;
             }
             else if (remainingUnits < 0)
             {
+                remainingUnits = 0;
                 statusWaiting.Checked = true;
-                bookStock.Text = @"10";
                 Information.Status = Status.Waiting;
             }
             else
             {
                 statusDispatched.Checked = true;
-                bookStock.Text = Convert.ToString(remainingUnits);
                 Information.Status = Status.Dispatched;
             }
 
             var purchaseTotal = _bookInformation.Price * numberUnits;
 
+            bookStock.Text = Convert.ToString(remainingUnits);
             statusWaiting.Enabled = Information.Status == Status.Waiting;
             statusProcessing.Enabled = Information.Status == Status.Processing;
             statusDispatched.Enabled = Information.Status != Status.Waiting;
