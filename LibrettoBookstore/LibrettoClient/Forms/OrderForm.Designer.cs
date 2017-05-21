@@ -535,7 +535,6 @@ namespace Libretto.Forms
             statusWaiting.Size = new Size(113, 17);
             statusWaiting.TabIndex = 6;
             statusWaiting.Text = "Waiting Expedition";
-            statusWaiting.CheckedChanged += new EventHandler(StatusWaiting_CheckedChanged);
             //
             // statusProcessing
             //
@@ -544,8 +543,7 @@ namespace Libretto.Forms
             statusProcessing.Name = "statusProcessing";
             statusProcessing.Size = new Size(106, 17);
             statusProcessing.TabIndex = 7;
-            statusProcessing.Text = "Waiting Dispatch";
-            statusProcessing.CheckedChanged += new EventHandler(StatusProcessing_CheckedChanged);
+            statusProcessing.Text = "Pending Confirmation";
             //
             // statusDispatched
             //
@@ -554,7 +552,6 @@ namespace Libretto.Forms
             statusDispatched.Size = new Size(114, 17);
             statusDispatched.TabIndex = 8;
             statusDispatched.Text = "Dispatch Complete";
-            statusDispatched.CheckedChanged += new EventHandler(StatusDispatched_CheckedChanged);
             //
             // buttonPanel
             //
@@ -581,13 +578,13 @@ namespace Libretto.Forms
             //
             // buttonConfirm
             //
-            buttonConfirm.DialogResult = DialogResult.OK;
             buttonConfirm.Location = new Point(360, 5);
             buttonConfirm.Margin = new Padding(0, 3, 2, 3);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(128, 24);
             buttonConfirm.TabIndex = 0;
-            buttonConfirm.Text = "Confirm";
+            buttonConfirm.Text = "Dispatch";
+            buttonConfirm.Click += new EventHandler(ButtonConfirm_Click);
             //
             // orderLabel
             //

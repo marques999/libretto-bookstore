@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using Libretto.Model;
+using Libretto.Properties;
 
 namespace Libretto.Forms
 {
@@ -27,6 +28,7 @@ namespace Libretto.Forms
         /// <param name="orderInformation"></param>
         public OrderForm(Order orderInformation)
         {
+            _insertMode = false;
             InitializeComponent();
             InitializeForm();
             Text = @"Update Order";
@@ -54,12 +56,21 @@ namespace Libretto.Forms
             orderQuantity.Enabled = false;
             customerNameButton.Enabled = false;
             UpdateBook(LibrettoClient.Instance.Books[bookIndex]);
+            buttonConfirm.Enabled = orderInformation.Status == Status.Pending;
         }
 
         /// <summary>
         /// 
         /// </summary>
         private Book _bookInformation;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Order Information
+        {
+            get;
+        } = new Order();
 
         /// <summary>
         /// 
@@ -72,10 +83,7 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        public Order Information
-        {
-            get;
-        } = new Order();
+        private readonly bool _insertMode = true;
 
         /// <summary>
         /// 
@@ -112,7 +120,7 @@ namespace Libretto.Forms
 
             var remainingUnits = _bookInformation.Stock - numberUnits;
 
-            if (Information.Status == Status.Processing)
+            if (Information.Status == Status.Pending)
             {
                 statusProcessing.Checked = true;
                 remainingUnits = _bookInformation.Stock;
@@ -133,8 +141,8 @@ namespace Libretto.Forms
 
             bookStock.Text = Convert.ToString(remainingUnits);
             statusWaiting.Enabled = Information.Status == Status.Waiting;
-            statusProcessing.Enabled = Information.Status == Status.Processing;
-            statusDispatched.Enabled = Information.Status != Status.Waiting;
+            statusProcessing.Enabled = Information.Status == Status.Pending;
+            statusDispatched.Enabled = Information.Status == Status.Dispatched;
             orderTotal.Text = LibrettoCommon.FormatDecimal(purchaseTotal);
             Information.Quantity = numberUnits;
             Information.Total = purchaseTotal;
@@ -162,6 +170,36 @@ namespace Libretto.Forms
             if (customerIndex >= 0)
             {
                 UpdateCustomer(Customers[customerName.SelectedIndex]);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void ButtonConfirm_Click(object sender, EventArgs args)
+        {
+            if (_insertMode)
+            {
+                DialogResult = DialogResult.OK;
+            }
+            else if (MessageBox.Show(this, Resources.DispatchOrder, Resources.DispatchOrder_Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
+            else
+            {
+                var operationResult = LibrettoClient.Instance.Proxy.DispatchOrder(Information.Id);
+
+                if (operationResult == Response.Success)
+                {
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -206,36 +244,6 @@ namespace Libretto.Forms
             {
                 UpdateBook(LibrettoClient.Instance.Books[bookTitle.SelectedIndex]);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StatusWaiting_CheckedChanged(object sender, EventArgs args)
-        {
-            Information.Status = Status.Waiting;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StatusProcessing_CheckedChanged(object sender, EventArgs args)
-        {
-            Information.Status = Status.Processing;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StatusDispatched_CheckedChanged(object sender, EventArgs args)
-        {
-            Information.Status = Status.Dispatched;
         }
 
         /// <summary>

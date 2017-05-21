@@ -133,6 +133,24 @@ namespace Libretto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to dispatch the selected customer order..
+        /// </summary>
+        internal static string DispatchOrder {
+            get {
+                return ResourceManager.GetString("DispatchOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dispatch Order.
+        /// </summary>
+        internal static string DispatchOrder_Title {
+            get {
+                return ResourceManager.GetString("DispatchOrder_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon librettoIcon {

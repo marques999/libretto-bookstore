@@ -134,27 +134,6 @@ namespace Libretto.Forms
         /// </summary>
         /// <param name="transactionInformation"></param>
         /// <returns></returns>
-        private static ListViewItem ParseTransaction(Order transactionInformation)
-        {
-            return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
-            {
-                Tag = transactionInformation,
-                SubItems =
-                {
-                    transactionInformation.BookTitle,
-                    transactionInformation.CustomerName,
-                    Convert.ToString(transactionInformation.Quantity),
-                    LibrettoCommon.FormatCurrency(transactionInformation.Total),
-                    $"{transactionInformation.Description} ({transactionInformation.StatusTimestamp.ToShortDateString()})"
-                }
-            };
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="transactionInformation"></param>
-        /// <returns></returns>
         private static ListViewItem ParseTransaction(Transaction transactionInformation)
         {
             return new ListViewItem(LibrettoCommon.FormatDate(transactionInformation.Timestamp))
@@ -288,12 +267,33 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void OrdersList_DoubleClicked(object sender, MouseEventArgs args)
         {
-            switch (transactionList.SelectedItems[0]?.Tag)
+            var listItem = transactionList.SelectedItems[0];
+            var orderInformation = listItem?.Tag as Order;
+
+            if (orderInformation == null)
             {
-            case Order orderInformation:
-                new OrderForm(orderInformation).ShowDialog(this);
-                break;
+                return;
             }
+
+            var orderForm = new OrderForm(orderInformation);
+
+            if (orderForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            var previousIndex = listItem.Index;
+
+            transactionList.Items.Remove(listItem);
+
+            if (previousIndex < 0)
+            {
+                return;
+            }
+
+            orderInformation.Status = Status.Dispatched;
+            orderInformation.StatusTimestamp = DateTime.Now;
+            transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
         }
 
         /// <summary>

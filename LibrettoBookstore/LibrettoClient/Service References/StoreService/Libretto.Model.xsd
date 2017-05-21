@@ -158,7 +158,7 @@
   <xs:simpleType name="Status">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Waiting" />
-      <xs:enumeration value="Processing" />
+      <xs:enumeration value="Pending" />
       <xs:enumeration value="Dispatched" />
       <xs:enumeration value="Cancelled" />
     </xs:restriction>

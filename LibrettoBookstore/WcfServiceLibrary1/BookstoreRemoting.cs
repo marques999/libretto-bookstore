@@ -19,7 +19,7 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response DispatchOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Update(orderIdentifier, Status.Processing, DateTime.Now.AddDays(2));
+            return LibrettoDatabase.OrderIntegration.Satisfy(orderIdentifier);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Libretto.Model
         /// 
         /// </summary>
         [NotMapped]
-        public override string Description => Status.GetDescription();
+        public override string Description => $"{Status.GetDescription()} ({StatusTimestamp.ToShortDateString()})";
 
         /// <summary>
         /// 
@@ -45,7 +45,7 @@ namespace Libretto.Model
         /// <returns></returns>
         public override bool Filter(bool waitingChecked, bool processingChecked, bool dispatchedChecked)
         {
-            return Status == Status.Cancelled || Status == Status.Waiting && waitingChecked || Status == Status.Processing && processingChecked || Status == Status.Dispatched && dispatchedChecked;
+            return Status == Status.Cancelled || Status == Status.Waiting && waitingChecked || Status == Status.Pending && processingChecked || Status == Status.Dispatched && dispatchedChecked;
         }
     }
 }

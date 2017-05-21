@@ -86,7 +86,7 @@ namespace LibrettoWCF.Database
                 return Response.DatabaseError;
             }
 
-            return LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, purchaseInformation.Quantity);
+            return LibrettoDatabase.BookIntegration.UpdateStock(purchaseInformation.BookId, -purchaseInformation.Quantity);
         }
 
         /// <summary>

@@ -94,7 +94,7 @@ namespace LibrettoWCF.Database
                     return Response.NotFound;
                 }
 
-                bookInformation.Stock -= quantity;
+                bookInformation.Stock += quantity;
                 _context.SaveChanges();
             }
             catch

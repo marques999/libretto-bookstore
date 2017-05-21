@@ -212,7 +212,7 @@ namespace LibrettoWCF
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
         public Response DeleteOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.DeleteOrder(orderIdentifier);
+            return LibrettoDatabase.OrderIntegration.Delete(orderIdentifier);
         }
 
         /// <summary>
@@ -230,12 +230,11 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         /// <param name="orderIdentifier"></param>
-        /// <param name="orderStatus"></param>
         /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Role = "Clerk")]
-        public Response UpdateOrder(Guid orderIdentifier, Status orderStatus)
+        public Response DispatchOrder(Guid orderIdentifier)
         {
-            return LibrettoDatabase.OrderIntegration.Update(orderIdentifier, orderStatus, DateTime.Now);
+            return LibrettoDatabase.OrderIntegration.Dispatch(orderIdentifier);
         }
     }
 }

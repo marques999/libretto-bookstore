@@ -120,7 +120,7 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
             return Send(
                 customerInformation,
                 $"Order {orderInformation.Id:B} Status: Cancelled",
-                $"StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}"
+                $"Cancelled: {orderInformation.StatusTimestamp.ToShortDateString()}"
             ) ? Response.Success : Response.EmailFailure;
         }
 
@@ -129,7 +129,7 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
         /// </summary>
         /// <param name="orderInformation"></param>
         /// <returns></returns>
-        public Response NotifyUpdate(Order orderInformation)
+        public Response NotifyPending(Order orderInformation)
         {
             var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
 
@@ -140,8 +140,29 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
 
             return Send(
                 customerInformation,
-                $"Order {orderInformation.Id:B} Status: {orderInformation.Status.GetDescription()}",
-                $"StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}"
+                $"Order {orderInformation.Id:B} Status: Pending",
+                $"Should Dispatch: {orderInformation.StatusTimestamp.ToShortDateString()}"
+            ) ? Response.Success : Response.EmailFailure;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderInformation"></param>
+        /// <returns></returns>
+        public Response NotifyDispatch(Order orderInformation)
+        {
+            var customerInformation = LibrettoDatabase.CustomerIntegration.Lookup(orderInformation.CustomerId);
+
+            if (customerInformation == null)
+            {
+                return Response.NotFound;
+            }
+
+            return Send(
+                customerInformation,
+                $"Order {orderInformation.Id:B} Status: Dispatched",
+                $"Dispatched: {orderInformation.StatusTimestamp.ToShortDateString()}"
             ) ? Response.Success : Response.EmailFailure;
         }
     }
