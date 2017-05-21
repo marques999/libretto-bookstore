@@ -24,7 +24,7 @@ namespace LibrettoWCF
         /// 
         /// </summary>
         public static List<IStoreCallbacks> Subscribers = new List<IStoreCallbacks>();
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,28 +52,14 @@ namespace LibrettoWCF
         /// <param name="transactionInformation"></param>
         public static void NotifyRegisterTransaction(Transaction transactionInformation)
         {
-            if (Subscribers.Count < 1)
-            {
-                return;
-            }
-
             try
             {
-                Subscribers.ForEach(delegate (IStoreCallbacks callback)
-                {
-                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
-                    {
-                        callback.OnRegisterTransaction(transactionInformation);
-                    }
-                    else
-                    {
-                        Subscribers.Remove(callback);
-                    }
-                });
+                Subscribers.RemoveAll(callback => (callback as ICommunicationObject).State != CommunicationState.Opened);
+                Subscribers.ForEach(callback => callback.OnRegisterTransaction(transactionInformation));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex);
             }
         }
 
@@ -84,28 +70,14 @@ namespace LibrettoWCF
         /// <returns></returns>
         public static void NotifyDeleteTransaction(Guid transactionIdentifier)
         {
-            if (Subscribers.Count < 1)
-            {
-                return;
-            }
-
             try
             {
-                Subscribers.ForEach(delegate (IStoreCallbacks callback)
-                {
-                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
-                    {
-                        callback.OnDeleteTransaction(transactionIdentifier);
-                    }
-                    else
-                    {
-                        Subscribers.Remove(callback);
-                    }
-                });
+                Subscribers.RemoveAll(callback => (callback as ICommunicationObject).State != CommunicationState.Opened);
+                Subscribers.ForEach(callback => callback.OnDeleteTransaction(transactionIdentifier));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex);
             }
         }
 
@@ -115,29 +87,15 @@ namespace LibrettoWCF
         /// <param name="transactionInformation"></param>
         public static void NotifyUpdateTransaction(Transaction transactionInformation)
         {
-            if (Subscribers.Count < 1)
-            {
-                return;
-            }
-
             try
             {
-                Subscribers.ForEach(delegate (IStoreCallbacks callback)
-                {
-                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
-                    {
-                        callback.OnUpdateTransaction(transactionInformation);
-                    }
-                    else
-                    {
-                        Subscribers.Remove(callback);
-                    }
-                });
+                Subscribers.RemoveAll(callback => (callback as ICommunicationObject).State != CommunicationState.Opened);
+                Subscribers.ForEach(callback => callback.OnUpdateTransaction(transactionInformation));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-            } 
+                Console.WriteLine(ex);
+            }
         }
 
         /*-------------------------------------------------------------------+

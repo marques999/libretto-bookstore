@@ -301,33 +301,12 @@ namespace Libretto.Forms
         /// </summary>
         private void DispatchOrder()
         {
-            var listItem = transactionList.SelectedItems[0];
-            var orderInformation = listItem?.Tag as Order;
+            var orderInformation = transactionList.SelectedItems[0]?.Tag as Order;
 
-            if (orderInformation == null)
+            if (orderInformation != null)
             {
-                return;
+                new OrderForm(orderInformation).ShowDialog(this);
             }
-
-            var orderForm = new OrderForm(orderInformation);
-
-            if (orderForm.ShowDialog(this) != DialogResult.OK)
-            {
-                return;
-            }
-
-            var previousIndex = listItem.Index;
-
-            transactionList.Items.Remove(listItem);
-
-            if (previousIndex < 0)
-            {
-                return;
-            }
-
-            orderInformation.Status = Status.Dispatched;
-            orderInformation.StatusTimestamp = DateTime.Now;
-            transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
         }
 
         /// <summary>

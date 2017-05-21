@@ -89,6 +89,8 @@ namespace Libretto
         /// <returns></returns>
         public bool Login(LoginTemplate loginForm)
         {
+            Proxy = new StoreServiceClient(new InstanceContext(this));
+
             if (Proxy.ClientCredentials == null)
             {
                 return false;
@@ -114,7 +116,11 @@ namespace Libretto
                 Transactions.Clear();
                 Transactions.AddRange(Proxy.ListOrders());
                 Transactions.AddRange(Proxy.ListPurchases());
-                SubscribeNotifications();
+
+                if (Proxy.State != CommunicationState.Faulted)
+                {
+                    Proxy.Subscribe();
+                }
 
                 return true;
             }
@@ -157,23 +163,15 @@ namespace Libretto
         /// </summary>
         public void ResetProxy()
         {
-            if (Proxy.State == CommunicationState.Opened)
+            UnsubscribeNotifications();
+
+            if (Proxy.State != CommunicationState.Opened)
             {
-                Proxy.Close();
+                return;
             }
 
-            Proxy = new StoreServiceClient(new InstanceContext(this));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void SubscribeNotifications()
-        {
-            if (Proxy.State != CommunicationState.Faulted)
-            {
-                Proxy.Subscribe();
-            }
+            Proxy.Close();
+            Proxy = null;
         }
 
         /// <summary>
@@ -181,7 +179,7 @@ namespace Libretto
         /// </summary>
         public void UnsubscribeNotifications()
         {
-            if (Proxy.State == CommunicationState.Opened)
+            if (Proxy.State != CommunicationState.Faulted)
             {
                 Proxy.Unsubscribe();
             }
