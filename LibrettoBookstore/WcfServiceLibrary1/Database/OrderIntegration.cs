@@ -123,6 +123,8 @@ namespace LibrettoWCF.Database
                     LibrettoDatabase.BookIntegration.UpdateStock(orderInformation.BookId, -orderInformation.Quantity);
                 }
 
+                StoreService.NotifyRegisterTransaction(orderInformation);
+
                 return EmailClient.Instance.NotifyInsert(orderInformation);
             }
             catch
@@ -167,6 +169,8 @@ namespace LibrettoWCF.Database
                     return Response.DatabaseError;
                 }
 
+                StoreService.NotifyUpdateTransaction(sqlEntity);
+
                 return EmailClient.Instance.NotifyCancel(sqlEntity);
             }
             catch
@@ -199,6 +203,7 @@ namespace LibrettoWCF.Database
                 sqlEntity.Status = Status.Pending;
                 sqlEntity.StatusTimestamp = DateTime.Now.AddDays(2);
                 _context.SaveChanges();
+                StoreService.NotifyUpdateTransaction(sqlEntity);
 
                 return EmailClient.Instance.NotifyPending(sqlEntity);
             }
@@ -238,6 +243,8 @@ namespace LibrettoWCF.Database
                     return Response.DatabaseError;
                 }
 
+                StoreService.NotifyUpdateTransaction(sqlEntity);
+
                 return EmailClient.Instance.NotifyDispatch(sqlEntity);
             }
             catch
@@ -270,12 +277,19 @@ namespace LibrettoWCF.Database
                     LibrettoHost.WarehouseService.DeleteOrder(orderIdentifier);
                 }
 
-                return EmailClient.Instance.NotifyCancel(sqlEntity);
+                StoreService.NotifyDeleteTransaction(orderIdentifier);
+
+                if (sqlEntity.Status < Status.Dispatched)
+                {
+                    return EmailClient.Instance.NotifyCancel(sqlEntity);
+                }
             }
             catch
             {
                 return Response.DatabaseError;
             }
+
+            return Response.Success;
         }
     }
 }

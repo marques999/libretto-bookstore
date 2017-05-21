@@ -13,7 +13,6 @@ namespace LibrettoWCF
     /// 
     /// </summary>
     /// 
-    
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class StoreService : IStoreService
     {
@@ -24,15 +23,14 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        public static double MSFTPrice = 10.0;
-        public static List<IStoreCallbacks> subscribers = new List<IStoreCallbacks>();
+        public static List<IStoreCallbacks> Subscribers = new List<IStoreCallbacks>();
+        
         /// <summary>
         /// 
         /// </summary>
         public void Unsubscribe()
         {
-            IStoreCallbacks callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
-            subscribers.Remove(callback);
+            Subscribers.Remove(OperationContext.Current.GetCallbackChannel<IStoreCallbacks>());
         }
 
         /// <summary>
@@ -40,21 +38,106 @@ namespace LibrettoWCF
         /// </summary>
         public void Subscribe()
         {
-            IStoreCallbacks callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
-            if (!subscribers.Contains(callback))
+            var callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
+
+            if (!Subscribers.Contains(callback))
             {
-                subscribers.Add(callback);
+                Subscribers.Add(callback);
             }
         }
 
-        public static void NotifyDispatchOrder(Guid transactionId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
+        public static void NotifyRegisterTransaction(Transaction transactionInformation)
         {
-            subscribers.ForEach(delegate (IStoreCallbacks callback) {
-                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
-                    callback.OnDispatchOrder(transactionId);
-                else
-                    subscribers.Remove(callback);
-            });
+            if (Subscribers.Count < 1)
+            {
+                return;
+            }
+
+            try
+            {
+                Subscribers.ForEach(delegate (IStoreCallbacks callback)
+                {
+                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
+                    {
+                        callback.OnRegisterTransaction(transactionInformation);
+                    }
+                    else
+                    {
+                        Subscribers.Remove(callback);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionIdentifier"></param>
+        /// <returns></returns>
+        public static void NotifyDeleteTransaction(Guid transactionIdentifier)
+        {
+            if (Subscribers.Count < 1)
+            {
+                return;
+            }
+
+            try
+            {
+                Subscribers.ForEach(delegate (IStoreCallbacks callback)
+                {
+                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
+                    {
+                        callback.OnDeleteTransaction(transactionIdentifier);
+                    }
+                    else
+                    {
+                        Subscribers.Remove(callback);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactionInformation"></param>
+        public static void NotifyUpdateTransaction(Transaction transactionInformation)
+        {
+            if (Subscribers.Count < 1)
+            {
+                return;
+            }
+
+            try
+            {
+                Subscribers.ForEach(delegate (IStoreCallbacks callback)
+                {
+                    if ((callback as ICommunicationObject).State == CommunicationState.Opened)
+                    {
+                        callback.OnUpdateTransaction(transactionInformation);
+                    }
+                    else
+                    {
+                        Subscribers.Remove(callback);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            } 
         }
 
         /*-------------------------------------------------------------------+

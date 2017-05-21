@@ -9,6 +9,8 @@ namespace Libretto.Model
     /// 
     /// </summary>
     [DataContract]
+    [KnownType(typeof(Order))]
+    [KnownType(typeof(Purchase))]
     public abstract class Transaction
     {
         /// <summary>

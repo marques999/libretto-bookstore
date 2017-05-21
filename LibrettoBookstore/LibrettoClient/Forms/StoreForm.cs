@@ -20,6 +20,18 @@ namespace Libretto.Forms
         {
             InitializeComponent();
             Text = $@"Libreto Bookstore ({LibrettoClient.Instance.Session.Name})";
+
+            LibrettoClient.OnRefresh += delegate
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new Action(UpdateFilter));
+                }
+                else
+                {
+                    UpdateFilter();
+                }
+            };
         }
 
         /// <summary>
@@ -29,7 +41,6 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonRefresh_Click(object sender, EventArgs args)
         {
-            LibrettoClient.Instance.RefreshTransactions();
             UpdateFilter();
         }
 
@@ -62,25 +73,23 @@ namespace Libretto.Forms
                     continue;
                 }
 
-                Response operationResult;
-
                 if (transactionInformation is Order)
                 {
-                    operationResult = LibrettoClient.Instance.Proxy.DeleteOrder(transactionInformation.Id);
-                }
-                else
-                {
-                    operationResult = LibrettoClient.Instance.Proxy.DeletePurchase(transactionInformation.Id);
-                }
+                    var operationResult = LibrettoClient.Instance.Proxy.DeleteOrder(transactionInformation.Id);
 
-                if (operationResult == Response.Success)
-                {
-                    LibrettoClient.Instance.Transactions.RemoveAt(listItem.Index);
-                    transactionList.Items.Remove(listItem);
+                    if (operationResult != Response.Success)
+                    {
+                        MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var operationResult = LibrettoClient.Instance.Proxy.DeletePurchase(transactionInformation.Id);
+
+                    if (operationResult != Response.Success)
+                    {
+                        MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -241,16 +250,7 @@ namespace Libretto.Forms
 
             if (operationResult == Response.Success)
             {
-                var validatedOrder = LibrettoClient.Instance.Proxy.LookupOrder(orderInformation.Id);
-
-                if (validatedOrder == null)
-                {
-                    return;
-                }
-
                 LibrettoClient.Instance.RefreshBooks();
-                LibrettoClient.Instance.Transactions.Add(validatedOrder);
-                transactionList.Items.Add(ParseTransaction(validatedOrder));
             }
             else
             {
@@ -289,21 +289,7 @@ namespace Libretto.Forms
 
                 var operationResult = LibrettoClient.Instance.Proxy.CancelOrder(orderInformation.Id);
 
-                if (operationResult == Response.Success)
-                {
-                    var previousIndex = listItem.Index;
-
-                    transactionList.Items.Remove(listItem);
-
-                    if (previousIndex < 0)
-                    {
-                        return;
-                    }
-
-                    orderInformation.Status = Status.Cancelled;
-                    transactionList.Items.Insert(previousIndex, ParseTransaction(orderInformation));
-                }
-                else
+                if (operationResult != Response.Success)
                 {
                     MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -423,16 +409,7 @@ namespace Libretto.Forms
 
             if (operationResult == Response.Success)
             {
-                var validatedPurchase = LibrettoClient.Instance.Proxy.LookupPurchase(purchaseInformation.Id);
-
-                if (validatedPurchase == null)
-                {
-                    return;
-                }
-
                 LibrettoClient.Instance.RefreshBooks();
-                LibrettoClient.Instance.Transactions.Add(validatedPurchase);
-                transactionList.Items.Add(ParseTransaction(validatedPurchase));
             }
             else
             {

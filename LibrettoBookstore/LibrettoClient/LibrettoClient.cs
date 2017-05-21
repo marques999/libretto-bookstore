@@ -12,8 +12,14 @@ namespace Libretto
     /// <summary>
     /// 
     /// </summary>
+    [CallbackBehavior(UseSynchronizationContext = false)]
     internal class LibrettoClient : IStoreServiceCallback
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public static event Action OnRefresh;
+
         /// <summary>
         /// 
         /// </summary>
@@ -30,24 +36,6 @@ namespace Libretto
         private LibrettoClient()
         {
             Proxy = new StoreServiceClient(new InstanceContext(this));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void RefreshBooks()
-        {
-            Books = Proxy.ListBooks();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void RefreshTransactions()
-        {
-            Transactions.Clear();
-            Transactions.AddRange(Proxy.ListOrders());
-            Transactions.AddRange(Proxy.ListPurchases());
         }
 
         /// <summary>
@@ -123,7 +111,9 @@ namespace Libretto
                 }
 
                 RefreshBooks();
-                RefreshTransactions();
+                Transactions.Clear();
+                Transactions.AddRange(Proxy.ListOrders());
+                Transactions.AddRange(Proxy.ListPurchases());
                 SubscribeNotifications();
 
                 return true;
@@ -132,6 +122,14 @@ namespace Libretto
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshBooks()
+        {
+            Books = Proxy.ListBooks();
         }
 
         /// <summary>
@@ -172,7 +170,7 @@ namespace Libretto
         /// </summary>
         public void SubscribeNotifications()
         {
-            if (Proxy.State == CommunicationState.Opened)
+            if (Proxy.State != CommunicationState.Faulted)
             {
                 Proxy.Subscribe();
             }
@@ -193,27 +191,52 @@ namespace Libretto
         /// 
         /// </summary>
         /// <param name="transactionIdentifier"></param>
-        public void OnCancelOrder(Guid transactionIdentifier)
+        public void OnDeleteTransaction(Guid transactionIdentifier)
         {
-            System.Diagnostics.Debug.Print("OnCancelOrder()");
+            if (Transactions.RemoveAll(transactionInformation => transactionInformation.Id == transactionIdentifier) > 0)
+            {
+                OnRefresh?.Invoke();
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
-        public void OnDispatchOrder(Guid transactionIdentifier)
+        /// <param name="transactionInformation"></param>
+        public void OnUpdateTransaction(Transaction transactionInformation)
         {
-            System.Diagnostics.Debug.Print("OnDispatchOrder()");
+            var transactionIndex = Transactions.FindIndex(previousTransaction => previousTransaction.Id == transactionInformation.Id);
+
+            if (transactionIndex >= 0)
+            {
+                Transactions[transactionIndex] = transactionInformation;
+            }
+            else
+            {
+                Transactions.Add(transactionInformation);
+            }
+
+            OnRefresh?.Invoke();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="purchaseInformation"></param>
-        public void OnRegisterTransaction(Transaction purchaseInformation)
+        /// <param name="transactionInformation"></param>
+        public void OnRegisterTransaction(Transaction transactionInformation)
         {
-            System.Diagnostics.Debug.Print("OnRegisterTransaction()");
+            var transactionIndex = Transactions.FindIndex(previousTransaction => previousTransaction.Id == transactionInformation.Id);
+
+            if (transactionIndex >= 0)
+            {
+                Transactions[transactionIndex] = transactionInformation;
+            }
+            else
+            {
+                Transactions.Add(transactionInformation);
+            }
+
+            OnRefresh?.Invoke();
         }
     }
 }

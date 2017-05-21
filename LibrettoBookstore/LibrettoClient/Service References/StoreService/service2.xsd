@@ -250,17 +250,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="OnCancelOrder">
+  <xs:element name="OnDeleteTransaction">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="transactionIdentifier" type="q30:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="OnDispatchOrder">
+  <xs:element name="OnUpdateTransaction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="transactionIdentifier" type="q31:guid" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Libretto.Model" minOccurs="0" name="transactionInformation" nillable="true" type="q31:Transaction" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

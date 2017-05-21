@@ -16,14 +16,14 @@ namespace LibrettoWCF
         /// </summary>
         /// <param name="transactionIdentifier"></param>
         [OperationContract(IsOneWay = true)]
-        void OnCancelOrder(Guid transactionIdentifier);
+        void OnDeleteTransaction(Guid transactionIdentifier);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="transactionInformation"></param>
         [OperationContract(IsOneWay = true)]
-        void OnDispatchOrder(Guid transactionIdentifier);
+        void OnUpdateTransaction(Transaction transactionInformation);
 
         /// <summary>
         /// 

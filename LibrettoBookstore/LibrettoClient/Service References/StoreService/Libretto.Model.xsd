@@ -138,12 +138,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Transaction" nillable="true" type="tns:Transaction" />
-  <xs:complexType name="ArrayOfOrder">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
   <xs:complexType name="Order">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Transaction">
@@ -164,4 +158,10 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Status" nillable="true" type="tns:Status" />
+  <xs:complexType name="ArrayOfOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
 </xs:schema>

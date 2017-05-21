@@ -828,7 +828,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_OnCancelOrder_output_policy">
+  <wsp:Policy wsu:Id="TcpEndpoint_OnDeleteTransaction_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -847,7 +847,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="TcpEndpoint_OnDispatchOrder_output_policy">
+  <wsp:Policy wsu:Id="TcpEndpoint_OnUpdateTransaction_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1006,11 +1006,11 @@
   <wsdl:message name="IStoreService_InsertOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:InsertOrderResponse" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_OnCancelOrder_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnCancelOrder" />
+  <wsdl:message name="IStoreService_OnDeleteTransaction_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnDeleteTransaction" />
   </wsdl:message>
-  <wsdl:message name="IStoreService_OnDispatchOrder_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnDispatchOrder" />
+  <wsdl:message name="IStoreService_OnUpdateTransaction_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnUpdateTransaction" />
   </wsdl:message>
   <wsdl:message name="IStoreService_OnRegisterTransaction_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnRegisterTransaction" />
@@ -1092,11 +1092,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStoreService/InsertOrder" message="tns:IStoreService_InsertOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/InsertOrderResponse" message="tns:IStoreService_InsertOrder_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnCancelOrder">
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/OnCancelOrder" message="tns:IStoreService_OnCancelOrder_OutputCallbackMessage" />
+    <wsdl:operation name="OnDeleteTransaction">
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/OnDeleteTransaction" message="tns:IStoreService_OnDeleteTransaction_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnDispatchOrder">
-      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/OnDispatchOrder" message="tns:IStoreService_OnDispatchOrder_OutputCallbackMessage" />
+    <wsdl:operation name="OnUpdateTransaction">
+      <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/OnUpdateTransaction" message="tns:IStoreService_OnUpdateTransaction_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="OnRegisterTransaction">
       <wsdl:output wsaw:Action="http://tempuri.org/IStoreService/OnRegisterTransaction" message="tns:IStoreService_OnRegisterTransaction_OutputCallbackMessage" />
@@ -1314,17 +1314,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnCancelOrder">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/OnCancelOrder" style="document" />
+    <wsdl:operation name="OnDeleteTransaction">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/OnDeleteTransaction" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#TcpEndpoint_OnCancelOrder_output_policy" />
+        <wsp:PolicyReference URI="#TcpEndpoint_OnDeleteTransaction_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnDispatchOrder">
-      <soap12:operation soapAction="http://tempuri.org/IStoreService/OnDispatchOrder" style="document" />
+    <wsdl:operation name="OnUpdateTransaction">
+      <soap12:operation soapAction="http://tempuri.org/IStoreService/OnUpdateTransaction" style="document" />
       <wsdl:output>
-        <wsp:PolicyReference URI="#TcpEndpoint_OnDispatchOrder_output_policy" />
+        <wsp:PolicyReference URI="#TcpEndpoint_OnUpdateTransaction_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

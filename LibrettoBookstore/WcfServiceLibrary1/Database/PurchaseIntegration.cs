@@ -84,6 +84,7 @@ namespace LibrettoWCF.Database
                 purchaseInformation.Timestamp = DateTime.Now;
                 _context.Purchases.Add(purchaseInformation);
                 _context.SaveChanges();
+                StoreService.NotifyRegisterTransaction(purchaseInformation);
                 LibrettoHost.InvoiceQueue.Send(Invoice.FromPurchase(purchaseInformation));
             }
             catch
@@ -112,6 +113,7 @@ namespace LibrettoWCF.Database
 
                 _context.Purchases.Remove(sqlEntity);
                 _context.SaveChanges();
+                StoreService.NotifyDeleteTransaction(transactionIdentifier);
             }
             catch
             {

@@ -19,12 +19,7 @@ namespace LibrettoWCF
         /// <returns></returns>
         public Response DispatchOrder(Guid orderIdentifier)
         {
-            Response res = LibrettoDatabase.OrderIntegration.Satisfy(orderIdentifier);
-            if (res == Response.Success)
-            {
-                StoreService.NotifyDispatchOrder(orderIdentifier);
-            }
-            return res;
+            return LibrettoDatabase.OrderIntegration.Satisfy(orderIdentifier);
         }
     }
 }

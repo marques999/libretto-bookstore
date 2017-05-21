@@ -36,169 +36,152 @@ namespace Libretto.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.emailLabel = new System.Windows.Forms.Label();
-            this.emailField = new System.Windows.Forms.TextBox();
-            this.passwordLabel = new System.Windows.Forms.Label();
-            this.passwordField = new System.Windows.Forms.TextBox();
-            this.buttonCancel = new Libretto.Forms.FlatButton();
-            this.buttonValidate = new Libretto.Forms.FlatButton();
-            this.formPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.formPanel.SuspendLayout();
-            this.buttonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.SuspendLayout();
-            // 
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(LoginForm));
+            emailLabel = new Label();
+            emailField = new TextBox();
+            passwordLabel = new Label();
+            passwordField = new TextBox();
+            buttonCancel = new FlatButton();
+            buttonValidate = new FlatButton();
+            formPanel = new TableLayoutPanel();
+            buttonPanel = new TableLayoutPanel();
+            pictureBox = new PictureBox();
+            formPanel.SuspendLayout();
+            buttonPanel.SuspendLayout();
+            ((ISupportInitialize)(pictureBox)).BeginInit();
+            SuspendLayout();
+            //
             // emailLabel
-            // 
-            this.emailLabel.BackColor = System.Drawing.Color.LightGray;
-            this.emailLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.emailLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.emailLabel.Location = new System.Drawing.Point(8, 0);
-            this.emailLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(268, 27);
-            this.emailLabel.TabIndex = 0;
-            this.emailLabel.Text = "E-mail";
-            this.emailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            emailLabel.BackColor = Color.LightGray;
+            emailLabel.BorderStyle = BorderStyle.FixedSingle;
+            emailLabel.Dock = DockStyle.Fill;
+            emailLabel.Location = new Point(8, 0);
+            emailLabel.Margin = new Padding(8, 0, 8, 0);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new Size(268, 27);
+            emailLabel.Text = "E-mail";
+            emailLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // emailField
-            // 
-            this.emailField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.emailField.Location = new System.Drawing.Point(8, 35);
-            this.emailField.Margin = new System.Windows.Forms.Padding(8);
-            this.emailField.Name = "emailField";
-            this.emailField.Size = new System.Drawing.Size(268, 20);
-            this.emailField.TabIndex = 2;
-            this.emailField.Text = "admin@libretto.pt";
-            this.emailField.TextChanged += new System.EventHandler(this.FieldEmail_TextChanged);
-            this.emailField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldEmail_KeyPress);
-            // 
+            //
+            emailField.Dock = DockStyle.Fill;
+            emailField.Location = new Point(8, 35);
+            emailField.Margin = new Padding(8);
+            emailField.Name = "emailField";
+            emailField.Size = new Size(268, 20);
+            emailField.TabIndex = 2;
+            emailField.Text = "admin@libretto.pt";
+            emailField.TextChanged += new EventHandler(FieldEmail_TextChanged);
+            emailField.KeyPress += new KeyPressEventHandler(FieldEmail_KeyPress);
+            //
             // passwordLabel
-            // 
-            this.passwordLabel.BackColor = System.Drawing.Color.LightGray;
-            this.passwordLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.passwordLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.passwordLabel.Location = new System.Drawing.Point(8, 62);
-            this.passwordLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(268, 27);
-            this.passwordLabel.TabIndex = 3;
-            this.passwordLabel.Text = "Password";
-            this.passwordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            passwordLabel.BackColor = Color.LightGray;
+            passwordLabel.BorderStyle = BorderStyle.FixedSingle;
+            passwordLabel.Dock = DockStyle.Fill;
+            passwordLabel.Location = new Point(8, 62);
+            passwordLabel.Margin = new Padding(8, 0, 8, 0);
+            passwordLabel.Name = "passwordLabel";
+            passwordLabel.Size = new Size(268, 27);
+            passwordLabel.Text = "Password";
+            passwordLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
             // passwordField
-            // 
-            this.passwordField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.passwordField.Location = new System.Drawing.Point(8, 97);
-            this.passwordField.Margin = new System.Windows.Forms.Padding(8);
-            this.passwordField.Name = "passwordField";
-            this.passwordField.PasswordChar = '*';
-            this.passwordField.Size = new System.Drawing.Size(268, 20);
-            this.passwordField.TabIndex = 3;
-            this.passwordField.Text = "changemeplease";
-            this.passwordField.TextChanged += new System.EventHandler(this.FieldPassword_TextChanged);
-            this.passwordField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldPassword_KeyPress);
-            // 
+            //
+            passwordField.Dock = DockStyle.Fill;
+            passwordField.Location = new Point(8, 97);
+            passwordField.Margin = new Padding(8);
+            passwordField.Name = "passwordField";
+            passwordField.PasswordChar = '*';
+            passwordField.Size = new Size(268, 20);
+            passwordField.TabIndex = 3;
+            passwordField.Text = "changemeplease";
+            passwordField.TextChanged += new EventHandler(FieldPassword_TextChanged);
+            passwordField.KeyPress += new KeyPressEventHandler(FieldPassword_KeyPress);
+            //
             // buttonCancel
-            // 
-            this.buttonCancel.AutoSize = true;
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(145, 7);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(132, 26);
-            this.buttonCancel.TabIndex = 1;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
-            // 
+            //
+            buttonCancel.DialogResult = DialogResult.Cancel;
+            buttonCancel.Location = new Point(145, 7);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(132, 26);
+            buttonCancel.TabIndex = 1;
+            buttonCancel.Text = "Cancel";
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
+            //
             // buttonValidate
-            // 
-            this.buttonValidate.AutoSize = true;
-            this.buttonValidate.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonValidate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonValidate.Location = new System.Drawing.Point(7, 7);
-            this.buttonValidate.Name = "buttonValidate";
-            this.buttonValidate.Size = new System.Drawing.Size(132, 26);
-            this.buttonValidate.TabIndex = 0;
-            this.buttonValidate.Text = "Validate";
-            this.buttonValidate.UseVisualStyleBackColor = false;
-            this.buttonValidate.Click += new System.EventHandler(this.ButtonValidate_Click);
-            // 
+            //
+            buttonValidate.Location = new Point(7, 7);
+            buttonValidate.Name = "buttonValidate";
+            buttonValidate.Size = new Size(132, 26);
+            buttonValidate.TabIndex = 0;
+            buttonValidate.Text = "Validate";
+            buttonValidate.Click += new EventHandler(ButtonValidate_Click);
+            //
             // formPanel
-            // 
-            this.formPanel.ColumnCount = 1;
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.formPanel.Controls.Add(this.emailLabel, 0, 0);
-            this.formPanel.Controls.Add(this.emailField, 0, 1);
-            this.formPanel.Controls.Add(this.passwordLabel, 0, 2);
-            this.formPanel.Controls.Add(this.passwordField, 0, 3);
-            this.formPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formPanel.Location = new System.Drawing.Point(0, 242);
-            this.formPanel.Name = "formPanel";
-            this.formPanel.RowCount = 4;
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.formPanel.Size = new System.Drawing.Size(284, 129);
-            this.formPanel.TabIndex = 0;
-            // 
+            //
+            formPanel.ColumnCount = 1;
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            formPanel.Controls.Add(emailLabel, 0, 0);
+            formPanel.Controls.Add(emailField, 0, 1);
+            formPanel.Controls.Add(passwordLabel, 0, 2);
+            formPanel.Controls.Add(passwordField, 0, 3);
+            formPanel.Dock = DockStyle.Fill;
+            formPanel.Location = new Point(0, 242);
+            formPanel.Name = "formPanel";
+            formPanel.RowCount = 4;
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 27F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 27F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            formPanel.Size = new Size(284, 129);
+            //
             // buttonPanel
-            // 
-            this.buttonPanel.BackColor = System.Drawing.Color.DarkGray;
-            this.buttonPanel.ColumnCount = 2;
-            this.buttonPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.buttonPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.buttonPanel.Controls.Add(this.buttonValidate, 0, 0);
-            this.buttonPanel.Controls.Add(this.buttonCancel, 1, 0);
-            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 371);
-            this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.buttonPanel.RowCount = 1;
-            this.buttonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.buttonPanel.Size = new System.Drawing.Size(284, 40);
-            this.buttonPanel.TabIndex = 1;
-            // 
+            //
+            buttonPanel.BackColor = Color.DarkGray;
+            buttonPanel.ColumnCount = 2;
+            buttonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            buttonPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            buttonPanel.Controls.Add(buttonValidate, 0, 0);
+            buttonPanel.Controls.Add(buttonCancel, 1, 0);
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Location = new Point(0, 371);
+            buttonPanel.Name = "buttonPanel";
+            buttonPanel.Padding = new Padding(4);
+            buttonPanel.RowCount = 1;
+            buttonPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            buttonPanel.Size = new Size(284, 40);
+            //
             // pictureBox
-            // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox.Image")));
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(284, 242);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox.TabIndex = 2;
-            this.pictureBox.TabStop = false;
-            // 
+            //
+            pictureBox.Dock = DockStyle.Top;
+            pictureBox.Image = ((Image)(resources.GetObject("pictureBox.Image")));
+            pictureBox.Location = new Point(0, 0);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(284, 242);
+            pictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            //
             // LoginForm
-            // 
-            this.AcceptButton = this.buttonValidate;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(284, 411);
-            this.Controls.Add(this.formPanel);
-            this.Controls.Add(this.buttonPanel);
-            this.Controls.Add(this.pictureBox);
-            this.Icon = global::Libretto.Properties.Resources.librettoIcon;
-            this.Name = "LoginForm";
-            this.ShowIcon = true;
-            this.ShowInTaskbar = true;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Libretto Bookstore";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
-            this.formPanel.ResumeLayout(false);
-            this.formPanel.PerformLayout();
-            this.buttonPanel.ResumeLayout(false);
-            this.buttonPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.ResumeLayout(false);
-
+            //
+            AcceptButton = buttonValidate;
+            CancelButton = buttonCancel;
+            ClientSize = new Size(284, 411);
+            Controls.Add(formPanel);
+            Controls.Add(buttonPanel);
+            Controls.Add(pictureBox);
+            Icon = Resources.librettoIcon;
+            Name = "LoginForm";
+            ShowIcon = true;
+            ShowInTaskbar = true;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Libretto Bookstore";
+            Load += new EventHandler(LoginForm_Load);
+            formPanel.ResumeLayout(false);
+            formPanel.PerformLayout();
+            buttonPanel.ResumeLayout(false);
+            ((ISupportInitialize)(pictureBox)).EndInit();
+            ResumeLayout(false);
         }
 
         private Label emailLabel;
