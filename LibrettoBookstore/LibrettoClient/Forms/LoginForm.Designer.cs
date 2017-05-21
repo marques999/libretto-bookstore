@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
 using Libretto.Properties;
 
 namespace Libretto.Forms
@@ -55,7 +56,6 @@ namespace Libretto.Forms
             emailLabel.BackColor = Color.LightGray;
             emailLabel.BorderStyle = BorderStyle.FixedSingle;
             emailLabel.Dock = DockStyle.Fill;
-            emailLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             emailLabel.Location = new Point(8, 0);
             emailLabel.Margin = new Padding(8, 0, 8, 0);
             emailLabel.Name = "emailLabel";
@@ -80,7 +80,6 @@ namespace Libretto.Forms
             passwordLabel.BackColor = Color.LightGray;
             passwordLabel.BorderStyle = BorderStyle.FixedSingle;
             passwordLabel.Dock = DockStyle.Fill;
-            passwordLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             passwordLabel.Location = new Point(8, 62);
             passwordLabel.Margin = new Padding(8, 0, 8, 0);
             passwordLabel.Name = "passwordLabel";

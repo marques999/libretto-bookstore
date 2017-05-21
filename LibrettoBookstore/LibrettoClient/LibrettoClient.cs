@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Windows.Forms;
+
 using Libretto.Forms;
 using Libretto.Model;
 using Libretto.StoreService;
-using System.ServiceModel;
 
 namespace Libretto
 {
@@ -194,7 +195,7 @@ namespace Libretto
         /// <param name="customerInformation"></param>
         public void OnRegisterCustomer(Customer customerInformation)
         {
-            MessageBox.Show("OnRegisterCustomer()");
+            System.Diagnostics.Debug.Print("OnRegisterCustomer()");
         }
 
         /// <summary>

@@ -111,9 +111,9 @@ namespace Libretto.Forms
             orderQuantityInfo.Text = Convert.ToString(numberUnits);
 
             var remainingUnits = _bookInformation.Stock - numberUnits;
-           
+
             if (Information.Status == Status.Processing)
-            {           
+            {
                 statusProcessing.Checked = true;
                 bookStock.Text = Convert.ToString(remainingUnits);
             }

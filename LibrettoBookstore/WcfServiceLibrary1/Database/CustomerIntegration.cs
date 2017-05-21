@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Libretto.Model;
+
 using LibrettoWCF.Tools;
 
 namespace LibrettoWCF.Database

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Principal;
+
 using Libretto.Model;
 
 namespace LibrettoWCF.Database

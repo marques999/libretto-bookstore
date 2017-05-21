@@ -4,6 +4,7 @@ using System.Security.Permissions;
 using System.ServiceModel;
 
 using Libretto.Model;
+
 using LibrettoWCF.Database;
 
 namespace LibrettoWCF
