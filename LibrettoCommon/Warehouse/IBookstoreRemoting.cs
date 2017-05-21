@@ -12,8 +12,8 @@ namespace Libretto.Warehouse
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transactionIdentifier"></param>
+        /// <param name="orderIdentifier"></param>
         /// <returns></returns>
-        Response DispatchOrder(Guid transactionIdentifier);
+        Response DispatchOrder(Guid orderIdentifier);
     }
 }
