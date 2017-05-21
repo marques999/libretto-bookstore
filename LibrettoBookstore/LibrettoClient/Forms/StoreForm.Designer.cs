@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
 using Libretto.Properties;
 
 namespace Libretto.Forms
@@ -35,482 +36,388 @@ namespace Libretto.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.customerLayout = new System.Windows.Forms.Panel();
-            this.formPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.customerNameLabel = new Libretto.Forms.FlatLabel();
-            this.customerName = new System.Windows.Forms.ComboBox();
-            this.dateFromLabel = new Libretto.Forms.FlatLabel();
-            this.dateToLabel = new Libretto.Forms.FlatLabel();
-            this.dateFromPicker = new System.Windows.Forms.DateTimePicker();
-            this.dateToPicker = new System.Windows.Forms.DateTimePicker();
-            this.statusLabel = new Libretto.Forms.FlatLabel();
-            this.statusPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.checkWaiting = new System.Windows.Forms.CheckBox();
-            this.checkProcessing = new System.Windows.Forms.CheckBox();
-            this.checkDispatched = new System.Windows.Forms.CheckBox();
-            this.customerPanel = new System.Windows.Forms.Panel();
-            this.customerLabel = new Libretto.Forms.FlatHeader();
-            this.transactionsLayout = new System.Windows.Forms.Panel();
-            this.transactionList = new System.Windows.Forms.ListView();
-            this.columnDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnCustomer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ordersPanel = new System.Windows.Forms.Panel();
-            this.transactionsLabel = new Libretto.Forms.FlatHeader();
-            this.buttonPanel = new System.Windows.Forms.Panel();
-            this.buttonLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonRegister = new Libretto.Forms.FlatButton();
-            this.buttonOrder = new Libretto.Forms.FlatButton();
-            this.buttonCancel = new Libretto.Forms.FlatButton();
-            this.buttonDelete = new Libretto.Forms.FlatButton();
-            this.buttonManage = new Libretto.Forms.FlatButton();
-            this.buttonLogout = new Libretto.Forms.FlatButton();
-            this.customerLayout.SuspendLayout();
-            this.formPanel.SuspendLayout();
-            this.statusPanel.SuspendLayout();
-            this.customerPanel.SuspendLayout();
-            this.transactionsLayout.SuspendLayout();
-            this.ordersPanel.SuspendLayout();
-            this.buttonPanel.SuspendLayout();
-            this.buttonLayout.SuspendLayout();
-            this.SuspendLayout();
-            // 
+            customerLayout = new Panel();
+            formPanel = new TableLayoutPanel();
+            customerNameLabel = new FlatLabel();
+            customerName = new ComboBox();
+            dateFromLabel = new FlatLabel();
+            dateToLabel = new FlatLabel();
+            dateFromPicker = new DateTimePicker();
+            dateToPicker = new DateTimePicker();
+            statusLabel = new FlatLabel();
+            statusPanel = new FlowLayoutPanel();
+            checkWaiting = new CheckBox();
+            checkProcessing = new CheckBox();
+            checkDispatched = new CheckBox();
+            customerPanel = new Panel();
+            customerLabel = new FlatHeader();
+            transactionsLayout = new Panel();
+            transactionList = new ListView();
+            columnDate = new ColumnHeader();
+            columnTitle = new ColumnHeader();
+            columnCustomer = new ColumnHeader();
+            columnQuantity = new ColumnHeader();
+            columnTotal = new ColumnHeader();
+            columnStatus = new ColumnHeader();
+            transactionsPanel = new Panel();
+            transactionsLabel = new FlatHeader();
+            buttonPanel = new Panel();
+            buttonLayout = new FlowLayoutPanel();
+            buttonRegister = new FlatButton();
+            buttonOrder = new FlatButton();
+            buttonCancel = new FlatButton();
+            buttonDelete = new FlatButton();
+            buttonManage = new FlatButton();
+            buttonLogout = new FlatButton();
+            customerLayout.SuspendLayout();
+            formPanel.SuspendLayout();
+            statusPanel.SuspendLayout();
+            customerPanel.SuspendLayout();
+            transactionsLayout.SuspendLayout();
+            transactionsPanel.SuspendLayout();
+            buttonPanel.SuspendLayout();
+            buttonLayout.SuspendLayout();
+            SuspendLayout();
+            //
             // customerLayout
-            // 
-            this.customerLayout.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.customerLayout.Controls.Add(this.formPanel);
-            this.customerLayout.Controls.Add(this.customerPanel);
-            this.customerLayout.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerLayout.Location = new System.Drawing.Point(0, 0);
-            this.customerLayout.Name = "customerLayout";
-            this.customerLayout.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
-            this.customerLayout.Size = new System.Drawing.Size(704, 96);
-            this.customerLayout.TabIndex = 1;
-            // 
+            //
+            customerLayout.BackColor = SystemColors.ControlDark;
+            customerLayout.Controls.Add(formPanel);
+            customerLayout.Controls.Add(customerPanel);
+            customerLayout.Dock = DockStyle.Top;
+            customerLayout.Location = new Point(0, 0);
+            customerLayout.Name = "customerLayout";
+            customerLayout.Padding = new Padding(4, 4, 4, 0);
+            customerLayout.Size = new Size(704, 96);
+            //
             // formPanel
-            // 
-            this.formPanel.BackColor = System.Drawing.Color.Silver;
-            this.formPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.formPanel.ColumnCount = 4;
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.formPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
-            this.formPanel.Controls.Add(this.customerNameLabel, 0, 0);
-            this.formPanel.Controls.Add(this.customerName, 1, 0);
-            this.formPanel.Controls.Add(this.dateFromLabel, 2, 0);
-            this.formPanel.Controls.Add(this.dateToLabel, 2, 1);
-            this.formPanel.Controls.Add(this.dateFromPicker, 3, 0);
-            this.formPanel.Controls.Add(this.dateToPicker, 3, 1);
-            this.formPanel.Controls.Add(this.statusLabel, 0, 1);
-            this.formPanel.Controls.Add(this.statusPanel, 1, 1);
-            this.formPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formPanel.Location = new System.Drawing.Point(4, 28);
-            this.formPanel.Name = "formPanel";
-            this.formPanel.RowCount = 2;
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.formPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.formPanel.Size = new System.Drawing.Size(696, 68);
-            this.formPanel.TabIndex = 0;
-            // 
+            //
+            formPanel.BackColor = Color.Silver;
+            formPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            formPanel.ColumnCount = 4;
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
+            formPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 320F));
+            formPanel.Controls.Add(customerNameLabel, 0, 0);
+            formPanel.Controls.Add(customerName, 1, 0);
+            formPanel.Controls.Add(dateFromLabel, 2, 0);
+            formPanel.Controls.Add(dateToLabel, 2, 1);
+            formPanel.Controls.Add(dateFromPicker, 3, 0);
+            formPanel.Controls.Add(dateToPicker, 3, 1);
+            formPanel.Controls.Add(statusLabel, 0, 1);
+            formPanel.Controls.Add(statusPanel, 1, 1);
+            formPanel.Dock = DockStyle.Fill;
+            formPanel.Location = new Point(4, 28);
+            formPanel.Name = "formPanel";
+            formPanel.RowCount = 2;
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            formPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            formPanel.Size = new Size(696, 68);
+            //
             // customerNameLabel
-            // 
-            this.customerNameLabel.AutoSize = true;
-            this.customerNameLabel.BackColor = System.Drawing.Color.Silver;
-            this.customerNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.customerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerNameLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.customerNameLabel.Location = new System.Drawing.Point(1, 1);
-            this.customerNameLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.customerNameLabel.Name = "customerNameLabel";
-            this.customerNameLabel.Size = new System.Drawing.Size(50, 32);
-            this.customerNameLabel.TabIndex = 0;
-            this.customerNameLabel.Text = "Name";
-            this.customerNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            customerNameLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            customerNameLabel.ForeColor = SystemColors.ControlLightLight;
+            customerNameLabel.Location = new Point(4, 1);
+            customerNameLabel.Name = "customerNameLabel";
+            customerNameLabel.Size = new Size(44, 32);
+            customerNameLabel.Text = "Name";
+            //
             // customerName
-            // 
-            this.customerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.customerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.customerName.Location = new System.Drawing.Point(58, 7);
-            this.customerName.Margin = new System.Windows.Forms.Padding(6);
-            this.customerName.Name = "customerName";
-            this.customerName.Size = new System.Drawing.Size(259, 21);
-            this.customerName.TabIndex = 6;
-            this.customerName.SelectedIndexChanged += new System.EventHandler(this.ComboCustomer_SelectedIndexChanged);
-            // 
+            //
+            customerName.Dock = DockStyle.Fill;
+            customerName.DropDownStyle = ComboBoxStyle.DropDownList;
+            customerName.Location = new Point(58, 7);
+            customerName.Margin = new Padding(6);
+            customerName.Name = "customerName";
+            customerName.Size = new Size(259, 21);
+            customerName.TabIndex = 6;
+            customerName.SelectedIndexChanged += new EventHandler(ComboCustomer_SelectedIndexChanged);
+            //
             // dateFromLabel
-            // 
-            this.dateFromLabel.AutoSize = true;
-            this.dateFromLabel.BackColor = System.Drawing.Color.Silver;
-            this.dateFromLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateFromLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateFromLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dateFromLabel.Location = new System.Drawing.Point(324, 1);
-            this.dateFromLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.dateFromLabel.Name = "dateFromLabel";
-            this.dateFromLabel.Size = new System.Drawing.Size(50, 32);
-            this.dateFromLabel.TabIndex = 7;
-            this.dateFromLabel.Text = "From";
-            this.dateFromLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            dateFromLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dateFromLabel.ForeColor = SystemColors.ControlLightLight;
+            dateFromLabel.Location = new Point(327, 1);
+            dateFromLabel.Name = "dateFromLabel";
+            dateFromLabel.Size = new Size(44, 32);
+            dateFromLabel.Text = "From";
+            //
             // dateToLabel
-            // 
-            this.dateToLabel.AutoSize = true;
-            this.dateToLabel.BackColor = System.Drawing.Color.Silver;
-            this.dateToLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateToLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateToLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dateToLabel.Location = new System.Drawing.Point(324, 34);
-            this.dateToLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.dateToLabel.Name = "dateToLabel";
-            this.dateToLabel.Size = new System.Drawing.Size(50, 33);
-            this.dateToLabel.TabIndex = 8;
-            this.dateToLabel.Text = "Until";
-            this.dateToLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            dateToLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dateToLabel.ForeColor = SystemColors.ControlLightLight;
+            dateToLabel.Location = new Point(327, 34);
+            dateToLabel.Name = "dateToLabel";
+            dateToLabel.Size = new Size(44, 33);
+            dateToLabel.Text = "Until";
+            //
             // dateFromPicker
-            // 
-            this.dateFromPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateFromPicker.Location = new System.Drawing.Point(381, 7);
-            this.dateFromPicker.Margin = new System.Windows.Forms.Padding(6);
-            this.dateFromPicker.Name = "dateFromPicker";
-            this.dateFromPicker.ShowCheckBox = true;
-            this.dateFromPicker.Size = new System.Drawing.Size(308, 20);
-            this.dateFromPicker.TabIndex = 10;
-            this.dateFromPicker.ValueChanged += new System.EventHandler(this.PickerFrom_ValueChanged);
-            // 
+            //
+            dateFromPicker.Dock = DockStyle.Fill;
+            dateFromPicker.Location = new Point(381, 7);
+            dateFromPicker.Margin = new Padding(6);
+            dateFromPicker.Name = "dateFromPicker";
+            dateFromPicker.ShowCheckBox = true;
+            dateFromPicker.Size = new Size(308, 20);
+            dateFromPicker.TabIndex = 10;
+            dateFromPicker.ValueChanged += new EventHandler(PickerFrom_ValueChanged);
+            //
             // dateToPicker
-            // 
-            this.dateToPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateToPicker.Location = new System.Drawing.Point(381, 40);
-            this.dateToPicker.Margin = new System.Windows.Forms.Padding(6);
-            this.dateToPicker.Name = "dateToPicker";
-            this.dateToPicker.ShowCheckBox = true;
-            this.dateToPicker.Size = new System.Drawing.Size(308, 20);
-            this.dateToPicker.TabIndex = 11;
-            this.dateToPicker.ValueChanged += new System.EventHandler(this.PickerUntil_ValueChanged);
-            // 
+            //
+            dateToPicker.Dock = DockStyle.Fill;
+            dateToPicker.Location = new Point(381, 40);
+            dateToPicker.Margin = new Padding(6);
+            dateToPicker.Name = "dateToPicker";
+            dateToPicker.ShowCheckBox = true;
+            dateToPicker.Size = new Size(308, 20);
+            dateToPicker.TabIndex = 11;
+            dateToPicker.ValueChanged += new EventHandler(PickerUntil_ValueChanged);
+            //
             // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.BackColor = System.Drawing.Color.Silver;
-            this.statusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.statusLabel.Location = new System.Drawing.Point(1, 34);
-            this.statusLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(50, 33);
-            this.statusLabel.TabIndex = 12;
-            this.statusLabel.Text = "Status";
-            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            statusLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            statusLabel.ForeColor = SystemColors.ControlLightLight;
+            statusLabel.Location = new Point(4, 5);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(44, 33);
+            statusLabel.Text = "Status";
+            //
             // statusPanel
-            // 
-            this.statusPanel.Controls.Add(this.checkWaiting);
-            this.statusPanel.Controls.Add(this.checkProcessing);
-            this.statusPanel.Controls.Add(this.checkDispatched);
-            this.statusPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusPanel.Location = new System.Drawing.Point(58, 40);
-            this.statusPanel.Margin = new System.Windows.Forms.Padding(6);
-            this.statusPanel.Name = "statusPanel";
-            this.statusPanel.Size = new System.Drawing.Size(259, 21);
-            this.statusPanel.TabIndex = 13;
-            // 
+            //
+            statusPanel.Controls.Add(checkWaiting);
+            statusPanel.Controls.Add(checkProcessing);
+            statusPanel.Controls.Add(checkDispatched);
+            statusPanel.Dock = DockStyle.Fill;
+            statusPanel.Location = new Point(58, 40);
+            statusPanel.Margin = new Padding(6);
+            statusPanel.Name = "statusPanel";
+            statusPanel.Size = new Size(259, 21);
+            //
             // checkWaiting
-            // 
-            this.checkWaiting.Checked = true;
-            this.checkWaiting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkWaiting.Location = new System.Drawing.Point(3, 3);
-            this.checkWaiting.Name = "checkWaiting";
-            this.checkWaiting.Size = new System.Drawing.Size(62, 17);
-            this.checkWaiting.TabIndex = 7;
-            this.checkWaiting.Text = "Waiting";
-            this.checkWaiting.CheckedChanged += new System.EventHandler(this.CheckWaiting_CheckedChanged);
-            // 
+            //
+            checkWaiting.Checked = true;
+            checkWaiting.CheckState = CheckState.Checked;
+            checkWaiting.Location = new Point(3, 3);
+            checkWaiting.Name = "checkWaiting";
+            checkWaiting.Size = new Size(62, 17);
+            checkWaiting.TabIndex = 7;
+            checkWaiting.Text = "Waiting";
+            checkWaiting.CheckedChanged += new EventHandler(CheckWaiting_CheckedChanged);
+            //
             // checkProcessing
-            // 
-            this.checkProcessing.Checked = true;
-            this.checkProcessing.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkProcessing.Location = new System.Drawing.Point(71, 3);
-            this.checkProcessing.Name = "checkProcessing";
-            this.checkProcessing.Size = new System.Drawing.Size(78, 17);
-            this.checkProcessing.TabIndex = 8;
-            this.checkProcessing.Text = "Processing";
-            this.checkProcessing.CheckedChanged += new System.EventHandler(this.CheckProcessing_CheckedChanged);
-            // 
+            //
+            checkProcessing.Checked = true;
+            checkProcessing.CheckState = CheckState.Checked;
+            checkProcessing.Location = new Point(71, 3);
+            checkProcessing.Name = "checkProcessing";
+            checkProcessing.Size = new Size(78, 17);
+            checkProcessing.TabIndex = 8;
+            checkProcessing.Text = "Processing";
+            checkProcessing.CheckedChanged += new EventHandler(CheckProcessing_CheckedChanged);
+            //
             // checkDispatched
-            // 
-            this.checkDispatched.Checked = true;
-            this.checkDispatched.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkDispatched.Location = new System.Drawing.Point(155, 3);
-            this.checkDispatched.Name = "checkDispatched";
-            this.checkDispatched.Size = new System.Drawing.Size(80, 17);
-            this.checkDispatched.TabIndex = 9;
-            this.checkDispatched.Text = "Dispatched";
-            this.checkDispatched.CheckedChanged += new System.EventHandler(this.CheckDispatched_CheckedChanged);
-            // 
+            //
+            checkDispatched.Checked = true;
+            checkDispatched.CheckState = CheckState.Checked;
+            checkDispatched.Location = new Point(155, 3);
+            checkDispatched.Name = "checkDispatched";
+            checkDispatched.Size = new Size(80, 17);
+            checkDispatched.TabIndex = 9;
+            checkDispatched.Text = "Dispatched";
+            checkDispatched.CheckedChanged += new EventHandler(CheckDispatched_CheckedChanged);
+            //
             // customerPanel
-            // 
-            this.customerPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.customerPanel.Controls.Add(this.customerLabel);
-            this.customerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerPanel.Location = new System.Drawing.Point(4, 4);
-            this.customerPanel.Name = "customerPanel";
-            this.customerPanel.Size = new System.Drawing.Size(696, 24);
-            this.customerPanel.TabIndex = 1;
-            // 
+            //
+            customerPanel.BackColor = SystemColors.ControlDarkDark;
+            customerPanel.Controls.Add(customerLabel);
+            customerPanel.Dock = DockStyle.Top;
+            customerPanel.Location = new Point(4, 4);
+            customerPanel.Name = "customerPanel";
+            customerPanel.Size = new Size(696, 24);
+            //
             // customerLabel
-            // 
-            this.customerLabel.AutoSize = true;
-            this.customerLabel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.customerLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.customerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerLabel.ForeColor = System.Drawing.Color.Silver;
-            this.customerLabel.Location = new System.Drawing.Point(0, 0);
-            this.customerLabel.Margin = new System.Windows.Forms.Padding(2);
-            this.customerLabel.Name = "customerLabel";
-            this.customerLabel.Size = new System.Drawing.Size(59, 13);
-            this.customerLabel.TabIndex = 0;
-            this.customerLabel.Text = "Customer";
-            this.customerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            customerLabel.Dock = DockStyle.None;
+            customerLabel.Location = new Point(7, 5);
+            customerLabel.Name = "customerLabel";
+            customerLabel.Size = new Size(59, 13);
+            customerLabel.Text = "Customer";
+            //
             // transactionsLayout
-            // 
-            this.transactionsLayout.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.transactionsLayout.Controls.Add(this.transactionList);
-            this.transactionsLayout.Controls.Add(this.ordersPanel);
-            this.transactionsLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transactionsLayout.Location = new System.Drawing.Point(0, 96);
-            this.transactionsLayout.Name = "transactionsLayout";
-            this.transactionsLayout.Padding = new System.Windows.Forms.Padding(4);
-            this.transactionsLayout.Size = new System.Drawing.Size(704, 422);
-            this.transactionsLayout.TabIndex = 0;
-            // 
+            //
+            transactionsLayout.BackColor = SystemColors.ControlDark;
+            transactionsLayout.Controls.Add(transactionList);
+            transactionsLayout.Controls.Add(transactionsPanel);
+            transactionsLayout.Dock = DockStyle.Fill;
+            transactionsLayout.Location = new Point(0, 96);
+            transactionsLayout.Name = "transactionsLayout";
+            transactionsLayout.Padding = new Padding(4);
+            transactionsLayout.Size = new Size(704, 422);
+            //
             // transactionList
-            // 
-            this.transactionList.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.transactionList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnDate,
-            this.columnTitle,
-            this.columnCustomer,
-            this.columnQuantity,
-            this.columnTotal,
-            this.columnStatus});
-            this.transactionList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transactionList.FullRowSelect = true;
-            this.transactionList.GridLines = true;
-            this.transactionList.Location = new System.Drawing.Point(4, 28);
-            this.transactionList.Name = "transactionList";
-            this.transactionList.Size = new System.Drawing.Size(696, 390);
-            this.transactionList.TabIndex = 12;
-            this.transactionList.UseCompatibleStateImageBehavior = false;
-            this.transactionList.View = System.Windows.Forms.View.Details;
-            this.transactionList.SelectedIndexChanged += new System.EventHandler(this.OrderList_SelectedIndexChanged);
-            this.transactionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OrdersList_DoubleClicked);
-            // 
+            //
+            transactionList.BackColor = SystemColors.ControlLight;
+            transactionList.Columns.AddRange(new ColumnHeader[] { columnDate, columnTitle, columnCustomer, columnQuantity, columnTotal, columnStatus });
+            transactionList.Dock = DockStyle.Fill;
+            transactionList.FullRowSelect = true;
+            transactionList.GridLines = true;
+            transactionList.Location = new Point(4, 28);
+            transactionList.Name = "transactionList";
+            transactionList.Size = new Size(696, 390);
+            transactionList.TabIndex = 12;
+            transactionList.View = View.Details;
+            transactionList.SelectedIndexChanged += new EventHandler(OrderList_SelectedIndexChanged);
+            transactionList.MouseDoubleClick += new MouseEventHandler(OrdersList_DoubleClicked);
+            //
             // columnDate
-            // 
-            this.columnDate.Text = "Date";
-            this.columnDate.Width = 100;
-            // 
-            // columnTitle
-            // 
-            this.columnTitle.Text = "Title";
-            this.columnTitle.Width = 200;
-            // 
-            // columnCustomer
-            // 
-            this.columnCustomer.Text = "Customer";
-            this.columnCustomer.Width = 150;
-            // 
-            // columnQuantity
-            // 
-            this.columnQuantity.Text = "Quantity";
-            this.columnQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnQuantity.Width = 64;
-            // 
-            // columnTotal
-            // 
-            this.columnTotal.Text = "Total";
-            this.columnTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnTotal.Width = 80;
-            // 
-            // columnStatus
-            // 
-            this.columnStatus.Text = "Status";
-            this.columnStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnStatus.Width = 96;
-            // 
+            //
+            columnDate.Text = "Date";
+            columnDate.Width = 100;
+            columnTitle.Text = "Title";
+            columnTitle.Width = 200;
+            columnCustomer.Text = "Customer";
+            columnCustomer.Width = 150;
+            columnQuantity.Text = "Quantity";
+            columnQuantity.TextAlign = HorizontalAlignment.Center;
+            columnQuantity.Width = 64;
+            columnTotal.Text = "Total";
+            columnTotal.TextAlign = HorizontalAlignment.Center;
+            columnTotal.Width = 80;
+            columnStatus.Text = "Status";
+            columnStatus.TextAlign = HorizontalAlignment.Center;
+            columnStatus.Width = 96;
+            //
             // ordersPanel
-            // 
-            this.ordersPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ordersPanel.Controls.Add(this.transactionsLabel);
-            this.ordersPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ordersPanel.Location = new System.Drawing.Point(4, 4);
-            this.ordersPanel.Name = "ordersPanel";
-            this.ordersPanel.Size = new System.Drawing.Size(696, 24);
-            this.ordersPanel.TabIndex = 13;
-            // 
+            //
+            transactionsPanel.BackColor = SystemColors.ControlDarkDark;
+            transactionsPanel.Controls.Add(transactionsLabel);
+            transactionsPanel.Dock = DockStyle.Top;
+            transactionsPanel.Location = new Point(4, 4);
+            transactionsPanel.Name = "transactionsPanel";
+            transactionsPanel.Size = new Size(696, 24);
+            //
             // transactionsLabel
-            // 
-            this.transactionsLabel.AutoSize = true;
-            this.transactionsLabel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.transactionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transactionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transactionsLabel.ForeColor = System.Drawing.Color.Silver;
-            this.transactionsLabel.Location = new System.Drawing.Point(0, 0);
-            this.transactionsLabel.Margin = new System.Windows.Forms.Padding(2);
-            this.transactionsLabel.Name = "transactionsLabel";
-            this.transactionsLabel.Size = new System.Drawing.Size(80, 13);
-            this.transactionsLabel.TabIndex = 0;
-            this.transactionsLabel.Text = "Transactions";
-            this.transactionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            transactionsLabel.Dock = DockStyle.None;
+            transactionsLabel.Location = new Point(4, 5);
+            transactionsLabel.Name = "transactionsLabel";
+            transactionsLabel.Size = new Size(80, 13);
+            transactionsLabel.Text = "Transactions";
+            //
             // buttonPanel
-            // 
-            this.buttonPanel.BackColor = System.Drawing.Color.Gray;
-            this.buttonPanel.Controls.Add(this.buttonLayout);
-            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 518);
-            this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.buttonPanel.Size = new System.Drawing.Size(704, 41);
-            this.buttonPanel.TabIndex = 2;
-            // 
+            //
+            buttonPanel.BackColor = Color.Gray;
+            buttonPanel.Controls.Add(buttonLayout);
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Location = new Point(0, 518);
+            buttonPanel.Name = "buttonPanel";
+            buttonPanel.Padding = new Padding(4);
+            buttonPanel.Size = new Size(704, 41);
+            //
             // buttonLayout
-            // 
-            this.buttonLayout.Controls.Add(this.buttonRegister);
-            this.buttonLayout.Controls.Add(this.buttonOrder);
-            this.buttonLayout.Controls.Add(this.buttonCancel);
-            this.buttonLayout.Controls.Add(this.buttonDelete);
-            this.buttonLayout.Controls.Add(this.buttonManage);
-            this.buttonLayout.Controls.Add(this.buttonLogout);
-            this.buttonLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonLayout.Location = new System.Drawing.Point(4, 4);
-            this.buttonLayout.Name = "buttonLayout";
-            this.buttonLayout.Size = new System.Drawing.Size(696, 33);
-            this.buttonLayout.TabIndex = 0;
-            // 
+            //
+            buttonLayout.Controls.Add(buttonRegister);
+            buttonLayout.Controls.Add(buttonOrder);
+            buttonLayout.Controls.Add(buttonCancel);
+            buttonLayout.Controls.Add(buttonDelete);
+            buttonLayout.Controls.Add(buttonManage);
+            buttonLayout.Controls.Add(buttonLogout);
+            buttonLayout.Dock = DockStyle.Fill;
+            buttonLayout.Location = new Point(4, 4);
+            buttonLayout.Name = "buttonLayout";
+            buttonLayout.Size = new Size(696, 33);
+            //
             // buttonRegister
-            // 
-            this.buttonRegister.AutoSize = true;
-            this.buttonRegister.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRegister.Location = new System.Drawing.Point(0, 3);
-            this.buttonRegister.Margin = new System.Windows.Forms.Padding(0, 3, 2, 3);
-            this.buttonRegister.Name = "buttonRegister";
-            this.buttonRegister.Size = new System.Drawing.Size(120, 28);
-            this.buttonRegister.TabIndex = 0;
-            this.buttonRegister.Text = "Register Purchase";
-            this.buttonRegister.UseVisualStyleBackColor = false;
-            this.buttonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
-            // 
+            //
+            buttonRegister.Location = new Point(0, 3);
+            buttonRegister.Margin = new Padding(0, 3, 2, 3);
+            buttonRegister.Name = "buttonRegister";
+            buttonRegister.Size = new Size(120, 28);
+            buttonRegister.TabIndex = 0;
+            buttonRegister.Text = "Register Purchase";
+            buttonRegister.Click += new EventHandler(ButtonRegister_Click);
+            //
             // buttonOrder
-            // 
-            this.buttonOrder.AutoSize = true;
-            this.buttonOrder.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonOrder.Location = new System.Drawing.Point(124, 3);
-            this.buttonOrder.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonOrder.Name = "buttonOrder";
-            this.buttonOrder.Size = new System.Drawing.Size(120, 28);
-            this.buttonOrder.TabIndex = 1;
-            this.buttonOrder.Text = "Place Order";
-            this.buttonOrder.UseVisualStyleBackColor = false;
-            this.buttonOrder.Click += new System.EventHandler(this.ButtonOrder_Click);
-            // 
+            //
+            buttonOrder.Location = new Point(124, 3);
+            buttonOrder.Margin = new Padding(2, 3, 2, 3);
+            buttonOrder.Name = "buttonOrder";
+            buttonOrder.Size = new Size(120, 28);
+            buttonOrder.TabIndex = 1;
+            buttonOrder.Text = "Place Order";
+            buttonOrder.Click += new EventHandler(ButtonOrder_Click);
+            //
             // buttonCancel
-            // 
-            this.buttonCancel.AutoSize = true;
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Location = new System.Drawing.Point(248, 3);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(105, 28);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
-            // 
+            //
+            buttonCancel.Location = new Point(248, 3);
+            buttonCancel.Margin = new Padding(2, 3, 2, 3);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(105, 28);
+            buttonCancel.TabIndex = 2;
+            buttonCancel.Text = "Cancel";
+            buttonCancel.Click += new EventHandler(ButtonCancel_Click);
+            //
             // buttonDelete
-            // 
-            this.buttonDelete.AutoSize = true;
-            this.buttonDelete.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Location = new System.Drawing.Point(357, 3);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(105, 28);
-            this.buttonDelete.TabIndex = 3;
-            this.buttonDelete.Text = "Delete";
-            this.buttonDelete.UseVisualStyleBackColor = false;
-            this.buttonDelete.Click += new System.EventHandler(this.ButtonDelete_Click);
-            // 
+            //
+            buttonDelete.Location = new Point(357, 3);
+            buttonDelete.Margin = new Padding(2, 3, 2, 3);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(105, 28);
+            buttonDelete.TabIndex = 3;
+            buttonDelete.Text = "Delete";
+            buttonDelete.Click += new EventHandler(ButtonDelete_Click);
+            //
             // buttonManage
-            // 
-            this.buttonManage.AutoSize = true;
-            this.buttonManage.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonManage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonManage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonManage.Location = new System.Drawing.Point(466, 3);
-            this.buttonManage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonManage.Name = "buttonManage";
-            this.buttonManage.Size = new System.Drawing.Size(120, 28);
-            this.buttonManage.TabIndex = 4;
-            this.buttonManage.Text = "Manage Books";
-            this.buttonManage.UseVisualStyleBackColor = false;
-            this.buttonManage.Click += new System.EventHandler(this.ButtonManage_Click);
-            // 
+            //
+            buttonManage.Location = new Point(466, 3);
+            buttonManage.Margin = new Padding(2, 3, 2, 3);
+            buttonManage.Name = "buttonManage";
+            buttonManage.Size = new Size(120, 28);
+            buttonManage.TabIndex = 4;
+            buttonManage.Text = "Manage Books";
+            buttonManage.Click += new EventHandler(ButtonManage_Click);
+            //
             // buttonLogout
-            // 
-            this.buttonLogout.AutoSize = true;
-            this.buttonLogout.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLogout.Location = new System.Drawing.Point(590, 3);
-            this.buttonLogout.Margin = new System.Windows.Forms.Padding(2, 3, 0, 3);
-            this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(105, 28);
-            this.buttonLogout.TabIndex = 5;
-            this.buttonLogout.Text = "Logout";
-            this.buttonLogout.UseVisualStyleBackColor = false;
-            this.buttonLogout.Click += new System.EventHandler(this.ButtonLogout_Click);
-            // 
+            //
+            buttonLogout.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonLogout.Location = new Point(590, 3);
+            buttonLogout.Margin = new Padding(2, 3, 0, 3);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Size = new Size(105, 28);
+            buttonLogout.TabIndex = 5;
+            buttonLogout.Text = "Logout";
+            buttonLogout.Click += new EventHandler(ButtonLogout_Click);
+            //
             // StoreForm
-            // 
-            this.AcceptButton = this.buttonRegister;
-            this.ClientSize = new System.Drawing.Size(704, 559);
-            this.Controls.Add(this.transactionsLayout);
-            this.Controls.Add(this.customerLayout);
-            this.Controls.Add(this.buttonPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::Libretto.Properties.Resources.librettoIcon;
-            this.MaximizeBox = false;
-            this.Name = "StoreForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Libretto Bookstore";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StoreForm_FormClosed);
-            this.Load += new System.EventHandler(this.StoreForm_Load);
-            this.customerLayout.ResumeLayout(false);
-            this.formPanel.ResumeLayout(false);
-            this.formPanel.PerformLayout();
-            this.statusPanel.ResumeLayout(false);
-            this.customerPanel.ResumeLayout(false);
-            this.customerPanel.PerformLayout();
-            this.transactionsLayout.ResumeLayout(false);
-            this.ordersPanel.ResumeLayout(false);
-            this.ordersPanel.PerformLayout();
-            this.buttonPanel.ResumeLayout(false);
-            this.buttonLayout.ResumeLayout(false);
-            this.buttonLayout.PerformLayout();
-            this.ResumeLayout(false);
-
+            //
+            AcceptButton = buttonRegister;
+            ClientSize = new Size(704, 559);
+            Controls.Add(transactionsLayout);
+            Controls.Add(customerLayout);
+            Controls.Add(buttonPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = Resources.librettoIcon;
+            MaximizeBox = false;
+            Name = "StoreForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Libretto Bookstore";
+            FormClosed += new FormClosedEventHandler(StoreForm_FormClosed);
+            Load += new EventHandler(StoreForm_Load);
+            customerLayout.ResumeLayout(false);
+            formPanel.ResumeLayout(false);
+            formPanel.PerformLayout();
+            statusPanel.ResumeLayout(false);
+            customerPanel.ResumeLayout(false);
+            customerPanel.PerformLayout();
+            transactionsLayout.ResumeLayout(false);
+            transactionsPanel.ResumeLayout(false);
+            transactionsPanel.PerformLayout();
+            buttonPanel.ResumeLayout(false);
+            buttonLayout.ResumeLayout(false);
+            buttonLayout.PerformLayout();
+            ResumeLayout(false);
         }
 
         private Panel customerLayout;
@@ -525,7 +432,7 @@ namespace Libretto.Forms
         private DateTimePicker dateFromPicker;
         private DateTimePicker dateToPicker;
         private Panel transactionsLayout;
-        private Panel ordersPanel;
+        private Panel transactionsPanel;
         private FlatHeader transactionsLabel;
         private FlowLayoutPanel statusPanel;
         private CheckBox checkWaiting;
@@ -538,10 +445,10 @@ namespace Libretto.Forms
         private FlatButton buttonDelete;
         private FlatButton buttonManage;
         private FlatButton buttonLogout;
-        private FlatButton buttonRegister;
         private ListView transactionList;
         private ColumnHeader columnDate;
         private ColumnHeader columnTitle;
+        private FlatButton buttonRegister;
         private ColumnHeader columnCustomer;
         private ColumnHeader columnQuantity;
         private ColumnHeader columnTotal;
