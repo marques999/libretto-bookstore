@@ -16,12 +16,12 @@ namespace Libretto
         /// <summary>
         /// 
         /// </summary>
-        private readonly MessageQueue _invoiceQueue;
+        private InvoiceCollection _invoices = new InvoiceCollection();
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly InvoiceCollection _invoices;
+        private readonly MessageQueue _invoiceQueue = MessagingCommon.InitializeInvoiceQueue();
 
         /// <summary>
         /// 
@@ -38,34 +38,7 @@ namespace Libretto
         /// </summary>
         public InvoiceClient()
         {
-            try
-            {
-                InitializeComponent();
-                _invoiceQueue = MessagingCommon.InitializeInvoiceQueue();
-                _invoiceQueue.ReceiveCompleted += OnReceive;
-                _invoiceQueue.BeginReceive(MessagingCommon.MsmqTimeout);
-
-                if (File.Exists(LibrettoCommon.InvoicesFilename))
-                {
-                    using (var reader = new FileStream(LibrettoCommon.InvoicesFilename, FileMode.Open))
-                    {
-                        _invoices = (InvoiceCollection)_serializer.Deserialize(reader) ?? new InvoiceCollection();
-                    }
-
-                    foreach (var invoiceInformation in _invoices.Invoices)
-                    {
-                        OnInsertAux(invoiceInformation, false);
-                    }
-                }
-                else
-                {
-                    _invoices = new InvoiceCollection();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Source, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            InitializeComponent();
         }
 
         /// <summary>
@@ -222,6 +195,29 @@ namespace Libretto
         /// <param name="args"></param>
         private void InvoiceClient_Load(object sender, EventArgs args)
         {
+            try
+            {
+                _invoiceQueue.ReceiveCompleted += OnReceive;
+                _invoiceQueue.BeginReceive(MessagingCommon.MsmqTimeout);
+
+                if (File.Exists(LibrettoCommon.InvoicesFilename))
+                {
+                    using (var reader = new FileStream(LibrettoCommon.InvoicesFilename, FileMode.Open))
+                    {
+                        _invoices = (InvoiceCollection)_serializer.Deserialize(reader) ?? new InvoiceCollection();
+                    }
+
+                    foreach (var invoiceInformation in _invoices.Invoices)
+                    {
+                        OnInsertAux(invoiceInformation, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Source, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             UpdateButtons();
         }
 
