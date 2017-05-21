@@ -91,16 +91,14 @@ namespace LibrettoWCF.Tools
                 return Response.NotFound;
             }
 
-            return Send(customerInformation, $"Order {orderInformation.Id:B}", $@"
-BookId: {orderInformation.BookId}
-BookTitle: {orderInformation.BookId}
-CustomerId: {orderInformation.CustomerId}
-CustomerName: {orderInformation.CustomerName}
-Quantity: {orderInformation.Quantity}
-Total: {LibrettoCommon.FormatCurrency(orderInformation.Total)}
-Timestamp: {LibrettoCommon.FormatDate(orderInformation.Timestamp)}
-Status: {orderInformation.Status.GetDescription()}
-StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}") ? Response.Success : Response.EmailFailure;
+            return Send(customerInformation,
+                $"Order {orderInformation.Id:B}", $@"
+                <b>{orderInformation.Description}</b>
+                <br/><br/>Book: {orderInformation.BookTitle}
+                <br/>Customer: {orderInformation.CustomerName}
+                <br/>Quantity: {orderInformation.Quantity}
+                <br/>Total: {LibrettoCommon.FormatCurrency(orderInformation.Total)}
+                <br/>Timestamp: {LibrettoCommon.FormatDate(orderInformation.Timestamp)}") ? Response.Success : Response.EmailFailure;
         }
 
         /// <summary>
@@ -120,7 +118,7 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
             return Send(
                 customerInformation,
                 $"Order {orderInformation.Id:B} Status: Cancelled",
-                $"Cancelled: {orderInformation.StatusTimestamp.ToShortDateString()}"
+                $"<b>Cancelled:</b> {orderInformation.StatusTimestamp.ToShortDateString()}"
             ) ? Response.Success : Response.EmailFailure;
         }
 
@@ -141,7 +139,7 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
             return Send(
                 customerInformation,
                 $"Order {orderInformation.Id:B} Status: Pending",
-                $"Should Dispatch: {orderInformation.StatusTimestamp.ToShortDateString()}"
+                $"<b>Should Dispatch:</b> {orderInformation.StatusTimestamp.ToShortDateString()}"
             ) ? Response.Success : Response.EmailFailure;
         }
 
@@ -162,7 +160,7 @@ StatusTimestamp: {LibrettoCommon.FormatDate(orderInformation.StatusTimestamp)}")
             return Send(
                 customerInformation,
                 $"Order {orderInformation.Id:B} Status: Dispatched",
-                $"Dispatched: {orderInformation.StatusTimestamp.ToShortDateString()}"
+                $"<b>Dispatched:</b> {orderInformation.StatusTimestamp.ToShortDateString()}"
             ) ? Response.Success : Response.EmailFailure;
         }
     }
