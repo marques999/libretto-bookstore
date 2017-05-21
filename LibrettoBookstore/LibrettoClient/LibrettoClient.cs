@@ -223,6 +223,6 @@ namespace Libretto
         public void OnDeleteTransaction(Guid transactionIdentifier)
         {
             System.Diagnostics.Debug.Print("OnDeleteTransaction()");
-        }
+        }        
     }
 }

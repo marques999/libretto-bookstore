@@ -12,6 +12,8 @@ namespace LibrettoWCF
     /// <summary>
     /// 
     /// </summary>
+    /// 
+    
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class StoreService : IStoreService
     {
@@ -22,13 +24,15 @@ namespace LibrettoWCF
         /// <summary>
         /// 
         /// </summary>
-        private readonly IStoreCallbacks _callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
-
+        public static double MSFTPrice = 10.0;
+        public static List<IStoreCallbacks> subscribers = new List<IStoreCallbacks>();
         /// <summary>
         /// 
         /// </summary>
         public void Unsubscribe()
         {
+            IStoreCallbacks callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
+            subscribers.Remove(callback);
         }
 
         /// <summary>
@@ -36,6 +40,21 @@ namespace LibrettoWCF
         /// </summary>
         public void Subscribe()
         {
+            IStoreCallbacks callback = OperationContext.Current.GetCallbackChannel<IStoreCallbacks>();
+            if (!subscribers.Contains(callback))
+            {
+                subscribers.Add(callback);
+            }
+        }
+
+        public static void NotifyTransaction(Transaction transactionId)
+        {
+            subscribers.ForEach(delegate (IStoreCallbacks callback) {
+                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+                    callback.OnUpdateTransaction(transactionId);
+                else
+                    subscribers.Remove(callback);
+            });
         }
 
         /*-------------------------------------------------------------------+
