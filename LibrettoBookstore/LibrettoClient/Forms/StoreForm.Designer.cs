@@ -47,7 +47,7 @@ namespace Libretto.Forms
             statusLabel = new FlatLabel();
             statusPanel = new FlowLayoutPanel();
             checkWaiting = new CheckBox();
-            checkProcessing = new CheckBox();
+            checkPending = new CheckBox();
             checkDispatched = new CheckBox();
             customerPanel = new Panel();
             customerLabel = new FlatHeader();
@@ -68,7 +68,7 @@ namespace Libretto.Forms
             buttonCancel = new FlatButton();
             buttonDelete = new FlatButton();
             buttonManage = new FlatButton();
-            buttonRefresh = new FlatButton();
+            buttonLogout = new FlatButton();
             customerLayout.SuspendLayout();
             formPanel.SuspendLayout();
             statusPanel.SuspendLayout();
@@ -187,7 +187,7 @@ namespace Libretto.Forms
             // statusPanel
             //
             statusPanel.Controls.Add(checkWaiting);
-            statusPanel.Controls.Add(checkProcessing);
+            statusPanel.Controls.Add(checkPending);
             statusPanel.Controls.Add(checkDispatched);
             statusPanel.Dock = DockStyle.Fill;
             statusPanel.Location = new Point(58, 40);
@@ -208,14 +208,14 @@ namespace Libretto.Forms
             //
             // checkProcessing
             //
-            checkProcessing.Checked = true;
-            checkProcessing.CheckState = CheckState.Checked;
-            checkProcessing.Location = new Point(71, 3);
-            checkProcessing.Name = "checkProcessing";
-            checkProcessing.Size = new Size(78, 17);
-            checkProcessing.TabIndex = 8;
-            checkProcessing.Text = "Processing";
-            checkProcessing.CheckedChanged += new EventHandler(CheckProcessing_CheckedChanged);
+            checkPending.Checked = true;
+            checkPending.CheckState = CheckState.Checked;
+            checkPending.Location = new Point(71, 3);
+            checkPending.Name = "checkPending";
+            checkPending.Size = new Size(78, 17);
+            checkPending.TabIndex = 8;
+            checkPending.Text = "Pending";
+            checkPending.CheckedChanged += new EventHandler(CheckProcessing_CheckedChanged);
             //
             // checkDispatched
             //
@@ -323,7 +323,7 @@ namespace Libretto.Forms
             buttonLayout.Controls.Add(buttonCancel);
             buttonLayout.Controls.Add(buttonDelete);
             buttonLayout.Controls.Add(buttonManage);
-            buttonLayout.Controls.Add(buttonRefresh);
+            buttonLayout.Controls.Add(buttonLogout);
             buttonLayout.Dock = DockStyle.Fill;
             buttonLayout.Location = new Point(4, 4);
             buttonLayout.Name = "buttonLayout";
@@ -379,16 +379,16 @@ namespace Libretto.Forms
             buttonManage.Text = "Manage Books";
             buttonManage.Click += new EventHandler(ButtonManage_Click);
             //
-            // buttonRefresh
+            // buttonLogout
             //
-            buttonRefresh.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonRefresh.Location = new Point(590, 3);
-            buttonRefresh.Margin = new Padding(2, 3, 0, 3);
-            buttonRefresh.Name = "buttonRefresh";
-            buttonRefresh.Size = new Size(105, 28);
-            buttonRefresh.TabIndex = 5;
-            buttonRefresh.Text = "Refresh";
-            buttonRefresh.Click += new EventHandler(ButtonRefresh_Click);
+            buttonLogout.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonLogout.Location = new Point(590, 3);
+            buttonLogout.Margin = new Padding(2, 3, 0, 3);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Size = new Size(105, 28);
+            buttonLogout.TabIndex = 5;
+            buttonLogout.Text = "Logout";
+            buttonLogout.Click += new EventHandler(ButtonLogout_Click);
             //
             // StoreForm
             //
@@ -436,7 +436,7 @@ namespace Libretto.Forms
         private FlatHeader transactionsLabel;
         private FlowLayoutPanel statusPanel;
         private CheckBox checkWaiting;
-        private CheckBox checkProcessing;
+        private CheckBox checkPending;
         private CheckBox checkDispatched;
         private Panel buttonPanel;
         private FlowLayoutPanel buttonLayout;
@@ -444,7 +444,7 @@ namespace Libretto.Forms
         private FlatButton buttonCancel;
         private FlatButton buttonDelete;
         private FlatButton buttonManage;
-        private FlatButton buttonRefresh;
+        private FlatButton buttonLogout;
         private ListView transactionList;
         private ColumnHeader columnDate;
         private ColumnHeader columnTitle;
