@@ -276,6 +276,10 @@ namespace LibrettoWCF.Database
                 {
                     LibrettoHost.WarehouseService.DeleteOrder(orderIdentifier);
                 }
+                else if (sqlEntity.Status == Status.Pending && LibrettoDatabase.BookIntegration.UpdateStock(sqlEntity.BookId, 10 + sqlEntity.Quantity) != Response.Success)
+                {
+                    return Response.DatabaseError;
+                }
 
                 StoreService.NotifyDeleteTransaction(orderIdentifier);
 

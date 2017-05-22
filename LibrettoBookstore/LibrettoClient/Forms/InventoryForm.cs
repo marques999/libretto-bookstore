@@ -23,16 +23,6 @@ namespace Libretto.Forms
         /// <summary>
         /// 
         /// </summary>
-        private void RefreshBooks()
-        {
-            listView.Items.Clear();
-            LibrettoClient.Instance.RefreshBooks();
-            listView.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="bookInformation"></param>
         /// <returns></returns>
         private static ListViewItem ParseBook(Book bookInformation)
@@ -161,7 +151,6 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void BookForm_Load(object sender, EventArgs args)
         {
-            RefreshBooks();
             UpdateButtons();
         }
 
@@ -208,7 +197,9 @@ namespace Libretto.Forms
         /// <param name="args"></param>
         private void ButtonRefresh_Click(object sender, EventArgs args)
         {
-            RefreshBooks();
+            listView.Items.Clear();
+            LibrettoClient.Instance.RefreshBooks();
+            listView.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
         }
 
         /// <summary>

@@ -25,13 +25,22 @@ namespace Libretto.Forms
             {
                 if (InvokeRequired)
                 {
-                    BeginInvoke(new Action(UpdateFilter));
+                    BeginInvoke(new Action(RefreshView));
                 }
                 else
                 {
-                    UpdateFilter();
+                    RefreshView();
                 }
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void RefreshView()
+        {
+            LibrettoClient.Instance.RefreshBooks();
+            UpdateFilter();
         }
 
         /// <summary>
@@ -245,14 +254,9 @@ namespace Libretto.Forms
                 return;
             }
 
-            var orderInformation = orderForm.Information;
-            var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderInformation);
+            var operationResult = LibrettoClient.Instance.Proxy.InsertOrder(orderForm.Information);
 
-            if (operationResult == Response.Success)
-            {
-                LibrettoClient.Instance.RefreshBooks();
-            }
-            else
+            if (operationResult != Response.Success)
             {
                 MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -383,14 +387,9 @@ namespace Libretto.Forms
                 return;
             }
 
-            var purchaseInformation = purchaseForm.Information;
-            var operationResult = LibrettoClient.Instance.Proxy.InsertPurchase(purchaseInformation);
+            var operationResult = LibrettoClient.Instance.Proxy.InsertPurchase(purchaseForm.Information);
 
-            if (operationResult == Response.Success)
-            {
-                LibrettoClient.Instance.RefreshBooks();
-            }
-            else
+            if (operationResult != Response.Success)
             {
                 MessageBox.Show(this, operationResult.ToString(), @"Libretto Bookstore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

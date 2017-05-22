@@ -96,7 +96,7 @@ namespace LibrettoWCF.Database
 
                 if (bookInformation == null)
                 {
-                    return Response.NotFound;
+                    return Response.Success;
                 }
 
                 bookInformation.Stock += quantity;
