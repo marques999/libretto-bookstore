@@ -18,6 +18,8 @@ namespace Libretto.Forms
         public InventoryForm()
         {
             InitializeComponent();
+            listView.Items.Clear();
+            listView.Items.AddRange(LibrettoClient.Instance.Books.Select(ParseBook).ToArray());
         }
 
         /// <summary>
